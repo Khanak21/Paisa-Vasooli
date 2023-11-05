@@ -12,6 +12,10 @@ const savingSchema = new mongoose.Schema({
     currAmt:{
         type:String,
         required:true,
+    },
+    currency:{
+        type:String,
+        required:true
     }
 },{timestamps: true})
 

@@ -13,6 +13,10 @@ const billSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    currency:{
+        type:String,
+        required:true
+    },
     toWhom:{
         type:String,
         required:true,
