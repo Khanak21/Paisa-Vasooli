@@ -21,7 +21,7 @@ const Dashboard = () => {
           setTransInput({...transInput,[name]:e.target.value})
     }
     useEffect(()=>{
-        axios.post()
+        // axios.post()
     },[])
 
     
