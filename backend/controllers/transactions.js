@@ -1,16 +1,16 @@
-const transaction = require("./models/transaction")
-const User = require("./models/user")
+import Transaction from "../models/transaction.js";
+import User from "../models/user.js"
 export const ErrorMessage = (status,message)=>{
     const error = new Error();
     error.status = status;
     error.message = message;
     return error;
-  }
+}
 
-const addTransaction = async(req,res)=>{
+export const addTransaction = async(req,res)=>{
     const {type,amount,currency,category,desc,date,userId}=req.body
 
-    const transaction = transaction({
+    const transaction = Transaction({
         userId,
         type,
         amount,
@@ -34,7 +34,7 @@ const addTransaction = async(req,res)=>{
 
 }
 
-const getTransactions=async(req,res)=>{
+export const getTransactions=async(req,res)=>{
     const {userId}= req.body;
     try{
         const trans = await transactionSchema.find({userId:userId})
@@ -45,7 +45,7 @@ const getTransactions=async(req,res)=>{
 
 }
 
-const editTransaction=async(req,res)=>{
+export const editTransaction=async(req,res)=>{
     try{
         const tran = await transaction.findById(req.params.id);
         if(!tran){
@@ -65,7 +65,7 @@ const editTransaction=async(req,res)=>{
     }
 }
 
-const deleteTransaction=async(req,res)=>{
+export const deleteTransaction=async(req,res)=>{
     try{
         const tran = await transaction.findById(req.params.id);
         if(!tran){
@@ -82,7 +82,7 @@ const deleteTransaction=async(req,res)=>{
     }
 }
 
-const getTransactionsByCategory=async(req,res)=>{
+export const getTransactionsByCategory=async(req,res)=>{
     const {userId,category}= req.body;
     try{
         const trans = await transactionSchema.find({userId:userId,category:category})
@@ -92,7 +92,7 @@ const getTransactionsByCategory=async(req,res)=>{
     }
 }
 
-const getTransactionsByDate=async(req,res)=>{
+export const getTransactionsByDate=async(req,res)=>{
     const {userId,date}= req.body;
     try{
         const trans = await transactionSchema.find({userId:userId,date:date})
@@ -102,7 +102,7 @@ const getTransactionsByDate=async(req,res)=>{
     }
 }
 
-const getTransactionsByMonth=async(req,res)=>{
+export const getTransactionsByMonth=async(req,res)=>{
     const {userId,category}= req.body;
     try{
         const trans = await transactionSchema.find({userId:userId,category:category})
@@ -112,7 +112,7 @@ const getTransactionsByMonth=async(req,res)=>{
     }
 }
 
-const getTransactionsByYear=async(req,res)=>{
+export const getTransactionsByYear=async(req,res)=>{
     const {userId,category}= req.body;
     try{
         const trans = await transactionSchema.find({userId:userId,category:category})
@@ -122,7 +122,7 @@ const getTransactionsByYear=async(req,res)=>{
     }
 }
 
-const getTotalStats=async(req,res)=>{
+export const getTotalStats=async(req,res)=>{
     const {userId} = req.body;
     try{
         const income = await transactionSchema.find({userId:userId,type:income})

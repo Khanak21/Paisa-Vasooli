@@ -11,8 +11,6 @@ function Signup() {
   const [entries,setEntries]=useState([])
   const [isPass,isPassValid]=useState(false)
   const [isUsername,isUsernameValid]=useState(false)
-  
-
 
 
   const handlePasswordChange = (event) => {

@@ -5,8 +5,6 @@ import  jwt  from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { validationResult } from "express-validator";
 
-
-
 export const ErrorMessage = (status,message)=>{
   const error = new Error();
   error.status = status;

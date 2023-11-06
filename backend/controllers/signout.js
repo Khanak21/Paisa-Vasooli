@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import  jwt  from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { validationResult } from "express-validator";
-const nodemailer = require('nodemailer');
+import nodemailer from "nodemailer";
 
 
 export const ErrorMessage = (status,message)=>{

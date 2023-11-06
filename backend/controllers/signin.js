@@ -5,25 +5,16 @@ import  jwt  from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { validationResult } from "express-validator";
 
-
-
-export const ErrorMessage = (status,message)=>{
-  const error = new Error();
-  error.status = status;
-  error.message = message;
-  return error;
-}
-
-
 export const signin = async (req, res, next) => {
 
     try {
       const user = await User.findOne({ username: req.body.username });
-      if (!user) return next(createError(404, "User not found!"));
+      // if (!user) return next(createError(404, "User not found!"));
   
       const isCorrect = await bcrypt.compare(req.body.password, user.password);
   
-      if (!isCorrect) return next(createError(400, "Wrong Credentials!"));
+      if (!isCorrect) {res.status(200).json({ message: "Logged out successfully" });}
+      
   
       const token = jwt.sign({ id: user._id }, process.env.JWT);
       const { password, ...others } = user._doc;
@@ -35,7 +26,6 @@ export const signin = async (req, res, next) => {
         .status(200)
         .json(others);
     } catch (err) {
-      next(err);
       console.log(err);
     }
   };

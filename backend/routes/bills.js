@@ -1,10 +1,12 @@
 import express from "express";
-import {addTransactions,editTransactions,deleteTransactions,getTransactionss} from '../controllers/transactions.js'
-const router = express.Router();
-import { verifyToken } from "../Verify.js";
+import {addBill,editBill,deleteBill,getBills} from '../controllers/transactions.js'
 
-router.post("/",addTransactions);
-router.put("/:id",editTransactions);
-router.delete("/:id",deleteTransactions);
-router.get("/:VideoId",getTransactionss);
+const router = express.Router();
+// import { verifyToken } from "../Verify.js";
+
+//Routes for bill api
+router.post("/addBill",addBill);
+router.put("/editBill/:id",editBill);
+router.delete("/deleteBill/:id",deleteBill);
+router.get("/getBills/:userId",getBills);
 export default router;

@@ -44,7 +44,7 @@ const Dashboard = () => {
     <div>
         <Navbar/>
         <div >
-            <div className='flex w-full border-black border-2 justify-center h-40'>
+            <div className='flex w-full justify-center h-40'>
             <div className=' mx-4 w-60 my-4 rounded-md flex justify-center bg-[#198754] text-white'>income</div>
             <div className=' mx-4 w-60 my-4 rounded-md flex justify-center bg-[#198754] text-white'>balance</div>
             <div className=' mx-4 w-60 my-4 rounded-md flex justify-center bg-[#198754] text-white'>expense</div>
