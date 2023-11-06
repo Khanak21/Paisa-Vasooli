@@ -4,7 +4,7 @@ const router = express.Router();
 import { verifyToken } from "../Verify.js";
 
 router.post("/",addTransactions);
-router.put("/:id",editTransactions);
-router.delete("/:id",deleteTransactions);
-router.get("/:VideoId",getTransactionss);
+// router.put("/:id",editTransactions);
+// router.delete("/:id",deleteTransactions);
+// router.get("/:VideoId",getTransactionss);
 export default router;
