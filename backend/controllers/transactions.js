@@ -1,23 +1,32 @@
-const transactionSchema = require("./models/transaction")
+import Transaction from "../models/transaction.js";
+import User from "../models/user.js"
+export const ErrorMessage = (status,message)=>{
+    const error = new Error();
+    error.status = status;
+    error.message = message;
+    return error;
+}
 
-const addTransaction = async(req,res)=>{
-    const {type,amount,category,desc,date,userId}=req.body
-
-    const transaction = transactionSchema({
-        userId,
-        type,
-        amount,
-        category,
-        desc,
-        date
-    })
+export const addTransaction = async(req,res)=>{
+    // const {type,amount,currency,category,desc,date,userId}=req.body
+    console.log(req.body);
+    const transaction = Transaction(
+        // userId,
+        // type,
+        // amount,
+        // currency,
+        // category,
+        // desc,
+        // date
+        req.body.transInput
+    )
 
     try{
-        if(!type || !amount || !category || !date){
-            return res.status(400).json({message: 'All fields are required!'})
-        }
+        // if(!type || !amount || !category || !date){
+        //     return res.status(400).json({message: 'All fields are required!'})
+        // }
         await transaction.save()
-        res.status(200).json({message:'transaction added'})
+        res.status(200).json({transaction})
 
     }catch(err){
         res.status(500).json({message:'Server error'})
@@ -26,69 +35,98 @@ const addTransaction = async(req,res)=>{
 
 }
 
-const getTransactions=async(req,res)=>{
+export const getTransactions=async(req,res)=>{
     const {userId}= req.body;
     try{
-        const trans = await transactionSchema.find({userId:userId})
+        const trans = await Transaction.find({userId:userId})
+        res.json({trans})
     }catch(err){
         res.json({message:"No transactions found"})
     }
 
 }
 
-const editTransaction=async(req,res)=>{
 
-}
-
-const deleteTransaction=async(req,res)=>{
-
-}
-
-const getTransactionsByCategory=async(req,res)=>{
-    const {id,category}= req.body;
+export const editTransaction=async(req,res)=>{
     try{
-        const trans = await transactionSchema.find({userId:id,category:category})
+        const tran = await Transaction.findById(req.params.id);
+        if(!tran){
+            return next(createError(404,"Transaction not found"));
+        }
+            const newtran = await Transaction.findByIdAndUpdate(req.params.id,{
+                $set:req.body
+            },{new:true});
+            res.json({newtran})
+            res.status(200).json("Transaction edited");
+    }catch(err){
+        res.status(400).json("unable to edit transaction");
+    }
+}
+
+export const deleteTransaction=async(req,res)=>{
+    try{
+        const tran = await Transaction.findById(req.params.id);
+        if(!tran){
+            return next(createError(404,"Transaction not found"));
+        }
+        if(req.User.id===req.user.id){
+            await Transaction.findByIdAndRemove(req.params.id);
+            res.status(200).json("Transaction removed");
+        }else{
+            next(ErrorMessage(403,"unable to delete this transaction"));
+        }
+    }catch{
+        res.status(200).json("unable to delete transaction");
+    }
+}
+
+export const getTransactionsByCategory=async(req,res)=>{
+    const {userId,category}= req.body;
+    try{
+        const trans = await Transaction.find({userId:userId,category:category})
+        res.json({trans})
     }catch(err){
         res.json({message:"No transactions by given category found"})
     }
 }
 
-const getTransactionsByDate=async(req,res)=>{
-    const {id,date}= req.body;
+export const getTransactionsByDate=async(req,res)=>{
+    const {userId,date}= req.body;
     try{
-        const trans = await transactionSchema.find({userId:id,date:date})
+        const trans = await Transaction.find({userId:userId,date:date})
+        res.json({trans})
     }catch(err){
         res.json({message:"No transactions on given date found"})
     }
 }
 
-const getTransactionsByMonth=async(req,res)=>{
-    const {id,category}= req.body;
+export const getTransactionsByMonth=async(req,res)=>{
+    const {userId,category}= req.body;
     try{
-        const trans = await transactionSchema.find({userId:id,category:category})
+        const trans = await Transaction.find({userId:userId,category:category})
+        res.json({trans})
     }catch(err){
         res.json({message:"No transactions by given month found"})
     }
 }
 
-const getTransactionsByYear=async(req,res)=>{
-    const {id,category}= req.body;
+export const getTransactionsByYear=async(req,res)=>{
+    const {userId,category}= req.body;
     try{
-        const trans = await transactionSchema.find({userId:id,category:category})
+        const trans = await Transaction.find({userId:userId,category:category})
+        res.json({trans})
     }catch(err){
         res.json({message:"No transactions by given year found"})
     }
 }
-
-const getTotalStats=async(req,res)=>{
-    const {id} = req.body;
+//correct this api first---->
+export const getTotalStats=async(req,res)=>{
+    const {userId} = req.body;
     try{
-        const income = await transactionSchema.find({userId:id,type:income})
-        const expense = await transactionSchema.find({userId:id,type:expense})
+        const income = await Transaction.find({userId:userId,type:income})
+        const expense = await Transaction.find({userId:userId,type:expense})
         const balance = income-expense
         res.json({income,expense,balance})
-
-
     }catch(err){
         res.json({message:"No stats found"})
     }

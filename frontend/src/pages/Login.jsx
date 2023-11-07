@@ -56,7 +56,16 @@ function Login() {
       setAllEntry([allEntry, Entry]);
       console.log(allEntry);
       // Handle form submission logic here
-
+      const logi =async()=>{
+        try{
+          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,password}).catch(function(err){
+          console.log(err)})
+          console.log(res.data);
+        }catch(err){
+            console.log(err);
+        }
+      }
+      logi();
       //making the credentials empty after submitting
       setEmail("");
       setPassword("")

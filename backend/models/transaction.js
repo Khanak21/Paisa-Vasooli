@@ -3,20 +3,19 @@ import mongoose from "mongoose";
 const transactionSchema = new mongoose.Schema({
     userId:{
         type:String,
-        required:true,
     },
     type:{
         type:String,
-        required:true,
     },
     amount:{
         type:Number,
-        required:true,
         trim: true
+    },
+    currency:{
+        type:String,
     },
     category:{
         type:String,
-        required:true,
         trim: true
     },
     desc:{
@@ -24,7 +23,6 @@ const transactionSchema = new mongoose.Schema({
     },
     date:{
         type: Date,
-        required: true,
         trim: true
     },
     

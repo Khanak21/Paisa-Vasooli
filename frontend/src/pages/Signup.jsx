@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import './SignUp.css'
+import axios from "axios"
 
 function Signup() {
 
@@ -11,24 +12,16 @@ function Signup() {
   const [entries,setEntries]=useState([])
   const [isPass,isPassValid]=useState(false)
   const [isUsername,isUsernameValid]=useState(false)
-  
-    // state to validate the email
-    const [validEmail,setValidemail]=useState(false)
-
-    //variable to hold the regular expression to check  correct email
-    const emailValidation= (email) => {  
-  
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return emailRegex.test(email);
-      };
-    
-   
 
 
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
-      
+     if(newPassword.length <8)
+     {
+      setPassword(false);
+     }
+     
     setPassword(newPassword);
     isPassValid(newPassword.length >= 8);
   };
@@ -52,23 +45,25 @@ function Signup() {
     const k=event.target.value
     setConformpass(k)
   }
-  
-  const emptyConfirmpass=()=>{
-   
-    setConformpass("");
-  }
-
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     if (isPass && isUsername && confirmpass===password) {
       const Entry = { username: username, password: password, email: email };
       setEntries([entries, Entry]);
+      const reg =async()=>{
+        try{
 
-      
+          const res = await axios.post("http://localhost:3001/api/auth/signup",{username,password,email}).catch(function(err){
+          console.log(err)})
 
+          console.log(res.data);
+        }catch(err){
+            console.log(err);
+        }
+      }
+      reg();
       console.log(Entry);
       // Handle form submission logic here
-
       //making the credentials empty after submitting
       setEmail("");
       setPassword("")
