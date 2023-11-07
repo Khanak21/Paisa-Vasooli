@@ -45,6 +45,11 @@ function Signup() {
     const k=event.target.value
     setConformpass(k)
   }
+
+  const emptyConfirmpass=()=>{
+   
+    setConformpass("");
+  }
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     if (isPass && isUsername && confirmpass===password) {
