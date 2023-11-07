@@ -38,11 +38,6 @@ function Signup() {
     const k=event.target.value
     setConformpass(k)
   }
-
-  React.useEffect(()=>{
-    // axios.post('')
-  })
-
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     if (isPass && isUsername && confirmpass===password) {
@@ -50,8 +45,10 @@ function Signup() {
       setEntries([entries, Entry]);
       const reg =async()=>{
         try{
+
           const res = await axios.post("http://localhost:3001/api/auth/signup",{username,password,email}).catch(function(err){
           console.log(err)})
+
           console.log(res.data);
         }catch(err){
             console.log(err);

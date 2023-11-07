@@ -46,6 +46,7 @@ export const getTransactions=async(req,res)=>{
 
 }
 
+
 export const editTransaction=async(req,res)=>{
     try{
         const tran = await Transaction.findById(req.params.id);
@@ -118,7 +119,7 @@ export const getTransactionsByYear=async(req,res)=>{
         res.json({message:"No transactions by given year found"})
     }
 }
-
+//correct this api first---->
 export const getTotalStats=async(req,res)=>{
     const {userId} = req.body;
     try{
