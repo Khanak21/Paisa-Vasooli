@@ -11,21 +11,22 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    background: linear-gradient(135deg, #2facff, #047a3f);
+    padding: 2px;
+    /* background: linear-gradient(135deg, #2facff, #047a3f);
+     */
+     background-color: #198754;
   }
   .container {
-    max-width: 750px;
-    width: 100%;
+    width: 567px;
     background-color: #fff;
-    padding: 25px 30px;
+    padding: 20px;
     border-radius: 40px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: space-evenly;
-    gap: 20px;
+    align-items: center;
+    gap: 25px;
   }
   
   .title {
@@ -33,16 +34,7 @@
     font-weight: 500;
     position: relative;
   }
-  .title::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 3px;
-    width: 50px;
-    border-radius: 5px;
-    background: linear-gradient(135deg, #71b7e6, #9b59b6);
-  }
+
   .user-details {
     display: flex;
     flex-direction: column;
@@ -52,9 +44,14 @@
   }
   .input-box {
     margin-bottom: 15px;
-    width: 500px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 300;
     display: flex;
     flex-direction: column;
+    gap:4px;
+    justify-content: space-around;
+    align-items: flex-start;
   }
   input {
     height: 45px;
@@ -66,6 +63,9 @@
     border: 1px solid #ccc;
     border-bottom-width: 2px;
     transition: all 0.3s ease;
+  }
+  .input-signup{
+    width:100%;
   }
   
   .btn {
@@ -80,15 +80,18 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      width: 100%;
+      width:75%;
       border-radius: 10px;
       border: none;
       color: #fff;
       font-size: 20px;
       font-weight: 500;
-      letter-spacing: 1px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      background: linear-gradient(135deg, #30acff, #007337);
+      background-color: #198754;
   }
-  
+  .forgotPass{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    gap:5px;
+  }

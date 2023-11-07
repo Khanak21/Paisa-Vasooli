@@ -5,13 +5,21 @@
   
   .outside {
     width: 100vw;
-    height: 100px;
+    height: 60px;
     display: flex;
+    font-size: 30px;
     padding: 20px;
-    color: red;
-    background-color: grey;
-    justify-content: space-between;
+    color: rgb(253, 253, 253);
+    /* background-image: linear-gradient(130deg, rgb(238, 140, 140), rgb(188, 29, 188) 60%, violet);
+     */
+     background-color: #198754;
+    justify-content:flex-end;
+    align-items: center;
+    gap:20px;
+    /* box-shadow: 0px 15px 30px -3px rgba(7, 7, 185, 0.5); */
   }
+  
+
   
   .logo-image {
     width: 200px;
@@ -20,6 +28,7 @@
   .content-link {
     display: flex;
     flex-direction: row;
+    gap:5px;
     justify-content: space-evenly;
     align-items: center;
     width: 50%;
@@ -37,7 +46,7 @@
   }
   
   .box:hover {
-    color: rgb(36, 3, 125);
+    color: rgb(157, 122, 253);
     font-size: larger;
   }
   
@@ -51,20 +60,23 @@
   
   @media (max-width: 62em) {
     .outside {
-      position: relative;
-      background-color: none;
+       display: flex;
+       justify-content: flex-end;
     }
   
     .content-link {
       display: none;
     }
-  
+    .box:hover {
+      color: rgb(193, 173, 248);
+      font-size: larger;
+    }
     .icons {
       display: block;
       z-index: 20;
       width: 50px;
       padding: 3px;
-      color: black;
+      color: rgb(14, 1, 1);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -81,21 +93,28 @@
     .box {
       height: 30px;
       font-size: 40x;
-      color:black;
+      color:rgb(252, 250, 250);
     }
   
     .active {
+
       display: flex;
-      background-image: linear-gradient(135deg, yellow, orange, red);
+      /* background-image: linear-gradient(130deg, rgb(0, 217, 255), rgb(0, 21, 255), rgb(255, 61, 142));
+       */
+       background-color: #077944;
       position: absolute;
       width: 100vw;
-      height: 40vh;
+      height: 30vh;
+      padding:30px;
+      color: white;
+      font-size: 27px;
       left: 0;
       top: 0;
       flex-direction: column;
       justify-content: center;
-      align-items: space-around;
-      gap: 5px;
+      align-items: center;
+      /* box-shadow: 0px 15px 30px -3px rgba(7, 7, 185, 0.5); */
+      gap: 20px;
     }
   
     .activemenu{

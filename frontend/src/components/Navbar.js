@@ -10,16 +10,14 @@ function Navbar() {
 
   return (
     <div className="outside">
-      <div className="logo-image">
-        <img src="" alt="" className="logoFinance" />
-      </div>
+ 
 
       <div className={showNav?"content-link active":"content-link"}>
-        <div className="box">Element1</div>
-        <div className="box">Element2</div>
-        <div className="box">Element3</div>
-        <div className="box">Element4</div>
-        <div className="box">Element5</div>
+        <div className="box">DashBoard</div>
+        <div className="box">Dues</div>
+        <div className="box">Groups</div>
+        <div className="box">Savings</div>
+        <div className="box">Stocks</div>
       </div>
 
       <div className="icons">
