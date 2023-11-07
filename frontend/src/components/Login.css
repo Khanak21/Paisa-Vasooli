@@ -11,11 +11,10 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background: linear-gradient(135deg, #2facff, #047a3f);
+  background-color: #198754;
 }
-.container {
-  max-width: 750px;
-  width: 100%;
+.container-login {
+  width:567px;
   background-color: #fff;
   padding: 25px 30px;
   border-radius: 40px;
@@ -23,25 +22,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: space-evenly;
+  align-items: center;
   gap: 20px;
 }
 
-.title {
+.title-login{
   font-size: 25px;
   font-weight: 500;
   position: relative;
 }
-.title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 50px;
-  border-radius: 5px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
-}
+
 .user-details {
   display: flex;
   flex-direction: column;
@@ -66,7 +56,9 @@ input {
   border-bottom-width: 2px;
   transition: all 0.3s ease;
 }
-
+.input-login{
+  width:100%;
+}
 .btn {
   display: flex;
   justify-content: space-evenly;
@@ -88,5 +80,9 @@ input {
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #30acff, #007337);
+    background-color: #198754;
+}
+.Hello{
+  text-decoration: none;
+  color:inherit;
 }

@@ -1,0 +1,190 @@
+*{
+    margin:0;
+    box-sizing: border-box;
+}
+
+.outer{
+    height:100vh;
+    padding: 20px;
+    margin:0 auto;
+    height: 100vh;
+    width:100vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    gap:3em;
+    align-items: space-evenly;
+    max-height: 700px;
+}
+.Tt{
+   text-align: center;
+   height:50px;
+   padding:5px;
+   color:rgb(16, 0, 0);
+   font-size: 40px;
+ 
+   /* border: 2px solid black; */
+}
+
+.hero-section{
+    /* border:2px solid black; */
+    padding: 10px;
+    display: flex;
+    gap:2px;
+    font-size: large;
+    padding:5px;
+}
+.hero-left{
+    width:50%;
+    padding:5px;
+    /* border:2px solid black; */
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    justify-content: flex-start;
+    align-items: space-evenly;
+}
+input{
+    border-radius: 20px;
+    width:70%;
+}
+.due-Date{
+    display:flex;
+    justify-content: space-between;
+    gap:30px;
+}
+.due-Title{
+    display:flex;
+    justify-content: space-between;
+    gap:30px;
+}
+.due-To{
+    display:flex;
+    justify-content: space-between;
+    gap:30px;
+}
+.due-Amount{
+    display:flex;
+    justify-content: space-between;
+    gap:30px;
+}
+.add-dues{
+    padding:5px;
+    /* border:2px solid black; */
+    display: flex;
+    font-size: 26px;
+    flex-direction: column;
+    gap:20px;
+    justify-content: center;
+    align-items: space-evenly;
+}
+.add-btn{
+    padding:10px;
+    font-size: 20px;
+    font-style: italic;
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* border:1px solid black; */
+}
+.plus-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:50px;
+    height:50px;
+    border: 1px solid orangered;
+    border-radius: 50%;
+    background-color: rgb(166, 1, 1);
+    box-shadow:0 0 10px #71b7e6;
+}
+.plus{
+
+    font-size: 40px;
+}
+.plus-btn:hover{
+    border:#71b7e6;
+    background-color: rgb(9, 108, 9);
+}
+.hero-right{
+    width:50%;
+    padding: 25px;
+    /* border:2px solid black; */
+    display:flex;
+    height: 500px;
+    overflow: scroll;
+}
+.storing-dues{
+    display: flex;
+    justify-content: space-evenly;
+    align-items:center;
+    flex-direction: column;
+    width:100%;
+    height:100%;
+    gap:20px;
+    padding:10px;
+}
+.parent-due{
+    width:100%;
+    /* border:2px solid black; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap:10px;
+    padding:10px;
+}
+.delete-minus{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    border:1px solid black;
+    border-radius: 50%;
+    padding:10px;
+}
+.delete-minus:hover{
+    background-color: green;
+}
+.due-box{
+    display:flex;
+    border:1px solid black;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    width:50%;
+    padding:5px;
+    gap:7px;
+}
+.due-name{
+    border:1px solid black;
+    width:100%;
+    display: flex;
+    gap:40px;
+    justify-content: space-evenly;
+}
+.due-date{
+    border:1px solid black;
+    width:100%;
+    display: flex;
+    gap:40px;
+    justify-content: space-evenly;
+}
+.due-amount{
+    border:2px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    width:100%;
+    gap:40px;
+}
+.due-whom{
+    display: flex;
+    justify-content: space-evenly;
+    gap:40px;
+    border: 1px solid black;
+    width:100%;
+}
+.active{
+    display:none;
+}

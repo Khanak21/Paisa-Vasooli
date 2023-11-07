@@ -12,6 +12,20 @@ function Login() {
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [allEntry, setAllEntry] = useState([]);
   // const [currentView,setView]=useState("Login")
+  // state to validate the email
+  const [validEmail,setValidemail]=useState(false)
+
+  //variable to hold the regular expression to check  correct email
+  const emailValidation= (email) => {  
+
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(email);
+    };
+  
+ 
+
+  
+
 
   const handlePasswordChange = (event) => {
     event.preventDefault();
@@ -26,6 +40,13 @@ function Login() {
     setUsername(newUsername);
     setIsUsernameValid(newUsername.length >= 5);
   };
+
+  const handleEmail=(event)=>{
+     const k=event.target.value;
+     setEmail(k);
+     setValidemail(emailValidation(k));
+
+  }
   
 
   const submitFunction = (event) => {
@@ -46,14 +67,16 @@ function Login() {
 
     }
   };
+  
 
+   
   return (
 
     <form onSubmit={submitFunction}>
       <div className="super-container">
-      <div className="container">
+      <div className="container-login">
 
-        <div className="title">
+        <div className="title-login">
           Login
         </div>
 
@@ -67,6 +90,7 @@ function Login() {
                 value={username}
                 name="username"
                 onChange={handleUsernameChange}
+                className="input-login"
                 required
               />
             </div>
@@ -77,9 +101,12 @@ function Login() {
                 placeholder="Enter your email"
                 name="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={handleEmail}
+                className="input-login"
                 required
               />
+              {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null}
+              {console.log(email)}
             </div>
             <div className="input-box">
               <label htmlFor="psw">Password</label>
@@ -89,10 +116,12 @@ function Login() {
                 name="password"
                 value={password}
                 onChange={handlePasswordChange}
+                className="input-login"
                 required
               />
             </div>
           </div>
+
           <div className="btn">
 
             <div 
@@ -100,18 +129,15 @@ function Login() {
             onClick={submitFunction}
             >
            Login 
-            </div>
-
-           
-            <div 
-            className="button"
-            >
-              <Link to="/signup">Sign up</Link>
-            
-            </div>
- 
-
+            </div>   
+        
           </div>
+          <div className="forgotPass">
+           <div>Not having any account? </div>
+              <div> <Link to="/signup">
+                Sign up
+            </Link></div>
+            </div>
         </div>
         </div>
       </div>

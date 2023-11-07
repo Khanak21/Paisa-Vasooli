@@ -12,20 +12,33 @@ function Signup() {
   const [isPass,isPassValid]=useState(false)
   const [isUsername,isUsernameValid]=useState(false)
   
+    // state to validate the email
+    const [validEmail,setValidemail]=useState(false)
 
+    //variable to hold the regular expression to check  correct email
+    const emailValidation= (email) => {  
+  
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+      };
+    
+   
 
 
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
-     if(newPassword.length <8)
-     {
-      password=false
-     }
-     
+      
     setPassword(newPassword);
     isPassValid(newPassword.length >= 8);
   };
+  
+  const handleEmail=(event)=>{
+    const k=event.target.value;
+    setEmail(k);
+    setValidemail(emailValidation(k));
+
+ }
 
   const handleUsernameChange = (event) => {
     event.preventDefault();
@@ -38,6 +51,11 @@ function Signup() {
     event.preventDefault();
     const k=event.target.value
     setConformpass(k)
+  }
+  
+  const emptyConfirmpass=()=>{
+   
+    setConformpass("");
   }
 
   const submitFunction = (event) => {
@@ -55,8 +73,9 @@ function Signup() {
       setEmail("");
       setPassword("")
       setUsername("")
-      setConformpass("")
-      // alert("Logged in successfully")
+      emptyConfirmpass()
+      console.log(confirmpass);
+      alert("Logged in successfully")
     }
     else {
       if(confirmpass!== password)
@@ -92,6 +111,7 @@ function Signup() {
                   placeholder="Enter your username"
                   name="uname"
                   onChange={handleUsernameChange}
+                  className="input-signup"
                   required
                 />
               </div>
@@ -102,10 +122,13 @@ function Signup() {
                   type="email"
                   placeholder="Enter your email"
                   name="email"
+                  className="input-signup"
                   value={email}
-                  onChange={(e)=>setEmail(e.target.value)}
+                  onChange={handleEmail}
                   required
                 />
+                 {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null}
+              {console.log(email)}
               </div>
 
               <div className="input-box">
@@ -114,6 +137,7 @@ function Signup() {
                   type="password"
                   value={password}
                   placeholder="Enter your password"
+                  className="input-signup"
                   onChange={handlePasswordChange}
                   name="psw"
                   required
@@ -125,8 +149,10 @@ function Signup() {
                 <input
                   type="password"
                   placeholder="Confirm your password"
+                  value={confirmpass}
                   name="password"
                   onChange={confirm}
+                  className="input-signup"
                   required
                 />
               </div>
@@ -134,17 +160,6 @@ function Signup() {
             </div>
 
             <div className="btn">
-    
-            <div 
-            className="button"
-            value="Login"
-            >
-              <Link to="/login">
-            Go_Back_To_Login
-            </Link>
-          
-            </div>
-
             <div 
             className="button"
             value="Submit"
@@ -156,7 +171,10 @@ function Signup() {
             </div>
             
             <div className="forgotPass">
-              <span>forgot password ? <a href="">Click here !</a></span>
+           <div>Already have an account? </div>
+              <div> <Link to="/login">
+                Login
+            </Link></div>
             </div>
         </div>
       </div>
