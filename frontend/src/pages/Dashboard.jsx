@@ -16,8 +16,12 @@ const Dashboard = () => {
         date:'',
     })
     const [filterInput,setFilterInput] = useState({
-
+      category:'',
+      date:'',
+      month:'',
+      year:''
     })
+
     const {type,amount,category,desc,date} = transInput
 
     //functions
@@ -30,12 +34,13 @@ const Dashboard = () => {
         const getTrans = async()=>{
           try{
             console.log("Sending request with data:", transInput);
-            const res = await axios.post("http://localhost:3001/api/transactions/getTransactions",{transInput})
+            const res = await axios.post("http://localhost:3001/api/transactions/getTransactions/",{transInput})//add user Id
             console.log(res.data)
           }catch(err){
             console.log(err)
           }
         }
+        getTrans()
 
     },[])
 
@@ -95,6 +100,11 @@ const Dashboard = () => {
         <select name="year" id="year" className='mx-2 border-2 rounded-md' placeholder='year' onChange={handleTransInput('year')}>
            <option value="2023">2023</option>
         </select>
+        <Button variant="success"
+                // onClick={handleFilter}
+          >
+            Filter
+          </Button>
         </div>
         <div>
         <TransactionCard/>

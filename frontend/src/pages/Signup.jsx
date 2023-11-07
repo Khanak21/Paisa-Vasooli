@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import './SignUp.css'
-
+import axios from "axios"
 function Signup() {
 
   const [password,setPassword]=useState("")
@@ -18,7 +18,7 @@ function Signup() {
     const newPassword = event.target.value;
      if(newPassword.length <8)
      {
-      password=false
+      setPassword(false)
      }
      
     setPassword(newPassword);
@@ -37,18 +37,23 @@ function Signup() {
     const k=event.target.value
     setConformpass(k)
   }
-
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     if (isPass && isUsername && confirmpass===password) {
       const Entry = { username: username, password: password, email: email };
       setEntries([entries, Entry]);
-
-      
-
+      const reg =async()=>{
+        try{
+          const res = await axios.post("http://localhost:3001/api/auth/signup",{Entry}).catch(function(err){
+            console.log(err)})
+          console.log(res.data);
+        }catch(err){
+            console.log(err);
+        }
+      }
+      reg();
       console.log(Entry);
       // Handle form submission logic here
-
       //making the credentials empty after submitting
       setEmail("");
       setPassword("")
