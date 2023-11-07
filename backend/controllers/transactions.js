@@ -47,12 +47,12 @@ export const getTransactions=async(req,res)=>{
 
 export const editTransaction=async(req,res)=>{
     try{
-        const tran = await transaction.findById(req.params.id);
+        const tran = await Transaction.findById(req.params.id);
         if(!tran){
             return next(createError(404,"Transaction not found"));
         }
         if(req.User.id===req.user.id){
-            const newtran = await transaction.findByIdAndUpdate(req.params.id,{
+            const newtran = await Transaction.findByIdAndUpdate(req.params.id,{
                 $set:req.body
             },{new:true});
             res.json({newtran})
@@ -67,12 +67,12 @@ export const editTransaction=async(req,res)=>{
 
 export const deleteTransaction=async(req,res)=>{
     try{
-        const tran = await transaction.findById(req.params.id);
+        const tran = await Transaction.findById(req.params.id);
         if(!tran){
             return next(createError(404,"Transaction not found"));
         }
         if(req.User.id===req.user.id){
-            await transaction.findByIdAndRemove(req.params.id);
+            await Transaction.findByIdAndRemove(req.params.id);
             res.status(200).json("Transaction removed");
         }else{
             next(ErrorMessage(403,"unable to delete this transaction"));

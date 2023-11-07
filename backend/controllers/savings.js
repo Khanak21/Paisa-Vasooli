@@ -39,11 +39,10 @@ export const getSavings = async(req,res)=>{
 
 export const editSaving = async(req,res)=>{
     try{
-        const saving = await savingSchema.findByIdAndUpdate(req.params.id);
+        const saving = await savingSchema.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true});
         res.json({message:"saving edited"})
     }catch(err){
         res.json({message:"cannot edit the saving/saving not found"})
-
     }
 }
 export const deleteSaving = async(req,res)=>{

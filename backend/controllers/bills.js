@@ -41,7 +41,7 @@ export const getBills = async(req,res)=>{
 
 export const editBill = async(req,res)=>{
     try{
-        const bill = await billSchema.findByIdAndUpdate(req.params.id);
+        const bill = await billSchema.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true});
         res.json({message:"bill edited"})
     }catch(err){
         res.json({message:"cannot edit the bill/bill not found"})
