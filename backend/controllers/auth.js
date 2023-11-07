@@ -26,8 +26,10 @@ export const signup = async(req,res,next)=>{
 
     await newUser.save();
     res.status(200).send("Aapka Swagat Hai");
+    // res.status(200).json({newUser})
   } catch (err) {
     next(err)
+    console.log(err);
   }
 };
 
