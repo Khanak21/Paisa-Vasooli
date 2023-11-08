@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import './SignUp.css'
 import axios from "axios"
+import { useNavigate } from 'react-router-dom'
 
-function Signup() {
+function Signup({user,setUser}) {
+  const navigate = useNavigate()
 
   const [password,setPassword]=useState("")
   const [username,setUsername]=useState("")
@@ -52,16 +54,17 @@ function Signup() {
   }
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
-    if (isPass && isUsername && confirmpass===password) {
+    if (isPass && isUsername && confirmpass===password){
       const Entry = { username: username, password: password, email: email };
       setEntries([entries, Entry]);
       const reg =async()=>{
         try{
-
-          const res = await axios.post("http://localhost:3001/api/auth/signup",{username,password,email}).catch(function(err){
-          console.log(err)})
-
-          console.log(res.data);
+          const res = await axios.post("http://localhost:3001/api/auth/signup",{username,email,password}).catch(function(err){
+            console.log(err)})
+            console.log(res.data);
+            setUser(res.data.newUser)
+            console.log(user)
+            navigate('/dashboard')
         }catch(err){
             console.log(err);
         }
@@ -83,7 +86,7 @@ function Signup() {
         alert("Password and confirmed pass didn't match")
       } 
       else
-      alert("Invalid username or password. Please check the requirements.");
+      alert("Invalid username or password.Make sure username is>=5 characters and password is >=8 characters");
 
     }
   };

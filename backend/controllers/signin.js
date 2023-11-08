@@ -13,7 +13,7 @@ export const signin = async (req, res, next) => {
   
       const isCorrect = await bcrypt.compare(req.body.password, user.password);
   
-      if (!isCorrect) {res.status(200).json({ message: "Logged out successfully" });}
+      if (!isCorrect) {res.status(200).json({ message: "Password does not match" });}
       
   
       const token = jwt.sign({ id: user._id }, process.env.JWT);

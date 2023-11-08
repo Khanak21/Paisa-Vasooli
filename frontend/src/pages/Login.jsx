@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
 import {Link} from 'react-router-dom'
+import axios from "axios";
 
-function Login() {
+function Login({user,setUser}) {
 
   //hooks to handle the changing states
   const [username, setUsername] = useState("");
@@ -51,16 +52,16 @@ function Login() {
 
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
-    if (isPasswordValid && isUsernameValid) {
+    // if (isPasswordValid && isUsernameValid) {
       const Entry = { username: username, password: password, email: email };
-      setAllEntry([allEntry, Entry]);
-      console.log(allEntry);
+      // setAllEntry([allEntry, Entry]);
+      // console.log(allEntry);
       // Handle form submission logic here
       const logi =async()=>{
         try{
-          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,password}).catch(function(err){
-          console.log(err)})
-          console.log(res.data);
+          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,password})
+          console.log("response data:"+res.data);
+          // setUser(res.data).then(console.log("userdata"+user))
         }catch(err){
             console.log(err);
         }
@@ -71,10 +72,10 @@ function Login() {
       setPassword("")
       setUsername("")
       alert("Logged in successfully")
-    } else {
-      alert("Invalid username or password. Please check the requirements.");
+    // } else {
+      // alert("Invalid username or password. Please check the requirements.");
 
-    }
+    // }
   };
   
 

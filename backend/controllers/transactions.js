@@ -36,7 +36,8 @@ export const addTransaction = async(req,res)=>{
 }
 
 export const getTransactions=async(req,res)=>{
-    const {userId}= req.body;
+    const userId= req.params.userId;
+    console.log(req.params.userId)
     try{
         const trans = await Transaction.find({userId:userId})
         res.json({trans})

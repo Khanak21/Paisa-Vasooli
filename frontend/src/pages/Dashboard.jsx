@@ -5,10 +5,12 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import TransactionCard from '../components/TransactionCard';
 
-const Dashboard = () => {
+const Dashboard = ({user}) => {
+  console.log(user)
   //states
     const [show, setShow] = useState(false);
     const [transInput,setTransInput] = useState({
+        userId:user._id,
         type: 'Expense',
         amount:'',
         category:'',
@@ -21,6 +23,7 @@ const Dashboard = () => {
       month:'',
       year:''
     })
+    const [transactionData,setTransactionData]=useState({})
 
     const {type,amount,category,desc,date} = transInput
 
@@ -28,14 +31,40 @@ const Dashboard = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleTransInput = name=>e=>{
+    
           setTransInput({...transInput,[name]:e.target.value})
+          console.log(filterInput)
+    }
+    const handleFilterInput = name=>e=>{
+      setFilterInput({...filterInput,[name]:e.target.value})
+}
+    const handleFilter = e=>{
+        e.preventDefault()
+        console.log("filters:"+filterInput)
+        const addFilter = async()=>{
+        try{
+          // const res = await axios.post("http://localhost:3001/api/transactions/getTransactionByFilter",{filterInput})
+          // console.log(res.data)
+        }catch(err){
+          console.log(err)
+        }
+      }
+      addFilter()
+    //   setFilterInput({
+    //     type:'Expense',
+    //     amount:'',
+    //     category:'',
+    //     desc:'',
+    //     date:''
+    // })
     }
     useEffect(()=>{
         const getTrans = async()=>{
           try{
-            console.log("Sending request with data:", transInput);
-            const res = await axios.post("http://localhost:3001/api/transactions/getTransactions/",{transInput})//add user Id
+            // console.log("Sending request with data:", transInput);
+            const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`)//add user Id
             console.log(res.data)
+            setTransactionData(res.data)
           }catch(err){
             console.log(err)
           }
@@ -73,9 +102,9 @@ const Dashboard = () => {
         {/* --------------------------User monetary stats------------------------ */}
         <div >
             <div className='flex w-full justify-center h-40'>
-            <div className=' mx-4 w-60 my-4 rounded-md flex justify-center bg-[#198754] text-white'>income</div>
-            <div className=' mx-4 w-60 my-4 rounded-md flex justify-center bg-[#198754] text-white'>balance</div>
-            <div className=' mx-4 w-60 my-4 rounded-md flex justify-center bg-[#198754] text-white'>expense</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>income</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>balance</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>expense</div>
         </div>
         
         {/* -----------------------Filters------------------------ */}
@@ -83,25 +112,25 @@ const Dashboard = () => {
         <div className='flex justify-center align-middle border-2 py-2 px-2 font-bold text-xl'>Filters:</div>
         
         {/* Category */}
-        <select className='mx-2 border-2 rounded-md' name="category" id="category" selected="All">
-           <option value="All">All Categories</option>
+        <select className='mx-2 border-2 rounded-md' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
+           <option value="">All Categories</option>
            <option value="Food">Food</option>
            <option value="Shopping">Shopping</option>
            <option value="Cinema">Cinema</option>
         </select>
 
         {/* Date */}
-        <input type="date" className='mx-2 border-2 rounded-md w-60' onChange={handleTransInput('date')}></input>
+        <input type="date" className='mx-2 border-2 rounded-md w-60' onChange={handleFilterInput('date')} value={filterInput.date}></input>
 
         {/* Month */}
-        <input type="month" id="month" name="month" className='mx-2 border-2 rounded-md w-60' placeholder='Select Month' onChange={handleTransInput('month')}></input>
+        <input type="month" id="month" name="month" className='mx-2 border-2 rounded-md w-60' value={filterInput.month} placeholder='Select Month' onChange={handleFilterInput('month')}></input>
        
         {/* Year */}
-        <select name="year" id="year" className='mx-2 border-2 rounded-md' placeholder='year' onChange={handleTransInput('year')}>
+        <select name="year" id="year" className='mx-2 border-2 rounded-md' value={filterInput.year} placeholder='year' onChange={handleFilterInput('year')}>
            <option value="2023">2023</option>
         </select>
         <Button variant="success"
-                // onClick={handleFilter}
+                onClick={handleFilter}
           >
             Filter
           </Button>
