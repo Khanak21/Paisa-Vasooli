@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import TransactionCard from '../components/TransactionCard';
+import { CSVLink, CSVDownload } from "react-csv"
 
 const Dashboard = ({user}) => {
   // console.log(user)
@@ -11,7 +12,7 @@ const Dashboard = ({user}) => {
     const [show, setShow] = useState(false);
     const [transInput,setTransInput] = useState({
         userId:user._id,
-        type: 'Expense',
+        type: 'expense',
         amount:'',
         category:'',
         desc:'',
@@ -24,7 +25,18 @@ const Dashboard = ({user}) => {
       year:''
     })
     const [transactionData,setTransactionData]=useState([])
-    console.log("transanction data being logged:",transactionData)
+    const [uniqueCategories, setUniqueCategories] = useState([]);
+    const [stats,setStats] = useState({})
+    console.log(uniqueCategories)
+    const headers = [
+      { label: "Transaction Type", key: "type" },
+      { label: "Amount", key: "amount" },
+      { label: "Category", key: "category" },
+      { label: "Description", key: "desc" },
+      { label: "Date", key: "date" }
+
+    ];
+    // console.log("transanction data being logged:",transactionData)
 
     const {type,amount,category,desc,date} = transInput
 
@@ -53,7 +65,7 @@ const Dashboard = ({user}) => {
       }
       addFilter()
     //   setFilterInput({
-    //     type:'Expense',
+    //     type:'expense',
     //     amount:'',
     //     category:'',
     //     desc:'',
@@ -84,6 +96,7 @@ const Dashboard = ({user}) => {
         date:''
     })
     }
+   
     useEffect(()=>{
       const getTrans = async()=>{
         try{
@@ -96,16 +109,31 @@ const Dashboard = ({user}) => {
         }
       }
       getTrans()
+      const getTotalStats = async()=>{
+        try{
+          const res = await axios.get(`http://localhost:3001/api/transactions/getTotalStats/${user._id}`)
+          console.log(res.data)
+          setStats(res.data)
+        }catch(err){
+          console.log(err)
+        }
+      }
+      getTotalStats()
     },[])
+    useEffect(() => {
+      const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
+      setUniqueCategories([...categoriesSet]);
+    }, [transactionData]);
+
   return (
     <div>
         <Navbar/>
         {/* --------------------------User monetary stats------------------------ */}
         <div >
             <div className='flex w-full justify-center h-40'>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>income</div>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>balance</div>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>expense</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalIncome}</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.balance}</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalExpense}</div>
         </div>
         
         {/* -----------------------Filters------------------------ */}
@@ -114,10 +142,12 @@ const Dashboard = ({user}) => {
         
         {/* Category */}
         <select className='mx-2 border-2 rounded-md' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
-           <option value="">All Categories</option>
-           <option value="Food">Food</option>
-           <option value="Shopping">Shopping</option>
-           <option value="Cinema">Cinema</option>
+        <option value="">All Categories</option>
+          {
+            uniqueCategories.map(cat=>(
+               <option value={cat}>{cat}</option>
+            ))
+          }
         </select>
 
         {/* Date */}
@@ -135,6 +165,9 @@ const Dashboard = ({user}) => {
           >
             Filter
           </Button>
+          <CSVLink data={transactionData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success">
+            Export
+          </Button></CSVLink>
         </div>
         <div>
           {transactionData?.map(trans=>(
@@ -154,7 +187,7 @@ const Dashboard = ({user}) => {
             <label htmlFor="type">Transaction type: </label>
             <select name="type" 
                     id="type" 
-                    selected="Expense" 
+                    selected="expense" 
                     value={type}
                     onChange={handleTransInput('type')}
                     className='px-1 border-1 py-1 mx-2 rounded-md'

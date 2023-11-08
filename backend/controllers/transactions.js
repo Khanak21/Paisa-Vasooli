@@ -9,7 +9,7 @@ export const ErrorMessage = (status,message)=>{
 
 export const addTransaction = async(req,res)=>{
     // const {type,amount,currency,category,desc,date,userId}=req.body
-    console.log(req.body);
+    // console.log(req.body);
     const transaction = Transaction(
         // userId,
         // type,
@@ -37,7 +37,7 @@ export const addTransaction = async(req,res)=>{
 
 export const getTransactions=async(req,res)=>{
     const userId= req.params.userId;
-    console.log(req.params.userId)
+    // console.log(req.params.userId)
     try{
         const trans = await Transaction.find({userId:userId})
         res.json({trans})
@@ -82,7 +82,7 @@ export const deleteTransaction=async(req,res)=>{
 }
 
 export const getTransactionsByCategory=async(req,res)=>{
-    const {userId,category}= req.body;
+    const {userId,category}= req.body;//change this
     try{
         const trans = await Transaction.find({userId:userId,category:category})
         res.json({trans})
@@ -102,7 +102,7 @@ export const getTransactionsByDate=async(req,res)=>{
 }
 
 export const getTransactionsByMonth=async(req,res)=>{
-    const {userId,category}= req.body;
+    const {userId,category}= req.body;//change this
     try{
         const trans = await Transaction.find({userId:userId,category:category})
         res.json({trans})
@@ -112,7 +112,7 @@ export const getTransactionsByMonth=async(req,res)=>{
 }
 
 export const getTransactionsByYear=async(req,res)=>{
-    const {userId,category}= req.body;
+    const {userId,category}= req.body;//change this
     try{
         const trans = await Transaction.find({userId:userId,category:category})
         res.json({trans})
@@ -122,12 +122,47 @@ export const getTransactionsByYear=async(req,res)=>{
 }
 //correct this api first---->
 export const getTotalStats=async(req,res)=>{
-    const {userId} = req.body;
+    const userId = req.params.userId
+    console.log("user:",userId)
     try{
-        const income = await Transaction.find({userId:userId,type:income})
-        const expense = await Transaction.find({userId:userId,type:expense})
-        const balance = income-expense
-        res.json({income,expense,balance})
+         // Calculate total income
+         const incomeResult = await Transaction.aggregate([
+            {
+                $match: {
+                    userId: userId,
+                    type: 'income'
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalIncome: { $sum: '$amount' }
+                }
+            }
+        ]);
+
+        // Calculate total expenses
+        const expenseResult = await Transaction.aggregate([
+            {
+                $match: {
+                    userId: userId,
+                    type: 'expense'
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalExpense: { $sum: '$amount' }
+                }
+            }
+        ]);
+
+        const totalIncome = incomeResult.length > 0 ? incomeResult[0].totalIncome : 0;
+        const totalExpense = expenseResult.length > 0 ? expenseResult[0].totalExpense : 0;
+        const balance = totalIncome - totalExpense;
+
+        res.json({ totalIncome, totalExpense, balance });
+        // res.json({incomeResult,expenseResult})
     }catch(err){
         res.json({message:"No stats found"})
     }
