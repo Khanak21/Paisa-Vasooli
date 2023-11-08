@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import Card from 'react-bootstrap/Card';
-import {AiTwotoneCalendar} from 'react-icons/ai';
+// import {AiTwotoneCalendar} from 'react-icons/ai';
 import {AiFillEdit} from 'react-icons/ai';
 import {AiFillDelete} from 'react-icons/ai';
 import Modal from 'react-bootstrap/Modal';
@@ -82,13 +82,15 @@ const handleDelete = (id)=>{
                 7/9/23
             </div>
            
-        </div> */}
+        </div> */
+        // <AiTwotoneCalendar size={20} />7
+      }
     <Card variant="light" border="success" className='mx-4 my-4'>
       <Card.Header>Food</Card.Header>
       <Card.Body>
         <div className='flex align-middle items-center border-2'>
         <Card.Text className='text-3xl align-middle items-center border-2 my-1'>$300</Card.Text>
-        <Card.Text className='flex align-middle border-2 my-1 mx-4'><AiTwotoneCalendar size={20} />7/9/23</Card.Text>
+        <Card.Text className='flex align-middle border-2 my-1 mx-4'>/9/23</Card.Text>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete/>
         </div>
         <Card.Text>

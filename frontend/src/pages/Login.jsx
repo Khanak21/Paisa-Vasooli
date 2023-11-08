@@ -3,7 +3,7 @@ import "./Login.css";
 import {Link} from 'react-router-dom'
 import axios from "axios";
 
-function Login({user,setUser}) {
+function Login({userData,setUserData}) {
 
   //hooks to handle the changing states
   const [username, setUsername] = useState("");
@@ -49,7 +49,7 @@ function Login({user,setUser}) {
 
   }
   
-
+  
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     // if (isPasswordValid && isUsernameValid) {
@@ -59,14 +59,16 @@ function Login({user,setUser}) {
       // Handle form submission logic here
       const logi =async()=>{
         try{
-          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,password})
-          console.log("response data:"+res.data);
-          // setUser(res.data).then(console.log("userdata"+user))
+          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,password}).catch(function(err){
+          console.log(err)})
+          console.log(res.data);
         }catch(err){
             console.log(err);
         }
       }
       logi();
+      // setUserData("sd");
+      // console.log(userData);
       //making the credentials empty after submitting
       setEmail("");
       setPassword("")
