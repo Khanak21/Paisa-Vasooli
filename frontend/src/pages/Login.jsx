@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "./Login.css";
 import {Link} from 'react-router-dom'
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login({user,setUser}) {
+  const navigate = useNavigate()
 
   //hooks to handle the changing states
   const [username, setUsername] = useState("");
@@ -32,20 +34,20 @@ function Login({user,setUser}) {
     event.preventDefault();
     const newPassword = event.target.value;
     setPassword(newPassword);
-    setIsPasswordValid(newPassword.length >= 8);
+    // setIsPasswordValid(newPassword.length >= 8);
   };
 
   const handleUsernameChange = (event) => {
     event.preventDefault();
     const newUsername = event.target.value;
     setUsername(newUsername);
-    setIsUsernameValid(newUsername.length >= 5);
+    // setIsUsernameValid(newUsername.length >= 5);
   };
 
   const handleEmail=(event)=>{
      const k=event.target.value;
      setEmail(k);
-     setValidemail(emailValidation(k));
+    //  setValidemail(emailValidation(k));
 
   }
   
@@ -59,8 +61,10 @@ function Login({user,setUser}) {
       // Handle form submission logic here
       const logi =async()=>{
         try{
-          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,password})
-          console.log("response data:"+res.data);
+          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,email,password})
+          console.log(res.data);
+          setUser(res.data)
+          navigate('/dashboard')
           // setUser(res.data).then(console.log("userdata"+user))
         }catch(err){
             console.log(err);
@@ -72,6 +76,7 @@ function Login({user,setUser}) {
       setPassword("")
       setUsername("")
       alert("Logged in successfully")
+    
     // } else {
       // alert("Invalid username or password. Please check the requirements.");
 
@@ -115,7 +120,7 @@ function Login({user,setUser}) {
                 className="input-login"
                 required
               />
-              {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null}
+              {/* {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null} */}
               {console.log(email)}
             </div>
             <div className="input-box">

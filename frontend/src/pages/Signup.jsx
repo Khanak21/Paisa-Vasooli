@@ -31,7 +31,7 @@ function Signup({user,setUser}) {
   const handleEmail=(event)=>{
     const k=event.target.value;
     setEmail(k);
-    setValidemail(emailValidation(k));
+    // setValidemail(emailValidation(k));
 
  }
 
@@ -130,7 +130,7 @@ function Signup({user,setUser}) {
                   onChange={handleEmail}
                   required
                 />
-                 {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null}
+                 {/* {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null} */}
               {console.log(email)}
               </div>
 

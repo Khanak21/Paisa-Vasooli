@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import TransactionCard from './components/TransactionCard';
+import Dues from "./components/Dues"
 function App() {
   const [user,setUser]=useState({})
   console.log(user)
@@ -20,6 +21,8 @@ function App() {
           <Route path="/navbar" element={<Navbar/>} />
           <Route path="/dashboard" element={<Dashboard user={user}/>} />
           <Route path="/transcard" element={<TransactionCard/>} />
+          <Route path="/dues" element={<Dues/>} />
+
 
         </Routes>
       </BrowserRouter>
