@@ -15,15 +15,16 @@ export const signin = async (req, res, next) => {
   
       if (!isCorrect) {res.status(200).json({ message: "Password does not match" });}
       
+  
       const token = jwt.sign({ id: user._id }, process.env.JWT);
       const { password, ...others } = user._doc;
   
-      res
-        .cookie("access_token", token, {
-          httpOnly: true,
-        })
-        .status(200)
-        .json(others);
+      // res
+      //   .cookie("access_token", token, {
+      //     httpOnly: true,
+      //   })
+      //   .status(200)
+      //   .json(others);
     } catch (err) {
       console.log(err);
     }

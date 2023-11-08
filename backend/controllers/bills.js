@@ -1,4 +1,4 @@
-const billSchema = require("./models/bills")
+import  billSchema from "../models/bills.js";
 
 //controllers for bills and dues
 export const addBill = async(req,res)=>{
@@ -10,8 +10,8 @@ export const addBill = async(req,res)=>{
         amount,
         currency,
         toWhom,
-        recurring//daily,weekly,monthly,yearly,none
-
+        recurring,//daily,weekly,monthly,yearly,none
+        dueDate
     })
 
     try{

@@ -3,10 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 import './Dues.css'
+import axios from "axios";
 
-
-
-function Dues() {
+function Dues({user}) {
 
     const [input,setInput]=useState('')
     const [selectedDate,setDate]=useState('')
@@ -15,25 +14,28 @@ function Dues() {
 
 
     //hook to add items of due payments
-    const [dueItem,setdueItem]=useState([])
+    const [dueItem,setdueItem]=useState({
+        name:'',
+        date:'',
+        amount:'',
+        person:''
+    })
     const [deleteDiv,setdeleteDiv]=useState(false)
+    const [BillData,setBillData] = useState([])
 
-    const listItems=()=>{
+    // const listItems=()=>{
        
-      const newDueItem={
-        name:input,
-        date:selectedDate,
-        amount:amount,
-        person:person
-      }
+    //   const newDueItem={
+        
+    //   }
 
-      setdueItem([...dueItem,newDueItem])
-      setInput('');
-      setAmount('');
-      setDate('');
-      setPerson('');
+    //   setdueItem([...dueItem,newDueItem])
+    //   setInput('');
+    //   setAmount('');
+    //   setDate('');
+    //   setPerson('');
 
-    };
+    // };
     
     const itemEvent=(event)=>{
       const k=event.target.value
@@ -62,7 +64,28 @@ function Dues() {
     setdeleteDiv(!deleteDiv)
    }
     
-
+   const handleSubmit = e=>{
+    e.preventDefault()
+    // console.log(transInput)
+    // addTransaction(transInput)
+    const addBill = async()=>{
+    try{
+      const res = await axios.post("http://localhost:3001/api/bills/addBill",JSON.stringify(dueItem),{headers:{'Content-Type':'application/json'}})
+      console.log(res.data)
+    //   const val=res.data.transaction
+    //   setBillData(prev=>[...prev,val])
+    }catch(err){
+      console.log(err.response.data)
+    }
+  }
+  addBill()
+  setdueItem({
+    name:'',
+    date:'',
+    amount:'',
+    person:''
+})
+}
 
     return (
  
@@ -128,10 +151,10 @@ function Dues() {
                 
             </div>
                 <div className="add-btn">
-                    <div className="add-item">
+                    <div className="add-item" >
                     Add Due 
                     </div>
-                    <div className="plus-btn" onClick={listItems}>
+                    <div className="plus-btn" onClick={handleSubmit}>
                     <FontAwesomeIcon icon={faPlus} className='plus' />
                     </div>
                 </div>

@@ -7,6 +7,8 @@ import {connect} from "./backend/db/db.js"
 import transroutes from './backend/routes/transactions.js'
 import authroutes from './backend/routes/auth.js';
 import savingroutes from './backend/routes/savings.js';
+import billsRoutes from './backend/routes/bills.js';
+import mailroutes from './backend/routes/sendEmail.js'
 import bodyParser from 'body-parser'
 
 import cookieParser from "cookie-parser";
@@ -22,10 +24,11 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // app.use("/api/users",userRoutes)
-// app.use("/api/bills",billsRoutes)
+app.use("/api/bills",billsRoutes)
 app.use("/api/transactions",transroutes)
 app.use("/api/savings",savingroutes)
 app.use("/api/auth",authroutes)
+app.use("/api/mail",mailroutes)
 // app.use("/api/auth/",signin)
 
 app.use((err,req,res,next)=>{

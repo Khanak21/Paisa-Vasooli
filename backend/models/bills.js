@@ -23,7 +23,6 @@ const billSchema = new mongoose.Schema({
     },
     recurring:{
         type:String,
-
     },
 
 

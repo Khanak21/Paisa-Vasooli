@@ -6,12 +6,12 @@ import axios from "axios"
 import TransactionCard from '../components/TransactionCard';
 
 const Dashboard = ({user}) => {
-  console.log(user)
+  // console.log(user)
   //states
     const [show, setShow] = useState(false);
     const [transInput,setTransInput] = useState({
         userId:user._id,
-        type: 'Expense',
+        type: 'expense',
         amount:'',
         category:'',
         desc:'',
@@ -23,15 +23,17 @@ const Dashboard = ({user}) => {
       month:'',
       year:''
     })
-    const [transactionData,setTransactionData]=useState({})
+    const [transactionData,setTransactionData]=useState([])
+    console.log("transanction data being logged:",transactionData)
 
     const {type,amount,category,desc,date} = transInput
 
     //functions
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+     
     const handleTransInput = name=>e=>{
-    
           setTransInput({...transInput,[name]:e.target.value})
           console.log(filterInput)
     }
@@ -58,46 +60,68 @@ const Dashboard = ({user}) => {
     //     date:''
     // })
     }
-    useEffect(()=>{
-        const getTrans = async()=>{
-          try{
-            // console.log("Sending request with data:", transInput);
-            const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`)//add user Id
-            console.log(res.data)
-            setTransactionData(res.data)
-          }catch(err){
-            console.log(err)
-          }
+    // const sendEmail = e=>{
+      
+      
+    // }
+
+    
+      const mailsend=async()=>{
+        try{
+          const reqmail = user.email
+          console.log(reqmail)
+          const res = await axios.post("http://localhost:3001/api/mail/sendmail",{reqmail})
+          .then(() => alert("Message Sent Succesfully"))
+          .catch((err) => console.log(err));
+        }catch(err){
+          console.log(err.response.data)
         }
-        getTrans()
-
-    },[])
-
+      }
+    
     
     const handleSubmit = e=>{
         e.preventDefault()
         // console.log(transInput)
         // addTransaction(transInput)
+        
         const addTrans = async()=>{
         try{
           const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{transInput})
           console.log(res.data)
+          const val=res.data.transaction
+          setTransactionData(prev=>[...prev,val])
         }catch(err){
-          console.log(err)
+          console.log(err.response.data)
         }
       }
+      
       addTrans()
+      mailsend()
       setTransInput({
-        type:'Expense',
+        type:'expense',
         amount:'',
         category:'',
         desc:'',
         date:''
     })
     }
-
+    
+    useEffect(()=>{
+      const getTrans = async()=>{
+        try{
+          // console.log("Sending request with data:", transInput);
+          const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`)//add user Id
+          console.log(res.data)
+          setTransactionData(res.data.trans)
+        }catch(err){
+          console.log(err)
+        }
+      }
+      getTrans()
+    },[])
   return (
     <div>
+      
         <Navbar/>
         {/* --------------------------User monetary stats------------------------ */}
         <div >
@@ -136,7 +160,10 @@ const Dashboard = ({user}) => {
           </Button>
         </div>
         <div>
-        <TransactionCard/>
+          {transactionData?.map(trans=>(
+            //  console.log("mapped data",trans)
+            <TransactionCard key={trans._id} transactionData={trans}/> 
+            ))}
         </div>
 
     {/* --------------------------------------Add transaction modal-------------------------------- */}
@@ -150,7 +177,7 @@ const Dashboard = ({user}) => {
             <label htmlFor="type">Transaction type: </label>
             <select name="type" 
                     id="type" 
-                    selected="Expense" 
+                    selected="expense" 
                     value={type}
                     onChange={handleTransInput('type')}
                     className='px-1 border-1 py-1 mx-2 rounded-md'
