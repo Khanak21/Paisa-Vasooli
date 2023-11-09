@@ -25,8 +25,7 @@ export const signup = async(req,res,next)=>{
     const newUser = new User({ ...req.body, password: hash });
 
     await newUser.save();
-    res.status(200).send("Aapka Swagat Hai");
-    // res.status(200).json({newUser})
+    res.status(200).json({newUser});
   } catch (err) {
     next(err)
     console.log(err);
