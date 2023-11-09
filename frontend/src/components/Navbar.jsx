@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-// import logoImage from './images/Grow.jpeg';
+
 
 function Navbar() {
   const [showNav, setShowNav] = useState(false);
@@ -20,6 +20,9 @@ function Navbar() {
         <div className="box">Stocks</div>
       </div>
 
+   
+
+    
       <div className="icons">
         <div className={showNav?'icon-menu activemenu':'icon-menu'} onClick={()=>setShowNav(!showNav)}>
           <FontAwesomeIcon icon={faBars} size="xl" />
