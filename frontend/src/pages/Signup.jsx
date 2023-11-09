@@ -57,10 +57,8 @@ function Signup() {
       setEntries([entries, Entry]);
       const reg =async()=>{
         try{
-
           const res = await axios.post("http://localhost:3001/api/auth/signup",{username,password,email}).catch(function(err){
           console.log(err)})
-
           console.log(res.data);
         }catch(err){
             console.log(err);
