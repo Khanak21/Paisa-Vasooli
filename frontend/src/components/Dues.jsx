@@ -87,6 +87,7 @@ function Dues() {
                     placeholder='Input due-title'
                     value={input}
                     onChange={itemEvent}
+                    className='input-dues'
                     />
                 </div>
 
@@ -99,6 +100,7 @@ function Dues() {
                     placeholder='Input date of due' 
                     value={selectedDate}
                     onChange={SettingDate}
+                    className='input-dues'
                     />
                 </div>
 
@@ -111,6 +113,8 @@ function Dues() {
                     placeholder='Input amount in Rs.' 
                     value={amount}
                     onChange={amountSet}
+                    className='input-dues'
+
                     />
                 </div>
 
@@ -123,6 +127,8 @@ function Dues() {
                     value={person}
                     onChange={DueMoneyPerson}
                     placeholder='To whom'
+                    className='input-dues'
+
                     />
                 </div>
                 

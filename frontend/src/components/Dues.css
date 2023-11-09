@@ -45,7 +45,7 @@
     justify-content: flex-start;
     align-items: space-evenly;
 }
-input{
+.input-dues{
     border-radius: 20px;
     width:70%;
 }
