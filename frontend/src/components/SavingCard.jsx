@@ -1,93 +1,42 @@
 import React,{useState} from 'react'
 import Card from 'react-bootstrap/Card';
-// import {AiTwotoneCalendar} from 'react-icons/ai';
+import {AiTwotoneCalendar} from 'react-icons/ai';
 import {AiFillEdit} from 'react-icons/ai';
 import {AiFillDelete} from 'react-icons/ai';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import {Button} from 'react-bootstrap'
-import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const TransactionCard = ({transactionData,key}) => {
+export const SavingCard = () => {
 const [show, setShow] = useState(false);
-//state to store edited values
-const [transInput,setTransInput] = useState({
-  type: 'Expense',
-  amount:'',
-  category:'',
-  desc:'',
-  date:'',
-})
-const {type,amount,category,desc,date} = transInput
-
-//handling edited values input
-const handleTransInput = name=>e=>{
-  setTransInput({...transInput,[name]:e.target.value})
-}
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
-
-//handling edit transaction submit
-const handleSubmit = (e,id)=>{
-  e.preventDefault()
-  // console.log(transInput)
-  // addTransaction(transInput)
-  const editTrans = async(id)=>{
-  try{
-    const res = await axios.put(`http://localhost:3001/api/transactions/editTransaction/${id}`,{transInput})
-    console.log(res.data)
-  }catch(err){
-    console.log(err)
-  }}
-
-  editTrans(id)
-
-  setTransInput({
-  type:'Expense',
-  amount:'',
-  category:'',
-  desc:'',
-  date:''
-  })
-}
-
-// handling deletion of transaction
-const handleDelete = (id)=>{
-  // console.log(transInput)
-  // addTransaction(transInput)
-  const delTrans = async(id)=>{
-  try{
-    const res = await axios.delete(`http://localhost:3001/api/transactions/deleteTransaction/${id}`)
-    console.log(res.data)
-  }catch(err){
-    console.log(err)
-  }}
-  delTrans(id)
-}
-
-
   return (
     <div>
-    <Card variant="light" border="success" className='mx-4 my-4'>
-      <Card.Header>{transactionData.category}</Card.Header>
+         <Card variant="light" border="success" className='w-full'>
+      <Card.Header>title</Card.Header>
       <Card.Body>
         <div className='flex align-middle items-center border-2'>
-        <Card.Text className='text-3xl align-middle items-center my-1'>${transactionData.amount}</Card.Text>
-        <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text>
-        <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete/>
+        <div className='flex justify-between align-middle items-center'><div class="progress">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{"width":"40%"}}>
+                 40% Complete (success)
+              </div>
+             </div>
+        <Card.Text className='text-3xl align-middle items-center my-1'>$100</Card.Text></div>
+        <div className='flex align-middle items-center justify-between'>
+        <Card.Text className='text-md align-middle items-center my-1'>$40</Card.Text>
+        <div className='flex'><AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete/></div>
         </div>
-        <Card.Text>
-            {transactionData.desc}
-        </Card.Text>
+        </div>
       </Card.Body>
     </Card>
     
-     <Modal show={show} onHide={handleClose} animation={false} centered>
+     {/* <Modal show={show} onHide={handleClose} animation={false} centered>
      <Modal.Header closeButton>
        <Modal.Title>Edit Transaction</Modal.Title>
      </Modal.Header>
      <Modal.Body>
-         {/* Add transaction input section */}
+        
          <label htmlFor="type">Transaction type: </label>
          <select name="type" 
                  id="type" 
@@ -140,9 +89,7 @@ const handleDelete = (id)=>{
          Save
        </Button>
      </Modal.Footer>
-   </Modal>
-   </div>
+   </Modal> */}
+    </div>
   )
 }
-
-export default TransactionCard

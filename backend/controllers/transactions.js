@@ -9,7 +9,7 @@ export const ErrorMessage = (status,message)=>{
 
 export const addTransaction = async(req,res)=>{
     // const {type,amount,currency,category,desc,date,userId}=req.body
-    console.log(req.body);
+    // console.log(req.body);
     const transaction = Transaction(
         // userId,
         // type,
@@ -79,53 +79,76 @@ export const deleteTransaction=async(req,res)=>{
     }
 }
 
-export const getTransactionsByCategory=async(req,res)=>{
-    const {userId,category}= req.body;
-    try{
-        const trans = await Transaction.find({userId:userId,category:category})
-        res.json({trans})
-    }catch(err){
-        res.json({message:"No transactions by given category found"})
-    }
+export const getTransactionsByFilter = async(req,res)=>{
+    console.log(req.body)
+    const {userId,category,startDate,endDate} = req.body.filterInput
+    try {
+        let filter = { userId: userId };
+    
+        if (req.body.filterInput.category !== '') {
+          filter.category = category;
+        }
+    
+        if (startDate && endDate) {
+          filter.date = {
+            $gte: new Date(startDate+"T00:00:00.000+00:00"),
+            $lte: new Date(endDate+"T23:59:59.999+00:00"),
+          };
+        }
+        console.log(filter)
+        const trans = await Transaction.find(filter);
+    
+        res.json({ trans });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+      }
+   
 }
 
-export const getTransactionsByDate=async(req,res)=>{
-    const {userId,date}= req.body;
-    try{
-        const trans = await Transaction.find({userId:userId,date:date})
-        res.json({trans})
-    }catch(err){
-        res.json({message:"No transactions on given date found"})
-    }
-}
-
-export const getTransactionsByMonth=async(req,res)=>{
-    const {userId,category}= req.body;
-    try{
-        const trans = await Transaction.find({userId:userId,category:category})
-        res.json({trans})
-    }catch(err){
-        res.json({message:"No transactions by given month found"})
-    }
-}
-
-export const getTransactionsByYear=async(req,res)=>{
-    const {userId,category}= req.body;
-    try{
-        const trans = await Transaction.find({userId:userId,category:category})
-        res.json({trans})
-    }catch(err){
-        res.json({message:"No transactions by given year found"})
-    }
-}
 //correct this api first---->
 export const getTotalStats=async(req,res)=>{
-    const {userId} = req.body;
+    const userId = req.params.userId
+    console.log("user:",userId)
     try{
-        const income = await Transaction.find({userId:userId,type:income})
-        const expense = await Transaction.find({userId:userId,type:expense})
-        const balance = income-expense
-        res.json({income,expense,balance})
+         // Calculate total income
+         const incomeResult = await Transaction.aggregate([
+            {
+                $match: {
+                    userId: userId,
+                    type: 'income'
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalIncome: { $sum: '$amount' }
+                }
+            }
+        ]);
+
+        // Calculate total expenses
+        const expenseResult = await Transaction.aggregate([
+            {
+                $match: {
+                    userId: userId,
+                    type: 'expense'
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalExpense: { $sum: '$amount' }
+                }
+            }
+        ]);
+
+        const totalIncome = incomeResult.length > 0 ? incomeResult[0].totalIncome : 0;
+        const totalExpense = expenseResult.length > 0 ? expenseResult[0].totalExpense : 0;
+        const balance = totalIncome - totalExpense;
+
+        res.json({ totalIncome, totalExpense, balance });
+        // res.json({incomeResult,expenseResult})
     }catch(err){
         res.json({message:"No stats found"})
     }

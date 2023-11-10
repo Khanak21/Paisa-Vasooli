@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import TransactionCard from '../components/TransactionCard';
+import { CSVLink, CSVDownload } from "react-csv"
 
 const Dashboard = ({user}) => {
   // console.log(user)
@@ -18,13 +19,30 @@ const Dashboard = ({user}) => {
         date:'',
     })
     const [filterInput,setFilterInput] = useState({
+      userId:user._id,
       category:'',
-      date:'',
-      month:'',
-      year:''
+      startDate:'',
+      endDate:'',
+
+      // month:'',
+      // year:''
     })
+
     const [transactionData,setTransactionData]=useState([])
-    console.log("transanction data being logged:",transactionData)
+    const [filteredData,setFilteredData]=useState(transactionData)
+
+    const [uniqueCategories, setUniqueCategories] = useState([]);
+    const [stats,setStats] = useState({})
+    console.log(uniqueCategories)
+    const headers = [
+      { label: "Transaction Type", key: "type" },
+      { label: "Amount", key: "amount" },
+      { label: "Category", key: "category" },
+      { label: "Description", key: "desc" },
+      { label: "Date", key: "date" }
+
+    ];
+    // console.log("transanction data being logged:",transactionData)
 
     const {type,amount,category,desc,date} = transInput
 
@@ -35,18 +53,20 @@ const Dashboard = ({user}) => {
      
     const handleTransInput = name=>e=>{
           setTransInput({...transInput,[name]:e.target.value})
-          console.log(filterInput)
     }
     const handleFilterInput = name=>e=>{
+      console.log(filterInput)
       setFilterInput({...filterInput,[name]:e.target.value})
+
 }
     const handleFilter = e=>{
         e.preventDefault()
-        console.log("filters:"+filterInput)
+        console.log("filters:",filterInput)
         const addFilter = async()=>{
         try{
-          // const res = await axios.post("http://localhost:3001/api/transactions/getTransactionByFilter",{filterInput})
-          // console.log(res.data)
+          const res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
+          console.log(res.data)
+          setFilteredData(res.data.trans)
         }catch(err){
           console.log(err)
         }
@@ -86,6 +106,7 @@ const Dashboard = ({user}) => {
         
         const addTrans = async()=>{
         try{
+          console.log(transInput)
           const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{transInput})
           console.log(res.data)
           const val=res.data.transaction
@@ -105,7 +126,6 @@ const Dashboard = ({user}) => {
         date:''
     })
     }
-    
     useEffect(()=>{
       const getTrans = async()=>{
         try{
@@ -118,7 +138,22 @@ const Dashboard = ({user}) => {
         }
       }
       getTrans()
+      const getTotalStats = async()=>{
+        try{
+          const res = await axios.get(`http://localhost:3001/api/transactions/getTotalStats/${user._id}`)
+          console.log(res.data)
+          setStats(res.data)
+        }catch(err){
+          console.log(err)
+        }
+      }
+      getTotalStats()
     },[])
+    useEffect(() => {
+      const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
+      setUniqueCategories([...categoriesSet]);
+    }, [transactionData]);
+
   return (
     <div>
       
@@ -126,41 +161,37 @@ const Dashboard = ({user}) => {
         {/* --------------------------User monetary stats------------------------ */}
         <div >
             <div className='flex w-full justify-center h-40'>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>income</div>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>balance</div>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white'>expense</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalIncome}</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.balance}</div>
+            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalExpense}</div>
         </div>
         
         {/* -----------------------Filters------------------------ */}
         <div className='flex px-4 py-4 justify-center'>
-        <div className='flex justify-center align-middle border-2 py-2 px-2 font-bold text-xl'>Filters:</div>
+        <div className='flex justify-center align-middle py-2 px-2 font-bold text-xl'>Filters:</div>
         
         {/* Category */}
         <select className='mx-2 border-2 rounded-md' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
-           <option value="">All Categories</option>
-           <option value="Food">Food</option>
-           <option value="Shopping">Shopping</option>
-           <option value="Cinema">Cinema</option>
+        <option value="">All Categories</option>
+          {
+            uniqueCategories.map(cat=>(
+               <option value={cat}>{cat}</option>
+            ))
+          }
         </select>
 
         {/* Date */}
-        <input type="date" className='mx-2 border-2 rounded-md w-60' onChange={handleFilterInput('date')} value={filterInput.date}></input>
+        <input type="date" id="startDate" className="mx-2 border-2 rounded-md" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
+        <input type="date" id="endDate" className="mx-2 border-2 rounded-md" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
+        <Button variant="success" onClick={handleFilter} className='mx-2'>Apply Filter</Button>
 
-        {/* Month */}
-        <input type="month" id="month" name="month" className='mx-2 border-2 rounded-md w-60' value={filterInput.month} placeholder='Select Month' onChange={handleFilterInput('month')}></input>
-       
-        {/* Year */}
-        <select name="year" id="year" className='mx-2 border-2 rounded-md' value={filterInput.year} placeholder='year' onChange={handleFilterInput('year')}>
-           <option value="2023">2023</option>
-        </select>
-        <Button variant="success"
-                onClick={handleFilter}
-          >
-            Filter
-          </Button>
+          {/* ----------------------Exporting data-------------------------- */}
+          <CSVLink data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success">Export</Button></CSVLink>
         </div>
+
+        {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
         <div>
-          {transactionData?.map(trans=>(
+          {filteredData?.map(trans=>(
             //  console.log("mapped data",trans)
             <TransactionCard key={trans._id} transactionData={trans}/> 
             ))}
@@ -219,12 +250,7 @@ const Dashboard = ({user}) => {
             ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success"
-                  onClick={handleSubmit}
-                  required
-          >
-            Save
-          </Button>
+          <Button variant="success" onClick={handleSubmit} required>Save</Button>
         </Modal.Footer>
       </Modal>
       

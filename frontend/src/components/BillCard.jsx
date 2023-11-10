@@ -8,21 +8,20 @@ import axios from "axios"
 import {Button} from 'react-bootstrap'
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const TransactionCard = ({transactionData,key}) => {
+const BillCard = ({BillData}) => {
 const [show, setShow] = useState(false);
 //state to store edited values
-const [transInput,setTransInput] = useState({
-  type: 'Expense',
-  amount:'',
-  category:'',
-  desc:'',
-  date:'',
+const [BillInput,setBillInput] = useState({
+    title:'',
+    dueDate:'',
+    amount:'',
+    toWhom:''
 })
-const {type,amount,category,desc,date} = transInput
+const {title,amount,toWhom,dueDate} = BillInput
 
 //handling edited values input
-const handleTransInput = name=>e=>{
-  setTransInput({...transInput,[name]:e.target.value})
+const handleBillInput = name=>e=>{
+  setBillInput({...BillInput,[name]:e.target.value})
 }
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
@@ -32,22 +31,21 @@ const handleSubmit = (e,id)=>{
   e.preventDefault()
   // console.log(transInput)
   // addTransaction(transInput)
-  const editTrans = async(id)=>{
+  const editBill = async(id)=>{
   try{
-    const res = await axios.put(`http://localhost:3001/api/transactions/editTransaction/${id}`,{transInput})
+    const res = await axios.put(`http://localhost:3001/api/bills/editBill/${id}`,{BillInput})
     console.log(res.data)
   }catch(err){
     console.log(err)
   }}
 
-  editTrans(id)
+  editBill(id)
 
-  setTransInput({
-  type:'Expense',
-  amount:'',
-  category:'',
-  desc:'',
-  date:''
+  setBillInput({
+    title:'',
+    dueDate:'',
+    amount:'',
+    toWhom:''
   })
 }
 
@@ -55,80 +53,86 @@ const handleSubmit = (e,id)=>{
 const handleDelete = (id)=>{
   // console.log(transInput)
   // addTransaction(transInput)
-  const delTrans = async(id)=>{
+  const delBill = async(id)=>{
   try{
-    const res = await axios.delete(`http://localhost:3001/api/transactions/deleteTransaction/${id}`)
+    const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${id}`)
     console.log(res.data)
   }catch(err){
     console.log(err)
   }}
-  delTrans(id)
+  delBill(id)
 }
 
 
   return (
     <div>
+        {/* <div className='border-2 rounded-md mx-4 my-2'>
+            <div>
+            Sabji 
+            <div>
+                this is a sabzi
+            </div>
+            <div>
+                $100
+            </div>
+
+            </div>
+            <div>
+                7/9/23
+            </div>
+           
+        </div> */
+        // <AiTwotoneCalendar size={20} />7
+      }
     <Card variant="light" border="success" className='mx-4 my-4'>
-      <Card.Header>{transactionData.category}</Card.Header>
       <Card.Body>
         <div className='flex align-middle items-center border-2'>
-        <Card.Text className='text-3xl align-middle items-center my-1'>${transactionData.amount}</Card.Text>
-        <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text>
+        <Card.Text className='text-3xl align-middle items-center border-2 my-1'>${BillData.toWhom}</Card.Text>
+        <Card.Text className='text-3xl align-middle items-center border-2 my-1'>${BillData.amount}</Card.Text>
+        <Card.Text className='flex align-middle border-2 my-1 mx-4'><AiTwotoneCalendar size={20} />{BillData.dueDate}</Card.Text>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete/>
         </div>
         <Card.Text>
-            {transactionData.desc}
+            {BillData.title}
         </Card.Text>
       </Card.Body>
     </Card>
     
      <Modal show={show} onHide={handleClose} animation={false} centered>
      <Modal.Header closeButton>
-       <Modal.Title>Edit Transaction</Modal.Title>
+       <Modal.Title>Edit Bill</Modal.Title>
      </Modal.Header>
      <Modal.Body>
-         {/* Add transaction input section */}
-         <label htmlFor="type">Transaction type: </label>
-         <select name="type" 
-                 id="type" 
-                 selected="Expense" 
-                 value={type}
-                 onChange={handleTransInput('type')}
-                 className='px-1 border-1 py-1 mx-2 rounded-md'
-                 required
-                 >
-         <option value="expense">Expense</option>
-         <option value="income">Income</option>
-         </select><br/>
+         {/* Add Bill input section */}
 
          <label htmlFor='amount'>Amount: </label>
          <input type="number" 
                 name={'amount'}
                 value={amount}
-                onChange={handleTransInput('amount')}
+                onChange={handleBillInput('amount')}
                 required
                 ></input>
 
-         <label htmlFor='category'>Category: </label>
-         <input name={"category"}
+         <label htmlFor='person'>toWhom: </label>
+         <input name={"person"}
                 type="text"
-                value={category}
-                onChange={handleTransInput('category')}
+                value={toWhom}
+                onChange={handleBillInput('toWhom')}
                 required
                 ></input>
 
-         <label htmlFor='desc'>Description:</label>
+         <label htmlFor='title'>Title:</label>
          <input type='text' 
-                name={'desc'}
-                value={desc}
-                onChange={handleTransInput('desc')}
+                name={'title'}
+                value={title}
+                onChange={handleBillInput('title')}
          ></input>
 
          <label htmlFor='date'>Date:</label>
          <input type='date'
-                name={"date"}
-                value={date}
-                onChange={handleTransInput('date')}
+                name={"dueDate"}
+                value={dueDate}
+                onChange={handleBillInput('dueDate')}
                 required
          ></input>
      </Modal.Body>
@@ -145,4 +149,4 @@ const handleDelete = (id)=>{
   )
 }
 
-export default TransactionCard
+export default BillCard

@@ -9,17 +9,25 @@ function Dues({user}) {
 
     const [input,setInput]=useState('')
     const [selectedDate,setDate]=useState('')
-    const [amount,setAmount]=useState(0)
-    const [person,setPerson]=useState('')
+    // const [amount,setAmount]=useState(0)
+    // const [person,setPerson]=useState('')
 
 
     //hook to add items of due payments
     const [dueItem,setdueItem]=useState({
-        name:'',
-        date:'',
+        userId:user._id,
+        title:'',
+        dueDate:'',
         amount:'',
-        person:''
+        toWhom:'',
+        recurring:''
     })
+    const [filterInput,setFilterInput] = useState({
+        userId:user._id,
+        category:'',
+        startDate:'',
+        endDate:'',
+      })
     const [deleteDiv,setdeleteDiv]=useState(false)
     const [BillData,setBillData] = useState([])
 
@@ -63,22 +71,70 @@ function Dues({user}) {
 
     setdeleteDiv(!deleteDiv)
    }
+
+   const {title,dueDate,amount,toWhom,recurring} = billInput
     
+   const handleBillInput = name=>e=>{
+    setdueItem({...dueItem,[name]:e.target.value})
+}
+    const handleFilterInput = name=>e=>{
+    console.log(filterInput)
+    setFilterInput({...filterInput,[name]:e.target.value})
+
+}
+
+   const mailsendstart=async()=>{
+    try{
+      const reqmail = user.email
+      console.log(reqmail)
+      const res = await axios.post("http://localhost:3001/api/mail/sendstartmail",{reqmail})
+      .then(() => alert("Message Sent Succesfully"))
+      .catch((err) => console.log(err));
+    }catch(err){
+      console.log(err.response.data)
+    }
+  }
+
+  const mailsendrecurring=async()=>{
+    try{
+      const reqmail = user.email
+      const recurringcat = BillData.recurring
+      const duedate = BillData.dueDate
+      console.log(reqmail)
+      const res = await axios.post("http://localhost:3001/api/mail/sendmailrecurring",{reqmail,date,recurringcat})
+      .then(() => alert("Message Sent Succesfully"))
+      .catch((err) => console.log(err));
+    }catch(err){
+      console.log(err.response.data)
+    }
+  }
+
    const handleSubmit = e=>{
     e.preventDefault()
     // console.log(transInput)
     // addTransaction(transInput)
     const addBill = async()=>{
     try{
-      const res = await axios.post("http://localhost:3001/api/bills/addBill",JSON.stringify(dueItem),{headers:{'Content-Type':'application/json'}})
+      const res = await axios.post("http://localhost:3001/api/bills/addBill",{dueItem})
       console.log(res.data)
-    //   const val=res.data.transaction
-    //   setBillData(prev=>[...prev,val])
+      const val=res.data.bill
+      setBillData(prev=>[...prev,val])
     }catch(err){
       console.log(err.response.data)
     }
   }
   addBill()
+  mailsendstart()
+  const currdate = new Date()
+  const dueDateStr = BillData.dueDate;
+  const duedate = new Date(dueDateStr)
+  if(
+    currdate.getFullYear()===duedate.getFullYear() &&
+    currdate.getMonth()===duedate.getMonth() &&
+    currdate.getDate()===duedate.getDate()
+  ){
+    mailsendrecurring()
+  }
   setdueItem({
     name:'',
     date:'',
@@ -86,6 +142,20 @@ function Dues({user}) {
     person:''
 })
 }
+
+useEffect(()=>{
+    const getBills = async()=>{
+      try{
+        // console.log("Sending request with data:", transInput);
+        const res = await axios.get(`http://localhost:3001/api/transactions/getBills/${user._id}`)//add user Id
+        console.log(res.data)
+        setBillData(res.data.bill)
+      }catch(err){
+        console.log(err)
+      }
+    }
+    getBills()
+  },[])
 
     return (
  
@@ -108,8 +178,9 @@ function Dues({user}) {
                     name="title" 
                     id="" 
                     placeholder='Input due-title'
-                    value={input}
-                    onChange={itemEvent}
+                    value={title}
+                    onChange={handleBillInput('title')}
+                    className='input-dues'
                     />
                 </div>
 
@@ -117,11 +188,12 @@ function Dues({user}) {
                     <label htmlFor="Date">Due-Date</label>
                     <input 
                     type="date"
-                    name="date" 
+                    name="dueDate" 
                     id="" 
                     placeholder='Input date of due' 
-                    value={selectedDate}
-                    onChange={SettingDate}
+                    value={dueDate}
+                    onChange={handleBillInput('dueDate')}
+                    className='input-dues'
                     />
                 </div>
 
@@ -133,7 +205,9 @@ function Dues({user}) {
                     id="" 
                     placeholder='Input amount in Rs.' 
                     value={amount}
-                    onChange={amountSet}
+                    onChange={handleBillInput('amount')}
+                    className='input-dues'
+
                     />
                 </div>
 
@@ -143,9 +217,25 @@ function Dues({user}) {
                     type="text" 
                     name="toWhom" 
                     id="" 
-                    value={person}
-                    onChange={DueMoneyPerson}
+                    value={toWhom}
+                    onChange={handleBillInput('toWhom')}
                     placeholder='To whom'
+                    className='input-dues'
+
+                    />
+                </div>
+
+                <div className="due-To">
+                    <label htmlFor="PersonDue">Recurring</label>
+                    <input 
+                    type="text" 
+                    name="recurring" 
+                    id="" 
+                    value={recurring}
+                    onChange={handleBillInput('recurring')}
+                    placeholder='recurring'
+                    className='input-dues'
+
                     />
                 </div>
                 
@@ -161,46 +251,11 @@ function Dues({user}) {
 
         </div>
 
-        <div className="hero-right">
-            <div className="storing-dues">
-
-               {
-                  dueItem.map(
-                    (items)=>{
-                        return (
-                            <>
-                            <div className={deleteDiv?'parent-due active':'parent-due'}>
-                            <div className="delete-minus"  onClick={handleDelete}>
-                                {console.log(deleteDiv)}
-                            <FontAwesomeIcon icon={faMinus} className='johnny' />
-                            </div>
-                            <div className="due-box">
-                                <div className="due-name">
-                                    <div>  Name:-   </div>
-                                    <div>  { items.name}</div>
-                              
-                                </div>
-                                <div className="due-date">
-                                <div>Date:-  </div>
-                                    <div>  { items.date}</div>
-                                </div>
-                                <div className="due-amount">
-                                <div>  Amount:-   </div>
-                                    <div>  { items.amount}</div>
-                                </div>
-                                <div className="due-whom">
-                                <div>  To Person:-   </div>
-                                    <div>  { items.person}</div>
-                                </div>
-                            </div>
-                            </div>
-                            </>
-                        )
-                    }
-                  )
-               }
-
-            </div>
+        <div>
+          {BillData?.map(bill=>(
+            //  console.log("mapped data",trans)
+            <TransactionCard key={bill._id} BillData={bill}/> 
+            ))}
         </div>
     </div>
 

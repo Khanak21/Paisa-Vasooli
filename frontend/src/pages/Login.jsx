@@ -25,6 +25,11 @@ function Login({user,setUser}) {
       return emailRegex.test(email);
     };
   
+ 
+
+  
+
+
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
