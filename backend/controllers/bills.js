@@ -2,22 +2,16 @@ import  billSchema from "../models/bills.js";
 
 //controllers for bills and dues
 export const addBill = async(req,res)=>{
-    const {userId,title,amount,currency,toWhom,recurring} =req.body
+    const {userId,title,amount,currency,toWhom,recurring,dueDate} =req.body
 
-    const bill = billSchema({
-        userId,
-        title,
-        amount,
-        currency,
-        toWhom,
-        recurring,//daily,weekly,monthly,yearly,none
-        dueDate
-    })
+    const bill = billSchema(
+        req.body.dueItem
+)
 
     try{
-        if(!userId || !title || !amount || !currency || !toWhom){
-            return res.status(400).json({message: 'All fields are required!'})
-        }
+        // if(!userId || !title || !amount  || !toWhom){
+        //     return res.status(400).json({message: 'All fields are required!'})
+        // }
         await bill.save()
         res.status(200).json({bill})
 
@@ -29,7 +23,7 @@ export const addBill = async(req,res)=>{
 }
 
 export const getBills = async(req,res)=>{
-    const {userId}= req.body;
+    const userId= req.params.userId;
     try{
         const bill = await billSchema.find({userId:userId})
         res.json({bill})

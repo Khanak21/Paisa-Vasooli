@@ -24,12 +24,6 @@ function Login({user,setUser}) {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       return emailRegex.test(email);
     };
-  
- 
-
-  
-
-
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
@@ -64,7 +58,7 @@ function Login({user,setUser}) {
           const res = await axios.post("http://localhost:3001/api/auth/signin",{username,email,password})
           console.log(res.data);
           setUser(res.data)
-          navigate('/dashboard')
+          navigate('/dues')
           // setUser(res.data).then(console.log("userdata"+user))
         }catch(err){
             console.log(err);

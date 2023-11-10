@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 import './Dues.css'
 import axios from "axios";
+import BillCard from "./BillCard.jsx"
 
 function Dues({user}) {
-
+    console.log(user)
     const [input,setInput]=useState('')
     const [selectedDate,setDate]=useState('')
     // const [amount,setAmount]=useState(0)
@@ -45,34 +46,34 @@ function Dues({user}) {
 
     // };
     
-    const itemEvent=(event)=>{
-      const k=event.target.value
-      setInput(k);
-      console.log(k);
-    }
+    // const itemEvent=(event)=>{
+    //   const k=event.target.value
+    //   setInput(k);
+    //   console.log(k);
+    // }
 
-    const SettingDate=(event)=>{
-        const d=event.target.value
-        setDate(d)
-        console.log(d)
-    }
+    // const SettingDate=(event)=>{
+    //     const d=event.target.value
+    //     setDate(d)
+    //     console.log(d)
+    // }
 
-    const amountSet=(event)=>{
-        const yum=event.target.value
-        setAmount(yum)
-    }
+    // const amountSet=(event)=>{
+    //     const yum=event.target.value
+    //     setAmount(yum)
+    // }
 
-    const DueMoneyPerson=(event)=>{
-        const per=event.target.value
-       setPerson(per)
-    }
+    // const DueMoneyPerson=(event)=>{
+    //     const per=event.target.value
+    //    setPerson(per)
+    // }
 
    const handleDelete=()=>{
 
     setdeleteDiv(!deleteDiv)
    }
 
-   const {title,dueDate,amount,toWhom,recurring} = billInput
+   const {title,dueDate,amount,toWhom,recurring} = dueItem
     
    const handleBillInput = name=>e=>{
     setdueItem({...dueItem,[name]:e.target.value})
@@ -101,7 +102,7 @@ function Dues({user}) {
       const recurringcat = BillData.recurring
       const duedate = BillData.dueDate
       console.log(reqmail)
-      const res = await axios.post("http://localhost:3001/api/mail/sendmailrecurring",{reqmail,date,recurringcat})
+      const res = await axios.post("http://localhost:3001/api/mail/sendmailrecurring",{reqmail,duedate,recurringcat})
       .then(() => alert("Message Sent Succesfully"))
       .catch((err) => console.log(err));
     }catch(err){
@@ -136,18 +137,19 @@ function Dues({user}) {
     mailsendrecurring()
   }
   setdueItem({
-    name:'',
-    date:'',
+    title:'',
+    dueDate:'',
     amount:'',
-    person:''
+    toWhom:'',
+    recurring:''
 })
 }
 
-useEffect(()=>{
+React.useEffect(()=>{
     const getBills = async()=>{
       try{
         // console.log("Sending request with data:", transInput);
-        const res = await axios.get(`http://localhost:3001/api/transactions/getBills/${user._id}`)//add user Id
+        const res = await axios.get(`http://localhost:3001/api/bills/getBills/${user._id}`)//add user Id
         console.log(res.data)
         setBillData(res.data.bill)
       }catch(err){
@@ -254,7 +256,7 @@ useEffect(()=>{
         <div>
           {BillData?.map(bill=>(
             //  console.log("mapped data",trans)
-            <TransactionCard key={bill._id} BillData={bill}/> 
+            <BillCard  BillData={bill}/> 
             ))}
         </div>
     </div>
