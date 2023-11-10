@@ -81,45 +81,33 @@ export const deleteTransaction=async(req,res)=>{
     }
 }
 
-export const getTransactionsByCategory=async(req,res)=>{
-    const {userId,category}= req.body;//change this
-    try{
-        const trans = await Transaction.find({userId:userId,category:category})
-        res.json({trans})
-    }catch(err){
-        res.json({message:"No transactions by given category found"})
-    }
+export const getTransactionsByFilter = async(req,res)=>{
+    console.log(req.body)
+    const {userId,category,startDate,endDate} = req.body.filterInput
+    try {
+        let filter = { userId: userId };
+    
+        if (req.body.filterInput.category !== '') {
+          filter.category = category;
+        }
+    
+        if (startDate && endDate) {
+          filter.date = {
+            $gte: new Date(startDate+"T00:00:00.000+00:00"),
+            $lte: new Date(endDate+"T23:59:59.999+00:00"),
+          };
+        }
+        console.log(filter)
+        const trans = await Transaction.find(filter);
+    
+        res.json({ trans });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+      }
+   
 }
 
-export const getTransactionsByDate=async(req,res)=>{
-    const {userId,date}= req.body;
-    try{
-        const trans = await Transaction.find({userId:userId,date:date})
-        res.json({trans})
-    }catch(err){
-        res.json({message:"No transactions on given date found"})
-    }
-}
-
-export const getTransactionsByMonth=async(req,res)=>{
-    const {userId,category}= req.body;//change this
-    try{
-        const trans = await Transaction.find({userId:userId,category:category})
-        res.json({trans})
-    }catch(err){
-        res.json({message:"No transactions by given month found"})
-    }
-}
-
-export const getTransactionsByYear=async(req,res)=>{
-    const {userId,category}= req.body;//change this
-    try{
-        const trans = await Transaction.find({userId:userId,category:category})
-        res.json({trans})
-    }catch(err){
-        res.json({message:"No transactions by given year found"})
-    }
-}
 //correct this api first---->
 export const getTotalStats=async(req,res)=>{
     const userId = req.params.userId

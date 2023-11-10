@@ -25,6 +25,9 @@ const billSchema = new mongoose.Schema({
         type:String,
 
     },
+    dueDate:{
+        type:String
+    }
 
 
 },{timestamps: true})

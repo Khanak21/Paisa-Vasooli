@@ -45,9 +45,9 @@
 }
 .main-right{
     width:50%;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
     justify-content: center;
     align-items: center;
     padding:20px;

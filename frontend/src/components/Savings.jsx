@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./Savings.css";
+import {Button} from 'react-bootstrap'
+import { SavingCard } from "./SavingCard";
+import axios from "axios"
 
-function Savings() {
+function Savings({user}) {
   const [inputTitle, setInputTitle] = useState("");
   const [currentAmount, setCurrentAmount] = useState(0);
   const [amount, setAmount] = useState(0);
@@ -12,6 +15,9 @@ function Savings() {
   const [editCurrent, setEditCurrent] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [savingData,setSavingData] = useState([])
+  console.log(inputTitle,amount,currentAmount)
+  console.log(items)
 
   const handleInputTitle = (event) => {
     setInputTitle(event.target.value);
@@ -26,53 +32,69 @@ function Savings() {
   };
 
   const addItem = () => {
-    const newItem = {
-      id: Date.now(),
-      title: inputTitle,
-      currentAmount: currentAmount,
-      goalAmount: amount,
-    };
-
-    setItems([...items, newItem]);
+    // const newItem = {
+    //   id: Date.now(),
+    //   title: inputTitle,
+    //   currentAmount: currentAmount,
+    //   goalAmount: amount,
+    // };
+// 
+    // setItems([...items, newItem]);
     setInputTitle("");
     setCurrentAmount(0);
     setAmount(0);
   };
 
   const handleEditAmount = (event) => {
-    setEditAmount(event.target.value);
+    // setEditAmount(event.target.value);
   };
 
   const handleEditCurrent = (event) => {
-    setEditCurrent(event.target.value);
+    // setEditCurrent(event.target.value);
   };
 
   const deleteData = () => {
-    setEditAmount("");
-    setEditCurrent("");
-    setEditItemId(null);
+    // setEditAmount("");
+    // setEditCurrent("");
+    // setEditItemId(null);
   };
 
   const handleSubmitEdit = () => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === editItemId
-          ? {
-              ...item,
-              currentAmount: parseFloat(editCurrent),
-              goalAmount: parseFloat(editAmount),
-            }
-          : item
-      )
-    );
-    deleteData();
-    setIsVisible(false);
+    // setItems((prevItems) =>
+    //   prevItems.map((item) =>
+    //     item.id === editItemId
+    //       ? {
+    //           ...item,
+    //           currentAmount: parseFloat(editCurrent),
+    //           goalAmount: parseFloat(editAmount),
+    //         }
+    //       : item
+    //   )
+    // );
+    // deleteData();
+    // setIsVisible(false);
   };
 
   const openModel = (itemId) => {
     setEditItemId(itemId);
     setIsVisible(true);
   };
+  const handleAddSaving = async()=>{
+    try{
+      const saving = {
+        userId:user._id,
+        title:inputTitle,
+        currAmt:currentAmount,
+        target:amount
+      }
+      const res = await axios.post("http://localhost:3001/api/savings/addSaving",{saving})
+      console.log(res.data)
+      const val=res.data
+      setSavingData(prev=>[...prev,val])
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <div className="savings-container">
@@ -122,12 +144,16 @@ function Savings() {
             </div>
 
             <div className="savings-holder" onClick={addItem}>
-              <p>Add goal</p>
-              <FontAwesomeIcon icon={faPlus} className="plus" />
+            <Button variant="success"
+                onClick={handleAddSaving}
+          >
+            Add Saving
+          </Button>
             </div>
           </div>
 
           <div className="main-right">
+            <SavingCard/>
             {items.map((item) => (
               <div className="savings-box" key={item.id}>
                 <div className="box-header">
