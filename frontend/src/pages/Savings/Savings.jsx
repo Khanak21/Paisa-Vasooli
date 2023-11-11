@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./Savings.css";
 import {Button} from 'react-bootstrap'
-import { SavingCard } from "./SavingCard";
+import { SavingCard } from "../../components/SavingCard";
 import axios from "axios"
+import Navbar from "../../components/Navbar"
 
 function Savings({user}) {
+  console.log(user)
   const [inputTitle, setInputTitle] = useState("");
   const [currentAmount, setCurrentAmount] = useState(0);
   const [amount, setAmount] = useState(0);
@@ -32,73 +34,51 @@ function Savings({user}) {
   };
 
   const addItem = () => {
-    // const newItem = {
-    //   id: Date.now(),
-    //   title: inputTitle,
-    //   currentAmount: currentAmount,
-    //   goalAmount: amount,
-    // };
-// 
-    // setItems([...items, newItem]);
     setInputTitle("");
     setCurrentAmount(0);
     setAmount(0);
-  };
-
-  const handleEditAmount = (event) => {
-    // setEditAmount(event.target.value);
-  };
-
-  const handleEditCurrent = (event) => {
-    // setEditCurrent(event.target.value);
-  };
-
-  const deleteData = () => {
-    // setEditAmount("");
-    // setEditCurrent("");
-    // setEditItemId(null);
-  };
-
-  const handleSubmitEdit = () => {
-    // setItems((prevItems) =>
-    //   prevItems.map((item) =>
-    //     item.id === editItemId
-    //       ? {
-    //           ...item,
-    //           currentAmount: parseFloat(editCurrent),
-    //           goalAmount: parseFloat(editAmount),
-    //         }
-    //       : item
-    //   )
-    // );
-    // deleteData();
-    // setIsVisible(false);
   };
 
   const openModel = (itemId) => {
     setEditItemId(itemId);
     setIsVisible(true);
   };
+
   const handleAddSaving = async()=>{
     try{
       const saving = {
         userId:user._id,
         title:inputTitle,
         currAmt:currentAmount,
-        target:amount
+        targetAmt:amount
       }
+      console.log(saving)
       const res = await axios.post("http://localhost:3001/api/savings/addSaving",{saving})
-      console.log(res.data)
+      console.log(res.data.saving)
       const val=res.data
       setSavingData(prev=>[...prev,val])
     }catch(err){
       console.log(err)
     }
   }
+  useEffect(()=>{
+    const getSavings = async()=>{
+      try{
+        // console.log("Sending request with data:", transInput);
+        const res = await axios.get(`http://localhost:3001/api/savings/getSavings/${user._id}`)//add user Id
+        console.log("savings data:",res.data)
+        setSavingData(res.data.savings)
+      }catch(err){
+        console.log(err)
+      }
+    }
+    getSavings()
+  },[])
 
   return (
     <div className="savings-container">
-      <div className="header"></div>
+      {/* <div className="header"></div> */}
+      <Navbar/>
       <div className="main-body">
         <div className="main-head">
           <h2>
@@ -153,7 +133,11 @@ function Savings({user}) {
           </div>
 
           <div className="main-right">
-            <SavingCard/>
+          {savingData?.map((sav)=>(
+            <SavingCard props={sav} setSavingData={setSavingData} savingData={savingData}/> 
+          ))
+          }
+
             {items.map((item) => (
               <div className="savings-box" key={item.id}>
                 <div className="box-header">
@@ -197,7 +181,7 @@ function Savings({user}) {
               placeholder="Input the new Goal"
               className="input-A"
               value={editAmount}
-              onChange={handleEditAmount}
+              // onChange={handleEditAmount}
             />
           </div>
           <div className="input-amount">
@@ -207,15 +191,15 @@ function Savings({user}) {
               placeholder="Input the current Amount"
               className="input-A"
               value={editCurrent}
-              onChange={handleEditCurrent}
+              // onChange={handleEditCurrent}
             />
           </div>
           <div className="model-button">
             <div className="model-br">
-              <button onClick={handleSubmitEdit}>Submit</button>
+              {/* <button onClick={handleSubmitEdit}>Submit</button> */}
             </div>
             <div className="model-br">
-              <button onClick={deleteData}>Clear</button>
+              <button>Clear</button>
             </div>
           </div>
         </div>

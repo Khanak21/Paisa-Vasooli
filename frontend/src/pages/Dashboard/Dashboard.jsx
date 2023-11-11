@@ -1,13 +1,14 @@
 import React,{useState,useEffect} from 'react'
-import Navbar from '../components/Navbar'
+import Navbar from '../../components/Navbar'
 import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
-import TransactionCard from '../components/TransactionCard';
+import TransactionCard from '../../components/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
 
 const Dashboard = ({user}) => {
   // console.log(user)
+
   //states
     const [show, setShow] = useState(false);
     const [transInput,setTransInput] = useState({
@@ -33,7 +34,8 @@ const Dashboard = ({user}) => {
 
     const [uniqueCategories, setUniqueCategories] = useState([]);
     const [stats,setStats] = useState({})
-    console.log(uniqueCategories)
+
+    // console.log(uniqueCategories)
     const headers = [
       { label: "Transaction Type", key: "type" },
       { label: "Amount", key: "amount" },

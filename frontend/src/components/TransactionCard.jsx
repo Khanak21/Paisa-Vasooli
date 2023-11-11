@@ -73,7 +73,7 @@ const handleDelete = (id)=>{
         <div className='flex align-middle items-center border-2'>
         <Card.Text className='text-3xl align-middle items-center my-1'>${transactionData.amount}</Card.Text>
         <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text>
-        <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete/>
+        <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete onClick={()=>{handleDelete(transactionData._id)}} style={{"cursor":"pointer"}}/>
         </div>
         <Card.Text>
             {transactionData.desc}

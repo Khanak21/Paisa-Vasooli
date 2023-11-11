@@ -7,25 +7,39 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import {Button} from 'react-bootstrap'
 
-export const SavingCard = () => {
+export const SavingCard = ({props,savingData,setSavingData}) => {
 const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
+console.log(props._id)
+const percentage=props.currAmt*100/props.targetAmt
+const handleDelete = async()=>{
+    try{
+        const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${props._id}`)
+        console.log(res.data.saving)
+        const sav=res.data.saving
+        setSavingData(savingData.filter(data=>data._id!=sav._id))
+
+    }catch(err){
+        console.log(err)
+    }
+}
   return (
     <div>
          <Card variant="light" border="success" className='w-full'>
-      <Card.Header>title</Card.Header>
+      <Card.Header>{props.title}</Card.Header>
       <Card.Body>
-        <div className='flex align-middle items-center border-2'>
-        <div className='flex justify-between align-middle items-center'><div class="progress">
-              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{"width":"40%"}}>
-                 40% Complete (success)
+        <div>
+        <div className='flex justify-between align-middle items-center'>
+            <div className="progress">
+              <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow={percentage} aria-valuemin="0" aria-valuemax="100" style={{"width":`${percentage}%`}}>
+                 {percentage}% Complete
               </div>
-             </div>
-        <Card.Text className='text-3xl align-middle items-center my-1'>$100</Card.Text></div>
+            </div>
+            <Card.Text className='text-3xl align-middle items-center my-1'>${props.targetAmt}</Card.Text></div>
         <div className='flex align-middle items-center justify-between'>
-        <Card.Text className='text-md align-middle items-center my-1'>$40</Card.Text>
-        <div className='flex'><AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete/></div>
+        <Card.Text className='text-md align-middle items-center my-1'>current amount: ${props.currAmt}</Card.Text>
+        <div className='flex'><AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete onClick={()=>handleDelete()} style={{"cursor":"pointer"}}/></div>
         </div>
         </div>
       </Card.Body>
