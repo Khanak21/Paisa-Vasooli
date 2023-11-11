@@ -24,8 +24,6 @@ function Login({user,setUser}) {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       return emailRegex.test(email);
     };
-
-
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
@@ -47,7 +45,7 @@ function Login({user,setUser}) {
 
   }
   
-
+  
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     // if (isPasswordValid && isUsernameValid) {
@@ -60,13 +58,15 @@ function Login({user,setUser}) {
           const res = await axios.post("http://localhost:3001/api/auth/signin",{username,email,password})
           console.log(res.data);
           setUser(res.data)
-          navigate('/dashboard')
+          navigate('/dues')
           // setUser(res.data).then(console.log("userdata"+user))
         }catch(err){
             console.log(err);
         }
       }
       logi();
+      // setUserData("sd");
+      // console.log(userData);
       //making the credentials empty after submitting
       setEmail("");
       setPassword("")
@@ -105,7 +105,7 @@ function Login({user,setUser}) {
                 required
               />
             </div>
-            <div className="input-box">
+            {/*<div className="input-box">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -116,9 +116,8 @@ function Login({user,setUser}) {
                 className="input-login"
                 required
               />
-              {/* {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null} */}
-              {console.log(email)}
-            </div>
+              { {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null} }
+            </div>*/}
             <div className="input-box">
               <label htmlFor="psw">Password</label>
               <input

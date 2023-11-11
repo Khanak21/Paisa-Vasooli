@@ -1,8 +1,7 @@
 import express from "express";
-import {addBill,editBill,deleteBill,getBills} from '../controllers/transactions.js'
+import {addBill,editBill,deleteBill,getBills} from '../controllers/bills.js'
 
 const router = express.Router();
-// import { verifyToken } from "../Verify.js";
 
 //Routes for bill api
 router.post("/addBill",addBill);
