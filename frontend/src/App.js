@@ -23,7 +23,7 @@ function App() {
           <Route path="/navbar" element={<Navbar/>} />
           <Route path="/dashboard" element={<Dashboard user={user}/>} />
           <Route path="/transcard" element={<TransactionCard/>} />
-          <Route path="/dues" element={<Dues/>} />
+          <Route path="/dues" element={<Dues user={user}/>} />
           <Route path="/vault" element={<Vault/>} />
           <Route path="/saving" element={<Savings user={user}/>} />
           <Route path="/charts" element={<Chart user={user}/>} />

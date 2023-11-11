@@ -74,12 +74,38 @@ const Dashboard = ({user}) => {
         }
       }
       addFilter()
+    //   setFilterInput({
+    //     type:'Expense',
+    //     amount:'',
+    //     category:'',
+    //     desc:'',
+    //     date:''
+    // })
     }
+    // const sendEmail = e=>{
+      
+      
+    // }
+
+    
+      const mailsend=async()=>{
+        try{
+          const reqmail = user.email
+          console.log(reqmail)
+          const res = await axios.post("http://localhost:3001/api/mail/sendmail",{reqmail})
+          .then(() => alert("Message Sent Succesfully"))
+          .catch((err) => console.log(err));
+        }catch(err){
+          console.log(err.response.data)
+        }
+      }
+    
     
     const handleSubmit = e=>{
         e.preventDefault()
         // console.log(transInput)
         // addTransaction(transInput)
+        
         const addTrans = async()=>{
         try{
           console.log(transInput)
@@ -88,19 +114,20 @@ const Dashboard = ({user}) => {
           const val=res.data.transaction
           setTransactionData(prev=>[...prev,val])
         }catch(err){
-          console.log(err)
+          console.log(err.response.data)
         }
       }
+      
       addTrans()
+      mailsend()
       setTransInput({
-        type:'Expense',
+        type:'expense',
         amount:'',
         category:'',
         desc:'',
         date:''
     })
     }
-   
     useEffect(()=>{
       const getTrans = async()=>{
         try{
@@ -131,6 +158,7 @@ const Dashboard = ({user}) => {
 
   return (
     <div>
+      
         <Navbar/>
         {/* --------------------------User monetary stats------------------------ */}
         <div >

@@ -32,6 +32,21 @@ export const signup = async(req,res,next)=>{
   }
 };
 
+// export const signup = async (req, res) => {
+//   // Save User to Database
+//   try {
+//     const user = await User.create({
+//       username: req.body.username,
+//       email: req.body.email,
+//       password: bcrypt.hashSync(req.body.password, 8),
+//     });
+//     // res.send({ message: "User registered successfully!" });
+//     res.json({user})
+//   } catch (error) {
+//     res.status(500).send({ message: error.message });
+//   }
+// };
+
 
 
 // export const signin = async (req, res, next) => {

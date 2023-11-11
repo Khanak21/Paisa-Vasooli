@@ -33,7 +33,6 @@ function Signup({user,setUser})
     const k=event.target.value;
     setEmail(k);
     // setValidemail(emailValidation(k));
-
  }
 
   const handleUsernameChange = (event) => {
