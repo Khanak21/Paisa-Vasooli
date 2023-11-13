@@ -1,123 +1,141 @@
 * {
-    margin: 0;
-    box-sizing: border-box;
-  }
-  
-  .outside {
-    width: 100vw;
-    height: 60px;
-    display: flex;
-    font-size: 30px;
-    padding: 20px;
-    color: rgb(253, 253, 253);
-    /* background-image: linear-gradient(130deg, rgb(238, 140, 140), rgb(188, 29, 188) 60%, violet);
-     */
-     background-color: #198754;
-    justify-content:flex-end;
-    align-items: center;
-    gap:20px;
-    /* box-shadow: 0px 15px 30px -3px rgba(7, 7, 185, 0.5); */
-  }
-  
+  margin: 0;
+  box-sizing: border-box;
+}
 
-  .content-link {
-    display: flex;
-    flex-direction: row;
-    gap:5px;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 50%;
-    padding: 10px;
+.outside {
+  width: 100vw;
+  height: 60px;
+  display: flex;
+  font-size: 30px;
+  padding: 20px;
+  color: rgb(253, 253, 253);
+  /* background-image: linear-gradient(130deg, rgb(238, 140, 140), rgb(188, 29, 188) 60%, violet);
+   */
+   background-color: #198754;
+  justify-content:flex-end;
+  align-items: center;
+  gap:20px;
+  /* box-shadow: 0px 15px 30px -3px rgba(7, 7, 185, 0.5); */
+}
+
+
+.content-link {
+  display: flex;
+  flex-direction: row;
+  gap:5px;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 50%;
+  padding: 10px;
+}
+
+.box {
+  width: 100px;
+  height: 100%;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  transition: all 0.7s;
+  align-items: center;
+}
+
+.box:hover {
+  color: rgb(157, 122, 253);
+  font-size: larger;
+}
+
+.icon-menu,
+.icon-crossX {
+  width: 2.2rem;
+  cursor: pointer;
+  height: 2.2rem;
+  display: none;
+}
+.inside{
+  display: block;
+}
+.inside2{
+  display: none;
+}
+.logout{
+  visibility: hidden;
+}
+.toggle-nav{
+  border:1px solid white;
+  color:white;
+  background-color: rgb(202, 115, 21);
+}
+
+
+@media (max-width: 62em) {
+  .outside {
+     display: flex;
+     justify-content: flex-end;
   }
-  
-  .box {
-    width: 100px;
-    height: 100%;
-    display: flex;
-    cursor: pointer;
-    justify-content: center;
-    transition: all 0.7s;
-    align-items: center;
-  }
-  
+ .content-link{
+  scale:0;
+ }
+
   .box:hover {
-    color: rgb(157, 122, 253);
+    color: rgb(193, 173, 248);
     font-size: larger;
   }
+  .icons {
+    display: block;
+    z-index: 20;
+    width: 50px;
+    padding: 3px;
+    color: rgb(14, 1, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid rgb(34, 4, 4);
+    border-radius: 5px;
+    text-align: center;
+  }
 
-  .icon-menu,
-  .icon-crossX {
-    width: 2.2rem;
-    cursor: pointer;
-    height: 2.2rem;
+ 
+  .icon-menu {
+    display: block;
+    z-index: 10;
+  }
+
+  .box {
+    height: 30px;
+    font-size: 40x;
+    color:rgb(252, 250, 250);
+  }
+
+  .content-link.active{
+    display: flex;
+    scale:1;
+    background-color: #077944;
+    position: absolute;
+    width: 100vw;
+    padding:30px;
+    color: white;
+    font-size: 27px;
+    left: 0;
+    top: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* box-shadow: 0px 15px 30px -3px rgba(7, 7, 185, 0.5); */
+    gap: 20px;
+  }
+
+  
+  .activemenu{
     display: none;
   }
 
-  
-  @media (max-width: 62em) {
-    .outside {
-       display: flex;
-       justify-content: flex-end;
-    }
-   .content-link{
-    scale:0;
-   }
-
-    .box:hover {
-      color: rgb(193, 173, 248);
-      font-size: larger;
-    }
-    .icons {
-      display: block;
-      z-index: 20;
-      width: 50px;
-      padding: 3px;
-      color: rgb(14, 1, 1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 3px solid rgb(34, 4, 4);
-      border-radius: 5px;
-      text-align: center;
-    }
-  
-   
-    .icon-menu {
-      display: block;
-      z-index: 10;
-    }
-  
-    .box {
-      height: 30px;
-      font-size: 40x;
-      color:rgb(252, 250, 250);
-    }
-
-    .content-link.active{
-      display: flex;
-      scale:1;
-      background-color: #077944;
-      position: absolute;
-      width: 100vw;
-      padding:30px;
-      color: white;
-      font-size: 27px;
-      left: 0;
-      top: 0;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      /* box-shadow: 0px 15px 30px -3px rgba(7, 7, 185, 0.5); */
-      gap: 20px;
-    }
-  
-    
-    .activemenu{
-      display: none;
-    }
-  
-    .activeman {
-      display: block;
-    }
+  .activeman {
+    display: block;
   }
-  
+  .inside2{
+    display: block;
+    color:orangered;
+    border:1px solid white;
+  }
+}

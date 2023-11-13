@@ -1,16 +1,15 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import {AiTwotoneCalendar} from 'react-icons/ai';
-import {AiFillEdit} from 'react-icons/ai';
-import {AiFillDelete} from 'react-icons/ai';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import Modal from 'react-bootstrap/Modal';
-import axios from "axios"
-import {Button} from 'react-bootstrap'
+import axios from 'axios';
+import { Button } from 'react-bootstrap';
 
-export const SavingCard = ({props,savingData,setSavingData}) => {
-const [show, setShow] = useState(false);
-const handleClose = () => setShow(false);
-const handleShow = () => setShow(true);
+const SavingCard = ({props,savingData,setSavingData}items) => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 console.log(props._id)
 const percentage=props.currAmt*100/props.targetAmt
 const handleDelete = async()=>{
@@ -24,86 +23,87 @@ const handleDelete = async()=>{
         console.log(err)
     }
 }
+
+  // Add your state variables here
+  // const [type, setType] = useState('');
+  // const [amount, setAmount] = useState('');
+  // ...
+
+  // Add your state update functions here
+  // const handleTransInput = (fieldName) => (event) => {
+  //   // Update state based on the field name
+  // };
+
+  // const handleSubmit = () => {
+  //   // Handle form submission
+  // };
+
   return (
-    <div>
-         <Card variant="light" border="success" className='w-full'>
-      <Card.Header>{props.title}</Card.Header>
-      <Card.Body>
-        <div>
-        <div className='flex justify-between align-middle items-center'>
-            <div className="progress">
-              <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow={percentage} aria-valuemin="0" aria-valuemax="100" style={{"width":`${percentage}%`}}>
-                 {percentage}% Complete
+    
+    <div className='flex flex-col justify-center items-start gap-8 w-full p-1 h-auto'>
+    
+      <Card variant="light" border="success" className="w-full flex flex-col gap-3 border-green-400 rounded-lg border-2 h-auto p-1 ">
+
+
+        <Card.Header className='bg-slate-300 font-semibold text-center text-lg flex justify-evenly'>Title{" "}- <div>
+         {items.title}</div></Card.Header>
+
+
+        <Card.Body>
+          <div className="flex justify-between gap-3 align-middle items-center p-3 w-full">
+            <div className="flex flex-col gap-5 justify-between align-middle items-center w-5/10">
+              <div className="progress w-full">
+              <div>Complete (success) </div>
+                <div
+                  className="progress-bar progress-bar-success text-sm h-5 w-full bg-green-800 rounded-lg text-white p-2 flex justify-center items-center"
+                  role="progressbar"
+                  aria-valuenow={percentage}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style={{ width: `${percentage}%` }}
+                >
+              
+                  <div>  {percentage}% </div>
+                
+                </div>
+              </div>
+              <Card.Text className="align-middle items-center my-1 text-sm">Current Amount{"  "}- ${items.currentAmount}</Card.Text>
+            </div>
+
+            <div className="flex flex-col gap-4 align-middle items-center justify-between  w-5/10 h-full">
+              <Card.Text className="text-md align-middle items-center my-1">Goal Amount{"  "}-{" "}${items.goalAmount}</Card.Text>
+              <div className="flex justify-between w-full items-center">
+                <AiFillEdit onClick={handleShow} style={{ cursor: 'pointer' }} />
+                <AiFillDelete onClick={()=>{()=>handleDelete()}} style={{"cursor":"pointer"}}/>
               </div>
             </div>
-            <Card.Text className='text-3xl align-middle items-center my-1'>${props.targetAmt}</Card.Text></div>
-        <div className='flex align-middle items-center justify-between'>
-        <Card.Text className='text-md align-middle items-center my-1'>current amount: ${props.currAmt}</Card.Text>
-        <div className='flex'><AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete onClick={()=>handleDelete()} style={{"cursor":"pointer"}}/></div>
-        </div>
-        </div>
-      </Card.Body>
-    </Card>
-    
-     {/* <Modal show={show} onHide={handleClose} animation={false} centered>
-     <Modal.Header closeButton>
-       <Modal.Title>Edit Transaction</Modal.Title>
-     </Modal.Header>
-     <Modal.Body>
-        
-         <label htmlFor="type">Transaction type: </label>
-         <select name="type" 
-                 id="type" 
-                 selected="Expense" 
-                 value={type}
-                 onChange={handleTransInput('type')}
-                 className='px-1 border-1 py-1 mx-2 rounded-md'
-                 required
-                 >
-         <option value="expense">Expense</option>
-         <option value="income">Income</option>
-         </select><br/>
+          </div>
+        </Card.Body>
+      </Card>
 
-         <label htmlFor='amount'>Amount: </label>
-         <input type="number" 
-                name={'amount'}
-                value={amount}
-                onChange={handleTransInput('amount')}
-                required
-                ></input>
-
-         <label htmlFor='category'>Category: </label>
-         <input name={"category"}
-                type="text"
-                value={category}
-                onChange={handleTransInput('category')}
-                required
-                ></input>
-
-         <label htmlFor='desc'>Description:</label>
-         <input type='text' 
-                name={'desc'}
-                value={desc}
-                onChange={handleTransInput('desc')}
-         ></input>
-
-         <label htmlFor='date'>Date:</label>
-         <input type='date'
-                name={"date"}
-                value={date}
-                onChange={handleTransInput('date')}
-                required
-         ></input>
-     </Modal.Body>
-     <Modal.Footer>
-       <Button variant="success"
-               onClick={handleSubmit}
-               required
-       >
-         Save
-       </Button>
-     </Modal.Footer>
-   </Modal> */}
+      <Modal show={show} onHide={handleClose} animation={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Transaction</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* Add your form inputs here */}
+          {/* Example: */}
+          {/* <label htmlFor="type">Transaction type:</label> */}
+          {/* <select name="type" id="type" value={type} onChange={handleTransInput('type')} required> */}
+          {/*   <option value="expense">Expense</option> */}
+          {/*   <option value="income">Income</option> */}
+          {/* </select> */}
+          {/* ... */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
-  )
-}
+  
+  );
+};
+
+export default SavingCard;
