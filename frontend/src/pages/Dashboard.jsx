@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
-import TransactionCard from '../components/TransactionCard';
+import TransactionCard from '../components/TransactionCard.jsx'
 import { CSVLink, CSVDownload } from "react-csv"
 
 const Dashboard = ({user,thememode,toggle}) => {
@@ -126,6 +126,8 @@ const Dashboard = ({user,thememode,toggle}) => {
         date:''
     })
     }
+    
+   
     useEffect(()=>{
       const getTrans = async()=>{
         try{
