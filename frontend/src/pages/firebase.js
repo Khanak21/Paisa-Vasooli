@@ -1,14 +1,17 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import {getAuth,GoogleAuthProvider} from "firebase/auth"
+import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: "paisa-vasooli.appspot.com",
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
+  apiKey: "AIzaSyA8e8Fgya6lFEr6EwLq0AhJ16zwTe6Y1bM",
+  authDomain: "paisa-tracker-d6ce1.firebaseapp.com",
+  projectId: "paisa-tracker-d6ce1",
+  storageBucket: "paisa-tracker-d6ce1.appspot.com",
+  messagingSenderId: "211393123451",
+  appId: "1:211393123451:web:2d48eb196e35d1d886bede",
+  measurementId: "G-LQ48DWDDTH"
 };
-
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const storage = getStorage(app);
+const analytics = getAnalytics(app);
+export const auth = getAuth()
+export const provider= new GoogleAuthProvider()
+export default app;

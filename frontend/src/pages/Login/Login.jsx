@@ -3,6 +3,8 @@ import "./Login.css";
 import {Link} from 'react-router-dom'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {auth,provider} from "./firebase.js"
+import {signInWithPopup} from "firebase/auth"
 
 function Login({user,setUser}) {
   const navigate = useNavigate()
@@ -47,7 +49,20 @@ function Login({user,setUser}) {
 
   }
   
-  
+  const blabla = (event)=>{
+    const logig =async()=>{
+      try{
+        const res = await axios.get("http://localhost:3001/api/google/google")
+        console.log(res.data);
+        setUser(res.data)
+        navigate('/dues')
+        // setUser(res.data).then(console.log("userdata"+user))
+      }catch(err){
+          console.log(err);
+      }
+    }
+    logig()
+  }
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     // if (isPasswordValid && isUsernameValid) {
@@ -81,9 +96,24 @@ function Login({user,setUser}) {
     // }
   };
   
-
+const googlesekar = (req,res)=>{
+  signInWithPopup(auth,provider).then((result)=>{
+    console.log(result);
+    axios
+          .post("http://localhost:3001/api/auth/google", {
+            username: result.user.displayName,
+            email: result.user.email,
+            img: result.user.photoURL,
+          })
+          .then((res) => {
+            console.log(res)
+            navigate("/dashboard")
+          });
+  }).catch((err)=>{console.log(err)})
+}
    
   return (
+    <>
 
     <form onSubmit={submitFunction}>
       <div className="super-container">
@@ -141,7 +171,11 @@ function Login({user,setUser}) {
             onClick={submitFunction}
             >
            Login 
-            </div>   
+            </div>  
+
+            <button className="button" onClick={googlesekar}>
+              
+              Sign In With Google</button>   
         
           </div>
           <div className="forgotPass">
@@ -154,6 +188,7 @@ function Login({user,setUser}) {
         </div>
       </div>
     </form>
+    </>
   );
 }
 

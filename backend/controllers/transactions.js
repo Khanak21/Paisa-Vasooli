@@ -56,7 +56,7 @@ export const editTransaction=async(req,res)=>{
             const newtran = await Transaction.findByIdAndUpdate(req.params.id,{
                 $set:req.body
             },{new:true});
-            res.json({newtran})
+            res.json(newtran)
             res.status(200).json("Transaction edited");
     }catch(err){
         res.status(400).json("unable to edit transaction");
