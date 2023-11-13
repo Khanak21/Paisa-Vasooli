@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema({
         unique:true,
         trim:true
     },
+    stocks:{
+        type:[Object],
+    }
 })
 
 export default mongoose.model("User",userSchema)

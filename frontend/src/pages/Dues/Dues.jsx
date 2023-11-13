@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 import './Dues.css'
 import axios from "axios";
-import BillCard from "./BillCard.jsx"
+import BillCard from "../../components/BillCard.jsx"
+import Navbar from '../../components/Navbar.jsx';
 
 function Dues({user,thememode,toggle}) {
     console.log(user)
@@ -161,8 +162,9 @@ React.useEffect(()=>{
 
     return (
  
-     
    <div className="outer">
+     <Navbar/>
+
     <div className="Tt">
        <h2> Manage Dues</h2>
     </div>

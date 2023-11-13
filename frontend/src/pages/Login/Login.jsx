@@ -60,7 +60,7 @@ function Login({user,setUser}) {
           const res = await axios.post("http://localhost:3001/api/auth/signin",{username,email,password})
           console.log(res.data);
           setUser(res.data)
-          navigate('/dues')
+          navigate('/dashboard')
           // setUser(res.data).then(console.log("userdata"+user))
         }catch(err){
             console.log(err);

@@ -8,10 +8,13 @@ const savingSchema = new mongoose.Schema({
         type:Number,
     },
     currAmt:{
-        type:String,
+        type:Number,
     },
     currency:{
         type:String,
+    },
+    title:{
+        type:String
     }
 },{timestamps: true})
 

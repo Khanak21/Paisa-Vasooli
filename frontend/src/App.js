@@ -11,6 +11,7 @@ import Dues from "./pages/Dues/Dues"
 import Vault from "./pages/Vault"
 import Savings from './pages/Savings/Savings';
 import Chart from './pages/Chart/Chart';
+import Stocks from './pages/Stocks/Stocks';
 function App() {
   const [user,setUser]=useState({})
   console.log(user)
@@ -44,6 +45,8 @@ function App() {
           <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle}/>} />
           <Route path="/saving" element={<Savings user={user} thememode={thememode} toggle={toggle}/>} />
           <Route path="/charts" element={<Chart user={user}/>} />
+          <Route path="/stocks" element={<Stocks user={user}/>} />
+
         </Routes>
       </BrowserRouter>
     </>

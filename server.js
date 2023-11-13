@@ -9,6 +9,8 @@ import authroutes from './backend/routes/auth.js';
 import savingroutes from './backend/routes/savings.js';
 import billsRoutes from './backend/routes/bills.js';
 import mailroutes from './backend/routes/sendEmail.js'
+import userroutes from './backend/routes/user.js'
+
 import bodyParser from 'body-parser'
 
 import cookieParser from "cookie-parser";
@@ -29,6 +31,8 @@ app.use("/api/transactions",transroutes)
 app.use("/api/savings",savingroutes)
 app.use("/api/auth",authroutes)
 app.use("/api/mail",mailroutes)
+app.use("/api/user",userroutes)
+
 // app.use("/api/auth/",signin)
 
 app.use((err,req,res,next)=>{
