@@ -8,7 +8,7 @@ import axios from "axios"
 import {Button} from 'react-bootstrap'
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const BillCard = ({BillData}) => {
+const BillCard = ({BillData,thememode,toggle}) => {
 const [show, setShow] = useState(false);
 //state to store edited values
 const [BillInput,setBillInput] = useState({
@@ -84,7 +84,7 @@ const handleDelete = (id)=>{
         </div> */
         // <AiTwotoneCalendar size={20} />7
       }
-    <Card variant="light" border="success" className='mx-4 my-4'>
+    <Card variant="light" border="success" className='mx-4 my-4' style={{}} >
       <Card.Body>
         <div className='flex align-middle items-center border-2'>
         <Card.Text className='text-3xl align-middle items-center border-2 my-1'>${BillData.toWhom}</Card.Text>

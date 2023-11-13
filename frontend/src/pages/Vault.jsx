@@ -64,7 +64,7 @@ import {
 import { storage } from "./firebase";
 import { v4 } from "uuid";
 
-function Vault() {
+function Vault({thememode,toggle}) {
   const [fileUpload, setfileUpload] = useState(null);
   const [fileUrls, setfileUrls] = useState([]);
 

@@ -6,7 +6,7 @@ import axios from "axios"
 import TransactionCard from '../components/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
 
-const Dashboard = ({user}) => {
+const Dashboard = ({user,thememode,toggle}) => {
   // console.log(user)
   //states
     const [show, setShow] = useState(false);
@@ -155,12 +155,12 @@ const Dashboard = ({user}) => {
     }, [transactionData]);
 
   return (
-    <div>
+    <div style={{backgroundColor:thememode==="dark"?"black":"white"}}>
       
-        <Navbar/>
+        <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
         <div >
-            <div className='flex w-full justify-center h-40'>
+            <div className='flex w-full justify-center h-40' style={{backgroundColor:thememode=="dark"?"black":"white"}}>
             <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalIncome}</div>
             <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.balance}</div>
             <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalExpense}</div>
@@ -183,7 +183,7 @@ const Dashboard = ({user}) => {
         {/* Date */}
         <input type="date" id="startDate" className="mx-2 border-2 rounded-md" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
         <input type="date" id="endDate" className="mx-2 border-2 rounded-md" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
-        <Button variant="success" onClick={handleFilter} className='mx-2'>Apply Filter</Button>
+        <Button style={{}} variant="success" onClick={handleFilter} className='mx-2'>Apply Filter</Button>
 
           {/* ----------------------Exporting data-------------------------- */}
           <CSVLink data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success">Export</Button></CSVLink>
@@ -199,11 +199,12 @@ const Dashboard = ({user}) => {
 
     {/* --------------------------------------Add transaction modal-------------------------------- */}
     <button onClick={handleShow} className='bg-[#198754] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 right-8'>+</button>
-    <Modal show={show} onHide={handleClose} animation={false} centered>
-        <Modal.Header closeButton>
+    <Modal show={show} onHide={handleClose} animation={false} centered style={{}}>
+        <Modal.Header closeButton style={{}}>
           <Modal.Title>Add Transaction</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+
+        <Modal.Body style={{}}>
             {/* Add transaction input section */}
             <label htmlFor="type">Transaction type: </label>
             <select name="type" 
@@ -249,7 +250,7 @@ const Dashboard = ({user}) => {
                    required
             ></input>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{}}>
           <Button variant="success" onClick={handleSubmit} required>Save</Button>
         </Modal.Footer>
       </Modal>

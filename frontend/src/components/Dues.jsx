@@ -6,7 +6,7 @@ import './Dues.css'
 import axios from "axios";
 import BillCard from "./BillCard.jsx"
 
-function Dues({user}) {
+function Dues({user,thememode,toggle}) {
     console.log(user)
     const [input,setInput]=useState('')
     const [selectedDate,setDate]=useState('')
@@ -256,7 +256,7 @@ React.useEffect(()=>{
         <div>
           {BillData?.map(bill=>(
             //  console.log("mapped data",trans)
-            <BillCard  BillData={bill}/> 
+            <BillCard  BillData={bill} thememode={thememode} toggle={toggle}/> 
             ))}
         </div>
     </div>

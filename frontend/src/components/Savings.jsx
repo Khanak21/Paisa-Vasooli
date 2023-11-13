@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
-import "./Savings.css";
-import {Button} from 'react-bootstrap'
-import { SavingCard } from "./SavingCard";
-import axios from "axios"
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { Button } from 'react-bootstrap';
+import SavingCard from "./SavingCard";
+import axios from "axios";
+import './Savings.css';
 
-function Savings({user}) {
+function Savings({ user ,thememode,toggle}) {
+  console.log(thememode);
   const [inputTitle, setInputTitle] = useState("");
   const [currentAmount, setCurrentAmount] = useState(0);
   const [amount, setAmount] = useState(0);
@@ -15,10 +16,10 @@ function Savings({user}) {
   const [editCurrent, setEditCurrent] = useState("");
   const [editItemId, setEditItemId] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [savingData,setSavingData] = useState([])
-  console.log(inputTitle,amount,currentAmount)
-  console.log(items)
+  const [savingData, setSavingData] = useState([]);
 
+
+ 
   const handleInputTitle = (event) => {
     setInputTitle(event.target.value);
   };
@@ -32,82 +33,89 @@ function Savings({user}) {
   };
 
   const addItem = () => {
-    // const newItem = {
-    //   id: Date.now(),
-    //   title: inputTitle,
-    //   currentAmount: currentAmount,
-    //   goalAmount: amount,
-    // };
-// 
-    // setItems([...items, newItem]);
+    const newItem = {
+      id: Date.now(),
+      title: inputTitle,
+      currentAmount: currentAmount,
+      goalAmount: amount,
+    };
+    setItems([...items, newItem]);
+
     setInputTitle("");
     setCurrentAmount(0);
     setAmount(0);
   };
 
   const handleEditAmount = (event) => {
-    // setEditAmount(event.target.value);
+    setEditAmount(event.target.value);
   };
 
   const handleEditCurrent = (event) => {
-    // setEditCurrent(event.target.value);
+    setEditCurrent(event.target.value);
   };
 
   const deleteData = () => {
-    // setEditAmount("");
-    // setEditCurrent("");
-    // setEditItemId(null);
+    setEditAmount("");
+    setEditCurrent("");
+    setEditItemId(null);
   };
 
   const handleSubmitEdit = () => {
-    // setItems((prevItems) =>
-    //   prevItems.map((item) =>
-    //     item.id === editItemId
-    //       ? {
-    //           ...item,
-    //           currentAmount: parseFloat(editCurrent),
-    //           goalAmount: parseFloat(editAmount),
-    //         }
-    //       : item
-    //   )
-    // );
-    // deleteData();
-    // setIsVisible(false);
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === editItemId
+          ? {
+              ...item,
+              currentAmount: parseFloat(editCurrent),
+              goalAmount: parseFloat(editAmount),
+            }
+          : item
+      )
+    );
+    deleteData();
+    setIsVisible(false);
   };
 
-  const openModel = (itemId) => {
-    setEditItemId(itemId);
-    setIsVisible(true);
-  };
-  const handleAddSaving = async()=>{
-    try{
+  // const openModel = (itemId) => {
+  //   setEditItemId(itemId);
+  //   setIsVisible(true);
+  // };
+
+  const handleAddSaving = async () => {
+    try {
       const saving = {
-        userId:user._id,
-        title:inputTitle,
-        currAmt:currentAmount,
-        target:amount
-      }
-      const res = await axios.post("http://localhost:3001/api/savings/addSaving",{saving})
-      console.log(res.data)
-      const val=res.data
-      setSavingData(prev=>[...prev,val])
-    }catch(err){
-      console.log(err)
+        userId: user._id,
+        title: inputTitle,
+        currAmt: currentAmount,
+        target: amount,
+      };
+      const res = await axios.post("http://localhost:3001/api/savings/addSaving", { saving });
+      console.log(res.data);
+      const val = res.data;
+      setSavingData(prev => [...prev, val]);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   return (
-    <div className="savings-container">
-      <div className="header"></div>
-      <div className="main-body">
-        <div className="main-head">
+    <div className="savings-container" style={{ color: thememode === "dark" ? "orange" : "white", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "green" }}>
+
+      <div className="header flex justify-end items-center" style={{ color: thememode === "dark" ? "orange" : "white", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "green" }}>
+        <div className="toggle p-1" onClick={toggle} >
+          Toggle Theme
+        </div>
+      </div>
+
+      <div className="main-body" style={{ color: thememode === "dark" ? "rgb(92, 230, 7)" : "black", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "white" }}>
+        <div className="main-head" style={{ color: thememode === "dark" ? "rgb(92, 230, 7)" : "black" }}>
           <h2>
             <b>Have any financial goals ?</b>
           </h2>
           <p>Track them here</p>
         </div>
 
-        <div className="main-content">
+        <div className="main-content" style={{ color: thememode === "dark" ? "rgb(92, 230, 7)" : "black", backgroundColor: thememode === "dark" ? " #000000" : "white",borderColor:thememode==="dark"?"green":"white"}}>
           <div className="main-left">
             <div className="savings-holder">
               <label htmlFor="">Title</label>
@@ -118,7 +126,7 @@ function Savings({user}) {
                 className="saving-input"
                 value={inputTitle}
                 onChange={handleInputTitle}
-              />
+                  />
             </div>
 
             <div className="savings-holder">
@@ -144,48 +152,30 @@ function Savings({user}) {
             </div>
 
             <div className="savings-holder" onClick={addItem}>
-            <Button variant="success"
-                onClick={handleAddSaving}
-          >
-            Add Saving
-          </Button>
+              <Button variant="success" onClick={handleAddSaving} style={{color:thememode==="dark"?"white":"white"}}>
+                Add Saving
+              </Button>
             </div>
           </div>
 
-          <div className="main-right">
-            <SavingCard/>
-            {items.map((item) => (
-              <div className="savings-box" key={item.id}>
-                <div className="box-header">
-                  <h3>{item.title}</h3>
-                </div>
-                <div className="box-body">
-                  <div className="box-left">
-                    <div className="progress">Goal Progress bar</div>
-                    <div className="input-range"></div>
-                    <div className="current-amt">
-                      <p>Current amt: {item.currentAmount}</p>
-                    </div>
-                  </div>
-                  <div className="box-right">
-                    <div className="amount-value">
-                      Goal Amount: ${item.goalAmount}
-                    </div>
-                    <div className="edit-btn">
-                      <button className="btn" onClick={() => openModel(item.id)}>
-                        Edit
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="main-right flex flex-col justify-center items-start gap-5 h-[500px]">
+            <div className="overflow-y-scroll w-full mt-2">
+              {items.map((item) => (
+                <SavingCard
+                  key={item.id}
+                  title={item.title}
+                  currentAmount={item.currentAmount}
+                  goalAmount={item.goalAmount}
+                  className="w-full h-full"
+                  props={{thememode:thememode,toggle:toggle}}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {
-      isVisible && (
+      {isVisible && (
         <div className="model visible">
           <div className="cross">
             <FontAwesomeIcon icon={faMinus} className="minus" />
