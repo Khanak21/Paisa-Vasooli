@@ -56,3 +56,23 @@ export const joingroup = async(req,res)=>{
     res.status(200).json(updatedGroup);
 }
 
+export const getgroups = async(req,res)=>{
+    const userId= req.params.id;
+    // console.log(req.params.userId)
+    try{
+        // const groups = await group.find({
+        //     $or:[
+        //     {members: { $in: userId }},{userId: userId},],})
+        console.log(userId)
+        const userr = await user.findById(userId)
+        const allgroups = userr.groups
+        // res.json({allgroups})
+        const groupDetails = await Promise.all(allgroups.map(async groupId => {
+            const groupDetail = await group.findById(groupId);
+            return groupDetail;
+          }));
+        res.json( groupDetails );
+    }catch(err){
+        console.log(err)
+    }
+}
