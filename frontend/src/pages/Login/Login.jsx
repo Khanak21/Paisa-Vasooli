@@ -75,7 +75,7 @@ function Login({user,setUser}) {
           const res = await axios.post("http://localhost:3001/api/auth/signin",{username,email,password})
           console.log(res.data);
           setUser(res.data)
-          navigate('/dashboard')
+          navigate('/groups')
           // setUser(res.data).then(console.log("userdata"+user))
         }catch(err){
             console.log(err);
