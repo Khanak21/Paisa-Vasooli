@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         type:[Object],
     },
     groups:{
-        type:[String],//list of group ids
+        type:[String],
     }
 })
 

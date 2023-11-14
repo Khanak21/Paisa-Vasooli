@@ -9,7 +9,8 @@ import authroutes from './backend/routes/auth.js';
 import savingroutes from './backend/routes/savings.js';
 import billsRoutes from './backend/routes/bills.js';
 import mailroutes from './backend/routes/sendEmail.js'
-import userroutes from './backend/routes/user.js'
+import userroutes from './backend/routes/user.js';
+import grouproutes from './backend/routes/groups.js'
 
 import bodyParser from 'body-parser'
 
@@ -41,6 +42,7 @@ app.use("/api/savings",savingroutes)
 app.use("/api/auth",authroutes)
 app.use("/api/mail",mailroutes)
 app.use("/api/user",userroutes)
+app.use("/api/group",grouproutes)
 
 // app.use("/api",signinwithgoogle)
 // app.use("/api/auth/",signin)
