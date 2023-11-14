@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-<<<<<<< Updated upstream:frontend/src/pages/Dues/Dues.jsx
-import { useState } from 'react';
 import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 import './Dues.css'
 import axios from "axios";
 import BillCard from "../../components/BillCard.jsx"
 import Navbar from '../../components/Navbar.jsx';
-=======
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import './Dues.css';
-import axios from 'axios';
-import BillCard from './BillCard.jsx';
-import ToggleBtn from './ToggleBtn.jsx';
->>>>>>> Stashed changes:frontend/src/components/Dues.jsx
+import ToggleBtn from '../../components/ToggleBtn.jsx';
 
 function Dues({ user, thememode, toggle }) {
   const [dueItem, setdueItem] = useState({
@@ -96,16 +88,6 @@ function Dues({ user, thememode, toggle }) {
     }
   };
 
-<<<<<<< Updated upstream:frontend/src/pages/Dues/Dues.jsx
-    return (
- 
-   <div className="outer">
-     <Navbar/>
-
-    <div className="Tt">
-       <h2> Manage Dues</h2>
-    </div>
-=======
   useEffect(() => {
     const getBills = async () => {
       try {
@@ -116,7 +98,6 @@ function Dues({ user, thememode, toggle }) {
         console.log(err);
       }
     };
->>>>>>> Stashed changes:frontend/src/components/Dues.jsx
 
     getBills();
   }, [user._id]);

@@ -3,15 +3,11 @@ import Navbar from '../../components/Navbar'
 import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
-<<<<<<< Updated upstream:frontend/src/pages/Dashboard/Dashboard.jsx
 import TransactionCard from '../../components/TransactionCard';
-=======
-import TransactionCard from '../components/TransactionCard.jsx'
->>>>>>> Stashed changes:frontend/src/pages/Dashboard.jsx
 import { CSVLink, CSVDownload } from "react-csv"
 import StockChart from '../../components/StockChart';
 
-const Dashboard = ({user}) => {
+const Dashboard = ({user,thememode,toggle}) => {
   const [show,setShow] = useState(false)
   // console.log(user)
 
@@ -168,14 +164,7 @@ const Dashboard = ({user}) => {
       
         <Navbar/>
         {/* --------------------------User monetary stats------------------------ */}
-<<<<<<< Updated upstream:frontend/src/pages/Dashboard/Dashboard.jsx
-        <div >
-            <div className='flex w-full justify-center h-40'>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalIncome}</div>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.balance}</div>
-            <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalExpense}</div>
-=======
-        <div>
+     
         <div className='flex w-full justify-center h-20 p-4' style={{backgroundColor:thememode=="dark"?"black":"white"}}>
           <div className='flex justify-start items-center gap-4'>
 
@@ -218,7 +207,6 @@ const Dashboard = ({user}) => {
           </div>
 
           </div>
->>>>>>> Stashed changes:frontend/src/pages/Dashboard.jsx
         </div>
         
         {/* -----------------------Filters------------------------ */}
@@ -237,15 +225,10 @@ const Dashboard = ({user}) => {
               </select>
 
         {/* Date */}
-<<<<<<< Updated upstream:frontend/src/pages/Dashboard/Dashboard.jsx
-        <input type="date" id="startDate" className="mx-2 border-2 rounded-md" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
-        <input type="date" id="endDate" className="mx-2 border-2 rounded-md" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
-        <Button variant="success" onClick={handleFilter} className='mx-2'>Apply Filter</Button>
-=======
+ 
         <input type="date" id="startDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
         <input type="date" id="endDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
         <Button style={{}} variant="success" onClick={handleFilter} className='mx-2 p-2 my-2'>Apply Filter</Button>
->>>>>>> Stashed changes:frontend/src/pages/Dashboard.jsx
 
           {/* ----------------------Exporting data-------------------------- */}
         <CSVLink className='' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success" className='my-2  p-2'>Export</Button></CSVLink>
@@ -320,7 +303,7 @@ const Dashboard = ({user}) => {
             
              
         </div>
-    </div>
+
   )
 }
 

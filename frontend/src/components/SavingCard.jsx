@@ -53,7 +53,7 @@ const handleDelete = async()=>{
         <Card.Body>
           <div className="flex justify-between gap-3 align-middle items-center p-3 w-full">
             <div className="flex flex-col gap-5 justify-between align-middle items-center w-5/10">
-              <div className="progress w-full">
+              <div className="w-full">
               <div>Complete (success) </div>
                 <div
                   className="text-sm h-5 w-full bg-green-800 rounded-lg text-white p-2 flex justify-center items-center"

@@ -60,7 +60,6 @@ const TransactionCard = ({ transactionData, key }) => {
 
   return (
     <div>
-<<<<<<< Updated upstream
     <Card variant="light" border="success" className='mx-4 my-4'>
       <Card.Header>{transactionData.category}</Card.Header>
       <Card.Body>
@@ -93,12 +92,10 @@ const TransactionCard = ({ transactionData, key }) => {
          <option value="expense">Expense</option>
          <option value="income">Income</option>
          </select><br/>
-=======
       <Card variant="light" border="success" className="mx-4 my-4">
         <Card.Header className='font-bold'>Transaction Category{" "} :-{" "} {transactionData.category}</Card.Header>
         <Card.Body>
           <div className="flex justify-between items-center gap-40 border-2">
->>>>>>> Stashed changes
 
             <Card.Text className="text-3xl align-middle items-center my-1">&#x20B9;{ " "}  {transactionData.amount}</Card.Text>
  
@@ -159,7 +156,9 @@ const TransactionCard = ({ transactionData, key }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+      </Modal.Body>
+      </Modal>
+    </div> 
   );
 };
 
