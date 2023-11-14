@@ -1,4 +1,3 @@
-
 import React, { useState,useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -14,6 +13,7 @@ import Chart from './pages/Chart/Chart';
 import Stocks from './pages/Stocks/Stocks';
 import { Main } from './pages/Groups/Main';
 import ToggleBtn from './components/ToggleBtn';
+import Savings2 from './pages/Savings/Savings2';
 
 function App() {
   const [user,setUser]=useState({})
@@ -55,6 +55,7 @@ function App() {
           <Route path="/stocks" element={<Stocks user={user} thememode={thememode} toggle={toggle}/>} />
           <Route path="/groups" element={<Main user={user} thememode={thememode} toggle={toggle} />} />
           <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
+          <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -162,7 +162,7 @@ const Dashboard = ({user,thememode,toggle}) => {
   return (
     <div>
       
-        <Navbar/>
+        <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
      
         <div className='flex w-full justify-center h-20 p-4' style={{backgroundColor:thememode=="dark"?"black":"white"}}>

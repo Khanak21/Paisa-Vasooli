@@ -162,7 +162,7 @@ function Signup({user,setUser})
 
             </div>
 
-            <div className="btn">
+            <div className="btn-signup">
             <div 
             className="button"
             value="Submit"

@@ -164,18 +164,19 @@ const googlesekar = (req,res)=>{
             </div>
           </div>
 
-          <div className="btn">
+          <div className="btn-login flex justify-between items-center">
 
             <div 
             className="button"
             onClick={submitFunction}
             >
-           Login 
+           Login
             </div>  
 
             <button className="button" onClick={googlesekar}>
               
-              Sign In With Google</button>   
+              Sign In With Google
+            </button>   
         
           </div>
           <div className="forgotPass">

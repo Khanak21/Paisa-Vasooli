@@ -68,12 +68,13 @@
     width:100%;
   }
   
-  .btn {
+  .btn-signup {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     gap: 10px;
     margin-bottom: 14px;
+    width: 100%;
   } 
   .button {
       height: 45px;
