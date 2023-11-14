@@ -5,12 +5,13 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import TransactionCard from '../../components/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
+import StockChart from '../../components/StockChart';
 
 const Dashboard = ({user}) => {
+  const [show,setShow] = useState(false)
   // console.log(user)
 
   //states
-    const [show, setShow] = useState(false);
     const [transInput,setTransInput] = useState({
         userId:user._id,
         type: 'expense',

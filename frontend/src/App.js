@@ -8,10 +8,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import TransactionCard from './components/TransactionCard';
 import Dues from "./pages/Dues/Dues"
-import Vault from "./pages/Vault"
+import Vault from "./pages/Vault/Vault"
 import Savings from './pages/Savings/Savings';
 import Chart from './pages/Chart/Chart';
 import Stocks from './pages/Stocks/Stocks';
+import { Main } from './pages/Groups/Main';
 function App() {
   const [user,setUser]=useState({})
   console.log(user)
@@ -19,10 +20,12 @@ function App() {
 
   const storedTheme = localStorage.getItem('theme');
   const [thememode, setThememode] = useState(storedTheme || 'light');
+  console.log(thememode)
 
   const toggle = () => {
     const newTheme = thememode === 'light' ? 'dark' : 'light';
     setThememode(newTheme);
+    console.log(newTheme)
     localStorage.setItem('theme', newTheme);
   };
 
@@ -30,6 +33,8 @@ function App() {
     document.querySelector('html').classList.remove('light', 'dark');
     document.querySelector('html').classList.add(thememode);
   }, [thememode]);
+
+  
 
   return (
     <>
@@ -42,10 +47,12 @@ function App() {
           <Route path="/dashboard" element={<Dashboard user={user}thememode={thememode} toggle={toggle}/>} />
           <Route path="/transcard" element={<TransactionCard thememode={thememode} toggle={toggle}/>} />
           <Route path="/dues" element={<Dues user={user}thememode={thememode} toggle={toggle}/>} />
-          <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle}/>} />
-          <Route path="/saving" element={<Savings user={user} thememode={thememode} toggle={toggle}/>} />
+          <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle} user={user}/>} />
+          <Route path="/savings" element={<Savings user={user} thememode={thememode} toggle={toggle}/>} />
           <Route path="/charts" element={<Chart user={user}/>} />
           <Route path="/stocks" element={<Stocks user={user}/>} />
+          <Route path="/groups" element={<Main user={user}/>} />
+
 
         </Routes>
       </BrowserRouter>

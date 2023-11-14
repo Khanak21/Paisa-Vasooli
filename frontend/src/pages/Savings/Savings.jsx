@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./Savings.css";
 import {Button} from 'react-bootstrap'
-import { SavingCard } from "../../components/SavingCard";
+import  SavingCard  from "../../components/SavingCard";
 import axios from "axios"
 import Navbar from "../../components/Navbar"
 
@@ -19,7 +19,7 @@ function Savings({user}) {
   const [isVisible, setIsVisible] = useState(false);
   const [savingData,setSavingData] = useState([])
   console.log(inputTitle,amount,currentAmount)
-  console.log(items)
+  // console.log(items) 
 
   const handleInputTitle = (event) => {
     setInputTitle(event.target.value);

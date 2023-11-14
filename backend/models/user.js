@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema({
     },
     stocks:{
         type:[Object],
+    },
+    files:{
+        type:[Object],
+    },
+    groups:{
+        type:[String],//list of group ids
     }
 })
 

@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 let tvScriptLoadingPromise;
 
-export default function TradingViewWidget() {
+export default function TradingViewWidget({sym}) {
   const onLoadScriptRef = useRef();
 
   useEffect(
@@ -27,11 +27,14 @@ export default function TradingViewWidget() {
 
       return () => onLoadScriptRef.current = null;
 
+
       function createWidget() {
+      // let sym = "MSFT"
+
         if (document.getElementById('tradingview_4f722') && 'TradingView' in window) {
           new window.TradingView.widget({
             autosize: false,
-            symbol: "NASDAQ:AAPL",
+            symbol: `${sym}`,
             interval: "D",
             timezone: "Etc/UTC",
             theme: "light",

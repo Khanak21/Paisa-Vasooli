@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {getAuth,GoogleAuthProvider} from "firebase/auth"
 import { getAnalytics } from "firebase/analytics";
+import { getStorage } from "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyA8e8Fgya6lFEr6EwLq0AhJ16zwTe6Y1bM",
   authDomain: "paisa-tracker-d6ce1.firebaseapp.com",
@@ -14,4 +15,5 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth()
 export const provider= new GoogleAuthProvider()
+export const storage = getStorage(app);
 export default app;

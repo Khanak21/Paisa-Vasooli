@@ -3,7 +3,7 @@ import "./Login.css";
 import {Link} from 'react-router-dom'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {auth,provider} from "./firebase.js"
+import {auth,provider} from "../firebase.js"
 import {signInWithPopup} from "firebase/auth"
 
 function Login({user,setUser}) {
