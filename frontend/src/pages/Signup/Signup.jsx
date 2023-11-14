@@ -96,7 +96,7 @@ function Signup({user,setUser})
   return (
     <form action="" onSubmit={submitFunction}>
       <div className="super-container">
-    <div className="container">
+    <div className="container-signup">
 
           <div className="title">
             Sign Up

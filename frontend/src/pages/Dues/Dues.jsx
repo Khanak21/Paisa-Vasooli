@@ -1,165 +1,102 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+<<<<<<< Updated upstream:frontend/src/pages/Dues/Dues.jsx
 import { useState } from 'react';
 import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 import './Dues.css'
 import axios from "axios";
 import BillCard from "../../components/BillCard.jsx"
 import Navbar from '../../components/Navbar.jsx';
+=======
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import './Dues.css';
+import axios from 'axios';
+import BillCard from './BillCard.jsx';
+import ToggleBtn from './ToggleBtn.jsx';
+>>>>>>> Stashed changes:frontend/src/components/Dues.jsx
 
-function Dues({user,thememode,toggle}) {
-    console.log(user)
-    const [input,setInput]=useState('')
-    const [selectedDate,setDate]=useState('')
-    // const [amount,setAmount]=useState(0)
-    // const [person,setPerson]=useState('')
+function Dues({ user, thememode, toggle }) {
+  const [dueItem, setdueItem] = useState({
+    userId: user._id,
+    title: '',
+    dueDate: '',
+    amount: '',
+    toWhom: '',
+    recurring: '',
+  });
 
+  const [filterInput, setFilterInput] = useState({
+    userId: user._id,
+    category: '',
+    startDate: '',
+    endDate: '',
+  });
 
-    //hook to add items of due payments
-    const [dueItem,setdueItem]=useState({
-        userId:user._id,
-        title:'',
-        dueDate:'',
-        amount:'',
-        toWhom:'',
-        recurring:''
-    })
-    const [filterInput,setFilterInput] = useState({
-        userId:user._id,
-        category:'',
-        startDate:'',
-        endDate:'',
-      })
-    const [deleteDiv,setdeleteDiv]=useState(false)
-    const [BillData,setBillData] = useState([])
+  const [deleteDiv, setdeleteDiv] = useState(false);
+  const [BillData, setBillData] = useState([]);
 
-    // const listItems=()=>{
-       
-    //   const newDueItem={
-        
-    //   }
+  const handleBillInput = (name) => (e) => {
+    setdueItem({ ...dueItem, [name]: e.target.value });
+  };
 
-    //   setdueItem([...dueItem,newDueItem])
-    //   setInput('');
-    //   setAmount('');
-    //   setDate('');
-    //   setPerson('');
+  const handleFilterInput = (name) => (e) => {
+    setFilterInput({ ...filterInput, [name]: e.target.value });
+  };
 
-    // };
-    
-    // const itemEvent=(event)=>{
-    //   const k=event.target.value
-    //   setInput(k);
-    //   console.log(k);
-    // }
-
-    // const SettingDate=(event)=>{
-    //     const d=event.target.value
-    //     setDate(d)
-    //     console.log(d)
-    // }
-
-    // const amountSet=(event)=>{
-    //     const yum=event.target.value
-    //     setAmount(yum)
-    // }
-
-    // const DueMoneyPerson=(event)=>{
-    //     const per=event.target.value
-    //    setPerson(per)
-    // }
-
-   const handleDelete=()=>{
-
-    setdeleteDiv(!deleteDiv)
-   }
-
-   const {title,dueDate,amount,toWhom,recurring} = dueItem
-    
-   const handleBillInput = name=>e=>{
-    setdueItem({...dueItem,[name]:e.target.value})
-}
-    const handleFilterInput = name=>e=>{
-    console.log(filterInput)
-    setFilterInput({...filterInput,[name]:e.target.value})
-
-}
-
-   const mailsendstart=async()=>{
-    try{
-      const reqmail = user.email
-      console.log(reqmail)
-      const res = await axios.post("http://localhost:3001/api/mail/sendstartmail",{reqmail})
-      .then(() => alert("Message Sent Succesfully"))
-      .catch((err) => console.log(err));
-    }catch(err){
-      console.log(err.response.data)
+  const mailsendstart = async () => {
+    try {
+      const reqmail = user.email;
+      console.log(reqmail);
+      const res = await axios.post('http://localhost:3001/api/mail/sendstartmail', { reqmail });
+      alert('Message Sent Successfully');
+    } catch (err) {
+      console.error('Error sending start mail:', err);
     }
-  }
+  };
 
-  const mailsendrecurring=async()=>{
-    try{
-      const reqmail = user.email
-      const recurringcat = BillData.recurring
-      const duedate = BillData.dueDate
-      console.log(reqmail)
-      const res = await axios.post("http://localhost:3001/api/mail/sendmailrecurring",{reqmail,duedate,recurringcat})
-      .then(() => alert("Message Sent Succesfully"))
-      .catch((err) => console.log(err));
-    }catch(err){
-      console.log(err.response.data)
+  const mailsendrecurring = async (recurring) => {
+    try {
+      const reqmail = user.email;
+      const duedate = dueItem.dueDate;
+      console.log(reqmail);
+      const res = await axios.post('http://localhost:3001/api/mail/sendmailrecurring', { reqmail, duedate, recurring });
+      alert('Message Sent Successfully');
+    } catch (err) {
+      console.error('Error sending recurring mail:', err);
     }
-  }
+  };
 
-   const handleSubmit = e=>{
-    e.preventDefault()
-    // console.log(transInput)
-    // addTransaction(transInput)
-    const addBill = async()=>{
-    try{
-      const res = await axios.post("http://localhost:3001/api/bills/addBill",{dueItem})
-      console.log(res.data)
-      const val=res.data.bill
-      setBillData(prev=>[...prev,val])
-    }catch(err){
-      console.log(err.response.data)
-    }
-  }
-  addBill()
-  mailsendstart()
-  const currdate = new Date()
-  const dueDateStr = BillData.dueDate;
-  const duedate = new Date(dueDateStr)
-  if(
-    currdate.getFullYear()===duedate.getFullYear() &&
-    currdate.getMonth()===duedate.getMonth() &&
-    currdate.getDate()===duedate.getDate()
-  ){
-    mailsendrecurring()
-  }
-  setdueItem({
-    title:'',
-    dueDate:'',
-    amount:'',
-    toWhom:'',
-    recurring:''
-})
-}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-React.useEffect(()=>{
-    const getBills = async()=>{
-      try{
-        // console.log("Sending request with data:", transInput);
-        const res = await axios.get(`http://localhost:3001/api/bills/getBills/${user._id}`)//add user Id
-        console.log(res.data)
-        setBillData(res.data.bill)
-      }catch(err){
-        console.log(err)
+    try {
+      const res = await axios.post('http://localhost:3001/api/bills/addBill', { dueItem });
+      console.log(res.data);
+      const val = res.data.bill;
+      setBillData((prev) => [...prev, val]);
+      mailsendstart();
+
+      const currdate = new Date();
+      const dueDateStr = dueItem.dueDate;
+      const duedate = new Date(dueDateStr);
+
+      if (currdate.getFullYear() === duedate.getFullYear() && currdate.getMonth() === duedate.getMonth() && currdate.getDate() === duedate.getDate()) {
+        mailsendrecurring(dueItem.recurring);
       }
-    }
-    getBills()
-  },[])
 
+      setdueItem({
+        title: '',
+        dueDate: '',
+        amount: '',
+        toWhom: '',
+        recurring: '',
+      });
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+<<<<<<< Updated upstream:frontend/src/pages/Dues/Dues.jsx
     return (
  
    <div className="outer">
@@ -168,104 +105,117 @@ React.useEffect(()=>{
     <div className="Tt">
        <h2> Manage Dues</h2>
     </div>
+=======
+  useEffect(() => {
+    const getBills = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3001/api/bills/getBills/${user._id}`);
+        console.log(res.data);
+        setBillData(res.data.bill);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+>>>>>>> Stashed changes:frontend/src/components/Dues.jsx
 
-    <div className="hero-section">
+    getBills();
+  }, [user._id]);
 
+  return (
+    <div className="outer">
+      <div className="Tt flex justify-evenly">
+        <div className="">
+          <h2> Manage Dues</h2>
+        </div>
+        <div className="toggle-dues hover:cursor-pointer mb-3 w-fit " >
+        <ToggleBtn  thememode={thememode} toggle={toggle} /> 
+        </div>
+      </div>
+
+      <div className="hero-section " style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}>
         <div className="hero-left">
+          <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="Title">Title</label>
+            <input
+              type="text"
+              name="title"
+              id=""
+              placeholder="Input due-title"
+              value={dueItem.title}
+              onChange={handleBillInput('title')}
+              className="w-[33rem] p-2"
+            />
+          </div>
 
-            <div className="add-dues">
+          <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="Date">Due-Date</label>
+            <input
+              type="date"
+              name="date"
+              id=""
+              placeholder="Input date of due"
+              value={dueItem.dueDate}
+              onChange={handleBillInput('dueDate')}
+              className="w-[33rem] p-2"
+            />
+          </div>
 
-                <div className="due-Title">
-                    <label htmlFor="Title">Title</label>
-                    <input 
-                    type="text"  
-                    name="title" 
-                    id="" 
-                    placeholder='Input due-title'
-                    value={title}
-                    onChange={handleBillInput('title')}
-                    className='input-dues'
-                    />
-                </div>
+          <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="amount">Amount</label> <br />
+            <input
+              type="number"
+              name="amount"
+              id=""
+              placeholder="Input amount in Rs."
+              value={dueItem.amount}
+              onChange={handleBillInput('amount')}
+              className="w-[33rem] p-2 rounded-md text-center"
+            />
+          </div>
 
-                <div className="due-Date">
-                    <label htmlFor="Date">Due-Date</label>
-                    <input 
-                    type="date"
-                    name="dueDate" 
-                    id="" 
-                    placeholder='Input date of due' 
-                    value={dueDate}
-                    onChange={handleBillInput('dueDate')}
-                    className='input-dues'
-                    />
-                </div>
+          <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="PersonDue">Due-To-Person</label> <br />
+            <input
+              type="text"
+              name="toWhom"
+              id=""
+              value={dueItem.toWhom}
+              onChange={handleBillInput('toWhom')}
+              placeholder="To whom"
+              className="w-[33rem] p-2"
+            />
+          </div>
 
-                <div className="due-Amount">
-                    <label htmlFor="amount">Amount</label>
-                    <input 
-                    type="number" 
-                    name="amount" 
-                    id="" 
-                    placeholder='Input amount in Rs.' 
-                    value={amount}
-                    onChange={handleBillInput('amount')}
-                    className='input-dues'
+          <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="PersonDue">Recurring</label>
+            <input
+              type="text"
+              name="recurring"
+              id=""
+              value={dueItem.recurring}
+              onChange={handleBillInput('recurring')}
+              placeholder="recurring"
+              className="w-[33rem] p-2"
+            />
+          </div>
 
-                    />
-                </div>
-
-                <div className="due-To">
-                    <label htmlFor="PersonDue">Due-To-Person</label>
-                    <input 
-                    type="text" 
-                    name="toWhom" 
-                    id="" 
-                    value={toWhom}
-                    onChange={handleBillInput('toWhom')}
-                    placeholder='To whom'
-                    className='input-dues'
-
-                    />
-                </div>
-
-                <div className="due-To">
-                    <label htmlFor="PersonDue">Recurring</label>
-                    <input 
-                    type="text" 
-                    name="recurring" 
-                    id="" 
-                    value={recurring}
-                    onChange={handleBillInput('recurring')}
-                    placeholder='recurring'
-                    className='input-dues'
-
-                    />
-                </div>
-                
-            </div>
-                <div className="add-btn">
-                    <div className="add-item" >
-                    Add Due 
-                    </div>
-                    <div className="plus-btn" onClick={handleSubmit}>
-                    <FontAwesomeIcon icon={faPlus} className='plus' />
-                    </div>
-                </div>
-
+          <div className="add-btn flex bg-green-600 justify-center items-center hover:cursor-pointer " onClick={handleSubmit}>
+            Add Due
+          </div>
         </div>
+      </div>
 
-        <div>
-          {BillData?.map(bill=>(
-            //  console.log("mapped data",trans)
-            <BillCard  BillData={bill} thememode={thememode} toggle={toggle}/> 
+      <div className="hero-right">
+        <div className="storing-dues">
+          <div className="overflow-y-auto w-full">
+            {BillData?.map((bill) => (
+              <BillCard BillData={bill} key={bill._id} />
             ))}
+          </div>
         </div>
+      </div>
     </div>
-
-   </div>
-
-  )
+  );
 }
 
-export default Dues
+export default Dues;

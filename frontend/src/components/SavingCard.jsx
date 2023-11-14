@@ -43,7 +43,7 @@ const handleDelete = async()=>{
     
     <div className='flex flex-col justify-center items-start gap-8 w-full p-1 h-auto'>
     
-      <Card variant="light" border="success" className="w-full flex flex-col gap-3 border-green-400 rounded-lg border-2 h-auto p-1 ">
+      <Card variant="light" border="success" className="w-full flex flex-col gap-3 border-green-400 rounded-lg border-2 h-40 p-1 ">
 
 
         <Card.Header className='bg-slate-300 font-semibold text-center text-lg flex justify-evenly'>Title{" "}- <div>
@@ -54,8 +54,9 @@ const handleDelete = async()=>{
           <div className="flex justify-between gap-3 align-middle items-center p-3 w-full">
             <div className="flex flex-col gap-5 justify-between align-middle items-center w-5/10">
               <div className="progress w-full">
+              <div>Complete (success) </div>
                 <div
-                  className="progress-bar progress-bar-success text-sm h-5 w-full bg-green-800 rounded-lg text-white p-2 flex justify-center items-center"
+                  className="text-sm h-5 w-full bg-green-800 rounded-lg text-white p-2 flex justify-center items-center"
                   role="progressbar"
                   aria-valuenow={percentage}
                   aria-valuemin="0"

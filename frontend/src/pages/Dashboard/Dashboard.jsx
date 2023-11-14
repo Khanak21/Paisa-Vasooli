@@ -3,7 +3,11 @@ import Navbar from '../../components/Navbar'
 import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
+<<<<<<< Updated upstream:frontend/src/pages/Dashboard/Dashboard.jsx
 import TransactionCard from '../../components/TransactionCard';
+=======
+import TransactionCard from '../components/TransactionCard.jsx'
+>>>>>>> Stashed changes:frontend/src/pages/Dashboard.jsx
 import { CSVLink, CSVDownload } from "react-csv"
 import StockChart from '../../components/StockChart';
 
@@ -129,6 +133,8 @@ const Dashboard = ({user}) => {
         date:''
     })
     }
+    
+   
     useEffect(()=>{
       const getTrans = async()=>{
         try{
@@ -162,41 +168,95 @@ const Dashboard = ({user}) => {
       
         <Navbar/>
         {/* --------------------------User monetary stats------------------------ */}
+<<<<<<< Updated upstream:frontend/src/pages/Dashboard/Dashboard.jsx
         <div >
             <div className='flex w-full justify-center h-40'>
             <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalIncome}</div>
             <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.balance}</div>
             <div className=' mx-4 w-60 my-2 rounded-md flex justify-center bg-[#198754] text-white align-middle'>${stats.totalExpense}</div>
+=======
+        <div>
+        <div className='flex w-full justify-center h-20 p-4' style={{backgroundColor:thememode=="dark"?"black":"white"}}>
+          <div className='flex justify-start items-center gap-4'>
+
+            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
+             <div className='flex  justify-between p-4 font-bold gap-6'>
+              <div>
+              Total Income
+              </div>
+
+             <div> 
+              ${stats.totalIncome}
+             </div>
+
+             
+              </div>
+            </div>
+
+
+           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
+             <div className='flex  justify-between p-4 font-bold gap-6'>
+              <div> 
+                Balance
+              </div>
+                <div>
+                 ${stats.balance}
+                </div>
+              </div>
+          </div>
+
+          <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
+             <div className='flex  justify-between p-4 font-bold gap-6'>
+                <div>
+                 Total Expense
+                </div>
+              <div>
+                 ${stats.totalExpense}
+              </div>
+
+              </div>
+          </div>
+
+          </div>
+>>>>>>> Stashed changes:frontend/src/pages/Dashboard.jsx
         </div>
         
         {/* -----------------------Filters------------------------ */}
-        <div className='flex px-4 py-4 justify-center'>
-        <div className='flex justify-center align-middle py-2 px-2 font-bold text-xl'>Filters:</div>
+        <div className='flex px-4 py-4 justify-center items-center'>
+           <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl'>Filters:</div>
         
         {/* Category */}
-        <select className='mx-2 border-2 rounded-md' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
-        <option value="">All Categories</option>
-          {
-            uniqueCategories.map(cat=>(
-               <option value={cat}>{cat}</option>
-            ))
-          }
-        </select>
+              <select className='mx-2 border-2 rounded-md p-3' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
+                <option value="">All Categories</option>
+                   {
+                      uniqueCategories.map(cat=>(
+                      <option value={cat}>{cat}</option>
+                       ))
+                    }
+
+              </select>
 
         {/* Date */}
+<<<<<<< Updated upstream:frontend/src/pages/Dashboard/Dashboard.jsx
         <input type="date" id="startDate" className="mx-2 border-2 rounded-md" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
         <input type="date" id="endDate" className="mx-2 border-2 rounded-md" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
         <Button variant="success" onClick={handleFilter} className='mx-2'>Apply Filter</Button>
+=======
+        <input type="date" id="startDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
+        <input type="date" id="endDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
+        <Button style={{}} variant="success" onClick={handleFilter} className='mx-2 p-2 my-2'>Apply Filter</Button>
+>>>>>>> Stashed changes:frontend/src/pages/Dashboard.jsx
 
           {/* ----------------------Exporting data-------------------------- */}
-          <CSVLink data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success">Export</Button></CSVLink>
+        <CSVLink className='' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success" className='my-2  p-2'>Export</Button></CSVLink>
         </div>
 
+
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
-        <div>
+        <div style={{width:"50%"}}>
           {filteredData?.map(trans=>(
             //  console.log("mapped data",trans)
-            <TransactionCard key={trans._id} transactionData={trans}/> 
+            <TransactionCard key={trans._id} transactionData={trans} /> 
             ))}
         </div>
 

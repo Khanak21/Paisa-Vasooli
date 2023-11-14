@@ -5,7 +5,7 @@
 
 .outer{
     height:100vh;
-    padding: 20px;
+
     margin:0 auto;
     height: 100vh;
     width:100vw;
@@ -13,80 +13,75 @@
     flex-direction: column;
     text-align: center;
     background-color: rgb(255, 255, 255);
-    gap:3em;
-    align-items: space-evenly;
-    max-height: 700px;
+    gap:20px;
+    align-items: flex-start;
+    height:700px;
+   
 }
 .Tt{
    text-align: center;
+   background-color: green;
    height:50px;
    padding:5px;
-   color:rgb(16, 0, 0);
-   font-size: 40px;
- 
+   width:100%;
+   color:rgb(253, 253, 253);
+   font-size: 25px;
+  
    /* border: 2px solid black; */
+}
+.toggle-dues{
+    /* border:1px solid white;
+    border-radius: 30px;
+    padding: 4px; */
+    cursor: pointer;
 }
 
 .hero-section{
     /* border:2px solid black; */
-    padding: 10px;
+    padding: 24px;
     display: flex;
+    justify-content: space-between;
     gap:2px;
     font-size: large;
-    padding:5px;
+    width:100%;
+    max-height:650px;
+    border:2px solid green;
 }
 .hero-left{
-    width:50%;
-    padding:5px;
-    /* border:2px solid black; */
     display: flex;
-    flex-direction: column;
-    gap:10px;
-    justify-content: flex-start;
-    align-items: space-evenly;
+  width: 50%;
+  height: 100%;
+  padding:20px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  gap: 31px;
+  border:1px solid green;
+  border-radius: 30px;
 }
-.input-dues{
-    border-radius: 20px;
-    width:70%;
+
+
+.due{
+  font-size:20px;
+
+
+  width: 100%;
 }
-.due-Date{
-    display:flex;
-    justify-content: space-between;
-    gap:30px;
-}
-.due-Title{
-    display:flex;
-    justify-content: space-between;
-    gap:30px;
-}
-.due-To{
-    display:flex;
-    justify-content: space-between;
-    gap:30px;
-}
-.due-Amount{
-    display:flex;
-    justify-content: space-between;
-    gap:30px;
-}
-.add-dues{
-    padding:5px;
-    /* border:2px solid black; */
-    display: flex;
-    font-size: 26px;
-    flex-direction: column;
-    gap:20px;
-    justify-content: center;
-    align-items: space-evenly;
-}
+
+
 .add-btn{
     padding:10px;
     font-size: 20px;
+    width:100%;
+    /* opacity: 0.7; */
+
+    border-radius: 20px;
     font-style: italic;
     display:flex;
+    color:white;
     justify-content: space-evenly;
     align-items: center;
-    /* border:1px solid black; */
+
 }
 .plus-btn{
     display: flex;
@@ -105,7 +100,7 @@
 }
 .plus-btn:hover{
     border:#71b7e6;
-    background-color: rgb(9, 108, 9);
+    background-color: rgb(195, 202, 195);
 }
 .hero-right{
     width:50%;
@@ -113,7 +108,10 @@
     /* border:2px solid black; */
     display:flex;
     height: 500px;
-    overflow: scroll;
+    
+}
+.add-item{
+    color:black;
 }
 .storing-dues{
     display: flex;
@@ -121,19 +119,19 @@
     align-items:center;
     flex-direction: column;
     width:100%;
+    overflow-y: auto;
     height:100%;
     gap:20px;
     padding:10px;
 }
 .parent-due{
     width:100%;
-    /* border:2px solid black; */
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap:10px;
+    border:2px solid rgb(1, 79, 1);
+    border-radius: 30px;
     padding:10px;
+    background-color: rgb(220, 246, 216);
 }
+
 .delete-minus{
     
     display: flex;
@@ -145,11 +143,11 @@
     padding:10px;
 }
 .delete-minus:hover{
-    background-color: green;
+    background-color: rgb(38, 206, 38);
 }
 .due-box{
     display:flex;
-    border:1px solid black;
+    /* border:1px solid black; */
     flex-direction: column;
     justify-content: center;
     align-items:center;
@@ -157,33 +155,12 @@
     padding:5px;
     gap:7px;
 }
-.due-name{
-    border:1px solid black;
+
+.due-b{
     width:100%;
     display: flex;
     gap:40px;
-    justify-content: space-evenly;
-}
-.due-date{
-    border:1px solid black;
-    width:100%;
-    display: flex;
-    gap:40px;
-    justify-content: space-evenly;
-}
-.due-amount{
-    border:2px solid black;
-    display: flex;
-    justify-content: space-evenly;
-    width:100%;
-    gap:40px;
-}
-.due-whom{
-    display: flex;
-    justify-content: space-evenly;
-    gap:40px;
-    border: 1px solid black;
-    width:100%;
+    justify-content:flex-start;
 }
 .active{
     display:none;
