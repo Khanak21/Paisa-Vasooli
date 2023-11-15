@@ -10,7 +10,7 @@ import StockChart from '../../components/StockChart';
 const Dashboard = ({user,thememode,toggle}) => {
   const [show,setShow] = useState(false)
   // console.log(user)
-
+console.log(user._id)
   //states
     const [transInput,setTransInput] = useState({
         userId:user._id,
@@ -88,7 +88,7 @@ const Dashboard = ({user,thememode,toggle}) => {
       
     // }
 
-    
+
       const mailsend=async()=>{
         try{
           const reqmail = user.email
@@ -100,8 +100,7 @@ const Dashboard = ({user,thememode,toggle}) => {
           console.log(err.response.data)
         }
       }
-    
-    
+  
     const handleSubmit = e=>{
         e.preventDefault()
         // console.log(transInput)
@@ -122,6 +121,7 @@ const Dashboard = ({user,thememode,toggle}) => {
       addTrans()
       mailsend()
       setTransInput({
+        userId:user._id,
         type:'expense',
         amount:'',
         category:'',

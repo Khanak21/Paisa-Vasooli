@@ -12,7 +12,7 @@ import ToggleBtn from './ToggleBtn';
 function Navbar({thememode,toggle}) {
   const [showNav, setShowNav] = useState(false);
   // const [isLoggedin,setIsloggedIn]=useState(true)
-  console.log(thememode)
+  // console.log(thememode)
   const navigate=useNavigate()
 
   return (

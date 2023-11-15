@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const groupSchema = new mongoose.Schema({
+    groupCode:{
+        type:String,
+    },
     userId:{
         type:String,//group creator
     },
@@ -15,4 +18,4 @@ const groupSchema = new mongoose.Schema({
     }
 },{timestamps: true})
 
-export default mongoose.model("Saving",savingSchema)
+export default mongoose.model("Group",groupSchema)
