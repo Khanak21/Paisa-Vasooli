@@ -33,16 +33,23 @@ export const Grouphome = ({groupData}) => {
     },[])
 
   return (
-    <div>
-        <div className='mt-3'>
-        <div>
-            {console.log(groupData._id)}
-          {membersdata?.map(data=>(
-            <div>{data.username}</div>
-            ))}
+   
+        <div className='flex flex-col justify-center items-start h-full'>
+          <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
+            Title 
+          </div>
+          
+          <div className='w-full text-justify bg-amber-500 text-black font-bold'>
+                {console.log(groupData._id)}
+               {membersdata?.map(data=>(
+                <div>Group Members :- {" "}{data.username}{" "}</div>
+                ))}
+           </div>
+           <div className="w-full bg-orange-200 h-full">
+            <b>Chat</b>
+          </div>
         </div>
-        </div>
-    </div>
+    
   )
 }
 
