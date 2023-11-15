@@ -42,17 +42,17 @@ export const joingroup = async(req,res)=>{
     if (existgroup.members.includes(userId)) {
         return res.status(400).json({ error: 'User is already a member of this group' });
     }
-    await existgroup.findByIdAndUpdate(
-            newgroup._id,
+    const newgroup = await group.findByIdAndUpdate(
+            existgroup._id,
             {$push:{members:userId}},
             {new:true}
         )
     const userr = await user.findByIdAndUpdate(
         userId,
-        { $push: { groups: updatedGroup._id } },
+        { $push: { groups: existgroup._id } },
         { new: true }
     );
-    const updatedGroup = await existgroup.save();
+    const updatedGroup = await newgroup.save();
     res.status(200).json(updatedGroup);
 }
 
@@ -72,6 +72,27 @@ export const getgroups = async(req,res)=>{
             return groupDetail;
           }));
         res.json( groupDetails );
+    }catch(err){
+        console.log(err)
+    }
+}
+
+export const getmembers = async(req,res)=>{
+    const groupId= req.params.id;
+    // console.log(req.params.userId)
+    try{
+        // const groups = await group.find({
+        //     $or:[
+        //     {members: { $in: userId }},{userId: userId},],})
+        console.log(groupId)
+        const groupweneed= await group.findById(groupId)
+        const allmembers = groupweneed.members
+        // res.json({allgroups})
+        const memberDetails = await Promise.all(allmembers.map(async userId => {
+            const memberDetail = await user.findById(userId);
+            return memberDetail;
+          }));
+        res.json( memberDetails );
     }catch(err){
         console.log(err)
     }
