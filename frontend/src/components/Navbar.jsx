@@ -7,6 +7,7 @@ import 'tailwindcss/components.css'; // Import Tailwind CSS components styles
 import 'tailwindcss/utilities.css'; // Import Tailwind CSS utilities styles
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
+import ToggleBtn from './ToggleBtn';
 
 function Navbar({thememode,toggle}) {
   const [showNav, setShowNav] = useState(false);
@@ -42,8 +43,10 @@ function Navbar({thememode,toggle}) {
       <div className="logout absolute border border-white rounded-md p-2 right-1 font-bold text-white hover:cursor-pointer hover:border-gray-300 hover:shadow-xl">
   <Link to='/login'>Logout</Link>
 </div>
-        <div className="toggle-nav" onClick={toggle}>
-          Theme toggle
+        <div className="toggle-nav flex flex-col justify-center items-center hover:cursor-pointer ">
+       
+         <ToggleBtn  thememode={thememode} toggle={toggle} /> 
+
         </div>
 
 

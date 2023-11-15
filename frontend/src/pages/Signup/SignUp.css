@@ -16,7 +16,7 @@
      */
      background-color: #198754;
   }
-  .container {
+  .container-signup {
     width: 567px;
     background-color: #fff;
     padding: 20px;
@@ -68,12 +68,13 @@
     width:100%;
   }
   
-  .btn {
+  .btn-signup {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     gap: 10px;
     margin-bottom: 14px;
+    width: 100%;
   } 
   .button {
       height: 45px;

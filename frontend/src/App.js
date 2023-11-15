@@ -1,4 +1,3 @@
-
 import React, { useState,useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -7,12 +6,15 @@ import Login from './pages/Login/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import TransactionCard from './components/TransactionCard';
-import Dues from "./pages/Dues/Dues"
+import Dues from './pages/Dues/Dues'
 import Vault from "./pages/Vault/Vault"
 import Savings from './pages/Savings/Savings';
 import Chart from './pages/Chart/Chart';
 import Stocks from './pages/Stocks/Stocks';
 import { Main } from './pages/Groups/Main';
+import ToggleBtn from './components/ToggleBtn';
+import Savings2 from './pages/Savings/Savings2';
+
 function App() {
   const [user,setUser]=useState({})
   console.log(user)
@@ -49,11 +51,11 @@ function App() {
           <Route path="/dues" element={<Dues user={user}thememode={thememode} toggle={toggle}/>} />
           <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle} user={user}/>} />
           <Route path="/savings" element={<Savings user={user} thememode={thememode} toggle={toggle}/>} />
-          <Route path="/charts" element={<Chart user={user}/>} />
-          <Route path="/stocks" element={<Stocks user={user}/>} />
-          <Route path="/groups" element={<Main user={user}/>} />
-
-
+          <Route path="/charts" element={<Chart user={user} thememode={thememode} toggle={toggle} />} />
+          <Route path="/stocks" element={<Stocks user={user} thememode={thememode} toggle={toggle}/>} />
+          <Route path="/groups" element={<Main user={user} thememode={thememode} toggle={toggle} />} />
+          <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
+          <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
         </Routes>
       </BrowserRouter>
     </>

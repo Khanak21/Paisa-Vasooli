@@ -96,7 +96,7 @@ function Signup({user,setUser})
   return (
     <form action="" onSubmit={submitFunction}>
       <div className="super-container">
-    <div className="container">
+    <div className="container-signup">
 
           <div className="title">
             Sign Up
@@ -162,7 +162,7 @@ function Signup({user,setUser})
 
             </div>
 
-            <div className="btn">
+            <div className="btn-signup">
             <div 
             className="button"
             value="Submit"

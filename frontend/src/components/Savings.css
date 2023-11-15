@@ -3,17 +3,17 @@
   flex-direction: column;
   align-items: flex-start;
 }
-/* .header{
+.header{
   height:70px;
   width:100vw;
   background-color: rgb(10, 107, 39);
-} */
-/* .toggle{
+}
+.toggle{
   width:100px;
   height:70%;
   background-color: rgb(222, 140, 7);
   text-align: center;
-} */
+}
 .main-body{
 display:flex;
 flex-direction: column;

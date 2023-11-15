@@ -59,7 +59,7 @@ input {
 .input-login{
   width:100%;
 }
-.btn {
+.btn-login {
   display: flex;
   justify-content: space-evenly;
   align-items: center;

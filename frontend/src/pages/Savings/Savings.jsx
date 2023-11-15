@@ -7,7 +7,7 @@ import  SavingCard  from "../../components/SavingCard";
 import axios from "axios"
 import Navbar from "../../components/Navbar"
 
-function Savings({user}) {
+function Savings({user,thememode,toggle}) {
   console.log(user)
   const [inputTitle, setInputTitle] = useState("");
   const [currentAmount, setCurrentAmount] = useState(0);
@@ -78,7 +78,7 @@ function Savings({user}) {
   return (
     <div className="savings-container">
       {/* <div className="header"></div> */}
-      <Navbar/>
+      <Navbar thememode={thememode} toggle={toggle}/>
       <div className="main-body">
         <div className="main-head">
           <h2>

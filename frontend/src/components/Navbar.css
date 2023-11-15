@@ -62,9 +62,8 @@
   visibility: hidden;
 }
 .toggle-nav{
-  border:1px solid white;
-  color:white;
-  background-color: rgb(202, 115, 21);
+ 
+  
 }
 
 
@@ -138,4 +137,9 @@
     color:orangered;
     border:1px solid white;
   }
+  .toggle-nav{
+    display: none;
+    background-color: rgb(209, 233, 0);
+  }
+
 }
