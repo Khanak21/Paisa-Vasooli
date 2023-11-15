@@ -1,0 +1,24 @@
+::-webkit-scrollbar {
+    width: 10px;
+  
+}
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #22070155;
+    border-radius: 10px; /* Adjust the border-radius to make it more rounded */
+  }
+
+  .card-parent{ 
+    width:100%;
+  }
+  .card-component{
+    width:40%;
+  }
+  .group-chat{          
+    width:55%;
+    padding: 0;
+    position:absolute;  
+    height:100%; 
+    top:22%;
+    right:2%;        
+  }
