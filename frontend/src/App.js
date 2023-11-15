@@ -56,6 +56,7 @@ function App() {
           <Route path="/groups" element={<Main user={user} thememode={thememode} toggle={toggle} />} />
           <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
           <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
+
         </Routes>
       </BrowserRouter>
     </>

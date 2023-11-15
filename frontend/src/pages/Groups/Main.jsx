@@ -9,6 +9,7 @@ export const Main = ({user}) => {
     const [showGroup, setShowGroup] = useState(false);
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
+    const [selectedGroup, setSelectedGroup] = useState(null);
 
     const handleGroupClose = () => setShowGroup(false);
     const handleGroupShow = () => setShowGroup(true);
@@ -125,7 +126,14 @@ export const Main = ({user}) => {
         <div>
           {groupData?.map(data=>(
             //  console.log("mapped data",trans)
-            <GroupCard key={data._id} setgroupData = {setgroupData} groupData={data} allgroupsdata = {groupData}/> 
+            <GroupCard 
+            key={data._id} 
+            setgroupData = {setgroupData} 
+            groupData={data} 
+            allgroupsdata = {groupData}
+            setSelectedGroup={setSelectedGroup} 
+            selectedGroup={selectedGroup}
+            /> 
             ))}
         </div>
 
