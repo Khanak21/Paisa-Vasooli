@@ -97,6 +97,7 @@ export const getmembers = async(req,res)=>{
         console.log(err)
     }
 }
+<<<<<<< Updated upstream
 export const splitBill = async (req, res) => {
     const { amount, groupData } = req.body.input;
     const n = groupData.members.length;
@@ -152,3 +153,21 @@ export const splitBill = async (req, res) => {
     }
 };
 
+=======
+
+
+export const deleteGroup=async(req,res)=>{
+    try{
+        const grouptodelete = await group.findById(req.params.id);
+        if(!grouptodelete){
+            return next(createError(404,"Transaction not found"));
+        }
+            const groupp = await group.findByIdAndDelete(req.params.id);
+            res.status(200).json({groupp});
+
+    }catch(err){
+        res.status(200).json("unable to delete transaction");
+        console.log(err)
+    }
+}
+>>>>>>> Stashed changes

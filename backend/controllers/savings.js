@@ -76,6 +76,5 @@ export const deleteSaving = async(req,res)=>{
         res.json({message:"saving deleted",saving})
     }catch(err){
         res.json({message:"cannot delete the saving/saving not found"})
-
     }
 }
