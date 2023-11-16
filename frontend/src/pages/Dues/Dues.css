@@ -42,6 +42,7 @@
     display: flex;
     justify-content: space-between;
     gap:2px;
+    height: 100%;
     font-size: large;
     width:100%;
     max-height:650px;
@@ -99,15 +100,15 @@
     font-size: 40px;
 }
 .plus-btn:hover{
-    border:#71b7e6;
-    background-color: rgb(195, 202, 195);
-}
-.hero-right{
+    border:#71b7e6; 
+    background-color: rgb(162, 252, 162);
+} 
+.hero-right{ 
     width:50%;
     padding: 25px;
-    /* border:2px solid black; */
+    /* border:2px solid black;  */
     display:flex;
-    height: 500px;
+    height: 100%;
     
 }
 .add-item{
@@ -120,6 +121,7 @@
     flex-direction: column;
     width:100%;
     overflow-y: auto;
+    height: 100%;
     height:100%;
     gap:20px;
     padding:10px;
@@ -148,7 +150,7 @@
 .due-box{
     display:flex;
     /* border:1px solid black; */
-    flex-direction: column;
+    flex-direction: column; 
     justify-content: center;
     align-items:center;
     width:50%;
@@ -164,4 +166,8 @@
 }
 .active{
     display:none;
+}
+
+.tare{
+    background-color: rgb(134, 199, 255);
 }

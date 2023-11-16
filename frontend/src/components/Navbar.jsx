@@ -9,6 +9,8 @@ import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 import ToggleBtn from './ToggleBtn';
 
+
+
 function Navbar({thememode,toggle,setUser,user}) {
   const [showNav, setShowNav] = useState(false);
   // const [isLoggedin,setIsloggedIn]=useState(true)
@@ -41,7 +43,7 @@ function Navbar({thememode,toggle,setUser,user}) {
 
         <div className="font-bold text-white hover:cursor-pointer" onClick={()=>{navigate("/dues")}}>Dues</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/groups")}}>Groups</div>
-        <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/savings")}}>Savings</div>
+        <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/saving")}}>Savings</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/charts")}}>Charts</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/stocks")}}>Stocks</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/vault")}}>Vault</div>
