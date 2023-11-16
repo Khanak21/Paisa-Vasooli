@@ -239,6 +239,7 @@ console.log(user._id)
               </div>
 
              <div> 
+       
              &#8377;{stats.totalIncome}
              </div>
 
@@ -253,6 +254,7 @@ console.log(user._id)
                 Balance
               </div>
                 <div>
+              ]
                 &#8377;{stats.balance}
                 </div>
               </div>
@@ -260,10 +262,11 @@ console.log(user._id)
 
           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
-                <div>
-                 Total Expense
+                <div className='text-md flex justify-evenly gap-2'>
+                 <span>Total</span><span> Expense </span>
                 </div>
               <div>
+          
               &#8377;{stats.totalExpense}
               </div>
 

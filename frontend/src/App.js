@@ -16,6 +16,7 @@ import { Main } from './pages/Groups/Main';
 import ToggleBtn from './components/ToggleBtn';
 import Savings2 from './pages/Savings/Savings2';
 
+
 function App() {
   const [user,setUser]=useState({})
   console.log(user)
@@ -37,22 +38,22 @@ function App() {
     document.querySelector('html').classList.add(thememode);
   }, [thememode]);
 
-  // useEffect(()=>{
-  //   const check=async()=>{
-  //     try{
-  //       const loggedInUser = localStorage.getItem("user");
-  //       if (loggedInUser) {
-  //         console.log(loggedInUser);
-  //         const foundUser = JSON.parse(loggedInUser);
-  //         console.log("found user",foundUser  )
-  //         await setUser(foundUser);
-  //       }
-  //     }catch(err){
-  //       console.log(err)
-  //     }
-  //   }
-  //   check()
-  // },[user._id])
+  useEffect(()=>{
+    const check=async()=>{
+      try{
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+          console.log(loggedInUser);
+          const foundUser = JSON.parse(loggedInUser);
+          console.log("found user",foundUser  )
+          await setUser(foundUser);
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
+    check()
+  },[user._id])
 
   return (
     <>

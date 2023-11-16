@@ -7,6 +7,7 @@ import BillCard from "../../components/BillCard.jsx"
 import Navbar from '../../components/Navbar.jsx';
 import ToggleBtn from '../../components/ToggleBtn.jsx';
 
+
 function Dues({ user, thememode, toggle,setUser }) {
   const [dueItem, setdueItem] = useState({
     userId: user._id,
@@ -117,15 +118,10 @@ function Dues({ user, thememode, toggle,setUser }) {
   // }, [user._id]);
 
   return (
+  <>
+   <Navbar thememode={thememode} toggle={toggle}/>
     <div className="outer">
-      <div className="Tt flex justify-evenly">
-        <div className="">
-          <h2> Manage Dues</h2>
-        </div>
-        <div className="toggle-dues hover:cursor-pointer mb-3 w-fit " >
-        <ToggleBtn  thememode={thememode} toggle={toggle} /> 
-        </div>
-      </div>
+      
 
       <div className="hero-section " style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}>
         <div className="hero-left">
@@ -139,6 +135,7 @@ function Dues({ user, thememode, toggle,setUser }) {
               value={dueItem.title}
               onChange={handleBillInput('title')}
               className="w-[33rem] p-2"
+              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
             />
           </div>
 
@@ -152,6 +149,7 @@ function Dues({ user, thememode, toggle,setUser }) {
               value={dueItem.dueDate}
               onChange={handleBillInput('dueDate')}
               className="w-[33rem] p-2"
+              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
             />
           </div>
 
@@ -165,6 +163,7 @@ function Dues({ user, thememode, toggle,setUser }) {
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
               className="w-[33rem] p-2 rounded-md text-center"
+              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
             />
           </div>
 
@@ -178,6 +177,7 @@ function Dues({ user, thememode, toggle,setUser }) {
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
               className="w-[33rem] p-2"
+              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
             />
           </div>
 
@@ -191,6 +191,7 @@ function Dues({ user, thememode, toggle,setUser }) {
               onChange={handleBillInput('recurring')}
               placeholder="recurring"
               className="w-[33rem] p-2"
+              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
             />
           </div>
 
@@ -198,9 +199,8 @@ function Dues({ user, thememode, toggle,setUser }) {
             Add Due
           </div>
         </div>
-      </div>
 
-      <div className="hero-right">
+      <div className="hero-right h-full">
         <div className="storing-dues">
           <div className="overflow-y-auto w-full">
             {BillData?.map((bill) => (
@@ -209,7 +209,10 @@ function Dues({ user, thememode, toggle,setUser }) {
           </div>
         </div>
       </div>
+      </div>
+
     </div>
+  </>
   );
 }
 
