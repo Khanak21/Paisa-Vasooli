@@ -13,6 +13,7 @@ const SavingCard = ({props,savingData,setSavingData,items}) => {
   const handleShow = () => setShow(true);
 console.log(props._id)
 const percentage=Math.round((props.currAmt*100/props.targetAmt) * 100) / 100
+console.log(percentage)
 
 const handleDelete = async()=>{
     try{
@@ -63,16 +64,15 @@ const handleDelete = async()=>{
                   aria-valuemax="100"
                   style={{ width: `${percentage}%` }}
                 >
-              
-                  <div> {percentage}% </div>
-                
+                  
                 </div>
+                <div> {percentage}% </div>
               </div>
-              <Card.Text className="align-middle items-center my-1 text-sm">Current Amount:${props.currAmt}</Card.Text>
+              <Card.Text className="align-middle items-center my-1 text-sm">Current Amount:{props.currAmt}</Card.Text>
             </div>
 
             <div className="flex flex-col gap-4 align-middle items-center justify-between  w-5/10 h-full">
-              <Card.Text className="text-md align-middle items-center my-1">Goal Amount:${props.targetAmt}</Card.Text>
+              <Card.Text className="text-md align-middle items-center my-1">Goal Amount:{props.targetAmt}</Card.Text>
               <div className="flex justify-between w-full items-center">
                 <AiFillEdit onClick={handleShow} style={{ cursor: 'pointer' }} />
                 <AiFillDelete onClick={()=>{handleDelete()}} style={{"cursor":"pointer"}}/>
