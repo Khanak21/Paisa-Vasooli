@@ -88,11 +88,11 @@ function Savings2({ user ,thememode,toggle}) {
         userId: user._id,
         title: inputTitle,
         currAmt: currentAmount,
-        target: amount,
+        targetAmt: amount,
       };
       const res = await axios.post("http://localhost:3001/api/savings/addSaving", { saving });
-      console.log(res.data);
-      const val = res.data;
+      console.log(res.data.saving);
+      const val = res.data.saving;
       setSavingData(prev => [...prev, val]);
     } catch (err) {
       console.log(err);

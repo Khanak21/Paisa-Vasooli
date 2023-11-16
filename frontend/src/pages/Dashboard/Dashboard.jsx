@@ -33,6 +33,7 @@ console.log(user._id)
         category:'',
         desc:'',
         date:'',
+        currency:''
     })
     const [filterInput,setFilterInput] = useState({
       userId:user._id,
@@ -61,7 +62,8 @@ console.log(user._id)
     ];
     // console.log("transanction data being logged:",transactionData)
 
-    const {type,amount,category,desc,date} = transInput
+    const {type,category,desc,date,currency} = transInput
+    let {amount} = transInput
 
     //functions
     const handleClose = () => setShow(false);
@@ -115,15 +117,41 @@ console.log(user._id)
         }
       }
   
-    const handleSubmit = e=>{
+      
+      const UCurrency=(currency)=>{
+        const [data, setData] = useState({})
+        useEffect(() => {
+          const fetchData = async () => {
+            try {
+              const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`);
+              const result = await response.json();
+              setData(result[currency]);
+            } catch (error) {
+              console.error('Error fetching currency data:', error);
+            }
+          };
+          fetchData();
+        }, [currency]);
+        useEffect(() => {
+          console.log(data); // Log the state after it has been updated
+        }, [data]);
+        return data
+    }
+    const [currenci, setCurrenci] = useState('inr');
+    const currenciData = UCurrency(currenci);
+    const handleSubmit = async(e)=>{
         e.preventDefault()
-        // console.log(transInput)
-        // addTransaction(transInput)
+        console.log('Currency data:', currenciData);
+        // // console.log(transInput)
+        // // addTransaction(transInput)
+        console.log(currenciData[currency]);
+        amount =Math.floor(amount / currenciData[currency]);
+        console.log(amount)
         
         const addTrans = async()=>{
         try{
           console.log(transInput)
-          const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{transInput})
+          const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{userId:user._id,type,category,desc,date,currency,amount})
           console.log(res.data)
           const val=res.data.transaction
           setTransactionData(prev=>[...prev,val])
@@ -131,8 +159,8 @@ console.log(user._id)
           console.log(err.response.data)
         }
       }
-      
       addTrans()
+      
       mailsend()
       setTransInput({
         userId:user._id,
@@ -140,7 +168,8 @@ console.log(user._id)
         amount:'',
         category:'',
         desc:'',
-        date:''
+        date:'',
+        currency:'',
     })
     }
     
@@ -190,6 +219,9 @@ console.log(user._id)
       setUniqueCategories([...categoriesSet]);
     }, [transactionData]);
 
+     // Replace with your dynamic currency value
+    const currencyData = UCurrency('inr');
+    console.log(currencyData['usd'])
 
   return (
     <div>
@@ -207,7 +239,7 @@ console.log(user._id)
               </div>
 
              <div> 
-              ${stats.totalIncome}
+             &#8377;{stats.totalIncome}
              </div>
 
              
@@ -221,7 +253,7 @@ console.log(user._id)
                 Balance
               </div>
                 <div>
-                 ${stats.balance}
+                &#8377;{stats.balance}
                 </div>
               </div>
           </div>
@@ -232,7 +264,7 @@ console.log(user._id)
                  Total Expense
                 </div>
               <div>
-                 ${stats.totalExpense}
+              &#8377;{stats.totalExpense}
               </div>
 
               </div>
@@ -296,6 +328,30 @@ console.log(user._id)
             <option value="income">Income</option>
             </select><br/>
 
+            <label htmlFor='currency'>Currency: </label>
+            <select
+                    name="currency"
+                    id="currency"
+                    value={currency}
+                    onChange={handleTransInput('currency')}
+                    className='px-1 border-1 py-1 mx-2 rounded-md'
+                    required
+                  >
+                    <option value="inr">inr</option>
+                    <option value="usd">usd</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="JPY">JPY</option>
+                    <option value="AUD">AUD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="CNY">CNY</option>
+                    <option value="HKD">HKD</option>
+                    <option value="SGD">SGD</option>
+                    <option value="CHF">CHF</option>
+                    <option value="SEK">SEK</option>
+                    <option value="MXN">MXN</option>
+                  </select>
+                  <br />
             <label htmlFor='amount'>Amount: </label>
             <input type="number" 
                    name={'amount'}
