@@ -7,7 +7,7 @@ import  SavingCard  from "../../components/SavingCard";
 import axios from "axios"
 import Navbar from "../../components/Navbar"
 
-function Savings({user,thememode,toggle}) {
+function Savings({user,thememode,toggle,setUser}) {
   console.log(user)
   const [inputTitle, setInputTitle] = useState("");
   const [currentAmount, setCurrentAmount] = useState(0);
@@ -62,6 +62,20 @@ function Savings({user,thememode,toggle}) {
     }
   }
   useEffect(()=>{
+    // const check=async()=>{
+    //   try{
+    //     const loggedInUser = localStorage.getItem("user");
+    //     if (loggedInUser) {
+    //       console.log(loggedInUser);
+    //       const foundUser = JSON.parse(loggedInUser);
+    //       console.log("found user",foundUser  )
+    //       await setUser(foundUser);
+    //     }
+    //   }catch(err){
+    //     console.log(err)
+    //   }
+    // }
+    // check()
     const getSavings = async()=>{
       try{
         // console.log("Sending request with data:", transInput);
@@ -74,6 +88,7 @@ function Savings({user,thememode,toggle}) {
     }
     getSavings()
   },[])
+  // },[user._id])
 
   return (
     <div className="savings-container">

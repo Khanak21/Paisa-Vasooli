@@ -7,7 +7,21 @@ import TransactionCard from '../../components/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
 import StockChart from '../../components/StockChart';
 
-const Dashboard = ({user,thememode,toggle}) => {
+const Dashboard = ({user,thememode,toggle,setUser}) => {
+ 
+  
+  // useEffect(() => {
+
+  //   const loggedInUser = localStorage.getItem("user");
+  //   if (loggedInUser) {
+  //     console.log(loggedInUser)
+
+  //    const foundUser = JSON.parse(loggedInUser);
+  //     setUser(foundUser);
+  //   }
+
+  // }, []);
+
   const [show,setShow] = useState(false)
   // console.log(user)
 console.log(user._id)
@@ -132,6 +146,21 @@ console.log(user._id)
     
    
     useEffect(()=>{
+      // const check=async()=>{
+      //   try{
+      //     const loggedInUser = localStorage.getItem("user");
+      //     if (loggedInUser) {
+      //       console.log(loggedInUser);
+      //       const foundUser = JSON.parse(loggedInUser);
+      //       console.log("found user",foundUser  )
+      //       await setUser(foundUser);
+      //     }
+      //   }catch(err){
+      //     console.log(err)
+      //   }
+      // }
+      // check()
+      
       const getTrans = async()=>{
         try{
           // console.log("Sending request with data:", transInput);
@@ -154,10 +183,13 @@ console.log(user._id)
       }
       getTotalStats()
     },[])
+    // },[user._id])
+
     useEffect(() => {
       const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
       setUniqueCategories([...categoriesSet]);
     }, [transactionData]);
+
 
   return (
     <div>

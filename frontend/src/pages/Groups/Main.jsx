@@ -5,7 +5,7 @@ import {Button} from 'react-bootstrap'
 import axios from 'axios';
 import GroupCard from '../../components/GroupCard.jsx'
 
-export const Main = ({user}) => {
+export const Main = ({user,setUser}) => {
     const [showGroup, setShowGroup] = useState(false);
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
@@ -104,6 +104,20 @@ export const Main = ({user}) => {
     }
 
     useEffect(()=>{
+        // const check=async()=>{
+        //     try{
+        //       const loggedInUser = localStorage.getItem("user");
+        //       if (loggedInUser) {
+        //         console.log(loggedInUser);
+        //         const foundUser = JSON.parse(loggedInUser);
+        //         console.log("found user",foundUser  )
+        //         await setUser(foundUser);
+        //       }
+        //     }catch(err){
+        //       console.log(err)
+        //     }
+        //   }
+        //   check()
       const getGroups = async()=>{
         try{
           const res = await axios.get(`http://localhost:3001/api/group/getgroups/${user._id}`)//add user Id
@@ -115,6 +129,7 @@ export const Main = ({user}) => {
       }
       getGroups()
     },[])
+    // },[user._id])
 
   return (
     <div>

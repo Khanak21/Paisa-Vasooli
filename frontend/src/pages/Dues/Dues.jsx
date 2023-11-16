@@ -7,7 +7,7 @@ import BillCard from "../../components/BillCard.jsx"
 import Navbar from '../../components/Navbar.jsx';
 import ToggleBtn from '../../components/ToggleBtn.jsx';
 
-function Dues({ user, thememode, toggle }) {
+function Dues({ user, thememode, toggle,setUser }) {
   const [dueItem, setdueItem] = useState({
     userId: user._id,
     title: '',
@@ -89,6 +89,20 @@ function Dues({ user, thememode, toggle }) {
   };
 
   useEffect(() => {
+    // const check=async()=>{
+    //   try{
+    //     const loggedInUser = localStorage.getItem("user");
+    //     if (loggedInUser) {
+    //       console.log(loggedInUser);
+    //       const foundUser = JSON.parse(loggedInUser);
+    //       console.log("found user",foundUser  )
+    //       await setUser(foundUser);
+    //     }
+    //   }catch(err){
+    //     console.log(err)
+    //   }
+    // }
+    // check()
     const getBills = async () => {
       try {
         const res = await axios.get(`http://localhost:3001/api/bills/getBills/${user._id}`);
@@ -100,7 +114,8 @@ function Dues({ user, thememode, toggle }) {
     };
 
     getBills();
-  }, [user._id]);
+  },[])
+  // }, [user._id]);
 
   return (
     <div className="outer">

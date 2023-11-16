@@ -9,11 +9,20 @@ import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 import ToggleBtn from './ToggleBtn';
 
-function Navbar({thememode,toggle}) {
+function Navbar({thememode,toggle,setUser,user}) {
   const [showNav, setShowNav] = useState(false);
   // const [isLoggedin,setIsloggedIn]=useState(true)
   // console.log(thememode)
   const navigate=useNavigate()
+ 
+  const handleLogout = () => {
+  //   console.log("User before logout:", user);
+  //   setUser({});
+  //   console.log("User after logout:", user);
+  //   localStorage.clear();
+    navigate('/login');
+  };
+
 
   return (
     <div className="flex gap-30 justify-between items-center bg-green-800 " style={{backgroundColor:thememode==="dark"?"black":"green"}}>
@@ -40,8 +49,8 @@ function Navbar({thememode,toggle}) {
         <div className="inside font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/login")}}>Logout</div>
         <div className="inside2 font-bold text-white hover:cursor-pointer " onClick={toggle} >Theme Toggle</div>
       </div>
-      <div className="logout absolute border border-white rounded-md p-2 right-1 font-bold text-white hover:cursor-pointer hover:border-gray-300 hover:shadow-xl">
-  <Link to='/login'>Logout</Link>
+      <div className="logout absolute border border-white rounded-md p-2 right-1 font-bold text-white hover:cursor-pointer hover:border-gray-300 hover:shadow-xl" onClick={handleLogout}>
+  Logout
 </div>
         <div className="toggle-nav flex flex-col justify-center items-center hover:cursor-pointer ">
        
