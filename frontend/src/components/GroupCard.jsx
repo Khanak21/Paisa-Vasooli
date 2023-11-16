@@ -19,8 +19,18 @@ const handleShow = () => setShow(true);
 const handleOpenGroup = () => {
   setShowGroupHome(true);
   setSelectedGroup(groupData);
-  // setShow(true);
 };
+
+const handleDelete = async()=>{
+  try{
+      const res=await axios.delete(`http://localhost:3001/api/group/deleteGroup/${groupData._id}`)
+      console.log(res.data.groupp)
+      const sav=res.data.groupp
+      setgroupData(allgroupsdata.filter(data=>data._id!=sav._id))
+  }catch(err){
+      console.log(err)
+  }
+}
 console.log(allgroupsdata)
   return (
 
@@ -52,7 +62,7 @@ console.log(allgroupsdata)
        
         <div className='flex justify-between items-center w-full'>
           <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
-          <AiFillDelete/>
+          <AiFillDelete onClick={handleDelete}/>
         </div>
        
        </div>

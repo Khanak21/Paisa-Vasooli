@@ -112,7 +112,6 @@ function Dues({ user, thememode, toggle,setUser }) {
         console.log(err);
       }
     };
-
     getBills();
   },[])
   // }, [user._id]);
