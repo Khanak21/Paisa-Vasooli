@@ -8,18 +8,17 @@ export const ErrorMessage = (status,message)=>{
 }
 
 export const addTransaction = async(req,res)=>{
-    // const {type,amount,currency,category,desc,date,userId}=req.body
-    // console.log(req.body);
-    const transaction = Transaction(
-        // userId,
-        // type,
-        // amount,
-        // currency,
-        // category,
-        // desc,
-        // date
-        req.body.transInput
-    )
+    const {type,amount,currency,category,desc,date,userId}=req.body
+    console.log(req.body);
+    const transaction = Transaction({
+        userId,
+        type,
+        amount,
+        currency,
+        category,
+        desc,
+        date
+    })
 
     try{
         // if(!type || !amount || !category || !date){
@@ -30,9 +29,9 @@ export const addTransaction = async(req,res)=>{
 
     }catch(err){
         res.status(500).json({message:'Server error'})
+        console.log(err)
     }
     console.log(transaction)
-
 }
 
 export const getTransactions=async(req,res)=>{
@@ -69,11 +68,12 @@ export const deleteTransaction=async(req,res)=>{
         if(!tran){
             return next(createError(404,"Transaction not found"));
         }
-            await Transaction.findByIdAndRemove(req.params.id);
+            await Transaction.findByIdAndDelete(req.params.id);
             res.status(200).json("Transaction removed");
 
-    }catch{
+    }catch(err){
         res.status(200).json("unable to delete transaction");
+        console.log(err)
     }
 }
 
@@ -141,8 +141,8 @@ export const getTotalStats=async(req,res)=>{
             }
         ]);
 
-        const totalIncome = incomeResult.length > 0 ? incomeResult[0].totalIncome : 0;
-        const totalExpense = expenseResult.length > 0 ? expenseResult[0].totalExpense : 0;
+        const totalIncome = incomeResult.length > 0 ? Math.floor(incomeResult[0].totalIncome) : 0;
+        const totalExpense = expenseResult.length > 0 ? Math.floor(expenseResult[0].totalExpense) : 0;
         const balance = totalIncome - totalExpense;
 
         res.json({ totalIncome, totalExpense, balance });

@@ -62,8 +62,8 @@ const BillCard = ({ BillData }) => {
       <Card variant="light" border="success" className="mx-4 my-4">
         <Card.Body>
           <div className="flex align-middle items-center border-2">
-            <Card.Text className="text-3xl align-middle items-center border-2 my-1">${BillData.toWhom}</Card.Text>
-            <Card.Text className="text-3xl align-middle items-center border-2 my-1">${BillData.amount}</Card.Text>
+            <Card.Text className="text-3xl align-middle items-center border-2 my-1">{BillData.toWhom}</Card.Text>
+            <Card.Text className="text-3xl align-middle items-center border-2 my-1">{BillData.amount}</Card.Text>
             <Card.Text className="flex align-middle border-2 my-1 mx-4">
               <AiTwotoneCalendar size={20} />
               {BillData.dueDate}

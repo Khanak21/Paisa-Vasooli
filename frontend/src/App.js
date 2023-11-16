@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import TransactionCard from './components/TransactionCard';
 import Dues from "./pages/Dues/Dues"
-import Vault from "./pages/Vault"
+import Vault from "./pages/Vault/Vault"
 import Savings from './pages/Savings/Savings';
 import Chart from './pages/Chart/Chart';
 import Stocks from './pages/Stocks/Stocks';
@@ -66,9 +66,10 @@ function App() {
           <Route path="/transcard" element={<TransactionCard thememode={thememode} toggle={toggle}/>} />
           <Route path="/dues" element={<Dues user={user}thememode={thememode} toggle={toggle}/>} />
           <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle}/>} />
-          <Route path="/saving" element={<Savings user={user} thememode={thememode} toggle={toggle}/>} />
+          <Route path="/savings" element={<Savings2 user={user} thememode={thememode} toggle={toggle}/>} />
           <Route path="/charts" element={<Chart user={user}/>} />
           <Route path="/stocks" element={<Stocks user={user}/>} />
+          <Route path="/groups" element={<Main user={user}thememode={thememode} toggle={toggle} setUser={setUser}/>}/>
 
         </Routes>
       </BrowserRouter>
