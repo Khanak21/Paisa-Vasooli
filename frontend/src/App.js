@@ -1,3 +1,4 @@
+
 import React, { useState,useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -6,8 +7,8 @@ import Login from './pages/Login/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import TransactionCard from './components/TransactionCard';
-import Dues from './pages/Dues/Dues'
-import Vault from "./pages/Vault/Vault"
+import Dues from "./pages/Dues/Dues"
+import Vault from "./pages/Vault"
 import Savings from './pages/Savings/Savings';
 import Chart from './pages/Chart/Chart';
 import Stocks from './pages/Stocks/Stocks';
@@ -36,22 +37,22 @@ function App() {
     document.querySelector('html').classList.add(thememode);
   }, [thememode]);
 
-  useEffect(()=>{
-    const check=async()=>{
-      try{
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
-          console.log(loggedInUser);
-          const foundUser = JSON.parse(loggedInUser);
-          console.log("found user",foundUser  )
-          await setUser(foundUser);
-        }
-      }catch(err){
-        console.log(err)
-      }
-    }
-    check()
-  },[user._id])
+  // useEffect(()=>{
+  //   const check=async()=>{
+  //     try{
+  //       const loggedInUser = localStorage.getItem("user");
+  //       if (loggedInUser) {
+  //         console.log(loggedInUser);
+  //         const foundUser = JSON.parse(loggedInUser);
+  //         console.log("found user",foundUser  )
+  //         await setUser(foundUser);
+  //       }
+  //     }catch(err){
+  //       console.log(err)
+  //     }
+  //   }
+  //   check()
+  // },[user._id])
 
   return (
     <>
@@ -63,14 +64,12 @@ function App() {
           <Route path="/navbar" element={<Navbar thememode={thememode} toggle={toggle} setUser={setUser} />} />
           <Route path="/dashboard" element={<Dashboard user={user}thememode={thememode} toggle={toggle} setUser={setUser}/>} />
           <Route path="/transcard" element={<TransactionCard thememode={thememode} toggle={toggle}/>} />
-          <Route path="/dues" element={<Dues user={user}thememode={thememode} toggle={toggle} setUser={setUser}/>} />
-          <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle} user={user}/>} />
-          <Route path="/savings" element={<Savings user={user} thememode={thememode} toggle={toggle} setUser={setUser}/>} />
-          <Route path="/charts" element={<Chart user={user} thememode={thememode} toggle={toggle} />} />
-          <Route path="/stocks" element={<Stocks user={user} thememode={thememode} toggle={toggle}/>} />
-          <Route path="/groups" element={<Main user={user} thememode={thememode} toggle={toggle} setUser={setUser} />} />
-          <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
-          <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
+          <Route path="/dues" element={<Dues user={user}thememode={thememode} toggle={toggle}/>} />
+          <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle}/>} />
+          <Route path="/saving" element={<Savings user={user} thememode={thememode} toggle={toggle}/>} />
+          <Route path="/charts" element={<Chart user={user}/>} />
+          <Route path="/stocks" element={<Stocks user={user}/>} />
+
         </Routes>
       </BrowserRouter>
     </>

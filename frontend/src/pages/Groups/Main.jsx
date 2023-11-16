@@ -5,10 +5,11 @@ import {Button} from 'react-bootstrap'
 import axios from 'axios';
 import GroupCard from '../../components/GroupCard.jsx'
 
-export const Main = ({user,setUser}) => {
+export const Main = ({user,setUser,thememode,toggle}) => {
     const [showGroup, setShowGroup] = useState(false);
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
+    const [selectedGroup, setSelectedGroup] = useState(null);
 
     const handleGroupClose = () => setShowGroup(false);
     const handleGroupShow = () => setShowGroup(true);
@@ -133,15 +134,28 @@ export const Main = ({user,setUser}) => {
 
   return (
     <div>
-        <Navbar/>
-        <div className='mt-3'>
-        <button onClick={handleGroupShow} className='bg-[#198754] ml-4 me-10'>Create Group</button>
-        <button onClick={handleGroupJoinShow} className='bg-[#198754]'>Join Group</button>
-        <div>
+        <Navbar thememode={thememode} toggle={toggle}/>
+        <div className='flex flex-col gap-2 justify-start items-start ' style={{backgroundColor:thememode==="dark"?"#000435":"white"}}>
+          <div className=' flex justify-evenly items-start w-full my-2'>
+            <button onClick={handleGroupShow} className='bg-[#198754] text-white p-4 rounded-lg'>Create Group</button>
+            <button onClick={handleGroupJoinShow} className='bg-[#198754] text-white p-4 rounded-lg'>Join Group</button>
+          </div>
+        <div className='flex  flex-col justify-evenly items-start gap-6 w-full h-fit'>
+          
           {groupData?.map(data=>(
             //  console.log("mapped data",trans)
-            <GroupCard key={data._id} setgroupData = {setgroupData} groupData={data} allgroupsdata = {groupData}/> 
+            <GroupCard 
+            key={data._id} 
+            setgroupData = {setgroupData} 
+            groupData={data} 
+            allgroupsdata = {groupData}
+            setSelectedGroup={setSelectedGroup} 
+            selectedGroup={selectedGroup}
+            thememode={thememode}
+            toggle={toggle}
+            /> 
             ))}
+
         </div>
 
     <Modal show={showGroup} onHide={handleGroupClose} animation={false} centered>

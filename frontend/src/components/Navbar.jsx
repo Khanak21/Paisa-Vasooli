@@ -8,6 +8,7 @@ import 'tailwindcss/utilities.css'; // Import Tailwind CSS utilities styles
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 import ToggleBtn from './ToggleBtn';
+import ToggleBtn from './ToggleBtn';
 
 function Navbar({thememode,toggle,setUser,user}) {
   const [showNav, setShowNav] = useState(false);

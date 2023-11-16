@@ -7,25 +7,67 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import {Button} from 'react-bootstrap'
 import { AiTwotoneCalendar } from 'react-icons/ai';
+import Grouphome from './Grouphome.jsx'; 
+import './GroupCard.css'
 
-const GroupCard = ({key,setgroupData,groupData,allgroupsdata}) => {
+
+const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle}) => {
 const [show, setShow] = useState(false);
+const [showGroupHome, setShowGroupHome] = useState(false);
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
+const handleOpenGroup = () => {
+  setShowGroupHome(true);
+  setSelectedGroup(groupData);
+  // setShow(true);
+};
 console.log(allgroupsdata)
   return (
-    <div>
-    <Card  border="success" className='mx-4 my-4' style={{}} >
-      <Card.Body>
-        <div className='flex align-middle items-center border-2'>
-        <Card.Text className='text-3xl align-middle items-center border-2 my-1'>{groupData.title}</Card.Text>
-        <Card.Text className='text-3xl align-middle items-center border-2 my-1'>{groupData.groupCode}</Card.Text>
-        <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete/>
-        <Button variant="primary" onClick={handleShow} style={{"cursor":"pointer"}}> Open Group</Button>
+
+    <div className='flex justify-between items-start card-parent h-full p-1 ' style={{backgroundColor:thememode==="dark"?"#00008B":"white"}}>
+
+     <Card  border="success" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"rgb(137, 204, 255)":"white"}} >
+
+      <Card.Body className='w-full'>
+
+        <div className='flex flex-col justify-start items-start gap-1'>
+
+          <Card.Text className='text-md justify-start items-center  '>
+          <b> Group Title</b>{" "}:-{" "}{groupData.title}
+          </Card.Text>
+
+          <Card.Text className='text-md w-fit justify-start items-center '>
+            <b> Group Code </b>{" "}:- <br/>
+            <input type="text" value= {groupData.groupCode} name="" id="" />
+          
+          </Card.Text>
+
         </div>
+
+       <div className='w-5/10 my-2 flex flex-col justify-center items-start gap-3'>
+        
+        <Button className='rounded-sm p-1' variant="primary" onClick={handleOpenGroup} style={{"cursor":"pointer"}}>
+           Open Group
+        </Button>
+       
+        <div className='flex justify-between items-center w-full'>
+          <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
+          <AiFillDelete/>
+        </div>
+       
+       </div>
+
       </Card.Body>
+
     </Card>
+   
+
+    <div className='group-chat'>
+    {showGroupHome && selectedGroup && selectedGroup._id === groupData._id && (
+        <Grouphome groupData={groupData} />
+      )}
    </div>
+  </div>
   )
 }
 
