@@ -97,3 +97,58 @@ export const getmembers = async(req,res)=>{
         console.log(err)
     }
 }
+export const splitBill = async (req, res) => {
+    const { amount, groupData } = req.body.input;
+    const n = groupData.members.length;
+  
+    try {
+      const billSplit = await Promise.all(
+        groupData.members.map(async (mem) => {
+          const { username } = await user.findById(mem);
+          return {
+            amount: amount / n,
+            name: username,
+            userId: mem,
+            settled: false,
+          };
+        })
+      )
+      const updatedgroup = await group.findByIdAndUpdate(
+        groupData._id,
+        {$push:{billSplit:billSplit}},
+        {new:true}
+       )
+  
+      res.json(updatedgroup);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+  export const markPaid = async (req, res) => {
+    // Group id
+    const id = req.params.id;
+    // User id
+    const userId = req.body.userId;
+
+    try {
+        const group1 = await group.findById(id);
+
+        // Find the index of the user in the billSplit array
+        const userIndex = group1.billSplit[0].findIndex((mem) => mem.userId === userId);
+
+        // If the user is found, update the settled field
+        if (userIndex !== -1) {
+            // Convert the string to a boolean and toggle it
+            group1.billSplit[0][userIndex].settled = group1.billSplit[0][userIndex].settled === 'true' ? 'false' : 'true';
+            await group1.save();
+        }
+
+        res.json(group1);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+

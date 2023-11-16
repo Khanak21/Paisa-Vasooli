@@ -15,6 +15,9 @@ const groupSchema = new mongoose.Schema({
     },
     title:{
         type:String,//group title
+    },
+    billSplit:{
+        type:[Object]
     }
 },{timestamps: true})
 
