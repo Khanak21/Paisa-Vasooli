@@ -15,6 +15,7 @@ import Stocks from './pages/Stocks/Stocks';
 import { Main } from './pages/Groups/Main';
 import ToggleBtn from './components/ToggleBtn';
 import Savings2 from './pages/Savings/Savings2';
+import SimplifyDebt from './pages/SimplifyDebt'
 
 
 function App() {
@@ -73,6 +74,7 @@ function App() {
           <Route path="/groups" element={<Main user={user} thememode={thememode} toggle={toggle} />} />
           <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
           <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
+          <Route path='/simplify' element={<SimplifyDebt/>}></Route>
 
         </Routes>
       </BrowserRouter>

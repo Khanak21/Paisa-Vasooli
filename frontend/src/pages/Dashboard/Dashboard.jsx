@@ -254,7 +254,7 @@ console.log(user._id)
                 Balance
               </div>
                 <div>
-              ]
+              
                 &#8377;{stats.balance}
                 </div>
               </div>

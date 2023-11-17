@@ -18,6 +18,9 @@ const groupSchema = new mongoose.Schema({
     },
     billSplit:{
         type:[Object]
+    },
+    simplifyDebt:{
+        type:[Array]
     }
 },{timestamps: true})
 

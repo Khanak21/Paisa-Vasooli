@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import  jwt  from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { validationResult } from "express-validator";
+import Splitwise from 'splitwise-js-map';
 
 export const  creategroup= async(req,res)=>{
     const {userId,title} = req.body.groupInput
@@ -210,7 +211,24 @@ export const markApproved = async (req, res) => {
 };
 
 
+export const simplifyDebt = async(req,res)=>{
+    const debts = req.body.outputArray
+    const id=req.params.id
 
+    try{
+        const splits = Splitwise(debts);
+        splits.forEach(subArray => subArray.push(false));
+        const updatedgroup = await group.findByIdAndUpdate(
+            id,
+            {$push:{simplifyDebt:splits}},
+            {new:true}
+           )
+    console.log(splits);
+    res.json(splits)
+    }catch(err){
+        res.json("unable to simplify")
+    }
+}
 
 
 export const deleteGroup=async(req,res)=>{

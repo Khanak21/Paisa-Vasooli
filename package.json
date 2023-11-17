@@ -32,6 +32,7 @@
     "react-csv": "^2.2.2",
     "react-icons": "^4.11.0",
     "react-scripts": "^5.0.1",
-    "sendmail": "^1.6.1"
+    "sendmail": "^1.6.1",
+    "splitwise-js-map": "^1.0.3"
   }
 }

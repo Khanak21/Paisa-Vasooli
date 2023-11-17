@@ -48,12 +48,13 @@ export const Grouphome = ({groupData,user}) => {
         console.log(err)
       }
     }
+    const handlePaid = ()=>{
+      const func=()=>{
+        console.log("clicked")
 
-    const handlePaid = (e)=>{
-      e.preventDefault()
-      console.log("clicked")
-
-      // try{
+      }
+      func()
+           // try{
 
       //   const res=await axios.put(`http://localhost:3001/api/group/markpaid/${groupData._id}`,{userId:id})
       //   setPaid(prev=>!prev)
@@ -63,6 +64,11 @@ export const Grouphome = ({groupData,user}) => {
       //   console.log(err)
       // }
     }
+  
+   
+    
+ 
+
     const handleApproved = async(id)=>{
       try{
         const res=await axios.put(`http://localhost:3001/api/group/markapproved/${groupData._id}`,{userId:id})
@@ -90,7 +96,6 @@ export const Grouphome = ({groupData,user}) => {
     
    
         <div className='flex flex-col justify-center items-start h-full'>
-      <Button onClick={handlePaid}>click</Button>
 
           <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
             Title 
@@ -104,7 +109,7 @@ export const Grouphome = ({groupData,user}) => {
            </div>
            <div className="w-full bg-orange-200 h-full">
             <Button variant='success' onClick={handleShow}>Split Bill</Button>
-            <Modal show={false} onHide={handleClose} animation={false} centered>
+            <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
           <Modal.Title>Split Bill</Modal.Title>
         </Modal.Header>
@@ -134,7 +139,6 @@ export const Grouphome = ({groupData,user}) => {
 
         ))
       }
-
             {/* <b>Chat</b> */}
           </div>
         </div>
