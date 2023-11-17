@@ -33,6 +33,17 @@ export const  creategroup= async(req,res)=>{
     console.log(err);
     }
 };
+export const  getgroup= async(req,res)=>{
+    const {groupId} = req.params
+       
+    try {
+        const grp= await group.findById(groupId)
+        res.status(200).json(grp)
+    }
+    catch (err) {
+    console.log(err);
+    }
+};
 
 export const joingroup = async(req,res)=>{
     const {userId,JoingCode} = req.body.joincode

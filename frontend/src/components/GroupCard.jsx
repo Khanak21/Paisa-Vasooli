@@ -9,9 +9,10 @@ import {Button} from 'react-bootstrap'
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import Grouphome from './Grouphome.jsx'; 
 import './GroupCard.css'
-
+import { useNavigate } from 'react-router-dom';
 
 const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle,user}) => {
+  const navigate = useNavigate()
 const [show, setShow] = useState(false);
 const [showGroupHome, setShowGroupHome] = useState(false);
 const handleClose = () => setShow(false);
@@ -56,7 +57,7 @@ console.log(allgroupsdata)
 
        <div className='w-5/10 my-2 flex flex-col justify-center items-start gap-3'>
         
-        <Button className='rounded-sm p-1' variant="primary" onClick={handleOpenGroup} style={{"cursor":"pointer"}}>
+        <Button className='rounded-sm p-1' variant="primary" onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
            Open Group
         </Button>
        
@@ -72,11 +73,7 @@ console.log(allgroupsdata)
     </Card>
    
 
-    <div className='group-chat'>
-    {showGroupHome && selectedGroup && selectedGroup._id === groupData._id && (
-        <Grouphome groupData={groupData} user={user}/>
-      )}
-   </div>
+  
   </div>
   )
 }

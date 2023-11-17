@@ -5,7 +5,8 @@ import {Button} from 'react-bootstrap'
 import axios from 'axios';
 import GroupCard from '../../components/GroupCard.jsx'
 
-export const Main = ({user,setUser,thememode,toggle}) => {
+export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => {
+  console.log(groupData)
     const [showGroup, setShowGroup] = useState(false);
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
@@ -18,8 +19,6 @@ export const Main = ({user,setUser,thememode,toggle}) => {
 
     const handleFriendClose = () => setShowFriend(false);
     const handleFriendShow = () => setShowFriend(true);
-
-
 
     const [groupInput,setgroupInput] = useState({
       userId:user._id,
@@ -60,7 +59,6 @@ export const Main = ({user,setUser,thememode,toggle}) => {
       );
     };
 
-    const [groupData,setgroupData]=useState([])
 
     const handleSubmit =e=>{  
       console.log("yoyy")

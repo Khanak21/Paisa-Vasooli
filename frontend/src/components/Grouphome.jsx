@@ -4,8 +4,23 @@ import Modal from 'react-bootstrap/Modal';
 import {Button} from 'react-bootstrap'
 import axios from 'axios';
 import GroupCard from './GroupCard.jsx'
+import { useParams } from 'react-router-dom';
 
-export const Grouphome = ({groupData,user}) => {
+export const Grouphome = ({user}) => {
+  const params = useParams()
+  console.log(params)
+  const [groupData,setgroupData]=useState([])
+  // useEffect(()=>{
+  //   const getgroup=async()=>{
+  //     try{
+  //       // const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
+  //   setgroupData(res.data)
+  //     }catch(err){
+  //       console.log(err)
+  //     }
+  //   }
+
+  // },[])
   console.log(groupData)
     const [showGroup, setShowGroup] = useState(false);
     const [show, setShow] = useState(false);
@@ -95,9 +110,9 @@ export const Grouphome = ({groupData,user}) => {
   return (
     
    
-        <div className='flex flex-col justify-center items-start h-full'>
+        <div className='flex flex-col justify-center items-start h-full'>group home
 
-          <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
+          {/* <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
             Title 
           </div>
           
@@ -140,8 +155,8 @@ export const Grouphome = ({groupData,user}) => {
         ))
       }
             {/* <b>Chat</b> */}
-          </div>
-        </div>
+          {/* </div> */}
+        </div> 
     
   )
 }

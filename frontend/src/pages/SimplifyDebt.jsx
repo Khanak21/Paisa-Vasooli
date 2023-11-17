@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios"
 import Navbar from '../components/Navbar';
 
-const ExampleComponent = () => {
+const SimplifyDebt = () => {
   const [inputFields, setInputFields] = useState([]);
   const [data,setData] = useState([])
   console.log(inputFields)
@@ -108,4 +108,4 @@ const ExampleComponent = () => {
   );
 };
 
-export default ExampleComponent;
+export default SimplifyDebt;

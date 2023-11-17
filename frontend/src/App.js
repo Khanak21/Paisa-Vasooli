@@ -16,10 +16,13 @@ import { Main } from './pages/Groups/Main';
 import ToggleBtn from './components/ToggleBtn';
 import Savings2 from './pages/Savings/Savings2';
 import SimplifyDebt from './pages/SimplifyDebt'
+import Grouphome from './components/Grouphome';
 
 
 function App() {
   const [user,setUser]=useState({})
+  const [groupData,setgroupData]=useState([])
+
   console.log(user)
 
 
@@ -71,7 +74,10 @@ function App() {
           <Route path="/saving" element={<Savings user={user} thememode={thememode} toggle={toggle}/>} />
           <Route path="/charts" element={<Chart user={user} thememode={thememode} toggle={toggle} />} />
           <Route path="/stocks" element={<Stocks user={user} thememode={thememode} toggle={toggle}/>} />
-          <Route path="/groups" element={<Main user={user} thememode={thememode} toggle={toggle} />} />
+          <Route path="/groups" element={<Main user={user} thememode={thememode} toggle={toggle} groupData={groupData} setgroupData={setgroupData} />} />
+          <Route path="/billsplit/:id" element={<Grouphome user={user}/>}/>
+          <Route path="/simplifydebt/:id" element={<SimplifyDebt user={user}/>}/>
+          
           <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
           <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
           <Route path='/simplify' element={<SimplifyDebt/>}></Route>
