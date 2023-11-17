@@ -61,17 +61,26 @@ const BillCard = ({ BillData }) => {
     <div>
       <Card variant="light" border="success" className="mx-4 my-4">
         <Card.Body>
-          <div className="flex align-middle items-center border-2">
-            <Card.Text className="text-3xl align-middle items-center border-2 my-1">{BillData.toWhom}</Card.Text>
-            <Card.Text className="text-3xl align-middle items-center border-2 my-1">{BillData.amount}</Card.Text>
-            <Card.Text className="flex align-middle border-2 my-1 mx-4">
-              <AiTwotoneCalendar size={20} />
-              {BillData.dueDate}
+          <Card.Text className="" style={{backgroundColor:"rgb(134, 199, 255)"}}>Title:-{"  "} {BillData.title}</Card.Text>
+          <div className="flex justify-between items-center border-2 gap-3 p-2">
+            <div className='flex flex-col justify-center items-start'>
+            <Card.Text className="text-md align-middle items-center "><b>To :-{" "}{BillData.toWhom} </b></Card.Text>
+            <Card.Text className="text-md align-middle items-center"><b>Due Amount :-{" " }&#8377; {BillData.amount} </b> </Card.Text>
+            </div>
+          
+          <div className='flex flex-col w-full justify-end items-start gap-2 '>
+            <Card.Text className="flex items-center justify-evenly  text-md w-full">
+               <br/>
+             <b>Date:-{" "}  {BillData.dueDate} </b>
+             <AiTwotoneCalendar size={20} />
             </Card.Text>
+
+          <div className='flex justify-end w-full gap-4 mr-6'>
             <AiFillEdit onClick={handleShow} style={{ cursor: 'pointer' }} />
             <AiFillDelete onClick={() => handleDelete(BillData._id)} style={{ cursor: 'pointer' }} />
           </div>
-          <Card.Text>{BillData.title}</Card.Text>
+          </div>
+          </div>
         </Card.Body>
       </Card>
 

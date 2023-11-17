@@ -4,7 +4,7 @@ import MonthlyChart from '../../components/MonthlyChart'
 import YearlyChart from '../../components/YearlyChart'
 import axios from 'axios'
 import Navbar from '../../components/Navbar'
-const Chart = ({user}) => {
+const Chart = ({user,thememode,toggle}) => {
     const [weeklyData,setWeeklyData]=useState([])
     const [monthlyData,setMonthlyData]=useState([])
     const [yearlyData,setYearlyData]=useState([])
@@ -48,20 +48,32 @@ const Chart = ({user}) => {
 
   return (
     <div>
-        <Navbar/>
+        <Navbar thememode={thememode} toggle={toggle}/>
+    <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#000435":"white"}}>
+      <div className='w-full flex justify-evenly items-center'>
+          <div className='font-bold text-5xl  flex justify-center items-center' style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:"darkblue"}}>Weekly Chart</div>
         <div className='w-[800px]'>
-            Weekly chart
         <WeeklyChart weeklyData={weeklyData}/>
         </div>
+
+    </div>
+
+    <div className='w-full flex justify-evenly items-center'>
         <div className='w-[800px]'>
-            Monthly chart
         <MonthlyChart monthlyData={monthlyData}/>
         </div>
+    <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:"darkblue"}}>Monthly Chart</div>
+
+    </div>
+
+    <div className='w-full flex justify-evenly items-center'>
+    <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:"darkblue"}}>Yearly Chart</div>
         <div className='w-[800px]'>
-            Yearly chart
+           
         <YearlyChart yearlyData={yearlyData}/>
         </div>
-
+    </div>
+      </div>
     </div>
   )
 }

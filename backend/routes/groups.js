@@ -12,4 +12,5 @@ router.put("/markapproved/:id",markApproved)
 
 
 
+router.delete("/deleteGroup/:id",deleteGroup)
 export default router;

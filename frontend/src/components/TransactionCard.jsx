@@ -61,23 +61,25 @@ const TransactionCard = ({ transactionData, key }) => {
   return (
     <div>
     <Card variant="light" border="success" className='mx-4 my-4'>
-      <Card.Header>{transactionData.category}</Card.Header>
+      <Card.Header className='font-bold'>Transaction Category{" "}:-{" "}{transactionData.category}</Card.Header>
       <Card.Body>
-        <div className='flex align-middle items-center border-2'>
-        <Card.Text className='text-3xl align-middle items-center my-1'>&#8377;{transactionData.amount}</Card.Text>
-        <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text>
-        <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/><AiFillDelete onClick={()=>{handleDelete(transactionData._id)}} style={{"cursor":"pointer"}}/>
+        <div className='flex justify-between items-center border-2'>
+        <Card.Text className='text-md align-middle items-center my-1 font-bold'>Transaction Amount{" "}:-&#8377;{" "}{transactionData.amount}</Card.Text>
+        {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
+      <div className='flex justify-between gap-2'>
+        <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
+        <AiFillDelete onClick={()=>{handleDelete(transactionData._id)}} style={{"cursor":"pointer"}}/>
+      </div>
+        
         </div>
-        <Card.Text>
-            {transactionData.desc}
+        <Card.Text className='font-bold my-1'>
+          Transaction Data{" "}  {transactionData.desc}
         </Card.Text>
       </Card.Body>
     </Card>
     
      <Modal show={show} onHide={handleClose} animation={false} centered>
-     <Modal.Header closeButton>
-       <Modal.Title>Edit Transaction</Modal.Title>
-     </Modal.Header>
+   
      <Modal.Body>
          {/* Add transaction input section */}
          <label htmlFor="type">Transaction type: </label>
@@ -89,21 +91,21 @@ const TransactionCard = ({ transactionData, key }) => {
                  className='px-1 border-1 py-1 mx-2 rounded-md'
                  required
                  >
-         <option value="expense">Expense</option>
-         <option value="income">Income</option>
+         <option value="expense" className='font-bold'>Expense</option>
+         <option value="income" className='font-bold'>Income</option>
          </select><br/>
       <Card variant="light" border="success" className="mx-4 my-4">
         <Card.Header className='font-bold'>Transaction Category{" "} :-{" "} {transactionData.category}</Card.Header>
         <Card.Body>
           <div className="flex justify-between items-center gap-40 border-2">
-
-            <Card.Text className="text-3xl align-middle items-center my-1">&#x20B9;{ " "}  {transactionData.amount}</Card.Text>
- 
+       
+            <Card.Text className="text-2xl  flex justify-evenly items-center font-bold mx-1">&#x20B9;{transactionData.amount}</Card.Text>
+     
             <div className='flex justify-between items-center gap-40'>
-            <Card.Text className="flex align-middle my-1 mx-4">
-              <AiTwotoneCalendar size={20} />
-              {transactionData.date && transactionData.date.substring(0, 10)}
-            </Card.Text>
+                <Card.Text className="flex align-middle my-1 mx-2">
+                   <AiTwotoneCalendar size={20} style={{cursor:"pointer"}} />
+                    {transactionData.date && transactionData.date.substring(0, 10)}
+                 </Card.Text>
             
 
             <div className='flex justify-between items-center gap-6'>
@@ -119,7 +121,7 @@ const TransactionCard = ({ transactionData, key }) => {
       </Card>
 
       <Modal show={show} onHide={handleClose} animation={false} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{cursor:"pointer"}}>
           <Modal.Title>Edit Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -133,8 +135,8 @@ const TransactionCard = ({ transactionData, key }) => {
             className="px-1 border-1 py-1 mx-2 rounded-md"
             required
           >
-            <option value="expense">Expense</option>
-            <option value="income">Income</option>
+            <option value="expense" className='font-bold'>Expense</option>
+            <option value="income" className='font-bold'>Income</option>
           </select>
           <br />
 
@@ -151,7 +153,7 @@ const TransactionCard = ({ transactionData, key }) => {
           <input type="date" name={'date'} value={date} onChange={handleTransInput('date')} required />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={(e) => handleSubmit(e, transactionData._id)} required>
+          <Button variant="success" onClick={(e) => handleSubmit(e, transactionData._id)} required className='rounded-md'>
             Save
           </Button>
         </Modal.Footer>

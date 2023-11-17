@@ -91,9 +91,10 @@ function Savings({user,thememode,toggle,setUser}) {
   // },[user._id])
 
   return (
+    <>
+      <Navbar thememode={thememode} toggle={toggle}/>
     <div className="savings-container">
       {/* <div className="header"></div> */}
-      <Navbar thememode={thememode} toggle={toggle}/>
       <div className="main-body">
         <div className="main-head">
           <h2>
@@ -220,6 +221,7 @@ function Savings({user,thememode,toggle,setUser}) {
         </div>
       )}
     </div>
+    </>
   );
 }
 
