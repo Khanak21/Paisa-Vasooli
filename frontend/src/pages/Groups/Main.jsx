@@ -153,6 +153,7 @@ export const Main = ({user,setUser,thememode,toggle}) => {
             selectedGroup={selectedGroup}
             thememode={thememode}
             toggle={toggle}
+            user={user}
             /> 
             ))}
 

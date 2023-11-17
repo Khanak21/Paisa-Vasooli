@@ -6,41 +6,41 @@ import axios from "axios"
 import StockChart from '../../components/StockChart'
 
 const Stocks = ({user}) => {
-    const [input,setInput]=useState({})
-    // const [data,setData] = useState([{ ticker: 'AAPL', company: 'Apple' }])
-  const [stockData,setStockData]=useState([{ ticker: 'AAPL', company: 'Apple' }])
-  console.log(stockData)
-    //handling user input for ticker symbol and company/crypto name
-    const handleInput = name=>e=>{
-        setInput(prev=>({...prev,[name]:e.target.value}))
-        console.log(input)
-    }
-    const handleSubmit = async()=>{
-        try{
-            const res=await axios.post(`http://localhost:3001/api/user/addStock/${user._id}`,{input})
-            console.log(res.data.user.stocks)
-            const val=res.data.user.stocks
-            setStockData(prev=>[...prev,val])
-            setInput({
-                ticker:'',
-                company:''
-            })
+//     const [input,setInput]=useState({})
+//     // const [data,setData] = useState([{ ticker: 'AAPL', company: 'Apple' }])
+//   const [stockData,setStockData]=useState([{ ticker: 'AAPL', company: 'Apple' }])
+//   console.log(stockData)
+//     //handling user input for ticker symbol and company/crypto name
+//     const handleInput = name=>e=>{
+//         setInput(prev=>({...prev,[name]:e.target.value}))
+//         console.log(input)
+//     }
+//     const handleSubmit = async()=>{
+//         try{
+//             const res=await axios.post(`http://localhost:3001/api/user/addStock/${user._id}`,{input})
+//             console.log(res.data.user.stocks)
+//             const val=res.data.user.stocks
+//             setStockData(prev=>[...prev,val])
+//             setInput({
+//                 ticker:'',
+//                 company:''
+//             })
 
-        }catch(err){
-            console.log(err)
-        }
-    }
-    useEffect(()=>{
-      const getStocks = async()=>{ try{ const res=await axios.get(`http://localhost:3001/api/user/getStocks/${user._id}`)
-        console.log("widget",res.data)
-        setStockData(res.data.val)
-    }catch(err){
-        console.log(err)
-    }
-    }
-    getStocks()
+//         }catch(err){
+//             console.log(err)
+//         }
+//     }
+//     useEffect(()=>{
+//       const getStocks = async()=>{ try{ const res=await axios.get(`http://localhost:3001/api/user/getStocks/${user._id}`)
+//         console.log("widget",res.data)
+//         setStockData(res.data.val)
+//     }catch(err){
+//         console.log(err)
+//     }
+//     }
+//     getStocks()
 
-    },[])
+//     },[])
 
 
   return (
@@ -66,7 +66,7 @@ const Stocks = ({user}) => {
         {/* </div> */}
         <div className="mx-4 my-4">
         <TradingViewWidget sym={"AAPL"}/>
-        <TradingViewWidget sym={"MSFT"}/>
+        {/* <TradingViewWidget sym={"MSFT"}/> */}
 
         </div>
     </div>

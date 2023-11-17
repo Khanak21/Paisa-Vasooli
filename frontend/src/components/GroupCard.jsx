@@ -11,7 +11,7 @@ import Grouphome from './Grouphome.jsx';
 import './GroupCard.css'
 
 
-const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle}) => {
+const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle,user}) => {
 const [show, setShow] = useState(false);
 const [showGroupHome, setShowGroupHome] = useState(false);
 const handleClose = () => setShow(false);
@@ -64,7 +64,7 @@ console.log(allgroupsdata)
 
     <div className='group-chat'>
     {showGroupHome && selectedGroup && selectedGroup._id === groupData._id && (
-        <Grouphome groupData={groupData} />
+        <Grouphome groupData={groupData} user={user}/>
       )}
    </div>
   </div>

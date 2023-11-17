@@ -14,6 +14,8 @@ import {AiOutlineFile} from "react-icons/ai"
 function Vault({thememode,toggle,user}) {
   const [fileUpload, setfileUpload] = useState(null);
   const [fileUrls, setfileUrls] = useState([]);
+  console.log(fileUrls)
+  console.log("vault user",user)
 
   const filesListRef = ref(storage, "files/");
 
@@ -28,7 +30,7 @@ function Vault({thememode,toggle,user}) {
         const addUrl= async()=>{
           try{
             const res = await axios.post(`http://localhost:3001/api/user/addUrl/${user._id}`,{url,fileName})
-            console.log(res.data)
+            console.log("file url",res.data)
 
           }catch(err){
             console.log(err)

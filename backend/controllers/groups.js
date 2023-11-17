@@ -110,6 +110,7 @@ export const splitBill = async (req, res) => {
             name: username,
             userId: mem,
             settled: false,
+            approved:false
           };
         })
       )
@@ -126,7 +127,33 @@ export const splitBill = async (req, res) => {
     }
   };
 
-  export const markPaid = async (req, res) => {
+//   export const markPaid = async (req, res) => {
+//     // Group id
+//     const id = req.params.id;
+//     // User id
+//     const userId = req.body.userId;
+
+
+//     try {
+        
+//         const group1 = await group.findById(id);
+
+//         // Find the index of the user in the billSplit array
+//         const userIndex = group1.billSplit[0].findIndex((mem) => mem.userId === userId);
+
+//         // If the user is found, update the settled field
+//         if (userIndex !== -1) {
+//             // Convert the string to a boolean and toggle it
+//             group1.billSplit[0][userIndex].settled = group1.billSplit[0][userIndex].settled === true ? false : true;
+//             await group1.save();
+//         }
+//         res.json(group1);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// };
+export const markPaid = async (req, res) => {
     // Group id
     const id = req.params.id;
     // User id
@@ -140,9 +167,11 @@ export const splitBill = async (req, res) => {
 
         // If the user is found, update the settled field
         if (userIndex !== -1) {
-            // Convert the string to a boolean and toggle it
-            group1.billSplit[0][userIndex].settled = group1.billSplit[0][userIndex].settled === 'true' ? 'false' : 'true';
-            await group1.save();
+            const currentSettledValue = group1.billSplit[0][userIndex].settled;
+            await group.updateOne(
+                { _id: group1._id, 'billSplit.0.userId': userId },
+                { $set: { 'billSplit.0.$.settled': !currentSettledValue } }
+            );
         }
 
         res.json(group1);
@@ -151,4 +180,32 @@ export const splitBill = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+export const markApproved = async (req, res) => {
+    // Group id
+    const id = req.params.id;
+    // User id
+    const userId = req.body.userId;
+
+    try {
+        const group1 = await group.findById(id);
+
+        // Find the index of the user in the billSplit array
+        const userIndex = group1.billSplit[0].findIndex((mem) => mem.userId === userId);
+
+        // If the user is found, update the settled field
+        if (userIndex !== -1) {
+            const currentApprovedValue = group1.billSplit[0][userIndex].approved;
+            await group.updateOne(
+                { _id: group1._id, 'billSplit.0.userId': userId },
+                { $set: { 'billSplit.0.$.approved': !currentApprovedValue } }
+            );
+        }
+
+        res.json(group1);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 

@@ -5,7 +5,7 @@ import {Button} from 'react-bootstrap'
 import axios from 'axios';
 import GroupCard from './GroupCard.jsx'
 
-export const Grouphome = ({groupData}) => {
+export const Grouphome = ({groupData,user}) => {
   console.log(groupData)
     const [showGroup, setShowGroup] = useState(false);
     const [show, setShow] = useState(false);
@@ -21,6 +21,9 @@ export const Grouphome = ({groupData}) => {
     const handleFriendClose = () => setShowFriend(false);
     const handleFriendShow = () => setShowFriend(true);
     const [membersdata,setmembersdata]=useState([])
+    const [paid,setPaid] = useState(false)
+    const [approved,setApproved] = useState(false)
+
 
     const [input, setInput] = useState({
       amount: '',
@@ -46,9 +49,24 @@ export const Grouphome = ({groupData}) => {
       }
     }
 
-    const handlePaid = async(id)=>{
+    const handlePaid = (e)=>{
+      e.preventDefault()
+      console.log("clicked")
+
+      // try{
+
+      //   const res=await axios.put(`http://localhost:3001/api/group/markpaid/${groupData._id}`,{userId:id})
+      //   setPaid(prev=>!prev)
+      //   console.log("clicked")
+      //   console.log(res.data)
+      // }catch(err){
+      //   console.log(err)
+      // }
+    }
+    const handleApproved = async(id)=>{
       try{
-        const res=await axios.put(`http://localhost:3001/api/group/markpaid/${groupData._id}`,{userId:id})
+        const res=await axios.put(`http://localhost:3001/api/group/markapproved/${groupData._id}`,{userId:id})
+        setApproved(prev=>!prev)
         console.log(res.data)
       }catch(err){
         console.log(err)
@@ -69,8 +87,11 @@ export const Grouphome = ({groupData}) => {
     },[])
 
   return (
+    
    
         <div className='flex flex-col justify-center items-start h-full'>
+      <Button onClick={handlePaid}>click</Button>
+
           <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
             Title 
           </div>
@@ -106,7 +127,9 @@ export const Grouphome = ({groupData}) => {
           <div  key={mem.userId}>
             <div>{mem.name}</div>
             <div>{mem.amount}</div>
-            <button onClick={()=>handlePaid(mem.userId)}>Mark as paid</button>
+            <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem.settled===false) ? "Mark as paid" : "Paid"}</button>
+           {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
+
           </div>
 
         ))

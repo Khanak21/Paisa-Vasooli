@@ -65,7 +65,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard user={user}thememode={thememode} toggle={toggle} setUser={setUser}/>} />
           <Route path="/transcard" element={<TransactionCard thememode={thememode} toggle={toggle}/>} />
           <Route path="/dues" element={<Dues user={user}thememode={thememode} toggle={toggle}/>} />
-          <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle}/>} />
+          <Route path="/vault" element={<Vault thememode={thememode} toggle={toggle} user={user}/>} />
           <Route path="/saving" element={<Savings user={user} thememode={thememode} toggle={toggle}/>} />
           <Route path="/charts" element={<Chart user={user} thememode={thememode} toggle={toggle} />} />
           <Route path="/stocks" element={<Stocks user={user} thememode={thememode} toggle={toggle}/>} />
