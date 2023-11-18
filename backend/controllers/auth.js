@@ -12,22 +12,49 @@ export const ErrorMessage = (status,message)=>{
   return error;
 }
 
-export const signup = async(req,res,next)=>{
-    try {
+// export const signup = async(req,res,next)=>{
+//     try {
+//     const salt = bcrypt.genSaltSync(10);
+//     const hash = bcrypt.hashSync(req.body.password, salt);
+//     const existingUser = await User.findOne({ email: req.body.email });
+
+//     if (existingUser) {
+//       // Handle the case where the email is already in use
+//       return res.status(400).json({ success: false, message: "Email is already in use." });
+//     }
+//     const newUser = new User({ ...req.body, password: hash });
+
+//     await newUser.save();
+//     res.status(200).json({newUser});
+//   } catch (err) {
+//     next(err)
+//     console.log(err);
+//   }
+// };
+
+export const signup = async (req, res, next) => {
+  try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-    const existingUser = await User.findOne({ email: req.body.email });
 
-    if (existingUser) {
-      // Handle the case where the email is already in use
+    // Check if the email is already in use
+    const existingUserEmail = await User.findOne({ email: req.body.email });
+    if (existingUserEmail) {
       return res.status(400).json({ success: false, message: "Email is already in use." });
     }
+
+    // Check if the username is already in use
+    const existingUsername = await User.findOne({ username: req.body.username });
+    if (existingUsername) {
+      return res.status(400).json({ success: false, message: "Username is already in use." });
+    }
+
     const newUser = new User({ ...req.body, password: hash });
 
     await newUser.save();
-    res.status(200).json({newUser});
+    res.status(200).json({ newUser });
   } catch (err) {
-    next(err)
+    next(err);
     console.log(err);
   }
 };

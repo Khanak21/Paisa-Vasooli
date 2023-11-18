@@ -10,6 +10,7 @@ const SimplifyDebt = ({user}) => {
   const [data,setData] = useState([])
   console.log(inputFields)
   console.log(data)
+  const [membersdata,setmembersdata]=useState([])
 
   const handleInputChange = (index, fieldName, value) => {
     const updatedInputFields = [...inputFields];
@@ -27,8 +28,6 @@ const SimplifyDebt = ({user}) => {
     setInputFields(updatedInputFields);
   };
   
- 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(inputFields);
@@ -91,27 +90,59 @@ const SimplifyDebt = ({user}) => {
      getdebts()
   },[])
 
+  useEffect(()=>{
+    const getMembers = async()=>{
+      try{
+        const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`)//add user Id
+        console.log(res.data)
+        setmembersdata(res.data)
+      }catch(err){
+        console.log(err)
+      }
+    }
+    getMembers()
+  },[])
+
+  const Dropdown = ({ options, value, onChange }) => (
+    <select value={value} onChange={onChange} className="w-80 m-4 p-2 border border-gray-300 rounded-md" disabled={options.length <= 1}>
+      <option value="" disabled>Select members</option>
+      {options.map((option, index) => (
+        <option key={index} value={option.username}>
+          {option.username}
+        </option>
+      ))}
+    </select>
+  );
+
   return (
     <div>
         <Navbar/>
+        <div className='w-full text-justify bg-amber-500 text-black font-bold'>
+                {console.log(id)}
+               {membersdata?.map(data=>(
+                <div>Group Members :- {" "}{data.username}{" "}</div>
+                ))}
+           </div>
         <div className='text-4xl m-4 w-full flex justify-center'>Simplify your debts!</div>
-   <form onSubmit={handleSubmit}>
-        {inputFields.map((field, index) => (
+        <form onSubmit={handleSubmit}>
+          {inputFields.map((field, index) => (
           <div className='flex justify-center'><div key={index}>
-            <input
-              type="text"
-              value={field.paidBy}
-              onChange={(e) => handleInputChange(index, 'paidBy', e.target.value)}
-              placeholder="Paid By"
-              className='w-80 m-4'
-            />
-            <input
-              type="text"
-              value={field.paidFor}
-              onChange={(e) => handleInputChange(index, 'paidFor', e.target.value)}
-              placeholder="Paid For"
-              className='w-80'
-            />
+             <div>
+              <label htmlFor={`paidBy-${index}`}>Paid By</label>
+              <Dropdown
+                options={membersdata}
+                value={field.paidBy}
+                onChange={(e) => handleInputChange(index, 'paidBy', e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor={`paidFor-${index}`}>Paid For</label>
+              <Dropdown
+                options={membersdata}
+                value={field.paidFor}
+                onChange={(e) => handleInputChange(index, 'paidFor', e.target.value)}
+              />
+            </div>
             <input
               type="number"
               value={field.amount}
@@ -142,8 +173,6 @@ const SimplifyDebt = ({user}) => {
                         const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`,debt)
                         setData(res.data.simplifyDebt)
                         console.log(res.data)
-            
-            
                     }catch(err){
                         console.log(err)
                     }

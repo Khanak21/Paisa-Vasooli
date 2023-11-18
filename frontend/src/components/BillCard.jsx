@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const BillCard = ({ user,BillData }) => {
+const BillCard = ({ billflag,setbillflag,user,BillData }) => {
   const [show, setShow] = useState(false);
   const [BillInput, setBillInput] = useState({
     userId: user._id,
@@ -40,6 +40,7 @@ const BillCard = ({ user,BillData }) => {
         toWhom: '',
         recurring: '',
         });
+        setbillflag((prev)=>!(prev))
       } catch (err) {
         console.log(err);
       }
@@ -52,6 +53,7 @@ const BillCard = ({ user,BillData }) => {
       try {
         const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${id}`);
         console.log(res.data);
+        setbillflag((prev)=>!(prev))
       } catch (err) {
         console.log(err);
       }
