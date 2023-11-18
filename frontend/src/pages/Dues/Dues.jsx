@@ -90,20 +90,20 @@ function Dues({ user, thememode, toggle,setUser }) {
   };
 
   useEffect(() => {
-    // const check=async()=>{
-    //   try{
-    //     const loggedInUser = localStorage.getItem("user");
-    //     if (loggedInUser) {
-    //       console.log(loggedInUser);
-    //       const foundUser = JSON.parse(loggedInUser);
-    //       console.log("found user",foundUser  )
-    //       await setUser(foundUser);
-    //     }
-    //   }catch(err){
-    //     console.log(err)
-    //   }
-    // }
-    // check()
+    const check=async()=>{
+      try{
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+          console.log(loggedInUser);
+          const foundUser = JSON.parse(loggedInUser);
+          console.log("found user",foundUser  )
+          await setUser(foundUser);
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
+    check()
     const getBills = async () => {
       try {
         const res = await axios.get(`http://localhost:3001/api/bills/getBills/${user._id}`);
@@ -114,8 +114,8 @@ function Dues({ user, thememode, toggle,setUser }) {
       }
     };
     getBills();
-  },[])
-  // }, [user._id]);
+  // },[])
+  }, [user._id]);
 
   return (
   <>
@@ -204,7 +204,7 @@ function Dues({ user, thememode, toggle,setUser }) {
         <div className="storing-dues">
           <div className="overflow-y-auto w-full">
             {BillData?.map((bill) => (
-              <BillCard BillData={bill} key={bill._id} />
+              <BillCard user={user} BillData={bill} key={bill._id} />
             ))}
           </div>
         </div>

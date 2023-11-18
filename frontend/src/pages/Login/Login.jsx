@@ -70,20 +70,20 @@ function Login({user,setUser}) {
       // setAllEntry([allEntry, Entry]);
       // console.log(allEntry);
       // Handle form submission logic here
-      const logi =async()=>{
+      const Logi =async()=>{
         try{
           const res = await axios.post("http://localhost:3001/api/auth/signin",{username,email,password})
           console.log("response data:",res.data);
           setUser(res.data)
           // store the user in localStorage
-          // localStorage.setItem('user', JSON.stringify(res.data))
+          localStorage.setItem('user', JSON.stringify(res.data))
           navigate('/dashboard')
           // setUser(res.data).then(console.log("userdata"+user))
         }catch(err){
             console.log(err);
         }
       }
-      logi();
+      Logi()
       // setUserData("sd");
       // console.log(userData);
       //making the credentials empty after submitting
@@ -108,7 +108,9 @@ const googlesekar = (req,res)=>{
             img: result.user.photoURL,
           })
           .then((res) => {
-            console.log(res)
+            console.log(res.data)
+            setUser(res.data)
+          localStorage.setItem('user', JSON.stringify(res.data))
             navigate("/dashboard")
           });
   }).catch((err)=>{console.log(err)})
@@ -176,7 +178,6 @@ const googlesekar = (req,res)=>{
             </div>  
 
             <button className="button" onClick={googlesekar}>
-              
               Sign In With Google
             </button>   
         

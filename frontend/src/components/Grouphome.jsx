@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from 'react'
+import Card from 'react-bootstrap/Card';
 import Navbar from './Navbar.jsx'
 import Modal from 'react-bootstrap/Modal';
-import {Button} from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import GroupCard from './GroupCard.jsx'
 import { useParams } from 'react-router-dom';
@@ -38,7 +39,10 @@ export const Grouphome = ({user}) => {
     const [membersdata,setmembersdata]=useState([])
     const [paid,setPaid] = useState(false)
     const [approved,setApproved] = useState(false)
-
+    const [showGroupHome, setShowGroupHome] = useState(false);
+    const handleOpenGroup = () => {
+    setShowGroupHome(true);
+};
 
     const [input, setInput] = useState({
       amount: '',
@@ -48,7 +52,7 @@ export const Grouphome = ({user}) => {
     const [billSplitData,setBillSplitData] = useState(groupData.billSplit[0])
     console.log(groupData.billSplit[0])
 
-    const handleClose = () => setShow(false);
+    const handleClose  = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleInput = (name) => (e) => {
       setInput({ ...input, [name]: e.target.value });
@@ -106,7 +110,6 @@ export const Grouphome = ({user}) => {
       }
       getMembers()
     },[])
-
   return (
     
    
@@ -142,15 +145,15 @@ export const Grouphome = ({user}) => {
         </Modal.Footer>
       </Modal>
 
-      {
-        billSplitData?.map((mem)=>(
-          <div  key={mem.userId}>
-            <div>{mem.name}</div>
-            <div>{mem.amount}</div>
-            <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem.settled===false) ? "Mark as paid" : "Paid"}</button>
-           {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
+      // {
+      //   billSplitData?.map((mem)=>(
+      //     <div  key={mem.userId}>
+      //       <div>{mem.name}</div>
+      //       <div>{mem.amount}</div>
+      //       <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem.settled===false) ? "Mark as paid" : "Paid"}</button>
+      //      {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
 
-          </div>
+      //     </div>
 
         ))
       }

@@ -48,15 +48,17 @@ export const getTransactions=async(req,res)=>{
 
 export const editTransaction=async(req,res)=>{
     try{
+      console.log(req.body)
+      console.log(req.params.id)
         const tran = await Transaction.findById(req.params.id);
         if(!tran){
             return next(createError(404,"Transaction not found"));
         }
             const newtran = await Transaction.findByIdAndUpdate(req.params.id,{
-                $set:req.body
+                $set:req.body.transInput
             },{new:true});
+            console.log("Updated document:", newtran);
             res.json(newtran)
-            res.status(200).json("Transaction edited");
     }catch(err){
         res.status(400).json("unable to edit transaction");
     }

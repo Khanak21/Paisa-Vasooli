@@ -7,11 +7,11 @@ import axios from "axios";
 import Navbar from "../../components/Navbar";
 import './Savings.css';
 
-function Savings2({ user ,thememode,toggle}) {
+function Savings2({ user,setUser,thememode,toggle}) {
   console.log(thememode);
   const [inputTitle, setInputTitle] = useState("");
-  const [currentAmount, setCurrentAmount] = useState(0);
-  const [amount, setAmount] = useState(0);
+  const [currentAmount, setCurrentAmount] = useState();
+  const [amount, setAmount] = useState();
   const [items, setItems] = useState([]);
   const [editAmount, setEditAmount] = useState("");
   const [editCurrent, setEditCurrent] = useState("");
@@ -100,6 +100,20 @@ function Savings2({ user ,thememode,toggle}) {
   };
 
   useEffect(()=>{
+        const check=async()=>{
+      try{
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+          console.log(loggedInUser);
+          const foundUser = JSON.parse(loggedInUser);
+          console.log("found user",foundUser  )
+          await setUser(foundUser);
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
+    check()
     const getSavings = async()=>{
       try{
         // console.log("Sending request with data:", transInput);
@@ -111,7 +125,7 @@ function Savings2({ user ,thememode,toggle}) {
       }
     }
     getSavings()
-  },[])
+  },[user._id])
   return (
     <>
     <Navbar thememode={thememode} toggle={toggle}/>
@@ -177,7 +191,7 @@ function Savings2({ user ,thememode,toggle}) {
           <div className="main-right flex flex-col justify-center items-start gap-5 h-[500px]">
             <div className="overflow-y-scroll w-full mt-2">
             {savingData?.map((sav)=>(
-            <SavingCard props={sav} setSavingData={setSavingData} savingData={savingData}/> 
+            <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData}/> 
           ))
           }
               {/* {items.map((item) => (

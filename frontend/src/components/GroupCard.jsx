@@ -18,9 +18,11 @@ const [showGroupHome, setShowGroupHome] = useState(false);
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
 const handleOpenGroup = () => {
+  console.log("yeeeee")
   setShowGroupHome(true);
   setSelectedGroup(groupData);
 };
+// setOnegroupData(groupData)
 
 const handleDelete = async()=>{
   try{
@@ -32,6 +34,9 @@ const handleDelete = async()=>{
       console.log(err)
   }
 }
+const handlePaid=()=>{
+  console.log("clicked")
+};
 console.log(allgroupsdata)
   return (
 
@@ -73,7 +78,11 @@ console.log(allgroupsdata)
     </Card>
    
 
-  
+    {/* <div className='group-chat'>
+    {showGroupHome && selectedGroup && selectedGroup._id === groupData._id && (
+        <Grouphome groupData={groupData} user={user} handlePaid={handlePaid} />
+      )}
+   </div> */}
   </div>
   )
 }

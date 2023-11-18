@@ -6,13 +6,15 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const BillCard = ({ BillData }) => {
+const BillCard = ({ user,BillData }) => {
   const [show, setShow] = useState(false);
   const [BillInput, setBillInput] = useState({
+    userId: user._id,
     title: '',
     dueDate: '',
     amount: '',
     toWhom: '',
+    recurring: '',
   });
 
   const { title, amount, toWhom, dueDate } = BillInput;
@@ -24,25 +26,25 @@ const BillCard = ({ BillData }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSubmit = (e, id) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const editBill = async (id) => {
+    const editBill = async () => {
       try {
-        const res = await axios.put(`http://localhost:3001/api/bills/editBill/${id}`, { BillInput });
+        const res = await axios.put(`http://localhost:3001/api/bills/editBill/${BillData._id}`, { BillInput });
         console.log(res.data);
+        setBillInput({
+          userId: user._id,
+        title: '',
+        dueDate: '',
+        amount: '',
+        toWhom: '',
+        recurring: '',
+        });
       } catch (err) {
         console.log(err);
       }
     };
-
-    editBill(id);
-
-    setBillInput({
-      title: '',
-      dueDate: '',
-      amount: '',
-      toWhom: '',
-    });
+    editBill();
   };
 
   const handleDelete = (id) => {
@@ -103,7 +105,7 @@ const BillCard = ({ BillData }) => {
           <input type="date" name={'dueDate'} value={dueDate} onChange={handleBillInput('dueDate')} required />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={(e) => handleSubmit(e, BillData._id)} required>
+          <Button variant="success" onClick={handleSubmit} required>
             Save
           </Button>
         </Modal.Footer>

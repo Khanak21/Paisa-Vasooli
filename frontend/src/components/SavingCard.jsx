@@ -5,15 +5,47 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-const SavingCard = ({props,savingData,setSavingData,items}) => {
+const SavingCard = ({user,props,savingData,setSavingData,items}) => {
   console.log()
   const [show, setShow] = useState(false);
-
+  const [flag,setflag] = useState(false)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 console.log(props._id)
 const percentage=Math.round((props.currAmt*100/props.targetAmt) * 100) / 100
 console.log(percentage)
+const [SavingInput, setSavingInput] = useState({
+  userId: user._id,
+  title: '',
+  currAmt: '',
+  targetAmt: '',
+});
+console.log(savingData)
+const { title, currAmt, targetAmt } = SavingInput;
+
+const handleSavingInput = (name) => (e) => {
+  setSavingInput({ ...SavingInput, [name]: e.target.value });
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const editSavings = async () => {
+    try {
+      const res = await axios.put(`http://localhost:3001/api/savings/editSaving/${props._id}`, { SavingInput });
+      console.log(res.data);
+      setSavingInput({
+        userId: user._id,
+        title: '',
+        currAmt: '',
+        targetAmt: '',
+      });
+      setflag((prev)=>!(prev))
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  editSavings();
+};
 
 const handleDelete = async()=>{
     try{
@@ -87,17 +119,15 @@ const handleDelete = async()=>{
           <Modal.Title>Edit Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* Add your form inputs here */}
-          {/* Example: */}
-          {/* <label htmlFor="type">Transaction type:</label> */}
-          {/* <select name="type" id="type" value={type} onChange={handleTransInput('type')} required> */}
-          {/*   <option value="expense">Expense</option> */}
-          {/*   <option value="income">Income</option> */}
-          {/* </select> */}
-          {/* ... */}
+        <label htmlFor="title">Title:</label>
+          <input type="text" name={'title'} value={title} onChange={handleSavingInput('title')} required />
+          <label htmlFor="person">currAmt: </label>
+          <input name={'currAmt'} type="text" value={currAmt} onChange={handleSavingInput('currAmt')} required />
+          <label htmlFor="targetAmt">targetAmt:</label>
+          <input type="text" name={'targetAmt'} value={targetAmt} onChange={handleSavingInput('targetAmt')} required />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick>
+          <Button variant="success" onClick={handleSubmit}>
             Save
           </Button>
         </Modal.Footer>
