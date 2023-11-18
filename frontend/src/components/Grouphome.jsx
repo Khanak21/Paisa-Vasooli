@@ -154,13 +154,12 @@ console.log("bill split data:",billSplitData)
       </Modal>
 
        {
-        billSplitData?.map((mem)=>(
-          <div  key={mem[0].userId}>
-             <div>{mem[0].name}</div> 
-             <div>{mem[0].amount}</div>
+        billSplitData[billSplitData.length-1]?.map((mem)=>(
+          <div  key={mem.userId}>
+             <div>{mem.name}</div> 
+             <div>{mem.amount}</div>
              {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
-            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem[0].approved===false ? "Approve" : "Approved"}</button>}
-
+            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
            </div>
 
         ))
