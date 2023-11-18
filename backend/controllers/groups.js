@@ -220,7 +220,7 @@ export const markApproved = async (req, res) => {
                 { $set: { 'billSplit.0.$.approved': !currentApprovedValue } }
             );
         }
-        console.log(group1.billSplit)
+        console.log("mark approved api:",group1.billSplit)
 
         res.json(group1);
     } catch (err) {

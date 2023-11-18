@@ -68,46 +68,53 @@ console.log("bill split data:",billSplitData)
       }
     }
   
-   
+    const getgroup=async()=>{
+      try{
+        const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
+        console.log(res.data)
+        setgroupData(res.data)
+        setBillSplitData(res.data.billSplit)
+        console.log("use effect",groupData)
+      }catch(err){
+        console.log(err)
+      }
+    }
     
  
+  const handleApproved = async(memid)=>{
+    try{
+      const res=await axios.put(`http://localhost:3001/api/group/markapproved/${groupData._id}`,{userId:memid})
+      setApproved(prev=>!prev)
+      setBillSplitData(res.data.billSplit)
+      getgroup()
+      console.log(res.data.billSplit)
+    }catch(err){
+      console.log(err)
+    }
+  }
 
-    const handleApproved = async(memid)=>{
+
+   
+
+    useEffect(()=>{
+     
+      getgroup()
+    },[])
+
+   useEffect(()=>{
+    const getMembers = async()=>{
       try{
-        const res=await axios.put(`http://localhost:3001/api/group/markapproved/${groupData._id}`,{userId:memid})
-        setApproved(prev=>!prev)
+        const res = await axios.get(`http://localhost:3001/api/group/getmembers/${groupData._id}`)//add user Id
         console.log(res.data)
+        setmembersdata(res.data)
       }catch(err){
         console.log(err)
       }
     }
 
-    useEffect(()=>{
-      const getgroup=async()=>{
-        try{
-          const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
-          console.log(res.data)
-          setgroupData(res.data)
-          setBillSplitData(res.data.billSplit)
-          console.log("use effect",groupData)
-        }catch(err){
-          console.log(err)
-        }
-      }
-      const getMembers = async()=>{
-        try{
-          const res = await axios.get(`http://localhost:3001/api/group/getmembers/${groupData._id}`)//add user Id
-          console.log(res.data)
-          setmembersdata(res.data)
-        }catch(err){
-          console.log(err)
-        }
-      }
+    getMembers()
+   },[])
 
-      getgroup()
-      getMembers()
-
-    },[])
     useEffect(() => {
       // This effect will run whenever groupData changes
       setInput((prevInput) => ({

@@ -50,17 +50,6 @@ const SimplifyDebt = ({user}) => {
       
         return result;
       }, {});
-
-    //   const a = async()=>{
-    //     try{
-    //         const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`,data)
-    //         console.log(res.data)
-
-
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    //   }
       
       const outputArray = Object.values(resultMap);
 
@@ -168,6 +157,7 @@ const SimplifyDebt = ({user}) => {
         data?.map(debt=>(
             <div className='m-4 flex bg-gray-100 rounded-2xl justify-between p-2'>
                 <div className='text-2xl flex align-middle p-3'>{debt[0]} owes {debt[1]} ${debt[2]}</div>
+
                 {user.username==debt[1] && <button onClick={async()=>{
                      try{
                         const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`,debt)
@@ -179,6 +169,7 @@ const SimplifyDebt = ({user}) => {
                 }}
                 className='bg-[#198754] p-2 rounded-md text-white m-2'
                 >{debt[3] ===true ? "Approved" : "Approve"}</button>}
+                {user.username==debt[0] && debt[3]==true && <div>Approved by {debt[1]}✅</div>}
             </div>
         ))
       }
