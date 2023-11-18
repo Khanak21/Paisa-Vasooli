@@ -63,7 +63,10 @@ console.log(allgroupsdata)
        <div className='w-5/10 my-2 flex flex-col justify-center items-start gap-3'>
         
         <Button className='rounded-sm p-1' variant="primary" onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
-           Open Group
+           Simplify Debt
+        </Button>
+        <Button className='rounded-sm p-1' variant="primary" onClick={()=>navigate(`/billsplit/${groupData._id}`)} style={{"cursor":"pointer"}}>
+           Split bill
         </Button>
        
         <div className='flex justify-between items-center w-full'>

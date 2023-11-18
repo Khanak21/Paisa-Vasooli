@@ -113,7 +113,11 @@ export const getmembers = async(req,res)=>{
 
 export const splitBill = async (req, res) => {
     const { amount, groupData } = req.body.input;
+    const userr=req.body.input.user
+    
     const n = groupData.members.length;
+    console.log(req.body)
+
   
     try {
       const billSplit = await Promise.all(
@@ -121,6 +125,7 @@ export const splitBill = async (req, res) => {
           const { username } = await user.findById(mem);
           return {
             amount: amount / n,
+            creator:userr._id,
             name: username,
             userId: mem,
             settled: false,
@@ -306,3 +311,15 @@ export const approveDebt = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+
+  export const getgroup = async(req,res)=>{
+    const id=req.params.id
+    try{
+        const grp = await group.findById(id)
+        console.log(grp)
+        res.json(grp)
+    }catch(err){
+      console.log(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }

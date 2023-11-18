@@ -8,20 +8,9 @@ import GroupCard from './GroupCard.jsx'
 import { useParams } from 'react-router-dom';
 
 export const Grouphome = ({user}) => {
-  const params = useParams()
-  console.log(params)
+  const {id} = useParams()
   const [groupData,setgroupData]=useState([])
-  // useEffect(()=>{
-  //   const getgroup=async()=>{
-  //     try{
-  //       // const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
-  //   setgroupData(res.data)
-  //     }catch(err){
-  //       console.log(err)
-  //     }
-  //   }
-
-  // },[])
+ 
   console.log(groupData)
     const [showGroup, setShowGroup] = useState(false);
     const [show, setShow] = useState(false);
@@ -46,12 +35,13 @@ export const Grouphome = ({user}) => {
 
     const [input, setInput] = useState({
       amount: '',
-      groupData
+      groupData,
+      user
     });
+    console.log(input)
 
-    const [billSplitData,setBillSplitData] = useState(groupData.billSplit[0])
-    console.log(groupData.billSplit[0])
-
+    const [billSplitData,setBillSplitData] = useState([])
+console.log("bill split data:",billSplitData)
     const handleClose  = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleInput = (name) => (e) => {
@@ -62,26 +52,20 @@ export const Grouphome = ({user}) => {
       try{
         const res= await axios.post(`http://localhost:3001/api/group/splitbill`,{input})
         console.log(res.data)
-        setBillSplitData(res.data)
+        setBillSplitData(res.data.billSplit)
       }catch(err){
         console.log(err)
       }
     }
-    const handlePaid = ()=>{
-      const func=()=>{
-        console.log("clicked")
-
+    const handlePaid = async()=>{
+      try{
+        const res=await axios.put(`http://localhost:3001/api/group/markpaid/${groupData._id}`,{userId:id})
+        setPaid(prev=>!prev)
+  
+        console.log(res.data)
+      }catch(err){
+        console.log(err)
       }
-      func()
-           // try{
-
-      //   const res=await axios.put(`http://localhost:3001/api/group/markpaid/${groupData._id}`,{userId:id})
-      //   setPaid(prev=>!prev)
-      //   console.log("clicked")
-      //   console.log(res.data)
-      // }catch(err){
-      //   console.log(err)
-      // }
     }
   
    
@@ -99,6 +83,17 @@ export const Grouphome = ({user}) => {
     }
 
     useEffect(()=>{
+      const getgroup=async()=>{
+        try{
+          const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
+
+          setgroupData(res.data)
+          console.log("use effect",groupData)
+        }catch(err){
+          console.log(err)
+        }
+      }
+      getgroup()
       const getMembers = async()=>{
         try{
           const res = await axios.get(`http://localhost:3001/api/group/getmembers/${groupData._id}`)//add user Id
@@ -110,12 +105,22 @@ export const Grouphome = ({user}) => {
       }
       getMembers()
     },[])
+    useEffect(() => {
+      // This effect will run whenever groupData changes
+      setInput((prevInput) => ({
+        ...prevInput,
+        groupData,
+      }));
+    }, [groupData]);
   return (
     
-   
-        <div className='flex flex-col justify-center items-start h-full'>group home
+   <>
+          <Navbar/>
 
-          {/* <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
+        <div className='flex flex-col justify-center items-start h-full'>
+
+
+          <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
             Title 
           </div>
           
@@ -145,21 +150,22 @@ export const Grouphome = ({user}) => {
         </Modal.Footer>
       </Modal>
 
-      // {
-      //   billSplitData?.map((mem)=>(
-      //     <div  key={mem.userId}>
-      //       <div>{mem.name}</div>
-      //       <div>{mem.amount}</div>
-      //       <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem.settled===false) ? "Mark as paid" : "Paid"}</button>
-      //      {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
+       {
+        billSplitData?.map((mem)=>(
+          <div  key={mem[0].userId}>
+             <div>{mem[0].name}</div> 
+             <div>{mem[0].amount}</div>
+             <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button>
+            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem[0].approved===false ? "Approve" : "Approved"}</button>}
 
-      //     </div>
+           </div>
 
         ))
       }
-            {/* <b>Chat</b> */}
-          {/* </div> */}
+             <b>Chat</b>
+          </div>
         </div> 
+        </>
     
   )
 }
