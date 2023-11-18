@@ -49,28 +49,28 @@ const Chart = ({user,thememode,toggle}) => {
   return (
     <div>
         <Navbar thememode={thememode} toggle={toggle}/>
-    <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#000435":"white"}}>
+    <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"rgb(85, 98, 106)":"white"}}>
       <div className='w-full flex justify-evenly items-center'>
-          <div className='font-bold text-5xl  flex justify-center items-center' style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:"darkblue"}}>Weekly Chart</div>
+          <div className='font-bold text-5xl  flex justify-center items-center' style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Weekly Chart</div>
         <div className='w-[800px]'>
-        <WeeklyChart weeklyData={weeklyData}/>
+        <WeeklyChart weeklyData={weeklyData} thememode={thememode} toggle={toggle}/>
         </div>
 
     </div>
 
     <div className='w-full flex justify-evenly items-center'>
         <div className='w-[800px]'>
-        <MonthlyChart monthlyData={monthlyData}/>
+        <MonthlyChart monthlyData={monthlyData} thememode={thememode}/>
         </div>
-    <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:"darkblue"}}>Monthly Chart</div>
+    <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Monthly Chart</div>
 
     </div>
 
     <div className='w-full flex justify-evenly items-center'>
-    <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:"darkblue"}}>Yearly Chart</div>
+    <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Yearly Chart</div>
         <div className='w-[800px]'>
            
-        <YearlyChart yearlyData={yearlyData}/>
+        <YearlyChart yearlyData={yearlyData} thememode={thememode}/>
         </div>
     </div>
       </div>

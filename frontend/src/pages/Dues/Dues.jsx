@@ -120,13 +120,13 @@ function Dues({ user, thememode, toggle,setUser }) {
   return (
   <>
    <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="outer">
+    <div className="outer" style={{ backgroundColor: thememode === 'dark' ? '#333333' : 'white'}}>
       
 
-      <div className="hero-section " style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}>
-        <div className="hero-left">
+      <div className="hero-section "  >
+        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? 'white' : 'green'}}>
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="Title">Title</label>
+            <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Title</label>
             <input
               type="text"
               name="title"
@@ -135,12 +135,11 @@ function Dues({ user, thememode, toggle,setUser }) {
               value={dueItem.title}
               onChange={handleBillInput('title')}
               className="w-[33rem] p-2"
-              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
-            />
+              />
           </div>
 
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="Date">Due-Date</label>
+            <label htmlFor="Date" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-Date</label>
             <input
               type="date"
               name="date"
@@ -149,12 +148,12 @@ function Dues({ user, thememode, toggle,setUser }) {
               value={dueItem.dueDate}
               onChange={handleBillInput('dueDate')}
               className="w-[33rem] p-2"
-              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
+             
             />
           </div>
 
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="amount">Amount</label> <br />
+            <label htmlFor="amount" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Amount</label> <br />
             <input
               type="number"
               name="amount"
@@ -163,12 +162,12 @@ function Dues({ user, thememode, toggle,setUser }) {
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
               className="w-[33rem] p-2 rounded-md text-center"
-              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
+              
             />
           </div>
 
-          <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="PersonDue">Due-To-Person</label> <br />
+          <div className="due flex justify-between w-full gap-4 dueperson ">
+            <label htmlFor="PersonDue " style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-To-Person</label> <br />
             <input
               type="text"
               name="toWhom"
@@ -177,12 +176,12 @@ function Dues({ user, thememode, toggle,setUser }) {
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
               className="w-[33rem] p-2"
-              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
+             
             />
           </div>
 
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="PersonDue">Recurring</label>
+            <label htmlFor="PersonDue" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
             <input
               type="text"
               name="recurring"
@@ -191,7 +190,7 @@ function Dues({ user, thememode, toggle,setUser }) {
               onChange={handleBillInput('recurring')}
               placeholder="recurring"
               className="w-[33rem] p-2"
-              style={{ backgroundColor: thememode === 'dark' ? 'black' : '', color: thememode === 'dark' ? 'white' : 'black' }}
+             
             />
           </div>
 

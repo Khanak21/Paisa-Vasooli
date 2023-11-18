@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-const SavingCard = ({user,props,savingData,setSavingData,items}) => {
+const SavingCard = ({user,props,savingData,setSavingData,items,thememode,toggle}) => {
   console.log()
   const [show, setShow] = useState(false);
   const [flag,setflag] = useState(false)
@@ -74,7 +74,7 @@ const handleDelete = async()=>{
 
   return (
     
-    <div className='flex flex-col justify-center items-start gap-8 w-full p-1 h-auto'>
+    <div className='flex flex-col justify-center items-start gap-8 w-full p-1 h-[300px]' style={{color:thememode=="dark"?"black":"black"}}>
     
       <Card variant="light" border="success" className="w-full flex flex-col gap-3 border-green-400 rounded-lg border-2 h-40 p-1 ">
 

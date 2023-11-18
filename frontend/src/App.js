@@ -18,7 +18,6 @@ import Savings2 from './pages/Savings/Savings2';
 import SimplifyDebt from './pages/SimplifyDebt'
 import Grouphome from './components/Grouphome';
 
-
 function App() {
   const [user,setUser]=useState({})
   const [groupData,setgroupData]=useState([])

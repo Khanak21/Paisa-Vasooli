@@ -274,7 +274,7 @@ console.log(user._id)
         </div>
         
         {/* -----------------------Filters------------------------ */}
-        <div className='flex px-4 py-4 justify-center items-center'>
+        <div className='flex px-4 py-4 justify-center items-center h-[100%]' style={{backgroundColor:thememode=="dark"?"#000435":"white"}}>
            <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl'>Filters:</div>
         
         {/* Category */}
@@ -300,12 +300,14 @@ console.log(user._id)
 
 
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
+      <div className='h-[100%] w-full my-0'  style={{backgroundColor:thememode=="dark"?"#000435":"white"}}> 
         <div style={{width:"50%"}}>
           {filteredData?.map(trans=>(
             //  console.log("mapped data",trans)
-            <TransactionCard user = {user} key={trans._id} transactionData={trans} /> 
+            <TransactionCard user={user} key={trans._id} transactionData={trans}  style={{backgroundColor:thememode=="dark"?"#000435":"white"}} /> 
             ))}
         </div>
+      </div>
 
     {/* --------------------------------------Add transaction modal-------------------------------- */}
     <button onClick={handleShow} className='bg-[#198754] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 right-8'>+</button>

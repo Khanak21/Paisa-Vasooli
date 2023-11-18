@@ -80,13 +80,13 @@ const TransactionCard = ({ user,transactionData, key }) => {
       </Card.Body>
     </Card>
     
-     {/* <Modal show={show} onHide={handleClose} animation={false} centered>
+     <Modal show={show} onHide={handleClose} animation={false} centered>
      <Modal.Header closeButton>
        <Modal.Title>Edit Transaction</Modal.Title>
      </Modal.Header>
      <Modal.Body>
-         {/* Add transaction input section */}
-         {/* <label htmlFor="type">Transaction type: </label>
+         Add transaction input section
+         <label htmlFor="type">Transaction type: </label>
          <select name="type" 
                  id="type" 
                  selected="Expense" 
@@ -95,10 +95,10 @@ const TransactionCard = ({ user,transactionData, key }) => {
                  className='px-1 border-1 py-1 mx-2 rounded-md'
                  required
                  >
-         <option value="expense">Expense</option>
-         <option value="income">Income</option>
-         </select><br/> */ 
-      /* <Card variant="light" border="success" className="mx-4 my-4">
+         <option value="expense" className='font-bold' style={{color:"red"}}>Expense</option>
+         <option value="income" className='font-bold' style={{color:"green"}}>Income</option>
+         </select><br/>
+      <Card variant="light" border="success" className="mx-4 my-4">
         <Card.Header className='font-bold'>Transaction Category{" "} :-{" "} {transactionData.category}</Card.Header>
         <Card.Body>
           <div className="flex justify-between items-center gap-40 border-2">
@@ -122,8 +122,10 @@ const TransactionCard = ({ user,transactionData, key }) => {
           </div>
           <Card.Text className='font-bold my-2'>Transaction Data :- {"  "}{transactionData.desc}</Card.Text>
         </Card.Body>
-      </Card> */}
+      </Card>
 
+      </Modal.Body>
+      </Modal>
       <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton style={{cursor:"pointer"}}>
           <Modal.Title>Edit Transaction</Modal.Title>
@@ -139,13 +141,13 @@ const TransactionCard = ({ user,transactionData, key }) => {
             className="px-1 border-1 py-1 mx-2 rounded-md"
             required
           >
-            <option value="expense" className='font-bold'>Expense</option>
-            <option value="income" className='font-bold'>Income</option>
+            <option value="expense" className='font-bold' style={{color:"red"}}>Expense</option>
+            <option value="income" className='font-bold' style={{color:"green"}}>Income</option>
           </select>
           <br />
 
           <label htmlFor="amount">Amount: </label>
-          <input type="number" name={'amount'} value={amount} onChange={handleTransInput('amount')} required />
+          <input type="number" name={'amount'} value={amount} onChange={handleTransInput('amount')} required style={{color:type==='expense'?"red":"green"}}/>
 
           <label htmlFor="category">Category: </label>
           <input name={'category'} type="text" value={category} onChange={handleTransInput('category')} required />
@@ -162,9 +164,9 @@ const TransactionCard = ({ user,transactionData, key }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* </Modal.Body>
-      </Modal> */}
-    </div> 
+    </div>
+    
+    
   );
 };
 
