@@ -6,21 +6,23 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const TransactionCard = ({ transactionData, key }) => {
+const TransactionCard = ({ user,transactionData, key }) => {
   const [show, setShow] = useState(false)
   const [transInput, setTransInput] = useState({
-    type: 'Expense',
-    amount: '',
-    category: '',
-    desc: '',
-    date: '',
+        userId:user._id,
+        type:'expense',
+        amount:'',
+        category:'',
+        desc:'',
+        date:'',
+        currency:'',
   });
   // Check if transactionData is defined
   if (!transactionData) {
     return null;
   }
 
-  const { type, amount, category, desc, date } = transInput;
+  const { type, amount, category, desc, date,currency } = transInput;
 
   const handleTransInput = (name) => (e) => {
     setTransInput({ ...transInput, [name]: e.target.value });
@@ -29,23 +31,23 @@ const TransactionCard = ({ transactionData, key }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSubmit = async (e, id) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`http://localhost:3001/api/transactions/editTransaction/${id}`, { transInput });
+      const res = await axios.put(`http://localhost:3001/api/transactions/editTransaction/${transactionData._id}`, { transInput });
       console.log(res.data);
-      // You might want to update the UI or state here if needed
+      setTransInput({
+        userId:user._id,
+        type:'expense',
+        amount:'',
+        category:'',
+        desc:'',
+        date:'',
+        currency:'',
+    });
     } catch (err) {
       console.log(err);
     }
-
-    setTransInput({
-      type: 'Expense',
-      amount: '',
-      category: '',
-      desc: '',
-      date: '',
-    });
   };
 
   const handleDelete = async (id) => {
@@ -64,7 +66,7 @@ const TransactionCard = ({ transactionData, key }) => {
       <Card.Header className='font-bold'>Transaction Category{" "}:-{" "}{transactionData.category}</Card.Header>
       <Card.Body>
         <div className='flex justify-between items-center border-2'>
-        <Card.Text className='text-md align-middle items-center my-1 font-bold'>Transaction Amount{" "}:-&#8377;{" "}{transactionData.amount}</Card.Text>
+        <Card.Text className='text-md align-middle items-center my-1 font-bold'>Transaction Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
       <div className='flex justify-between gap-2'>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
@@ -73,16 +75,18 @@ const TransactionCard = ({ transactionData, key }) => {
         
         </div>
         <Card.Text className='font-bold my-1'>
-          Transaction Data{" "}  {transactionData.desc}
+          Transaction Data{" "} :-  {transactionData.desc}
         </Card.Text>
       </Card.Body>
     </Card>
     
-     <Modal show={show} onHide={handleClose} animation={false} centered>
-   
+     {/* <Modal show={show} onHide={handleClose} animation={false} centered>
+     <Modal.Header closeButton>
+       <Modal.Title>Edit Transaction</Modal.Title>
+     </Modal.Header>
      <Modal.Body>
          {/* Add transaction input section */}
-         <label htmlFor="type">Transaction type: </label>
+         {/* <label htmlFor="type">Transaction type: </label>
          <select name="type" 
                  id="type" 
                  selected="Expense" 
@@ -91,10 +95,10 @@ const TransactionCard = ({ transactionData, key }) => {
                  className='px-1 border-1 py-1 mx-2 rounded-md'
                  required
                  >
-         <option value="expense" className='font-bold'>Expense</option>
-         <option value="income" className='font-bold'>Income</option>
-         </select><br/>
-      <Card variant="light" border="success" className="mx-4 my-4">
+         <option value="expense">Expense</option>
+         <option value="income">Income</option>
+         </select><br/> */ 
+      /* <Card variant="light" border="success" className="mx-4 my-4">
         <Card.Header className='font-bold'>Transaction Category{" "} :-{" "} {transactionData.category}</Card.Header>
         <Card.Body>
           <div className="flex justify-between items-center gap-40 border-2">
@@ -118,7 +122,7 @@ const TransactionCard = ({ transactionData, key }) => {
           </div>
           <Card.Text className='font-bold my-2'>Transaction Data :- {"  "}{transactionData.desc}</Card.Text>
         </Card.Body>
-      </Card>
+      </Card> */}
 
       <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton style={{cursor:"pointer"}}>
@@ -153,13 +157,13 @@ const TransactionCard = ({ transactionData, key }) => {
           <input type="date" name={'date'} value={date} onChange={handleTransInput('date')} required />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={(e) => handleSubmit(e, transactionData._id)} required className='rounded-md'>
+          <Button variant="success" onClick={handleSubmit} required>
             Save
           </Button>
         </Modal.Footer>
       </Modal>
-      </Modal.Body>
-      </Modal>
+      {/* </Modal.Body>
+      </Modal> */}
     </div> 
   );
 };

@@ -21,7 +21,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
   //   }
 
   // }, []);
-
+  const [updateFlag, setUpdateFlag] = useState(false); 
   const [show,setShow] = useState(false)
   // console.log(user)
 console.log(user._id)
@@ -83,7 +83,11 @@ console.log(user._id)
         console.log("filters:",filterInput)
         const addFilter = async()=>{
         try{
-          const res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
+          let res
+          if (filterInput.category === "") {
+            res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
+          } 
+          res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
           console.log(res.data)
           setFilteredData(res.data.trans)
         }catch(err){
@@ -91,19 +95,7 @@ console.log(user._id)
         }
       }
       addFilter()
-    //   setFilterInput({
-    //     type:'Expense',
-    //     amount:'',
-    //     category:'',
-    //     desc:'',
-    //     date:''
-    // })
     }
-    // const sendEmail = e=>{
-      
-      
-    // }
-
 
       const mailsend=async()=>{
         try{
@@ -139,57 +131,38 @@ console.log(user._id)
     }
     const [currenci, setCurrenci] = useState('inr');
     const currenciData = UCurrency(currenci);
-    const handleSubmit = async(e)=>{
-        e.preventDefault()
-        console.log('Currency data:', currenciData);
-        // // console.log(transInput)
-        // // addTransaction(transInput)
-        console.log(currenciData[currency]);
-        amount =Math.floor(amount / currenciData[currency]);
-        console.log(amount)
-        
-        const addTrans = async()=>{
+    
+    useEffect(()=>{
+      const check=async()=>{
         try{
-          console.log(transInput)
-          const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{userId:user._id,type,category,desc,date,currency,amount})
-          console.log(res.data)
-          const val=res.data.transaction
-          setTransactionData(prev=>[...prev,val])
+          const loggedInUser = localStorage.getItem("user");
+          if (loggedInUser) {
+            console.log(loggedInUser);
+            const foundUser = JSON.parse(loggedInUser);
+            console.log("found user",foundUser  )
+            await setUser(foundUser);
+          }
         }catch(err){
-          console.log(err.response.data)
+          console.log(err)
         }
       }
-      addTrans()
-      
-      mailsend()
-      setTransInput({
-        userId:user._id,
-        type:'expense',
-        amount:'',
-        category:'',
-        desc:'',
-        date:'',
-        currency:'',
-    })
-    }
-    
-   
+      check()
+    // },[])
+    },[user._id])
     useEffect(()=>{
-      // const check=async()=>{
-      //   try{
-      //     const loggedInUser = localStorage.getItem("user");
-      //     if (loggedInUser) {
-      //       console.log(loggedInUser);
-      //       const foundUser = JSON.parse(loggedInUser);
-      //       console.log("found user",foundUser  )
-      //       await setUser(foundUser);
-      //     }
-      //   }catch(err){
-      //     console.log(err)
-      //   }
-      // }
-      // check()
-      
+    const getTotalStats = async()=>{
+      try{
+        const res = await axios.get(`http://localhost:3001/api/transactions/getTotalStats/${user._id}`)
+        console.log(res.data)
+        setStats(res.data)
+      }catch(err){
+        console.log(err)
+      }
+    }
+    getTotalStats()
+  },[updateFlag])
+    
+    useEffect(()=>{
       const getTrans = async()=>{
         try{
           // console.log("Sending request with data:", transInput);
@@ -201,27 +174,51 @@ console.log(user._id)
         }
       }
       getTrans()
-      const getTotalStats = async()=>{
-        try{
-          const res = await axios.get(`http://localhost:3001/api/transactions/getTotalStats/${user._id}`)
-          console.log(res.data)
-          setStats(res.data)
-        }catch(err){
-          console.log(err)
-        }
-      }
-      getTotalStats()
-    },[])
-    // },[user._id])
+    },[updateFlag])
 
     useEffect(() => {
       const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
       setUniqueCategories([...categoriesSet]);
-    }, [transactionData]);
+    }, [updateFlag]);
 
      // Replace with your dynamic currency value
     const currencyData = UCurrency('inr');
     console.log(currencyData['usd'])
+    
+    const handleSubmit = async(e)=>{
+      e.preventDefault()
+      console.log('Currency data:', currenciData);
+      // // console.log(transInput)
+      // // addTransaction(transInput)
+      console.log(currenciData[currency]);
+      amount =Math.floor(amount / currenciData[currency]);
+      console.log(amount)
+      const addTrans = async()=>{
+      try{
+        console.log(transInput)
+        const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{userId:user._id,type,category,desc,date,currency,amount})
+        console.log(res.data)
+        const val=res.data.transaction
+        setTransactionData(prev=>[...prev,val])
+        setUpdateFlag((prevFlag) => !prevFlag);
+      }catch(err){
+        console.log(err.response.data)
+      }
+    }
+    addTrans()
+    
+    mailsend()
+    setTransInput({
+      userId:user._id,
+      type:'expense',
+      amount:'',
+      category:'',
+      desc:'',
+      date:'',
+      currency:'',
+  })
+  }
+  
 
   return (
     <div>
@@ -306,7 +303,7 @@ console.log(user._id)
         <div style={{width:"50%"}}>
           {filteredData?.map(trans=>(
             //  console.log("mapped data",trans)
-            <TransactionCard key={trans._id} transactionData={trans} /> 
+            <TransactionCard user = {user} key={trans._id} transactionData={trans} /> 
             ))}
         </div>
 
@@ -341,18 +338,19 @@ console.log(user._id)
                     required
                   >
                     <option value="inr">inr</option>
+                    <option value="inr">inr</option>
                     <option value="usd">usd</option>
-                    <option value="EUR">EUR</option>
-                    <option value="GBP">GBP</option>
-                    <option value="JPY">JPY</option>
-                    <option value="AUD">AUD</option>
-                    <option value="CAD">CAD</option>
-                    <option value="CNY">CNY</option>
-                    <option value="HKD">HKD</option>
-                    <option value="SGD">SGD</option>
-                    <option value="CHF">CHF</option>
-                    <option value="SEK">SEK</option>
-                    <option value="MXN">MXN</option>
+                    <option value="eur">eur</option>
+                    <option value="gbp">gbp</option>
+                    <option value="jpy">jpy</option>
+                    <option value="aud">aud</option>
+                    <option value="cad">cad</option>
+                    <option value="cny">cny</option>
+                    <option value="hkd">hkd</option>
+                    <option value="sgd">sgd</option>
+                    <option value="chf">chf</option>
+                    <option value="sek">sek</option>
+                    <option value="mxn">mxn</option>
                   </select>
                   <br />
             <label htmlFor='amount'>Amount: </label>

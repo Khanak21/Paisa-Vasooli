@@ -176,6 +176,7 @@ export const markPaid = async (req, res) => {
         const group1 = await group.findById(id);
 
         // Find the index of the user in the billSplit array
+        console.log(group1.billSplit[0])
         const userIndex = group1.billSplit[0].findIndex((mem) => mem.userId === userId);
 
         // If the user is found, update the settled field
@@ -242,17 +243,65 @@ export const simplifyDebt = async(req,res)=>{
 }
 
 
-export const deleteGroup=async(req,res)=>{
-    try{
-        const grouptodelete = await group.findById(req.params.id);
-        if(!grouptodelete){
-            return next(createError(404,"Transaction not found"));
-        }
-            const groupp = await group.findByIdAndDelete(req.params.id);
-            res.status(200).json({groupp});
-
-    }catch(err){
-        res.status(200).json("unable to delete transaction");
-        console.log(err)
+export const deleteGroup = async (req, res) => {
+    try {
+      const groupId = req.params.id;
+      const groupToDelete = await group.findById(groupId);
+      if (!groupToDelete) {
+        return res.status(404).json({ error: "Group not found" });
+      }
+      await group.findByIdAndDelete(groupId);
+      const members = groupToDelete.members;
+      await Promise.all(
+        members.map(async (userId) => {
+          const userToUpdate = await user.findById(userId);
+          if (userToUpdate) {
+            userToUpdate.groups = userToUpdate.groups.filter(
+              (groupId) => groupId.toString() !== groupToDelete._id.toString()
+            );
+            await userToUpdate.save();
+          }
+        })
+      );
+  
+      res.status(200).json({ message: "Group deleted successfully" });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Unable to delete group" });
     }
-}
+  };
+  
+
+
+export const approveDebt = async (req, res) => {
+    const id = req.params.id;
+    const arr = req.body;
+  
+    try {
+      const updatedGroup = await group.findOneAndUpdate(
+        {
+          _id: id,
+          'simplifyDebt.0': {
+            $elemMatch: {
+              0: arr[0],
+              1: arr[1],
+            },
+          },
+        },
+        {
+          $set: {
+            'simplifyDebt.0.$[outer].3': true,
+          },
+        },
+        {
+          arrayFilters: [{ 'outer.0': arr[0], 'outer.1': arr[1] }],
+          new: true, // Return the modified document
+        }
+      );
+  
+      res.json(updatedGroup);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };

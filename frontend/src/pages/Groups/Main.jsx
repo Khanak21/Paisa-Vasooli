@@ -103,20 +103,20 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     }
 
     useEffect(()=>{
-        // const check=async()=>{
-        //     try{
-        //       const loggedInUser = localStorage.getItem("user");
-        //       if (loggedInUser) {
-        //         console.log(loggedInUser);
-        //         const foundUser = JSON.parse(loggedInUser);
-        //         console.log("found user",foundUser  )
-        //         await setUser(foundUser);
-        //       }
-        //     }catch(err){
-        //       console.log(err)
-        //     }
-        //   }
-        //   check()
+        const check=async()=>{
+            try{
+              const loggedInUser = localStorage.getItem("user");
+              if (loggedInUser) {
+                console.log(loggedInUser);
+                const foundUser = JSON.parse(loggedInUser);
+                console.log("found user",foundUser  )
+                await setUser(foundUser);
+              }
+            }catch(err){
+              console.log(err)
+            }
+          }
+          check()
       const getGroups = async()=>{
         try{
           const res = await axios.get(`http://localhost:3001/api/group/getgroups/${user._id}`)//add user Id
@@ -127,8 +127,8 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         }
       }
       getGroups()
-    },[])
-    // },[user._id])
+    // },[])
+    },[user._id])
 
   return (
     <div>
@@ -140,11 +140,11 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
           </div>
         <div className='flex  flex-col justify-evenly items-start gap-6 w-full h-fit'>
           
-          {groupData?.map(data=>(
-            //  console.log("mapped data",trans)
+          {groupData?.map(data=>{
+            return(
             <GroupCard 
             key={data._id} 
-            setgroupData = {setgroupData} 
+            setgroupData = {setgroupData}
             groupData={data} 
             allgroupsdata = {groupData}
             setSelectedGroup={setSelectedGroup} 
@@ -153,7 +153,8 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
             toggle={toggle}
             user={user}
             /> 
-            ))}
+            );
+            })}
 
         </div>
 
