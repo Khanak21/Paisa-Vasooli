@@ -3,30 +3,72 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart }            from 'react-chartjs-2'
 
-const MonthlyChart = ({ monthlyData }) => {
+const MonthlyChart = ({ monthlyData,thememode }) => {
+
+  const lightTheme = {
+    colorText: 'black',
+    income: 'rgba(75,192,192,0.5)', 
+    incomeBorder: 'rgba(75,192,192,1)',
+    expenses: 'rgba(255,99,132,0.5)', 
+    expensesBorder: 'rgba(255,99,132,1)',
+  };
+
+  const darkTheme = {
+    colorText: 'white',
+    income: 'rgba(34,139,34,0.5)', 
+    incomeBorder: 'rgba(34,139,34,1)',
+    expenses: 'rgba(165,42,42,0.5)', 
+    expensesBorder: 'rgba(165,42,42,1)',
+  };
+
+  const colors = thememode === 'dark' ? darkTheme : lightTheme;
+
+
   const data = {
     labels: monthlyData.map(data=>data.month),
     datasets: [
       {
         label: 'Income',
-        backgroundColor: 'rgba(75,192,192,0.2)',
-        borderColor: 'rgba(75,192,192,1)',
+        backgroundColor: colors.income,
+        borderColor: colors.incomeBorder,
         borderWidth: 1,
         data: monthlyData.map(data=>data.totalIncome),
       },
       {
         label: 'Expenses',
-        backgroundColor: 'rgba(255,99,132,0.2)',
-        borderColor: 'rgba(255,99,132,1)',
+        backgroundColor: colors.expenses,
+        borderColor: colors.expensesBorder,
         borderWidth: 1,
         data: monthlyData.map(data=>data.totalExpense),
       },
     ],
   };
-
+ 
+    // Using the plugins to change the color in dark mode
+    const options = {
+      scales: {
+        x: {
+          ticks: {
+            color: colors.colorText, 
+          },
+        },
+        y: {
+          ticks: {
+            color: colors.colorText, 
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: colors.colorText,
+          },
+        },
+      },
+    };
  
 
-  return <Bar data={data}/>;
+  return <Bar data={data} options={options}/>;
 };
 
 export default MonthlyChart;

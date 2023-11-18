@@ -48,7 +48,7 @@ console.log(allgroupsdata)
 
         <div className='flex flex-col justify-start items-start gap-1'>
 
-          <Card.Text className='text-md justify-start items-center  '>
+          <Card.Text className='text-md justify-start items-center font-extrabold '>
           <b> Group Title</b>{" "}:-{" "}{groupData.title}
           </Card.Text>
 

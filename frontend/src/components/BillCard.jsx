@@ -67,17 +67,17 @@ const BillCard = ({ user,BillData }) => {
           <div className="flex justify-between items-center border-2 gap-3 p-2">
             <div className='flex flex-col justify-center items-start'>
             <Card.Text className="text-md align-middle items-center "><b>To :-{" "}{BillData.toWhom} </b></Card.Text>
-            <Card.Text className="text-md align-middle items-center"><b>Due Amount :-{" " }&#8377; {BillData.amount} </b> </Card.Text>
+            <Card.Text className="text-sm align-middle items-center"><b>Amount :-{" " }&#8377; {BillData.amount} </b> </Card.Text>
             </div>
           
-          <div className='flex flex-col w-full justify-end items-start gap-2 '>
+          <div className='flex flex-col w-[60%] justify-end items-start gap-2 '>
             <Card.Text className="flex items-center justify-evenly  text-md w-full">
                <br/>
              <b>Date:-{" "}  {BillData.dueDate} </b>
              <AiTwotoneCalendar size={20} />
             </Card.Text>
 
-          <div className='flex justify-end w-full gap-4 mr-6'>
+          <div className='flex justify-end w-[80%] gap-4 mr-6'>
             <AiFillEdit onClick={handleShow} style={{ cursor: 'pointer' }} />
             <AiFillDelete onClick={() => handleDelete(BillData._id)} style={{ cursor: 'pointer' }} />
           </div>
@@ -88,20 +88,20 @@ const BillCard = ({ user,BillData }) => {
 
       <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Bill</Modal.Title>
+          <Modal.Title className='font-bolder'>Edit Bill</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* Add Bill input section */}
-          <label htmlFor="amount">Amount: </label>
+          <label htmlFor="amount" className='font-bold'>Amount: </label>
           <input type="number" name={'amount'} value={amount} onChange={handleBillInput('amount')} required />
 
-          <label htmlFor="person">toWhom: </label>
+          <label htmlFor="person" className='font-bold'>toWhom: </label>
           <input name={'person'} type="text" value={toWhom} onChange={handleBillInput('toWhom')} required />
 
-          <label htmlFor="title">Title:</label>
+          <label htmlFor="title" className='font-bold'>Title:</label>
           <input type="text" name={'title'} value={title} onChange={handleBillInput('title')} required />
 
-          <label htmlFor="date">Date:</label>
+          <label htmlFor="date" className='font-bold'>Date:</label>
           <input type="date" name={'dueDate'} value={dueDate} onChange={handleBillInput('dueDate')} required />
         </Modal.Body>
         <Modal.Footer>

@@ -96,7 +96,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
       setSavingData(prev => [...prev, val]);
     } catch (err) {
       console.log(err);
-    }
+    } 
   };
 
   useEffect(()=>{
@@ -137,25 +137,26 @@ function Savings2({ user,setUser,thememode,toggle}) {
         </div>
       </div> */}
      
-      <div className="main-body" style={{ color: thememode === "dark" ? "rgb(92, 230, 7)" : "black", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "white" }}>
-        <div className="main-head" style={{ color: thememode === "dark" ? "rgb(92, 230, 7)" : "black" }}>
+      <div className="main-body" style={{ color: thememode === "dark" ? "orange" : "black", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "white" }}>
+        <div className="main-head" style={{ color: thememode === "dark" ? "orange" : "black" }}>
           <h2>
             <b>Have any financial goals ?</b>
           </h2>
           <p>Track them here</p>
         </div>
 
-        <div className="main-content" style={{ color: thememode === "dark" ? "rgb(92, 230, 7)" : "black", backgroundColor: thememode === "dark" ? " #000000" : "white",borderColor:thememode==="dark"?"green":"white"}}>
+        <div className="main-content" style={{ color: thememode === "dark" ? "orange" : "black", backgroundColor: thememode === "dark" ? " #000000" : "white",borderColor:thememode==="dark"?"green":"white"}}>
           <div className="main-left">
-            <div className="savings-holder">
+            <div className="savings-holder"  >
               <label htmlFor="">Title</label>
               <br />
               <input
-                type="text"
+                type="text"  
                 placeholder="Input the title"
                 className="saving-input"
                 value={inputTitle}
                 onChange={handleInputTitle}
+                style={{ color: thememode === "dark" ? "black" : "black"}}
                   />
             </div>
 
@@ -167,6 +168,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
                 className="saving-input"
                 value={currentAmount}
                 onChange={handleCurrentAmount}
+                style={{ color: thememode === "dark" ? "black" : "black"}}
               />
             </div>
 
@@ -178,6 +180,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
                 className="saving-input"
                 value={amount}
                 onChange={handleAmount}
+                style={{ color: thememode === "dark" ? "black" : "black"}}
               />
             </div>
 
@@ -191,7 +194,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
           <div className="main-right flex flex-col justify-center items-start gap-5 h-[500px]">
             <div className="overflow-y-scroll w-full mt-2">
             {savingData?.map((sav)=>(
-            <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData}/> 
+            <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData} thememode={thememode} toggle={toggle}/> 
           ))
           }
               {/* {items.map((item) => (
