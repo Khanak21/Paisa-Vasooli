@@ -78,7 +78,8 @@ function App() {
           <Route path="/billsplit/:id" element={<Grouphome user={user}/>}/>
           <Route path="/simplifydebt/:id" element={<SimplifyDebt user={user}/>}/>
           <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
-          <Route path='/simplify' element={<SimplifyDebt/>}></Route>
+          <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
+          <Route path='/simplify' element={<SimplifyDebt user={user}/>}></Route>
 
         </Routes>
       </BrowserRouter>

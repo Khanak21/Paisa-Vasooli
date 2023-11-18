@@ -33,12 +33,13 @@ export const  creategroup= async(req,res)=>{
     console.log(err);
     }
 };
-export const  getgroup= async(req,res)=>{
+export const  getDebts= async(req,res)=>{
     const {groupId} = req.params
        
     try {
         const grp= await group.findById(groupId)
-        res.status(200).json(grp)
+        console.log("getDebts:",grp)
+        res.status(200).json(grp.simplifyDebt)
     }
     catch (err) {
     console.log(err);
@@ -232,7 +233,7 @@ export const simplifyDebt = async(req,res)=>{
         splits.forEach(subArray => subArray.push(false));
         const updatedgroup = await group.findByIdAndUpdate(
             id,
-            {$push:{simplifyDebt:splits}},
+            {$set:{simplifyDebt:splits}},
             {new:true}
            )
     console.log(splits);
@@ -281,7 +282,7 @@ export const approveDebt = async (req, res) => {
       const updatedGroup = await group.findOneAndUpdate(
         {
           _id: id,
-          'simplifyDebt.0': {
+          'simplifyDebt': {
             $elemMatch: {
               0: arr[0],
               1: arr[1],
@@ -290,7 +291,7 @@ export const approveDebt = async (req, res) => {
         },
         {
           $set: {
-            'simplifyDebt.0.$[outer].3': true,
+            'simplifyDebt.$[outer].3': true,
           },
         },
         {
