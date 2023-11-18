@@ -80,14 +80,16 @@ console.log(user._id)
 }
     const handleFilter = e=>{
         e.preventDefault()
+        const isFilterEmpty =filterInput.category === "" && filterInput.startDate === "" && filterInput.endDate === "";
         console.log("filters:",filterInput)
         const addFilter = async()=>{
         try{
           let res
-          if (filterInput.category === "") {
+          if (isFilterEmpty) {
             res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
-          } 
-          res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
+          }else{
+            res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
+          }
           console.log(res.data)
           setFilteredData(res.data.trans)
         }catch(err){
@@ -147,7 +149,6 @@ console.log(user._id)
         }
       }
       check()
-    // },[])
     },[user._id])
     useEffect(()=>{
     const getTotalStats = async()=>{
@@ -319,13 +320,13 @@ console.log(user._id)
             {/* Add transaction input section */}
             <label htmlFor="type">Transaction type: </label>
             <select name="type" 
-                    id="type" 
-                    selected="expense" 
+                    id="type"  
                     value={type}
                     onChange={handleTransInput('type')}
                     className='px-1 border-1 py-1 mx-2 rounded-md'
                     required
                     >
+            <option value="">Select</option>    
             <option value="expense">Expense</option>
             <option value="income">Income</option>
             </select><br/>
@@ -339,7 +340,7 @@ console.log(user._id)
                     className='px-1 border-1 py-1 mx-2 rounded-md'
                     required
                   >
-                    <option value="inr">inr</option>
+                    <option>select:</option>
                     <option value="inr">inr</option>
                     <option value="usd">usd</option>
                     <option value="eur">eur</option>

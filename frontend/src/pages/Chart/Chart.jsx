@@ -4,13 +4,42 @@ import MonthlyChart from '../../components/MonthlyChart'
 import YearlyChart from '../../components/YearlyChart'
 import axios from 'axios'
 import Navbar from '../../components/Navbar'
-const Chart = ({user,thememode,toggle}) => {
+const Chart = ({user,setUser,thememode,toggle}) => {
     const [weeklyData,setWeeklyData]=useState([])
     const [monthlyData,setMonthlyData]=useState([])
     const [yearlyData,setYearlyData]=useState([])
 
-
+    // useEffect(()=>{
+    //     const check=async()=>{
+    //       try{
+    //         const loggedInUser = localStorage.getItem("user");
+    //         if (loggedInUser) {
+    //           console.log(loggedInUser);
+    //           const foundUser = JSON.parse(loggedInUser);
+    //           console.log("found user",foundUser  )
+    //           await setUser(foundUser);
+    //         }
+    //       }catch(err){
+    //         console.log(err)
+    //       }
+    //     }
+    //     check()
+    //   },[user._id])
     useEffect(()=>{
+        const check=async()=>{
+            try{
+              const loggedInUser = localStorage.getItem("user");
+              if (loggedInUser) {
+                console.log(loggedInUser);
+                const foundUser = JSON.parse(loggedInUser);
+                console.log("found user",foundUser)
+                await setUser(foundUser);
+              }
+            }catch(err){
+              console.log(err)
+            }
+          }
+          check()
        const getWeeklyData = async()=>{
         try{
             const res = await axios.get(`http://localhost:3001/api/transactions/getWeeklyTransaction/${user._id}`)
@@ -42,9 +71,9 @@ const Chart = ({user,thememode,toggle}) => {
        getWeeklyData()
        getMonthlyData()
        getYearlyData()
+    },[user._id])
 
-
-    },[])
+    
 
   return (
     <div>

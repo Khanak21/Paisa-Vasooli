@@ -164,7 +164,7 @@ export const getWeeklyTransaction=async(req,res)=>{
           {
             $match: {
               userId: userId,
-              date: { $gte: sevenDaysAgo, $lt: currentDate },
+              date: { $gte: sevenDaysAgo, $lte: currentDate },
             },
           },
           {
@@ -215,7 +215,7 @@ export const getMonthlyTransaction = async (req, res) => {
       {
         $match: {
           userId: userId,
-          date: { $gte: firstDayOfMonth, $lt: currentDate },
+          date: { $gte: firstDayOfMonth, $lte: currentDate },
         },
       },
       {
@@ -266,7 +266,7 @@ export const getYearlyTransaction = async (req, res) => {
       {
         $match: {
           userId: userId,
-          date: { $gte: firstDayOfYear, $lt: currentDate },
+          date: { $gte: firstDayOfYear, $lte: currentDate },
         },
       },
       {

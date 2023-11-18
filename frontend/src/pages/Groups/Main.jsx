@@ -11,7 +11,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(null);
-
+    const [groupflag,setgroupflag] = useState(false)
     const handleGroupClose = () => setShowGroup(false);
     const handleGroupShow = () => setShowGroup(true);
     const handleGroupJoinClose = () => setShowGroupJoin(false);
@@ -72,6 +72,8 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
             console.log(res.data.newgroup)
             const val=res.data.newgroup
             setgroupData(prev=>[...prev,val])
+            setgroupflag((prev)=>!(prev))
+            console.log(groupData)
           }catch(err){
             console.log(err)
           }
@@ -90,7 +92,9 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
           try{
             console.log(JoingCode)
             const res = await axios.post("http://localhost:3001/api/group/joingroup",{joincode})
-            console.log(res.data)
+            console.log(res.data.newgroup)
+            setgroupflag((prev)=>!(prev))
+            console.log(groupData)
           }catch(err){
             console.log(err.response.error)
           }
@@ -117,6 +121,9 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
             }
           }
           check()
+    },[user._id])
+
+    useEffect(()=>{
       const getGroups = async()=>{
         try{
           const res = await axios.get(`http://localhost:3001/api/group/getgroups/${user._id}`)//add user Id
@@ -127,8 +134,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         }
       }
       getGroups()
-    // },[])
-    },[user._id])
+    },[groupflag])
 
   return (
     <div>
@@ -143,7 +149,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
           {groupData?.map(data=>{
             return(
             <GroupCard 
-            key={data._id} 
+            key={data._id}
             setgroupData = {setgroupData}
             groupData={data} 
             allgroupsdata = {groupData}

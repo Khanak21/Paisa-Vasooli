@@ -9,6 +9,7 @@ import ToggleBtn from '../../components/ToggleBtn.jsx';
 
 
 function Dues({ user, thememode, toggle,setUser }) {
+  const [billflag,setbillflag] = useState(false)
   const [dueItem, setdueItem] = useState({
     userId: user._id,
     title: '',
@@ -104,6 +105,9 @@ function Dues({ user, thememode, toggle,setUser }) {
       }
     }
     check()
+  }, [user._id]);
+
+  useEffect(()=>{
     const getBills = async () => {
       try {
         const res = await axios.get(`http://localhost:3001/api/bills/getBills/${user._id}`);
@@ -114,8 +118,7 @@ function Dues({ user, thememode, toggle,setUser }) {
       }
     };
     getBills();
-  // },[])
-  }, [user._id]);
+  },[billflag])
 
   return (
   <>
@@ -203,7 +206,7 @@ function Dues({ user, thememode, toggle,setUser }) {
         <div className="storing-dues">
           <div className="overflow-y-auto w-full">
             {BillData?.map((bill) => (
-              <BillCard user={user} BillData={bill} key={bill._id} />
+              <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} />
             ))}
           </div>
         </div>

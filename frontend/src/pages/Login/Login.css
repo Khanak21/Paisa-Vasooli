@@ -71,7 +71,7 @@ input {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 100%;
+    width: 50%;
     border-radius: 10px;
     border: none;
     color: #fff;

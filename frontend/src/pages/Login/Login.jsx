@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {auth,provider} from "../firebase.js"
 import {signInWithPopup} from "firebase/auth"
+import GoogleButton from 'react-google-button'
 
 function Login({user,setUser}) {
   const navigate = useNavigate()
@@ -177,10 +178,7 @@ const googlesekar = (req,res)=>{
            Login
             </div>  
 
-            <button className="button" onClick={googlesekar}>
-              Sign In With Google
-            </button>   
-        
+            <GoogleButton  onClick={googlesekar}/>
           </div>
           <div className="forgotPass">
            <div>Not having any account? </div>
