@@ -66,7 +66,7 @@ const TransactionCard = ({ user,transactionData, key }) => {
       <Card.Header className='font-bold'>Transaction Category{" "}:-{" "}{transactionData.category}</Card.Header>
       <Card.Body>
         <div className='flex justify-between items-center border-2'>
-        <Card.Text className='text-md align-middle items-center my-1 font-bold'>Transaction Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
+        <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}>Transaction Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
       <div className='flex justify-between gap-2'>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
