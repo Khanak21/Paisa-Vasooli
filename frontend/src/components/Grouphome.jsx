@@ -72,9 +72,9 @@ console.log("bill split data:",billSplitData)
     
  
 
-    const handleApproved = async(id)=>{
+    const handleApproved = async(memid)=>{
       try{
-        const res=await axios.put(`http://localhost:3001/api/group/markapproved/${groupData._id}`,{userId:id})
+        const res=await axios.put(`http://localhost:3001/api/group/markapproved/${groupData._id}`,{userId:memid})
         setApproved(prev=>!prev)
         console.log(res.data)
       }catch(err){
@@ -86,14 +86,14 @@ console.log("bill split data:",billSplitData)
       const getgroup=async()=>{
         try{
           const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
-
+          console.log(res.data)
           setgroupData(res.data)
+          setBillSplitData(res.data.billSplit)
           console.log("use effect",groupData)
         }catch(err){
           console.log(err)
         }
       }
-      getgroup()
       const getMembers = async()=>{
         try{
           const res = await axios.get(`http://localhost:3001/api/group/getmembers/${groupData._id}`)//add user Id
@@ -103,7 +103,10 @@ console.log("bill split data:",billSplitData)
           console.log(err)
         }
       }
+
+      getgroup()
       getMembers()
+
     },[])
     useEffect(() => {
       // This effect will run whenever groupData changes
@@ -155,7 +158,7 @@ console.log("bill split data:",billSplitData)
           <div  key={mem[0].userId}>
              <div>{mem[0].name}</div> 
              <div>{mem[0].amount}</div>
-             <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button>
+             {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
             {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem[0].approved===false ? "Approve" : "Approved"}</button>}
 
            </div>

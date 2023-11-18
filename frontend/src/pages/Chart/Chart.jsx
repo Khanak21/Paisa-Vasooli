@@ -53,6 +53,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
        const getMonthlyData = async()=>{
         try{
             const res = await axios.get(`http://localhost:3001/api/transactions/getMonthlyTransaction/${user._id}`)
+            console.log(res.data.monthlyData)
             setMonthlyData(res.data.monthlyData)
 
         }catch(err){

@@ -209,6 +209,7 @@ export const getMonthlyTransaction = async (req, res) => {
 
   try {
     const currentDate = new Date();
+    // currentDate.setHours(23, 59, 59, 999);
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
     const monthlyData = await Transaction.aggregate([
