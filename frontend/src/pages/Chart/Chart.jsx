@@ -4,10 +4,18 @@ import MonthlyChart from '../../components/MonthlyChart'
 import YearlyChart from '../../components/YearlyChart'
 import axios from 'axios'
 import Navbar from '../../components/Navbar'
+import CategoryChart from '../../components/CategoryChart'
 const Chart = ({user,setUser,thememode,toggle}) => {
     const [weeklyData,setWeeklyData]=useState([])
     const [monthlyData,setMonthlyData]=useState([])
     const [yearlyData,setYearlyData]=useState([])
+    const [allCategories,setAllCategories]=useState([])
+    const [incomeArray,setIncomeArray]=useState([])
+    const [expenseArray,setExpenseArray]=useState([])
+    const [categoryData,setCategoryData]=useState([])
+
+
+
 
     // useEffect(()=>{
     //     const check=async()=>{
@@ -69,10 +77,33 @@ const Chart = ({user,setUser,thememode,toggle}) => {
             console.log(err)
         }
        } 
+       const getCategory = async()=>{
+        try{
+          const res= await axios.get(`http://localhost:3001/api/transactions/getCategoryWiseTransaction/${user._id}`)
+          const result = res.data
+          setCategoryData(res.data)
+          // Array of all categories
+          const allCategories = result.map(item => item._id);
+          setAllCategories(allCategories)
+          console.log(allCategories)
+
+          // Array of expenses for all categories
+          const expenseArray = result.map(item => item.totalExpense);
+          setExpenseArray(expenseArray)
+
+          // Array of income for all categories
+          const incomeArray = result.map(item => item.totalIncome);
+          setIncomeArray(incomeArray)
+        }catch(err){
+          console.log(err)
+        }
+       }
        getWeeklyData()
        getMonthlyData()
        getYearlyData()
+       getCategory()
     },[user._id])
+    console.log(allCategories)
 
     
 
@@ -104,7 +135,14 @@ const Chart = ({user,setUser,thememode,toggle}) => {
         </div>
     </div>
       </div>
+      <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Category-wise Expenses</div>
+        <div className='w-[800px]'>
+           
+        <CategoryChart categoryData={categoryData} allCategories={allCategories}/>
+
+        </div>
     </div>
+    
   )
 }
 

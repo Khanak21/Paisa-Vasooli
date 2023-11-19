@@ -307,3 +307,35 @@ export const getYearlyTransaction = async (req, res) => {
   }
 };
 
+export const getCategoryWiseTransaction = async(req,res)=>{
+  const id = req.params.userId
+  try{
+    const categoryData = await Transaction.aggregate([
+      {
+        $match: {
+          userId: id,
+        },
+      },
+      {
+        $group: {
+          _id: { $toLower: "$category" },
+          totalIncome: {
+            $sum: {
+              $cond: [{ $eq: ["$type", "income"] }, "$amount", 0],
+            },
+          },
+          totalExpense: {
+            $sum: {
+              $cond: [{ $eq: ["$type", "expense"] }, "$amount", 0],
+            },
+          },
+        },
+      },
+    ]);
+    res.json(categoryData)
+    
+
+  }catch(err){
+    console.log(err)
+  }
+}
