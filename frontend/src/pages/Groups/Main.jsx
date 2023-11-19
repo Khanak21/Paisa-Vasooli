@@ -10,12 +10,19 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     const [showGroup, setShowGroup] = useState(false);
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
+    const [showAddFriend, setShowAddFriend] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [groupflag,setgroupflag] = useState(false)
+
     const handleGroupClose = () => setShowGroup(false);
     const handleGroupShow = () => setShowGroup(true);
+
     const handleGroupJoinClose = () => setShowGroupJoin(false);
     const handleGroupJoinShow = () => setShowGroupJoin(true);
+
+    const handleAddFriendShow = () => setShowAddFriend(true);
+    const handleAddFriendClose = () => setShowAddFriend(false);
+
 
     const handleFriendClose = () => setShowFriend(false);
     const handleFriendShow = () => setShowFriend(true);
@@ -29,6 +36,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       userId:user._id,
       JoingCode:''
     })
+    const [friendName,setFriendName] = useState("")
 
     const {title} = groupInput
     const {groupCode} = groupInput
@@ -38,6 +46,10 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     }
     const handleGroupJoinInput = name=>e=>{
       setjoincode({...joincode,[name]:e.target.value})
+    }
+    const handleAddFriendInput = (e)=>{
+      console.log(e.target.value)
+      setFriendName(e.target.value)
     }
     const uuid = () => {
       var S4 = () => {
@@ -58,6 +70,17 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         S4()
       );
     };
+
+    const handleSendRequest = async()=>{
+      try{
+        const res= await axios.put(`http://localhost:3001/api/friend/sendRequest/${user._id}`,{friendName})
+        console.log(res)
+        alert(res.data.message)
+        setFriendName("")
+      }catch(err){
+        console.log(err)
+      }
+    }
 
 
     const handleSubmit =e=>{  
@@ -139,12 +162,14 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
   return (
     <div>
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='flex flex-col gap-2 justify-start items-start ' style={{backgroundColor:thememode==="dark"?"#000435":"white"}}>
+        <div className='flex flex-col gap-2 justify-start items-start' style={{backgroundColor:thememode==="dark"?"#000435":"white"}}>
           <div className=' flex justify-evenly items-start w-full my-2'>
-            <button onClick={handleGroupShow} className='bg-[#198754] text-white p-4 rounded-lg'>Create Group</button>
+            <button onClick={handleGroupShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Create Group</button>
             <button onClick={handleGroupJoinShow} className='bg-[#198754] text-white p-4 rounded-lg'>Join Group</button>
+            <button onClick={handleAddFriendShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Invite Friend</button>
+
           </div>
-        <div className='flex  flex-col justify-evenly items-start gap-6 w-full h-fit'>
+        <div className='flex  flex-col justify-evenly items-center gap-6 w-full h-fit border-2'>
           
           {groupData?.map(data=>{
             return(
@@ -211,7 +236,26 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
           <Button variant="success" onClick={handleSubmit} required>Save</Button>
         </Modal.Footer>
       </Modal>
+
+      <Modal show={showAddFriend} onHide={handleAddFriendClose} animation={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Friend</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <label htmlFor='friendName'>Enter Username of friend: </label>
+            <input type="text" 
+                   name='friendName'
+                   value={friendName}
+                   onChange={handleAddFriendInput}
+                   required
+                   ></input>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleSendRequest}  required>Invite</Button>
+        </Modal.Footer>
+      </Modal>
         </div>
+
     </div>
   )
 }

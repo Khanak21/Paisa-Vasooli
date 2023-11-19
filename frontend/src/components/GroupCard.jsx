@@ -54,7 +54,8 @@ console.log(allgroupsdata)
 
           <Card.Text className='text-md w-fit justify-start items-center '>
             <b> Group Code </b>{" "}:- <br/>
-            <input type="text" value= {groupData.groupCode} name="" id="" />
+           <div className='flex'><input type="text" value= {groupData.groupCode} name="" id="" />
+            <button className='mx-2 w-80 bg-blue-600 rounded-md text-white'>or Add Friend</button></div>
           
           </Card.Text>
 

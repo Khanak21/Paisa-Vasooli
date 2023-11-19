@@ -25,6 +25,18 @@ const userSchema = new mongoose.Schema({
     },
     groups:{
         type:[String],
+    },
+    friends:{
+        type:[String]
+    },
+    sentRequests:{
+        type:[String]
+    },
+    receivedRequests:{
+        type:[String]
+    },
+    inbox:{
+        type:[String]
     }
 })
 

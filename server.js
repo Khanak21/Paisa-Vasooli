@@ -11,6 +11,8 @@ import billsRoutes from './backend/routes/bills.js';
 import mailroutes from './backend/routes/sendEmail.js'
 import userroutes from './backend/routes/user.js';
 import grouproutes from './backend/routes/groups.js'
+import friendroutes from './backend/routes/friends.js'
+
 
 import bodyParser from 'body-parser'
 
@@ -43,6 +45,8 @@ app.use("/api/auth",authroutes)
 app.use("/api/mail",mailroutes)
 app.use("/api/user",userroutes)
 app.use("/api/group",grouproutes)
+app.use("/api/friend",friendroutes)
+
 
 // app.use("/api",signinwithgoogle)
 // app.use("/api/auth/",signin)
