@@ -133,6 +133,7 @@ function Signup({user,setUser})
         console.log(res.data);
         setUser(res.data.newUser);
         console.log(user);
+        localStorage.setItem('user', JSON.stringify(res.data.newUser))
         navigate('/dashboard');
         // Handle form submission logic here
         // Making the credentials empty after submitting

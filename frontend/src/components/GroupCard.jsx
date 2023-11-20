@@ -10,6 +10,7 @@ import { AiTwotoneCalendar } from 'react-icons/ai';
 import Grouphome from './Grouphome.jsx'; 
 import './GroupCard.css'
 import { useNavigate } from 'react-router-dom';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle,user}) => {
   const navigate = useNavigate()
@@ -47,10 +48,12 @@ const handleAddFriendsToGroup=async()=>{
     console.log(err)
   }
 }
-
+const [copied, setCopied] = useState(false);
 const handleAddFriendClose = () => setShowAddFriend(false);
 const handleAddFriendShow = () => setShowAddFriend(true);
-
+const handleCopyToClipboard = () => {
+  setCopied(true);
+};
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
 
@@ -91,7 +94,11 @@ console.log(allgroupsdata)
 
           <Card.Text className='text-md w-fit justify-start items-center '>
             <b> Group Code </b>{" "}:- <br/>
-           <div className='flex'><input type="text" value= {groupData.groupCode} name="" id="" />
+            <div className='flex'><input type="text" value= {groupData.groupCode} name="" id="" />
+            <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
+            <button>Copy to Clipboard</button>
+            </CopyToClipboard>
+            {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>}
             <button className='mx-2 w-80 bg-blue-600 rounded-md text-white' onClick={handleAddFriendShow}>or Add Friend</button></div>
           
           </Card.Text>
