@@ -162,14 +162,14 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
   return (
     <div>
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='flex flex-col gap-2 justify-start items-start' style={{backgroundColor:thememode==="dark"?"#000435":"white"}}>
+        <div className='flex flex-col gap-2 justify-start items-start' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
           <div className=' flex justify-evenly items-start w-full my-2'>
             <button onClick={handleGroupShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Create Group</button>
             <button onClick={handleGroupJoinShow} className='bg-[#198754] text-white p-4 rounded-lg'>Join Group</button>
             <button onClick={handleAddFriendShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Invite Friend</button>
 
           </div>
-        <div className='flex  flex-col justify-evenly items-center gap-6 w-full h-fit border-2'>
+        <div className='flex  flex-col justify-evenly items-center gap-6 w-full h-fit border-2' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
           
           {groupData?.map(data=>{
             return(

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const TransactionCard = ({ user,transactionData, key }) => {
+const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
   const [show, setShow] = useState(false)
   const [transInput, setTransInput] = useState({
         userId:user._id,
@@ -62,9 +62,9 @@ const TransactionCard = ({ user,transactionData, key }) => {
 
   return (
     <div>
-    <Card variant="light" border="success" className='mx-4 my-4'>
-      <Card.Header className='font-bold'>Transaction Category{" "}:-{" "}{transactionData.category}</Card.Header>
-      <Card.Body>
+    <Card variant="light" border="success" className='mx-4 my-4' >
+      <Card.Header className='font-bold' style={{backgroundColor:thememode=="dark"?"rgb(177, 225, 190)":"white"}}>Transaction Category{" "}:-{" "}{transactionData.category}</Card.Header>
+      <Card.Body style={{backgroundColor:thememode=="dark"?"rgb(202, 227, 208)":"white"}}>
         <div className='flex justify-between items-center border-2'>
         <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}>Transaction Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}

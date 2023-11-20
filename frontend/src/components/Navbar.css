@@ -45,27 +45,30 @@
   font-size: larger;
 }
 
-.icon-menu,
-.icon-crossX {
+.icon-menu,            
+.icon-crossX { 
   width: 2.2rem;
-  cursor: pointer;
+  cursor: pointer; 
   height: 2.2rem;
-  display: none;
-}
-.inside{
-  display: block;
-}
-.inside2{
-  display: none;
-}
+  display: none;     
+}                
+.inside{  
+  display: block;    
+}           
+.inside2{ 
+  display: none;      
+}  
 .logout{
-  visibility: hidden;
-}
-.toggle-nav{
- 
-  
+  visibility: hidden;                    
+}      
+.hi{
+  background-color: rgb(189, 218, 196);
 }
 
+.profileIcon{              
+  border-radius: 150%;
+  padding:10px;
+}
 
 @media (max-width: 62em) {
   .outside {

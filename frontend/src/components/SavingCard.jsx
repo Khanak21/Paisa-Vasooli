@@ -74,12 +74,12 @@ const handleDelete = async()=>{
 
   return (
     
-    <div className='flex flex-col justify-center items-start gap-8 w-full p-1 h-[300px]' style={{color:thememode=="dark"?"black":"black"}}>
+    <div className='flex flex-col justify-center items-start gap-8 w-full p-1 h-[300px]' style={{backgroundColor:thememode=="dark"?"":"white",color:thememode=="dark"?"black":"black",}}>
     
-      <Card variant="light" border="success" className="w-full flex flex-col gap-3 border-green-400 rounded-lg border-2 h-40 p-1 ">
+      <Card variant="light" border="success" className="w-full flex flex-col gap-3  rounded-lg border-2 h-40 p-1 " style={{backgroundColor:thememode=="dark"?"rgb(201, 191, 191)":"white",border: thememode === "dark" ? "3px solid white" : "1px solid black",}}>
 
 
-        <Card.Header className='bg-slate-300 font-semibold text-center text-lg flex justify-evenly'>Title{" "}- <div>
+        <Card.Header className='bg-slate-300 font-semibold text-center text-lg flex justify-evenly' style={{backgroundColor:thememode=="dark"?"rgb(246, 235, 235)":"rgb(193, 255, 210)"}}>Title{" "}- <div>
          {props.title}</div></Card.Header>
 
 
@@ -94,7 +94,7 @@ const handleDelete = async()=>{
                   aria-valuenow={percentage}
                   aria-valuemin="0"
                   aria-valuemax="100"
-                  style={{ width: `${percentage}%` }}
+                  style={{ width: `${percentage}%`}}
                 >
                   
                 </div>

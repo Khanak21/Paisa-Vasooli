@@ -222,7 +222,7 @@ console.log(user._id)
   
 
   return (
-    <div>
+    <div className='min-h-screen w-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
       
         <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
@@ -275,8 +275,8 @@ console.log(user._id)
         </div>
         
         {/* -----------------------Filters------------------------ */}
-        <div className='flex px-4 py-4 justify-center items-center h-[100%]' style={{backgroundColor:thememode=="dark"?"#000435":"white"}}>
-           <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl'>Filters:</div>
+        <div className='flex px-4 py-4 justify-center items-center h-[100%]' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+           <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode=="dark"?"white":"black"}}>Filters:</div>
         
         {/* Category */}
               <select className='mx-2 border-2 rounded-md p-3' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
@@ -301,11 +301,11 @@ console.log(user._id)
 
 
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
-      <div className='h-[100%] w-full my-0'  style={{backgroundColor:thememode=="dark"?"#000435":"white"}}> 
+      <div className='min-h-screen w-full '  style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}> 
         <div style={{width:"50%"}}>
           {filteredData?.map(trans=>(
             //  console.log("mapped data",trans)
-            <TransactionCard user={user} key={trans._id} transactionData={trans}  style={{backgroundColor:thememode=="dark"?"#000435":"white"}} /> 
+            <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} /> 
             ))}
         </div>
       </div>

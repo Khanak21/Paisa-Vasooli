@@ -129,7 +129,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   return (
     <>
     <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="savings-container" style={{ color: thememode === "dark" ? "orange" : "white", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "green" }}>
+    <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"rgb(195, 189, 189)":"white" }}>
 
       {/* <div className="header flex justify-end items-center" style={{ color: thememode === "dark" ? "orange" : "white", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "green" }}>
         <div className="toggle p-1" onClick={toggle} >
@@ -137,15 +137,20 @@ function Savings2({ user,setUser,thememode,toggle}) {
         </div>
       </div> */}
      
-      <div className="main-body" style={{ color: thememode === "dark" ? "orange" : "black", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "white" }}>
-        <div className="main-head" style={{ color: thememode === "dark" ? "orange" : "black" }}>
+      <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"rgb(85, 98, 106)":"white"}}>
+        <div className="main-head" style={{ color: thememode === "dark" ? "white" : "black" }}>
           <h2>
             <b>Have any financial goals ?</b>
           </h2>
           <p>Track them here</p>
         </div>
 
-        <div className="main-content" style={{ color: thememode === "dark" ? "orange" : "black", backgroundColor: thememode === "dark" ? " #000000" : "white",borderColor:thememode==="dark"?"green":"white"}}>
+        <div className="main-content" style={{
+  color: thememode === "dark" ? "white" : "black",
+  backgroundColor: thememode === "dark" ? "rgb(85, 98, 106)" : "white",
+  border: thememode === "dark" ? "3px solid white" : "",
+}}
+>
           <div className="main-left">
             <div className="savings-holder"  >
               <label htmlFor="">Title</label>

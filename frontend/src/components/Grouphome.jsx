@@ -7,7 +7,7 @@ import axios from 'axios';
 import GroupCard from './GroupCard.jsx'
 import { useParams } from 'react-router-dom';
 
-export const Grouphome = ({user}) => {
+export const Grouphome = ({user,thememode,toggle}) => {
   const {id} = useParams()
   const [groupData,setgroupData]=useState([])
  
@@ -125,23 +125,23 @@ console.log("bill split data:",billSplitData)
   return (
     
    <>
-          <Navbar/>
+          <Navbar thememode={thememode} toggle={toggle}/>
 
-        <div className='flex flex-col justify-center items-start h-full'>
+        <div className='flex flex-col justify-center items-start'>
 
 
           <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
             Title 
           </div>
           
-          <div className='w-full text-justify bg-amber-500 text-black font-bold'>
+          <div className='w-full h-[80px] text-justify bg-amber-500 text-black font-bold mx-auto '>
                 {console.log(groupData._id)}
                {membersdata?.map(data=>(
                 <div>Group Members :- {" "}{data.username}{" "}</div>
                 ))}
            </div>
-           <div className="w-full bg-orange-200 h-full">
-            <Button variant='success' onClick={handleShow}>Split Bill</Button>
+           <div className="w-full bg-orange-200 min-h-screen">
+            <Button variant='success' onClick={handleShow} className=''>Split Bill</Button>
             <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
           <Modal.Title>Split Bill</Modal.Title>
@@ -159,18 +159,19 @@ console.log("bill split data:",billSplitData)
           <Button variant="success" onClick={handleSubmit} required>Split Bill</Button>
         </Modal.Footer>
       </Modal>
-
+  
        {
         billSplitData[billSplitData.length-1]?.map((mem)=>(
-          <div  key={mem.userId}>
-             <div>{mem.name}</div> 
-             <div>{mem.amount}</div>
+          <div  key={mem.userId} className='mx-auto w-[50%] flex flex-col justify-start gap-2 items-center'>
+             <div><b>Name {" "}</b>{mem.name}</div> 
+             <div><b>Amount {" "}</b>{mem.amount}</div>
              {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
             {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
            </div>
 
         ))
       }
+
              <b>Chat</b>
           </div>
         </div> 

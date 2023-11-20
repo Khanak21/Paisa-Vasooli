@@ -3,10 +3,10 @@ import React from 'react';
 export default function ToggleBtn({thememode,toggle}) {
   return (
  
-      <div className='top-5'>
+      <div className='box-border mt-2'>
 
       <label 
-      class="relative inline-flex items-center mb-5 cursor-pointer"
+      class="relative inline-flex items-center mb-5 cursor-pointer mt-2"
 
       >
        <input 

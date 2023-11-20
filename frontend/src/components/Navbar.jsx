@@ -1,6 +1,6 @@
 import React, { useState,useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes,faUser } from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom'
 import 'tailwindcss/base.css'; // Import Tailwind CSS base styles
 import 'tailwindcss/components.css'; // Import Tailwind CSS components styles
@@ -8,6 +8,7 @@ import 'tailwindcss/utilities.css'; // Import Tailwind CSS utilities styles
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 import ToggleBtn from './ToggleBtn';
+import Profile from './Profile';
 
 
 
@@ -51,17 +52,24 @@ function Navbar({thememode,toggle,setUser,user}) {
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/charts")}}>Charts</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/stocks")}}>Stocks</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/vault")}}>Vault</div>
+
         <div className="inside font-bold text-white hover:cursor-pointer " onClick={()=>{Logout()}}>Logout</div>
         <div className="inside2 font-bold text-white hover:cursor-pointer " onClick={toggle} >Theme Toggle</div>
+        
       </div>
       <div className="logout absolute border border-white rounded-md p-2 right-1 font-bold text-white hover:cursor-pointer hover:border-gray-300 hover:shadow-xl" onClick={handleLogout}>
   Logout
 </div>
-        <div className="toggle-nav flex flex-col justify-center items-center hover:cursor-pointer ">
+        <div className="toggle-nav flex flex-col justify-center items-center hover:cursor-pointer">
        
          <ToggleBtn  thememode={thememode} toggle={toggle} /> 
-
+            
         </div>
+     
+        <div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
+          <FontAwesomeIcon icon={faUser}  />
+        </div>
+     
 
 
       <div className="icons" style={{color:thememode==="dark"?"white":"black",border:thememode==="dark"?"1px solid white":"1px solid black"}}>

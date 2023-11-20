@@ -40,9 +40,9 @@ const handlePaid=()=>{
 console.log(allgroupsdata)
   return (
 
-    <div className='flex justify-between items-start card-parent h-full p-1 ' style={{backgroundColor:thememode==="dark"?"#00008B":"white"}}>
+    <div className='flex justify-between items-start card-parent h-full p-1 ' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
 
-     <Card  border="success" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"rgb(137, 204, 255)":"white"}} >
+     <Card  border="success" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"rgb(189, 218, 196)":"white"}} >
 
       <Card.Body className='w-full'>
 
