@@ -8,6 +8,7 @@ import 'tailwindcss/utilities.css'; // Import Tailwind CSS utilities styles
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 import ToggleBtn from './ToggleBtn';
+import { FaRegEnvelope } from "react-icons/fa";
 
 
 
@@ -62,6 +63,7 @@ function Navbar({thememode,toggle,setUser,user}) {
          <ToggleBtn  thememode={thememode} toggle={toggle} /> 
 
         </div>
+        <FaRegEnvelope className="text-white cursor-pointer" onClick={()=>{navigate("/inbox")}}/>
 
 
       <div className="icons" style={{color:thememode==="dark"?"white":"black",border:thememode==="dark"?"1px solid white":"1px solid black"}}>

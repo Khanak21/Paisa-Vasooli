@@ -17,6 +17,7 @@ import ToggleBtn from './components/ToggleBtn';
 import Savings2 from './pages/Savings/Savings2';
 import SimplifyDebt from './pages/SimplifyDebt'
 import Grouphome from './components/Grouphome';
+import Inbox from './pages/Inbox';
 
 function App() {
   const [user,setUser]=useState({})
@@ -79,6 +80,8 @@ function App() {
           <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
           <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
           <Route path='/simplify' element={<SimplifyDebt user={user}/>}></Route>
+          <Route path='/inbox' element={<Inbox user={user} setUser={setUser}/>}></Route>
+
 
         </Routes>
       </BrowserRouter>
