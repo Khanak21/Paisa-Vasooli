@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from "axios"
 
 const Inbox = ({ user,setUser }) => {
-  useEffect(() => {
-
-  }, [user.inbox,user.friends]);
+    const [inbox,setInbox] = useState(user.inbox)
 
   const handleAccept=async(key)=>{
     try{
@@ -14,17 +12,27 @@ const Inbox = ({ user,setUser }) => {
         alert(res.data.message)
         setUser(res.data.res1);
 
+
     }catch(err){
         console.log(err)
     }
   }
-  let arr=user.inbox
+  useEffect(()=>{
+     const getinbox = async()=>{
+        try{
+            const res=await axios.get(`http://localhost:3001/api/user/getStocks/${user._id}`)
+            setInbox(res.data.inbox)
+        }catch(err){
+            console.log(err)
+        }
+     }
+  },[])
 
 
   return (
     <div>
       <Navbar />
-      {arr.reverse()?.map((msg, index) => {
+      {inbox?.map((msg, index) => {
         const tokens = msg.split(' ');
         const key = tokens[0];
 

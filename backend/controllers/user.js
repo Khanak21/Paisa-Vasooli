@@ -62,3 +62,13 @@ export const addUrl = async(req,res)=>{
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
+
+export const getInbox = async(req,res)=>{
+    const {userId} = req.params
+    try{
+        const user=await User.findById(userId)
+        res.json({inbox:user.inbox})
+    }catch(err){
+        res.json("user not found")
+    }
+}
