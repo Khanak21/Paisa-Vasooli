@@ -129,7 +129,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   return (
     <>
     <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"rgb(195, 189, 189)":"white" }}>
+    <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"white" }}>
 
       {/* <div className="header flex justify-end items-center" style={{ color: thememode === "dark" ? "orange" : "white", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "green" }}>
         <div className="toggle p-1" onClick={toggle} >
@@ -137,7 +137,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
         </div>
       </div> */}
      
-      <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"rgb(85, 98, 106)":"white"}}>
+      <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black"}}>
         <div className="main-head" style={{ color: thememode === "dark" ? "white" : "black" }}>
           <h2>
             <b>Have any financial goals ?</b>
@@ -147,8 +147,8 @@ function Savings2({ user,setUser,thememode,toggle}) {
 
         <div className="main-content" style={{
   color: thememode === "dark" ? "white" : "black",
-  backgroundColor: thememode === "dark" ? "rgb(85, 98, 106)" : "white",
-  border: thememode === "dark" ? "3px solid white" : "",
+  backgroundColor: thememode === "dark" ? "#282828" : "white",
+  borderRadius: thememode==="dark" ? "20px" : "20px" 
 }}
 >
           <div className="main-left">
@@ -161,7 +161,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
                 className="saving-input"
                 value={inputTitle}
                 onChange={handleInputTitle}
-                style={{ color: thememode === "dark" ? "black" : "black"}}
+                style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
                   />
             </div>
 
@@ -173,7 +173,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
                 className="saving-input"
                 value={currentAmount}
                 onChange={handleCurrentAmount}
-                style={{ color: thememode === "dark" ? "black" : "black"}}
+                style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
               />
             </div>
 
@@ -185,7 +185,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
                 className="saving-input"
                 value={amount}
                 onChange={handleAmount}
-                style={{ color: thememode === "dark" ? "black" : "black"}}
+                style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
               />
             </div>
 

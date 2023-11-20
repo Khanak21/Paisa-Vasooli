@@ -233,7 +233,7 @@ useEffect(()=>{
   
 
   return (
-    <div className='min-h-screen w-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}}>
       
         <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
@@ -249,13 +249,13 @@ useEffect(()=>{
                     );
                 })}
             </select>
-        <div className='flex w-full justify-center h-20 p-4' style={{backgroundColor:thememode=="dark"?"black":"white"}}>
+        <div className='flex w-full justify-center h-20 p-4' >
           <div className='flex justify-start items-center gap-4'>
 
             <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div>
-              {/* {t("income")} */}
+              {/* {t("income")} */}Total Income
               </div>
 
              <div> 
@@ -271,7 +271,7 @@ useEffect(()=>{
            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div> 
-                Balance
+               Total Balance
               </div>
                 <div>
               
@@ -297,7 +297,7 @@ useEffect(()=>{
         </div>
         
         {/* -----------------------Filters------------------------ */}
-        <div className='flex px-4 py-4 justify-center items-center h-[100%]' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+        <div className='flex px-4 py-4 justify-center items-center h-[100%]'>
            <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode=="dark"?"white":"black"}}>Filters:</div>
         
         {/* Category */}
@@ -323,7 +323,7 @@ useEffect(()=>{
 
 
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
-      <div className='min-h-screen w-full '  style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}> 
+      <div className='min-h-screen w-full '> 
         <div style={{width:"50%"}}>
           {filteredData?.map(trans=>(
             //  console.log("mapped data",trans)

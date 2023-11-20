@@ -110,7 +110,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
   return (
     <div>
         <Navbar thememode={thememode} toggle={toggle}/>
-    <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"rgb(85, 98, 106)":"white"}}>
+    <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#181818":"white",color: thememode=="dark"?"white":"black"}}>
       <div className='w-full flex justify-evenly items-center'>
           <div className='font-bold text-5xl  flex justify-center items-center' style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Weekly Chart</div>
         <div className='w-[800px]'>

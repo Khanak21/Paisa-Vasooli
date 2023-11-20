@@ -18,29 +18,31 @@ const Inbox = ({ user,setUser,thememode,toggle }) => {
         console.log(err)
     }
   }
-  let arr=user.inbox
+//   let arr=user.inbox
 
 
   return (
-    <div>
+    <div className='dark:bg-[#181818] h-[100vh]'>
       <Navbar thememode={thememode} toggle={toggle} />
-      {arr.reverse()?.map((msg, index) => {
+      <div >
+      {user.inbox?.map((msg, index) => {
         const tokens = msg.split(' ');
         const key = tokens[0];
 
         return (
           <div key={key}>
             {msg.includes('sent') ? (
-              <div className='m-4 bg-gray-200 p-2 rounded-md flex  justify-between align-middle'>
+              <div className='m-4 bg-gray-200 p-2 rounded-md flex  justify-between align-middle dark:bg-[#282828] dark:text-white'>
                 <div className='m-3'>{msg}</div>
                 <button className='p-2 m-2 bg-green-600 rounded-md text-white' onClick={()=>handleAccept(key)}>{user.friends.includes(key) ? "Accepted" : "Accept"}</button>
               </div>
             ) : (
-              <div className='m-4 bg-gray-200 p-2 rounded-md'>{msg}</div>
+              <div className='m-4 bg-gray-200 p-2 rounded-md dark:bg-[#282828] dark:text-white'>{msg}</div>
             )}
           </div>
         );
       })}
+    </div>
     </div>
   );
 };

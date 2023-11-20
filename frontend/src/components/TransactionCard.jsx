@@ -62,11 +62,11 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
 
   return (
     <div>
-    <Card variant="light" border="success" className='mx-4 my-4' >
-      <Card.Header className='font-bold' style={{backgroundColor:thememode=="dark"?"rgb(177, 225, 190)":"white"}}>Transaction Category{" "}:-{" "}{transactionData.category}</Card.Header>
-      <Card.Body style={{backgroundColor:thememode=="dark"?"rgb(202, 227, 208)":"white"}}>
-        <div className='flex justify-between items-center border-2'>
-        <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}>Transaction Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
+    <Card variant="light" border="success" className='mx-4 my-4' style={{backgroundColor:thememode=="dark"?"#282828":"white",color:thememode=="dark"?"white":"black"}}>
+      <Card.Header className='font-bold' >Transaction Category{" "}:{" "}{transactionData.category}</Card.Header>
+      <Card.Body >
+        <div className='flex justify-between items-center'>
+        <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}>Transaction Amount{" "}:  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
       <div className='flex justify-between gap-2'>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
@@ -75,7 +75,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
         
         </div>
         <Card.Text className='font-bold my-1'>
-          Transaction Data{" "} :-  {transactionData.desc}
+          Transaction Description{" "} :  {transactionData.desc}
+        </Card.Text>
+        <Card.Text className='font-bold my-1'>
+          Transaction Date{" "} :  {transactionData.date.substring(0,10)}
         </Card.Text>
       </Card.Body>
     </Card>

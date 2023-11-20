@@ -11,7 +11,7 @@ import ToggleBtn from './ToggleBtn';
 
 import Profile from './Profile';
 import { FaRegEnvelope } from "react-icons/fa";
-import Inbox from '../pages/inbox';
+import Inbox from '../pages/Inbox';
 
 
 
@@ -36,14 +36,14 @@ function Navbar({thememode,toggle,setUser,user}) {
   }
 
   return (
-    <div className="flex gap-30 justify-between items-center bg-green-800 " style={{backgroundColor:thememode==="dark"?"black":"green"}}>
+    <div className="flex gap-30 justify-between items-center bg-green-800 ">
         <div className='text-2xl italic text-white font-extrabold'>
             Paisa Vasooli
          
         </div>
           
 
-      <div className={showNav?" flex justify-between gap-12 p-4 text-white content-link active":"flex justify-evenly gap-12 p-4 text-white content-link"} style={{backgroundColor:thememode==="dark"?"black":"green"}}>
+      <div className={showNav?" flex justify-between gap-12 p-4 text-white content-link active":"flex justify-evenly gap-12 p-4 text-white content-link"} >
 
   
         <div className="font-bold text-white hover:cursor-pointer relative" onClick={()=>{navigate("/dashboard")}}>

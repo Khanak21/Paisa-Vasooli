@@ -123,11 +123,11 @@ function Dues({ user, thememode, toggle,setUser }) {
   return (
   <>
    <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="outer" style={{ backgroundColor: thememode === 'dark' ? 'rgb(85, 98, 106)' : 'white'}}>
+    <div className="outer" style={{ backgroundColor: thememode === 'dark' ? '#181818' : 'white'}}>
       
 
       <div className="hero-section "  >
-        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? 'white' : 'green'}}>
+        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? 'white' : 'green',backgroundColor: thememode === 'dark' ? '#282828' : 'white'}}>
           <div className="due flex justify-between w-full gap-4">
             <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Title</label>
             <input
@@ -137,7 +137,9 @@ function Dues({ user, thememode, toggle,setUser }) {
               placeholder="Input due-title"
               value={dueItem.title}
               onChange={handleBillInput('title')}
-              className="w-[33rem] p-2"
+              className="w-[33rem] p-2 dark:border-none"
+              style={{ backgroundColor: thememode === 'dark' ? '#3a3a3a' : 'white'}}
+
               />
           </div>
 
@@ -150,7 +152,8 @@ function Dues({ user, thememode, toggle,setUser }) {
               placeholder="Input date of due"
               value={dueItem.dueDate}
               onChange={handleBillInput('dueDate')}
-              className="w-[33rem] p-2"
+              className="w-[33rem] p-2 text-gray-400 dark:border-none"
+              style={{ backgroundColor: thememode === 'dark' ? '#3a3a3a' : 'white'}}
              
             />
           </div>
@@ -164,7 +167,8 @@ function Dues({ user, thememode, toggle,setUser }) {
               placeholder="Input amount in Rs."
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
-              className="w-[33rem] p-2 "
+              className="w-[33rem] p-2 dark:border-none "
+              style={{ backgroundColor: thememode === 'dark' ? '#3a3a3a' : 'white'}}
             />
           </div>
 
@@ -177,7 +181,8 @@ function Dues({ user, thememode, toggle,setUser }) {
               value={dueItem.toWhom}
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
-              className="w-[33rem] p-2 dueperson"
+              className="w-[33rem] p-2 dueperson dark:border-none"
+              style={{ backgroundColor: thememode === 'dark' ? '#3a3a3a' : 'white'}}
             />
           </div>
 
@@ -201,7 +206,8 @@ function Dues({ user, thememode, toggle,setUser }) {
             name="recurring"
             value={dueItem.recurring}
             onChange={handleBillInput('recurring')}
-            className="w-[33rem] p-2"
+            className="w-[33rem] p-2 text-gray-400 dark:border-none border-1"
+            style={{ backgroundColor: thememode === 'dark' ? '#3a3a3a' : 'white'}}
           >
             <option value="">Select:</option>x
             <option value="daily">Daily</option>
@@ -219,7 +225,7 @@ function Dues({ user, thememode, toggle,setUser }) {
         <div className="storing-dues">
           <div className="overflow-y-auto w-full">
             {BillData?.map((bill) => (
-              <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} />
+              <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} thememode={thememode}/>
             ))}
           </div>
         </div>

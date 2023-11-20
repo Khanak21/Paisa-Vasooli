@@ -9,7 +9,6 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import TransactionCard from './components/TransactionCard';
 import Dues from "./pages/Dues/Dues"
 import Vault from "./pages/Vault/Vault"
-import Savings from './pages/Savings/Savings';
 import Chart from './pages/Chart/Chart';
 import Stocks from './pages/Stocks/Stocks';
 import { Main } from './pages/Groups/Main';
@@ -19,7 +18,7 @@ import SimplifyDebt from './pages/SimplifyDebt'
 import Grouphome from './components/Grouphome';
 
 import Profile from './components/Profile';
-import Inbox from './pages/inbox';
+import Inbox from './pages/Inbox';
 
 
 function App() {
