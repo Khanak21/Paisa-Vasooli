@@ -324,3 +324,43 @@ export const approveDebt = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
+
+  export const addFriendsToGroup = async(req,res)=>{
+    const id=req.params.id//group id
+    const friends = req.body.friends//array of usernames of friends
+    console.log(friends)
+
+    try{
+    const existgroup = await group.findById(id);
+
+    if (!existgroup) {
+        return res.status(404).json({ error: 'Group not found' });
+    }
+    let updatedGroup={}
+    friends.map(async (friend) => {
+      const friendId = (await user.findOne({ username: friend }))._id;
+      if (!existgroup.members.includes(friendId)) {
+        const newgroup = await group.findByIdAndUpdate(
+          id,
+          { $push: { members: friendId } },
+          { new: true }
+        );
+      
+      const userr = await user.findByIdAndUpdate(
+        friendId,
+        { $push: { groups: id } },
+        { new: true }
+      );
+    updatedGroup = await newgroup.save();
+      }
+
+    });
+    
+    res.status(200).json(updatedGroup);
+
+    }catch(err){
+      console.log(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+
+    }
+  }

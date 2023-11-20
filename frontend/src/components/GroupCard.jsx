@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Card from 'react-bootstrap/Card';
 // import {AiTwotoneCalendar} from 'react-icons/ai';
 import {AiFillEdit} from 'react-icons/ai';
@@ -15,8 +15,45 @@ const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, s
   const navigate = useNavigate()
 const [show, setShow] = useState(false);
 const [showGroupHome, setShowGroupHome] = useState(false);
+const [showAddFriend, setShowAddFriend] = useState(false);
+const [friends,setFriends] = useState([])
+
+const [checkedState, setCheckedState] = useState(
+  new Array(user.friends.length).fill(false)
+);
+
+const handleOnChange = (position) => {
+  const updatedCheckedState = checkedState.map((item, index) =>
+    index === position ? !item : item
+  );
+
+  setCheckedState(updatedCheckedState);
+ 
+}
+
+useEffect(()=>{
+  checkedState.map((item,index)=>{
+    if(item==true)setFriends(prev=>[...prev,user.friends[index]])
+})
+},[checkedState])
+
+const handleAddFriendsToGroup=async()=>{
+  try{
+    console.log(friends)
+    const res = await axios.put(`http://localhost:3001/api/group/addfriendsgroup/${groupData._id}`,{friends})
+    console.log(res.data)
+
+  }catch(err){
+    console.log(err)
+  }
+}
+
+const handleAddFriendClose = () => setShowAddFriend(false);
+const handleAddFriendShow = () => setShowAddFriend(true);
+
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
+
 const handleOpenGroup = () => {
   console.log("yeeeee")
   setShowGroupHome(true);
@@ -55,7 +92,7 @@ console.log(allgroupsdata)
           <Card.Text className='text-md w-fit justify-start items-center '>
             <b> Group Code </b>{" "}:- <br/>
            <div className='flex'><input type="text" value= {groupData.groupCode} name="" id="" />
-            <button className='mx-2 w-80 bg-blue-600 rounded-md text-white'>or Add Friend</button></div>
+            <button className='mx-2 w-80 bg-blue-600 rounded-md text-white' onClick={handleAddFriendShow}>or Add Friend</button></div>
           
           </Card.Text>
 
@@ -87,6 +124,38 @@ console.log(allgroupsdata)
         <Grouphome groupData={groupData} user={user} handlePaid={handlePaid} />
       )}
    </div> */}
+    <Modal show={showAddFriend} onHide={handleAddFriendClose} animation={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Select friends to be added</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <ul className="friends-list">
+        {user.friends.map((name, index) => {
+          return (
+            <li key={index}>
+              <div className="toppings-list-item h-8 align-middle">
+                <div className="left-section flex px-4 align-middle">
+                  <input
+                    type="checkbox"
+                    id={`custom-checkbox-${index}`}
+                    name={name}
+                    value={name}
+                    checked={checkedState[index]}
+                    onChange={() => handleOnChange(index)}
+                    className='flex justify-start w-4 align middle'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                  />
+                  <label htmlFor={`custom-checkbox-${index}`} className='flex align-middle m-2'>{name}</label>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+        </ul>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleAddFriendsToGroup}  required>Add to group</Button>
+        </Modal.Footer>
+      </Modal>
   </div>
   )
 }

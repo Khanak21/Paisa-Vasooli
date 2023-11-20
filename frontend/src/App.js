@@ -17,8 +17,10 @@ import ToggleBtn from './components/ToggleBtn';
 import Savings2 from './pages/Savings/Savings2';
 import SimplifyDebt from './pages/SimplifyDebt'
 import Grouphome from './components/Grouphome';
+
 import Profile from './components/Profile';
 import Inbox from './pages/inbox';
+
 
 function App() {
   const [user,setUser]=useState({})
@@ -84,6 +86,7 @@ function App() {
            <Route path="/profile" element={<Profile user={user} thememode={thememode} toggle={toggle}/>} />
            <Route path="/billsplit" element={<Grouphome user={user} thememode={thememode} toggle={toggle}/>}/>
            <Route path="/inbox" element={<Inbox user={user} setUser={setUser} thememode={thememode} toggle={toggle}/>} />
+
         </Routes>
       </BrowserRouter>
     </>
