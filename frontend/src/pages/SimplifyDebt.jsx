@@ -104,7 +104,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
   );
 
   return (
-    <div className='w-screen h-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+    <div className='w-screen min-h-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className='w-full flex justify-center bg-amber-500 text-black font-bold'>
                 {console.log(id)}
