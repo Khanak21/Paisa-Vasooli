@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import axios from "axios"
 
-const Inbox = ({ user,setUser }) => {
+const Inbox = ({ user,setUser,thememode,toggle }) => {
   useEffect(() => {
 
   }, [user.inbox,user.friends]);
@@ -23,7 +23,7 @@ const Inbox = ({ user,setUser }) => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar thememode={thememode} toggle={toggle} />
       {arr.reverse()?.map((msg, index) => {
         const tokens = msg.split(' ');
         const key = tokens[0];

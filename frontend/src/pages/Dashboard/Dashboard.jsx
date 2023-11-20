@@ -222,11 +222,7 @@ console.log(user._id)
   
 
   return (
-<<<<<<< Updated upstream
     <div className='min-h-screen w-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
-=======
-    <div  style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
->>>>>>> Stashed changes
       
         <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
@@ -305,11 +301,7 @@ console.log(user._id)
 
 
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
-<<<<<<< Updated upstream
       <div className='min-h-screen w-full '  style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}> 
-=======
-      <div className='h-[100%] w-full '  style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}> 
->>>>>>> Stashed changes
         <div style={{width:"50%"}}>
           {filteredData?.map(trans=>(
             //  console.log("mapped data",trans)

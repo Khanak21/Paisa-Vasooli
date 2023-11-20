@@ -9,6 +9,8 @@ import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 import ToggleBtn from './ToggleBtn';
 import Profile from './Profile';
+import { FaRegEnvelope } from "react-icons/fa";
+import Inbox from '../pages/inbox';
 
 
 
@@ -65,7 +67,10 @@ function Navbar({thememode,toggle,setUser,user}) {
          <ToggleBtn  thememode={thememode} toggle={toggle} /> 
             
         </div>
-     
+        <div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon ' onClick={()=>{navigate("/inbox")}}>
+        <FaRegEnvelope className="text-white cursor-pointer" />
+
+        </div>
         <div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
           <FontAwesomeIcon icon={faUser}  />
         </div>
