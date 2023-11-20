@@ -6,21 +6,23 @@ import axios from "axios"
 import TransactionCard from '../../components/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
 import StockChart from '../../components/StockChart';
+import { useTranslation } from "react-i18next"; 
+const languages = [
+  { value: "", text: "Options" },
+  { value: "en", text: "English" },
+  { value: "hi", text: "Hindi" },
+];
 
 const Dashboard = ({user,thememode,toggle,setUser}) => {
- 
-  
-  // useEffect(() => {
-
-  //   const loggedInUser = localStorage.getItem("user");
-  //   if (loggedInUser) {
-  //     console.log(loggedInUser)
-
-  //    const foundUser = JSON.parse(loggedInUser);
-  //     setUser(foundUser);
-  //   }
-
-  // }, []);
+  // const { t } = useTranslation();
+  const [lang, setLang] = useState("en");
+  const handleChange = (e) => {
+    setLang(e.target.value);
+    let loc = "http://localhost:3000/dashboard"
+    window.location.replace(
+        loc + "?lng=" + e.target.value
+    );
+};
   const [updateFlag, setUpdateFlag] = useState(false); 
   const [show,setShow] = useState(false)
   // console.log(user)
@@ -78,18 +80,28 @@ console.log(user._id)
       setFilterInput({...filterInput,[name]:e.target.value})
 
 }
+console.log("filters:",filterInput)
+const isFilterEmpty =filterInput.category === "" && filterInput.startDate === "" && filterInput.endDate === "";
+useEffect(()=>{
+  const ifnocategselect=async()=>{
+    try{
+      const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
+      console.log(res.data)
+      setFilteredData(res.data.trans)
+    }catch(err){
+        console.log(err)
+    }
+  }
+  if(isFilterEmpty){
+    ifnocategselect()
+  }
+},[updateFlag])
     const handleFilter = e=>{
         e.preventDefault()
-        const isFilterEmpty =filterInput.category === "" && filterInput.startDate === "" && filterInput.endDate === "";
         console.log("filters:",filterInput)
         const addFilter = async()=>{
         try{
-          let res
-          if (isFilterEmpty) {
-            res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
-          }else{
-            res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
-          }
+          const res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
           console.log(res.data)
           setFilteredData(res.data.trans)
         }catch(err){
@@ -98,7 +110,6 @@ console.log(user._id)
       }
       addFilter()
     }
-
       const mailsend=async()=>{
         try{
           const reqmail = user.email
@@ -180,7 +191,7 @@ console.log(user._id)
     useEffect(() => {
       const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
       setUniqueCategories([...categoriesSet]);
-    }, [updateFlag]);
+    },[updateFlag]);
 
      // Replace with your dynamic currency value
     const currencyData = UCurrency('inr');
@@ -201,7 +212,7 @@ console.log(user._id)
         console.log(res.data)
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])
-        setUpdateFlag((prevFlag) => !prevFlag);
+        setUpdateFlag((prevFlag) => !(prevFlag));
       }catch(err){
         console.log(err.response.data)
       }
@@ -226,14 +237,25 @@ console.log(user._id)
       
         <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
-     
+        <select value={lang} onChange={handleChange}>
+                {languages.map((item) => {
+                    return (
+                        <option
+                            key={item.value}
+                            value={item.value}
+                        >
+                            {item.text}
+                        </option>
+                    );
+                })}
+            </select>
         <div className='flex w-full justify-center h-20 p-4' style={{backgroundColor:thememode=="dark"?"black":"white"}}>
           <div className='flex justify-start items-center gap-4'>
 
             <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div>
-              Total Income
+              {/* {t("income")} */}
               </div>
 
              <div> 

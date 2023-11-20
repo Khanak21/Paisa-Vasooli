@@ -2,12 +2,19 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios"
 import Navbar from '../components/Navbar';
 import { useParams } from 'react-router-dom';
+<<<<<<< Updated upstream
 
 const SimplifyDebt = ({user,thememode,toggle}) => {
+=======
+// import io from 'socket.io-client';
+// const socket = io('http://localhost:3001');
+const SimplifyDebt = ({user}) => {
+>>>>>>> Stashed changes
     console.log(user)
     const {id} = useParams()
   const [inputFields, setInputFields] = useState([]);
   const [data,setData] = useState([])
+  const [commentflag,setcommentflag] = useState(false);
   console.log(inputFields)
   console.log(data)
   const [membersdata,setmembersdata]=useState([])
@@ -52,7 +59,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
       }, {});
       
       const outputArray = Object.values(resultMap);
-
+      
       const simplify = async()=>{
         try{
           const res = await axios.post(`http://localhost:3001/api/group/simplifyDebt/${id}`,{outputArray})
@@ -78,6 +85,62 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
      }
      getdebts()
   },[])
+
+  const [commentText, setCommentText] = useState('');
+
+    const handleCommentChange = (e) => {
+        setCommentText(e.target.value);
+    };
+
+    const handleAddComment = async () => {
+      try {
+          const res = await axios.post(`http://localhost:3001/api/group/addcomment`, {
+                  userId: user._id, 
+                  text:commentText,
+                  groupId:id,
+                  username:user.username
+          });
+          console.log(res.data)
+          // socket.emit('comment', {
+          //   userId: user._id,
+          //   text: commentText,
+          //   groupId: id,
+          //   username: user.username,
+          // });
+          setCommentText('')
+          setcommentflag((prev)=>!(prev))
+      } catch (err) {
+          console.log(err);
+      }
+  };
+  const [comments, setComments] = useState([]);
+  const getcomments = async()=>{
+    try {
+      const response = await axios.get(`http://localhost:3001/api/group/getcomments/${id}`);
+      setComments(response.data.commentss);
+      console.log(comments)
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  }
+  useEffect(()=>{
+    getcomments()
+  },[commentflag,comments.length])
+  // useEffect(()=>{
+  //   getcomments()
+  // },[comments.length])
+
+  // useEffect(() => {
+  //   // Listen for incoming comments from the server
+  //   socket.on('comment', (data) => {
+  //     setComments((prevComments) => [...prevComments, data]);
+  //   });
+
+  //   return () => {
+  //     // Clean up the socket connection when the component unmounts
+  //     socket.disconnect();
+  //   };
+  // }, [socket]);
 
   useEffect(()=>{
     const getMembers = async()=>{
@@ -177,6 +240,29 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
             </div>
         ))
       }
+
+              <label htmlFor="commentText">Add Comment:</label>
+                <input
+                    type="text"
+                    id="commentText"
+                    value={commentText}
+                    onChange={handleCommentChange}
+                    placeholder="Type your comment here"
+                    className="w-80 m-4 p-2 border border-gray-300 rounded-md"
+                />
+                <button onClick={handleAddComment} className="bg-[#198754] p-2 rounded-md text-white m-2">
+                    Add Comment
+                </button>
+
+                <div className="m-4">
+        <h3>Comments:</h3>
+        {comments.map((comment) => (
+          <div key={comment._id} className="border p-2 my-2 rounded-md">
+            <p>{comment.text}</p>
+            <p>By: {comment.username === user.username ? 'You' : comment.username}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

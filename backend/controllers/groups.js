@@ -145,33 +145,6 @@ export const splitBill = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
-
-//   export const markPaid = async (req, res) => {
-//     // Group id
-//     const id = req.params.id;
-//     // User id
-//     const userId = req.body.userId;
-
-
-//     try {
-        
-//         const group1 = await group.findById(id);
-
-//         // Find the index of the user in the billSplit array
-//         const userIndex = group1.billSplit[0].findIndex((mem) => mem.userId === userId);
-
-//         // If the user is found, update the settled field
-//         if (userIndex !== -1) {
-//             // Convert the string to a boolean and toggle it
-//             group1.billSplit[0][userIndex].settled = group1.billSplit[0][userIndex].settled === true ? false : true;
-//             await group1.save();
-//         }
-//         res.json(group1);
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// };
 export const markPaid = async (req, res) => {
     // Group id
     const id = req.params.id;
@@ -324,6 +297,51 @@ export const approveDebt = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
+
+export const addComment = async (req, res) => {
+  const { groupId, userId, text,username} = req.body;
+
+  try {
+      const groupp = await group.findByIdAndUpdate(
+          groupId,
+          {
+              $push: {
+                  comments: {
+                      userId: userId,
+                      text: text,
+                      username:username
+                  },
+              },
+          },
+          { new: true }
+      );
+
+      res.status(200).json({ groupp });
+  } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const getAllComments = async (req, res) => {
+  const groupId = req.params.id;
+
+  try {
+      const groupp = await group.findById(groupId);
+
+      if (!groupp) {
+          return res.status(404).json({ error: 'Group not found' });
+      }
+
+      const commentss = groupp.comments || [];
+
+      res.status(200).json({ commentss });
+  } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
   export const addFriendsToGroup = async(req,res)=>{
     const id=req.params.id//group id

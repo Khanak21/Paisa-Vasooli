@@ -1,5 +1,5 @@
 import express from "express";
-import { creategroup,joingroup,getgroups,getmembers,splitBill, markPaid, markApproved,deleteGroup, simplifyDebt, approveDebt, getDebts,getgroup, addFriendsToGroup} from "../controllers/groups.js";
+import { creategroup,joingroup,getgroups,getmembers,splitBill, markPaid, markApproved,deleteGroup, simplifyDebt, approveDebt, getDebts,getgroup,addComment,getAllComments, addFriendsToGroup} from "../controllers/groups.js";
 
 const router = express.Router();
 router.post("/creategroup",creategroup)
@@ -13,7 +13,8 @@ router.put("/markpaid/:id",markPaid)
 router.put("/markapproved/:id",markApproved)
 router.post("/simplifyDebt/:id",simplifyDebt)
 router.post("/approveDebt/:id",approveDebt)
-
 router.get("/getDebts/:groupId",getDebts)
 router.delete("/deleteGroup/:id",deleteGroup)
+router.post("/addcomment",addComment)
+router.get("/getcomments/:id",getAllComments)
 export default router;

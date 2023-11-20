@@ -75,7 +75,7 @@ const BillCard = ({ billflag,setbillflag,user,BillData }) => {
           <div className='flex flex-col w-[60%] justify-end items-start gap-2 '>
             <Card.Text className="flex items-center justify-evenly  text-md w-full">
                <br/>
-             <b>Date:-{" "}  {BillData.dueDate} </b>
+             <b>Date:-{" "}  {BillData.dueDate.split('T')[0]} </b>
              <AiTwotoneCalendar size={20} />
             </Card.Text>
 

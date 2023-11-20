@@ -164,8 +164,7 @@ function Dues({ user, thememode, toggle,setUser }) {
               placeholder="Input amount in Rs."
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
-              className="w-[33rem] p-2 rounded-md text-center"
-              
+              className="w-[33rem] p-2 "
             />
           </div>
 
@@ -178,12 +177,11 @@ function Dues({ user, thememode, toggle,setUser }) {
               value={dueItem.toWhom}
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
-              className="w-[33rem] p-2"
-             
+              className="w-[33rem] p-2 dueperson"
             />
           </div>
 
-          <div className="due flex justify-between w-full gap-4">
+          {/* <div className="due flex justify-between w-full gap-4">
             <label htmlFor="PersonDue" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
             <input
               type="text"
@@ -195,7 +193,22 @@ function Dues({ user, thememode, toggle,setUser }) {
               className="w-[33rem] p-2"
              
             />
-          </div>
+          </div> */}
+
+        <div className="due flex justify-between w-full gap-4">
+          <label htmlFor="PersonDue" style={{ color: thememode === 'dark' ? 'white' : 'black' }}>Recurring</label>
+          <select
+            name="recurring"
+            value={dueItem.recurring}
+            onChange={handleBillInput('recurring')}
+            className="w-[33rem] p-2"
+          >
+            <option value="">Select:</option>x
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
 
           <div className="add-btn flex bg-green-600 justify-center items-center hover:cursor-pointer " onClick={handleSubmit}>
             Add Due
