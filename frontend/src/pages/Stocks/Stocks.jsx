@@ -5,7 +5,7 @@ import StockWidget from '../../components/StockWidget'
 import axios from "axios"
 import StockChart from '../../components/StockChart'
 
-const Stocks = ({user}) => {
+const Stocks = ({user,thememode,toggle}) => {
 //     const [input,setInput]=useState({})
 //     // const [data,setData] = useState([{ ticker: 'AAPL', company: 'Apple' }])
 //   const [stockData,setStockData]=useState([{ ticker: 'AAPL', company: 'Apple' }])
@@ -43,9 +43,9 @@ const Stocks = ({user}) => {
 //     },[])
 
 
-  return (
+  return ( 
     <div>
-        <Navbar/>
+        <Navbar thememode={thememode} toggle={toggle}/>
         {/* <div className="h-[60vh] border-2 mx-4 my-4 flex justify-center">
         <div className='flex flex-col border-3 w-1/3 mx-2 my-2 justify-center'>
             <input type='text' placeholder='Enter ticker symbol' className='my-2' name='ticker' onChange={handleInput('ticker')}></input>
@@ -64,10 +64,11 @@ const Stocks = ({user}) => {
         }
         helooooooooooooo */}
         {/* </div> */}
-        <div className="mx-4 my-4">
+        <div className="mx-auto my-auto w-screen h-screen flex justify-center items-center" style={{backgroundColor:thememode==="dark"?"rgb(195, 189, 189)":"white"}} >
+        <div>
         <TradingViewWidget sym={"AAPL"}/>
         {/* <TradingViewWidget sym={"MSFT"}/> */}
-
+         </div>
         </div>
     </div>
   )

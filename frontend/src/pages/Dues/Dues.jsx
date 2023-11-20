@@ -123,7 +123,7 @@ function Dues({ user, thememode, toggle,setUser }) {
   return (
   <>
    <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="outer" style={{ backgroundColor: thememode === 'dark' ? '#333333' : 'white'}}>
+    <div className="outer" style={{ backgroundColor: thememode === 'dark' ? 'rgb(85, 98, 106)' : 'white'}}>
       
 
       <div className="hero-section "  >

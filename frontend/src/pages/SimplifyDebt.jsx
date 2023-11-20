@@ -3,7 +3,7 @@ import axios from "axios"
 import Navbar from '../components/Navbar';
 import { useParams } from 'react-router-dom';
 
-const SimplifyDebt = ({user}) => {
+const SimplifyDebt = ({user,thememode,toggle}) => {
     console.log(user)
     const {id} = useParams()
   const [inputFields, setInputFields] = useState([]);
@@ -104,18 +104,19 @@ const SimplifyDebt = ({user}) => {
   );
 
   return (
-    <div>
-        <Navbar/>
-        <div className='w-full text-justify bg-amber-500 text-black font-bold'>
+    <div className='w-screen h-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+        <Navbar thememode={thememode} toggle={toggle}/>
+        <div className='w-full flex justify-center bg-amber-500 text-black font-bold'>
                 {console.log(id)}
                {membersdata?.map(data=>(
                 <div>Group Members :- {" "}{data.username}{" "}</div>
                 ))}
            </div>
-        <div className='text-4xl m-4 w-full flex justify-center'>Simplify your debts!</div>
-        <form onSubmit={handleSubmit}>
+        <div className='text-4xl m-4 w-full flex justify-center' style={{color:thememode=="dark"?"white":"black"}}>Simplify your debts!</div>
+        <form onSubmit={handleSubmit}  className=' p-3 mx-auto flex flex-col gap-3 justify-center'>
           {inputFields.map((field, index) => (
-          <div className='flex justify-center'><div key={index}>
+          <div className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg' style={{border:thememode=="dark"?"2px solid white":"1px solid black"}}>
+            <div key={index} className='gap-3'>
              <div>
               <label htmlFor={`paidBy-${index}`}>Paid By</label>
               <Dropdown
@@ -125,7 +126,7 @@ const SimplifyDebt = ({user}) => {
               />
             </div>
             <div>
-              <label htmlFor={`paidFor-${index}`}>Paid For</label>
+              <label htmlFor={`paidFor-${index}`}>Paid To</label>
               <Dropdown
                 options={membersdata}
                 value={field.paidFor}
@@ -152,11 +153,14 @@ const SimplifyDebt = ({user}) => {
           Add Field
         </button>
       
-        <div><button type="submit" className='bg-[#198754] w-60 p-2 rounded-md text-white m-4 ' onClick={handleSubmit}>Simplify</button></div></div>
+        <div>
+          <button type="submit" className='bg-[#198754] w-60 p-2 rounded-md text-white m-4 ' onClick={handleSubmit}>Simplify</button></div></div>
+
       {
         data?.map(debt=>(
-            <div className='m-4 flex bg-gray-100 rounded-2xl justify-between p-2'>
-                <div className='text-2xl flex align-middle p-3'>{debt[0]} owes {debt[1]} ${debt[2]}</div>
+            <div className='flex items-center bg-gray-100 rounded-2xl justify-between p-2 mx-auto w-[60%]'>
+                 <div className='w-[30%]'><h4>Statement:-</h4></div>
+                <div className='w-[60%] text-2xl flex align-middle p-3'>{debt[0]}{" "} owes {debt[1]} {" "}&#x20B9;{debt[2]}</div>
 
                 {user.username==debt[1] && <button onClick={async()=>{
                      try{
