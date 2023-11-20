@@ -29,10 +29,10 @@ export const sendRequest = async(req,res)=>{
     const res2 = await User.findByIdAndUpdate(
 
         friendUser._id,
-        {$push:{receivedRequests:username}},
+        {$push:{receivedRequests:username,inbox:`${username} sent you a friend request`}},
         {new:true}
     )
-     res.json({message:"Invitation sent"})
+     res.json({message:"Invitation sent",res2})
    }catch(err){
     res.json("Unable to send request")
    }
@@ -62,7 +62,7 @@ export const acceptRequest = async(req,res)=>{
         {$push:{friends:username,inbox:`${username} accepted your friend request`},$pull: { sentRequests: username }},
         {new:true}
     )
-    res.json({res1,res2,message:"Invitation accepted"})
+    res.status(200).json({res1,res2,message:"Invitation accepted"})
    }catch(err){
     res.json("Error")
    }
