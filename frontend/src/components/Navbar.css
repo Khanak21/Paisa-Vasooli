@@ -65,7 +65,11 @@
   background-color: rgb(189, 218, 196);
 }
 
+<<<<<<< Updated upstream
 .profileIcon{              
+=======
+.profileIcon{      
+>>>>>>> Stashed changes
   border-radius: 150%;
   padding:10px;
 }
