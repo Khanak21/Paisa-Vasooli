@@ -233,6 +233,7 @@ const currenciData = UCurrency(currenci);
                     value={Currency}
                     onChange={handleCurrency}
                     className="w-[33rem] p-2"
+                    style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
                     required
                   >
                     <option>Select:</option>
