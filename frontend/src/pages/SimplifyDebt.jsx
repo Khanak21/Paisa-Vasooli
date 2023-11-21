@@ -12,7 +12,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
   console.log(inputFields)
   console.log(data)
   const [membersdata,setmembersdata]=useState([])
-
+console.log(membersdata)
   const handleInputChange = (index, fieldName, value) => {
     const updatedInputFields = [...inputFields];
     updatedInputFields[index][fieldName] = value;
@@ -161,28 +161,30 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
   );
 
   return (
-    <div className='w-screen h-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+    <div className=' h-[150vh] dark:bg-[#181818] dark:text-white bg-[#f0f0f0]' >
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='w-full flex justify-center bg-amber-500 text-black font-bold'>
-                {console.log(id)}
+        <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white bg-[#cac8c8]'>
+                {console.log(id)}Group Members :- 
                {membersdata?.map(data=>(
-                <div>Group Members :- {" "}{data.username}{" "}</div>
+                <div>{" "}{data.username},{" "}</div>
                 ))}
            </div>
-        <div className='text-4xl m-4 w-full flex justify-center' style={{color:thememode=="dark"?"white":"black"}}>Simplify your debts!</div>
+        <div className='text-4xl m-4 flex justify-center' style={{color:thememode=="dark"?"white":"black"}}>Simplify your debts!</div>
         <form onSubmit={handleSubmit}  className=' p-3 mx-auto flex flex-col gap-3 justify-center'>
           {inputFields.map((field, index) => (
-          <div className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg' style={{border:thememode=="dark"?"2px solid white":"1px solid black"}}>
+          <div className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg ' >
             <div key={index} className='gap-3'>
-             <div>
+             <div 
+                className='text-gray-400'
+                >
               <label htmlFor={`paidBy-${index}`}>Paid By</label>
               <Dropdown
                 options={membersdata}
                 value={field.paidBy}
                 onChange={(e) => handleInputChange(index, 'paidBy', e.target.value)}
-              />
+           />
             </div>
-            <div>
+            <div className='text-gray-400'>
               <label htmlFor={`paidFor-${index}`}>Paid To</label>
               <Dropdown
                 options={membersdata}
@@ -215,7 +217,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
 
       {
         data?.map(debt=>(
-            <div className='flex items-center bg-gray-100 rounded-2xl justify-between p-2 mx-auto w-[60%]'>
+            <div className='flex items-center bg-gray-100 rounded-2xl justify-between p-2 mx-auto w-[60%] dark:bg-[#282828]'>
                  <div className='w-[30%]'><h4>Statement:-</h4></div>
                 <div className='w-[60%] text-2xl flex align-middle p-3'>{debt[0]}{" "} owes {debt[1]} {" "}&#x20B9;{debt[2]}</div>
 
@@ -235,7 +237,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
         ))
       }
 
-              <label htmlFor="commentText">Add Comment:</label>
+           <div className='w-full p-4'> <label htmlFor="commentText">Add Comment:</label>
                 <input
                     type="text"
                     id="commentText"
@@ -247,6 +249,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
                 <button onClick={handleAddComment} className="bg-[#198754] p-2 rounded-md text-white m-2">
                     Add Comment
                 </button>
+                </div>
 
                 <div className="m-4">
         <h3>Comments:</h3>

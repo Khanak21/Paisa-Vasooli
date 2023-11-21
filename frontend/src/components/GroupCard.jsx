@@ -81,7 +81,7 @@ const handlePaid=()=>{
 console.log(allgroupsdata)
   return (
 
-    <div className='flex justify-center items-center card-parent h-full p-1 '>
+    <div className='flex justify-center items-center card-parent h-full p-1'>
 
      <Card  border="success" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"#282828":"white",color:thememode==="dark"?"white":"black"}} >
 
@@ -95,12 +95,16 @@ console.log(allgroupsdata)
 
           <Card.Text className='text-md w-fit justify-start items-center '>
             <b> Group Code </b>{" "}:- <br/>
-            <div className='flex'><input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} />
+            <div className='flex align-middle'>
+              <div className='flex'>
+              <input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} />
             <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
             <button><MdContentCopy  className='ml-2 text-xl'/></button>
             </CopyToClipboard>
+            </div>
             {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>}
-            <button className='mx-2 w-80 bg-blue-600 rounded-md text-white' onClick={handleAddFriendShow}>or Add Friend</button></div>
+            <button className='mx-2 px-2 bg-blue-600 rounded-md text-white lg:w-80 md:w-80' onClick={handleAddFriendShow}>or Add Friend</button>
+            </div>
           
           </Card.Text>
 

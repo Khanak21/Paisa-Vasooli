@@ -148,11 +148,11 @@ const currenciData = UCurrency(currenci);
   return (
   <>
    <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? 'rgb(85, 98, 106)' : 'white'}}>
+    <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
       
 
       <div className="hero-section "  >
-        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? 'white' : 'green',backgroundColor: thememode === 'dark' ? '#282828' : 'white'}}>
+        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? '' : 'green',backgroundColor: thememode === 'dark' ? '#282828' : 'white'}}>
           <div className="due flex justify-between w-full gap-4">
             <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
             <input

@@ -104,7 +104,7 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
           <input type="text" name={'title'} defaultValue={BillData.title} onChange={handleBillInput('title')} required />
 
           <label htmlFor="date" className='font-bold'>Date:</label>
-          <input type="date" name={'dueDate'} defaultValue={BillData.dueDate.split('T')[0]} onChange={handleBillInput('dueDate')} required />
+          <input type="date" name={'dueDate'} defaultValue={BillData?.dueDate?.substring(0,10)} onChange={handleBillInput('dueDate')} required />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={handleSubmit} required>
