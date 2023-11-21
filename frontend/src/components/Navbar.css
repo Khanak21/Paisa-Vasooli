@@ -69,11 +69,24 @@
   border-radius: 150%;
   padding:10px;
 } 
+.navbar-title{
+  display: flex;
+  height:100%; 
+
+  align-items: center;
+  justify-content: center;
+}
+
 
 @media (max-width: 62em) {
+  .main-navbar{
+    height:fit-content;   
+    align-items: flex-start; 
+  }
   .outside {
      display: flex;
      justify-content: flex-end;
+     
   }
  .content-link{
   scale:0;
@@ -108,12 +121,12 @@
     font-size: 40x;
     color:rgb(252, 250, 250);
   }
-
+  
   .content-link.active{
     display: flex;
     scale:1;
     background-color: #077944;
-    position: absolute;
+    /* position: absolute; */
     width: 100vw;
     padding:30px;
     color: white;
@@ -126,7 +139,14 @@
     /* box-shadow: 0px 15px 30px -3px rgba(7, 7, 185, 0.5); */
     gap: 20px;
   }
-
+  .navbar-title{
+    display: flex;
+    height:100%; 
+    font-size:22px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
   
   .activemenu{
     display: none;

@@ -160,7 +160,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     },[groupflag])
 
   return (
-    <div>
+    <div className='min-h-screen w-screen flex flex-col justify-center' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className='flex flex-col gap-2 justify-start items-start' style={{backgroundColor:thememode=="dark"?"#181818":"white"}}>
           <div className=' flex justify-evenly items-start w-full my-2'>

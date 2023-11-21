@@ -108,7 +108,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
     
 
   return (
-    <div>
+    <div className='min-h-screen w-screen flex flex-col items-start'  style={{backgroundColor:thememode==="dark"?"rgb(85, 98, 106)":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
     <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#181818":"white",color: thememode=="dark"?"white":"black"}}>
       <div className='w-full flex justify-evenly items-center'>
@@ -134,15 +134,20 @@ const Chart = ({user,setUser,thememode,toggle}) => {
         <YearlyChart yearlyData={yearlyData} thememode={thememode}/>
         </div>
     </div>
-      </div>
-      <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Category-wise Expenses</div>
-        <div className='w-[800px]'>
-           
-        <CategoryChart categoryData={categoryData} allCategories={allCategories}/>
 
+   
+
+      <div className='w-full flex justify-evenly items-center'>
+        <div className='w-[800px] h-[600px]'>
+          <CategoryChart categoryData={categoryData} allCategories={allCategories} thememode={thememode} toggle={toggle}/>
         </div>
+        <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>
+          Category-wise Expenses
+        </div>
+       </div>
+
+      </div>
     </div>
-    
   )
 }
 

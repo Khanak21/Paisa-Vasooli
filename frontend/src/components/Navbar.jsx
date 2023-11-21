@@ -11,7 +11,8 @@ import ToggleBtn from './ToggleBtn';
 
 import Profile from './Profile';
 import { FaRegEnvelope } from "react-icons/fa";
-import Inbox from '../pages/Inbox';
+import Inbox from '../pages/inbox.jsx'
+
 
 
 
@@ -36,9 +37,9 @@ function Navbar({thememode,toggle,setUser,user}) {
   }
 
   return (
-    <div className="flex gap-30 justify-between items-center bg-green-800 ">
-        <div className='text-2xl italic text-white font-extrabold'>
-            Paisa Vasooli
+    <div className="flex gap-30 justify-between items-center bg-green-800 w-full h-[80px] main-navbar" style={{backgroundColor:thememode==="dark"?"black":"green"}}>
+        <div className='text-2xl italic text-white font-extrabold h-full navbar-title p-1'>
+          <div className='w-full h-fit'>  Paisa Vasooli</div>
          
         </div>
           
@@ -62,13 +63,14 @@ function Navbar({thememode,toggle,setUser,user}) {
         
       </div>
       <div className="logout absolute border border-white rounded-md p-2 right-1 font-bold text-white hover:cursor-pointer hover:border-gray-300 hover:shadow-xl" onClick={handleLogout}>
-  Logout
-</div>
+       Logout
+      </div>
         <div className="toggle-nav flex flex-col justify-center items-center hover:cursor-pointer">
        
          <ToggleBtn  thememode={thememode} toggle={toggle} /> 
             
         </div>
+    <div className='w-[20em] flex justify-evenly items-center icon-bar'>
         <div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon ' onClick={()=>{navigate("/inbox")}}>
         <FaRegEnvelope className="text-white cursor-pointer" />
 
@@ -77,7 +79,7 @@ function Navbar({thememode,toggle,setUser,user}) {
         <div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
           <FontAwesomeIcon icon={faUser}  />
         </div>
-     
+     </div>
 
 
       <div className="icons" style={{color:thememode==="dark"?"white":"black",border:thememode==="dark"?"1px solid white":"1px solid black"}}>

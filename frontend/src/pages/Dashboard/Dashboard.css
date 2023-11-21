@@ -2,4 +2,28 @@
     background-color: green;
     border: 2px solid black;
     padding: 10px;
-} */ 
+} */    
+@media(max-width:62em)
+{    
+    .d-parent{
+        display: flex;
+        flex-direction: column;  
+        height: 250px;
+        gap:20px;   
+  
+    }
+    .chill{
+        width:100%;    
+    }
+  
+    .filter{         
+        display: flex;
+        flex-direction: column;
+    } 
+    .category-all{  
+        width: 100%;
+    }
+    .export-dashboard{
+        width:100%;
+    }    
+}

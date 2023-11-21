@@ -64,7 +64,7 @@ function Vault({thememode,toggle,user}) {
   },[])
 
   return (
-    <div  className="h-[100vh]" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"white" }}>
+    <div className="min-h-screen w-screen"  style={{ backgroundColor: thememode === 'dark' ? 'rgb(85, 98, 106)' : 'white' }}>
       <Navbar thememode={thememode} toggle={toggle}/>
       <div >
       <div className="flex justify-center font-bold text-4xl m-2 p-2">Vault</div>
@@ -74,7 +74,7 @@ function Vault({thememode,toggle,user}) {
          <button onClick={uploadFile} className="text-white  rounded-md p-2 bg-[#198754]">Upload file</button>
         
       </div>
-      <div className="flex flex-wrap">{fileUrls.map((file) => (
+      <div className="flex flex-wrap" style={{backgroundColor:"white"}}>{fileUrls.map((file) => (
         <div key={file.fileName}>
           <div className="m-2 w-82 h-34 rounded-md shadow-md font-semibold px-2 py-2 border-1 border-black border-dashed flex align-middle justify-center cursor-pointer" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#282828":"white",borderColor:thememode==="dark"?"white":"black" }} alt={file.fileName} onClick={() => downloadCSV(file.fileName)}>
             <AiOutlineFile style={{ fontSize: '80px' }}/>
