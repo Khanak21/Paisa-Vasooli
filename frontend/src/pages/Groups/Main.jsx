@@ -160,16 +160,16 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     },[groupflag])
 
   return (
-    <div className='min-h-screen w-screen flex flex-col justify-center' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}} >
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='flex flex-col gap-2 justify-start items-start' style={{backgroundColor:thememode=="dark"?"#181818":"white"}}>
+        <div className='flex flex-col gap-2 justify-start items-start' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
           <div className=' flex justify-evenly items-start w-full my-2'>
-            <button onClick={handleGroupShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Create Group</button>
-            <button onClick={handleGroupJoinShow} className='bg-[#198754] text-white p-4 rounded-lg'>Join Group</button>
-            <button onClick={handleAddFriendShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Invite Friend</button>
+            <button onClick={handleGroupShow} className='bg-[#198754] text-white p-4 rounded-lg mx-2'>+ Create Group</button>
+            <button onClick={handleGroupJoinShow} className='bg-[#198754] text-white p-4 rounded-lg mx-2'>Join Group</button>
+            <button onClick={handleAddFriendShow} className='bg-[#198754] text-white p-4 rounded-lg mx-2'>+ Invite Friend</button>
 
           </div>
-        <div className='flex flex-col lg:grid lg:grid-cols-2 justify-evenly items-center gap-6 w-full h-fit'>
+        <div className='flex flex-col lg:grid lg:grid-cols-2 justify-evenly items-center gap-6 w-full h-fit dark:bg-[#181818]'>
           
           {groupData?.map(data=>{
             return(

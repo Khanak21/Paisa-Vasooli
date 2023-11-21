@@ -53,31 +53,38 @@ const Stocks = ({user,thememode,toggle}) => {
   return ( 
     <div>
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className="mx-auto my-auto h-[200vh] block justify-center items-center" style={{backgroundColor:thememode==="dark"?"#181818":"white"}} >
-        <div className='flex w-full justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}> Explore the Trendy Stocks...</div>
+        <div className="mx-auto my-auto h-[200vh] block justify-center items-center" style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} >
+        <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}> Explore the Trendy Stocks...</div>
        <HeatmapStocks thememode={thememode}/>
-       <div className='flex w-full justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
-       <div>
-       <label htmlFor='stocks'>Add Stocks: </label>
+       <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
+    
+         <div className='m-4 dark:text-white text-xl font-bold flex justify-center'>
+       <label htmlFor='stocks' >Add Stocks: </label>
        <input name={"input"}
                    type="text"
                    value={input}
                    onChange={handleInput}
                    required
+                   className='w-[60%] mx-2'
                    ></input>
-                   <button onClick={handleSubmit}>Save</button>
-      {stockData.map((stock, index) => (
-        <div key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer", border: "1px solid black", padding: "5px" }}>
-          {stock.input}
-        </div>
+                   <button onClick={handleSubmit} className='mx-2 bg-[#198754]  text-white p-2 rounded-md dark:bg-[#3a3a3a]'>Save</button>
+                   </div>
+                 <div className=' w-full flex lg:grid lg:grid-cols-12'>  {stockData.map((stock, index) => (
+                       <div className=' bg-green-500 w-[60px] rounded-sm m-2 flex' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px" }}>
+                         {stock.input}
+                      </div>
       ))}
-    </div>
-        <div className='p-4'>
+                  </div>
+
+       <div className='p-4'>
         <TradingViewWidget sym={sym} stockflag={stockflag} thememode={thememode} />
          </div>
-   
 
-        </div>
+
+
+      </div>
+
+      
     </div>
   )
 }

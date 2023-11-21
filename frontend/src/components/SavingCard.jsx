@@ -79,7 +79,7 @@ const handleDelete = async()=>{
       <Card variant="light" border="success" className="w-full flex flex-col gap-3  rounded-lg border-2 h-40 p-1 " style={{backgroundColor:thememode=="dark"?"#3a3a3a":"white",border: thememode === "dark" ? "3px solid white" : "1px solid black",color: thememode=="dark"?"white":"black"}}>
 
 
-        <Card.Header className='bg-slate-300 font-semibold text-center text-lg flex justify-evenly' style={{backgroundColor:thememode=="dark"?"green":"rgb(193, 255, 210)"}}>Title{" "}- <div>
+        <Card.Header className='bg-slate-300 font-semibold text-center text-lg flex justify-evenly' style={{backgroundColor:thememode=="dark"?"green":"green"}}>Title{" "}- <div>
          {props.title}</div></Card.Header>
 
 

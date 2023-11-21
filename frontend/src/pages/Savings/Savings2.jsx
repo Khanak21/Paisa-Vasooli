@@ -162,10 +162,10 @@ const currenciData = UCurrency(currenci);
     getSavings()
   },[user._id])
   return (
-    <div className="min-h-screen w-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"rgb(85, 98, 106)":"white" }}>
+    <div className="min-h-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
 
     <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"white" }}>
+    <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
 
       {/* <div className="header flex justify-end items-center" style={{ color: thememode === "dark" ? "orange" : "white", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "green" }}>
         <div className="toggle p-1" onClick={toggle} >
@@ -181,11 +181,12 @@ const currenciData = UCurrency(currenci);
           <p>Track them here</p>
         </div>
 
-        <div className="main-content" style={{
+        <div className="main-content p-1" style={{
   color: thememode === "dark" ? "white" : "black",
-  backgroundColor: thememode === "dark" ? "#282828" : "white",
-  borderRadius: thememode==="dark" ? "20px" : "20px" 
+  backgroundColor: thememode === "dark" ? "#282828" : "#E5E4E2",
+  borderRadius: thememode==="dark" ? "20px" : "20px"
 }}
+
 >
           <div className="main-left">
             <div className="savings-holder"  >
@@ -194,7 +195,7 @@ const currenciData = UCurrency(currenci);
               <input
                 type="text"  
                 placeholder="Input the title"
-                className="saving-input"
+                className="saving-input border-none"
                 value={inputTitle}
                 onChange={handleInputTitle}
                 style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
@@ -206,7 +207,7 @@ const currenciData = UCurrency(currenci);
               <input
                 type="number"
                 placeholder="Input the Current Amount"
-                className="saving-input"
+                className="saving-input border-none"
                 value={currentAmount}
                 onChange={handleCurrentAmount}
                 style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
@@ -218,7 +219,7 @@ const currenciData = UCurrency(currenci);
               <input
                 type="number"
                 placeholder="Input the Goal Amount"
-                className="saving-input"
+                className="saving-input border-none"
                 value={amount}
                 onChange={handleAmount}
                 style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
@@ -232,9 +233,10 @@ const currenciData = UCurrency(currenci);
                     id="currency"
                     value={Currency}
                     onChange={handleCurrency}
-                    className="w-[33rem] p-2"
-                    style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
+                    className="p-2 border-1 rounded-md"
+                    style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
                     required
+                    
                   >
                     <option>Select:</option>
                     <option value="inr">inr</option>
@@ -261,7 +263,7 @@ const currenciData = UCurrency(currenci);
           </div>
 
           <div className="main-right flex flex-col justify-center items-start gap-5 h-[500px]">
-            <div className="overflow-y-scroll w-full mt-2">
+            <div className="overflow-y-scroll w-full mt-2 rounded-md">
             {savingData?.map((sav)=>(
             <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData} thememode={thememode} toggle={toggle}/> 
           ))

@@ -108,7 +108,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
     
 
   return (
-    <div className='min-h-screen w-screen flex flex-col items-start'  style={{backgroundColor:thememode==="dark"?"rgb(85, 98, 106)":"white"}} >
+    <div  style={{backgroundColor:thememode==="dark"?"#181818":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
     <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#181818":"white",color: thememode=="dark"?"white":"black"}}>
       <div className='w-full flex justify-evenly items-center'>

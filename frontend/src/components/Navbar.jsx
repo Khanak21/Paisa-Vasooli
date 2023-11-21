@@ -14,9 +14,6 @@ import { FaRegEnvelope } from "react-icons/fa";
 import Inbox from '../pages/Inbox.jsx'
 
 
-
-
-
 function Navbar({thememode,toggle,setUser,user,pfp}) {
   const [navuser,setNavuser] = useState({})
  
@@ -63,14 +60,13 @@ function Navbar({thememode,toggle,setUser,user,pfp}) {
   
 
   return (
-    <div className="flex gap-30 justify-between items-center bg-green-800 ">
-        <div className='text-2xl italic text-white font-extrabold'>
+    <div className="flex gap-30 justify-between items-center bg-[#8656cd] ">
+        <div className='text-2xl mx-2 text-white font-extrabold'>
             Paisa Vasooli
-         
         </div>
           
 
-      <div className={showNav?" flex justify-between gap-12 p-4 text-white content-link active":"flex justify-evenly gap-12 p-4 text-white content-link"} >
+      <div className={showNav ? " flex justify-between gap-12 p-4 text-white content-link active":"flex justify-evenly gap-12 p-4 text-white content-link"} >
 
   
         <div className="font-bold text-white hover:cursor-pointer relative" onClick={()=>{navigate("/dashboard")}}>
@@ -110,7 +106,7 @@ function Navbar({thememode,toggle,setUser,user,pfp}) {
      
 
 
-      <div className="icons" style={{color:thememode==="dark"?"white":"black",border:thememode==="dark"?"1px solid white":"1px solid black"}}>
+      <div className="icons" style={{color:thememode==="dark"?"white":"black"}}>
         <div
           className={showNav ? 'icon-menu activemenu' : 'icon-menu'}
           onClick={() => setShowNav(!showNav)}

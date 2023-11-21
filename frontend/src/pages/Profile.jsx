@@ -58,8 +58,8 @@ function Profile({ user, thememode, toggle,setUser}) {
     <>
       <Navbar thememode={thememode} toggle={toggle} />
       <div
-        className='flex flex-col justify-start items-center p-3 border-green-700'
-        style={{ backgroundColor: thememode === 'dark' ? '#181818' : 'white' }}
+        className='flex flex-col justify-start items-center p-3 border-green-700 h-[100vh]' 
+        style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}
       >
         <div
           className='flex flex-col mx-auto w-[50%] h-[250px] border-1 border-black p-2 rounded-sm'

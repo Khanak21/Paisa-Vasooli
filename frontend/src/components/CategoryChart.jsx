@@ -45,8 +45,8 @@ const CategoryChart = ({ allCategories, categoryData, thememode }) => {
   const options = {
     maintainAspectRatio: false,
     responsive: true,
-    height: 500,
-    width: 600,
+    height: 400,
+    width: 500,
   };
 
   const option = {

@@ -130,11 +130,11 @@ console.log("bill split data:",billSplitData)
         <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode=="dark"?"#181818":""}}>
 
 
-          <div className="text-center bg-amber-500 w-full text-black font-bold dark:bg-[#282828] text-white p-2">
+          <div className="text-center bg-[#f0f0f0] w-full light:text-black font-bold dark:bg-[#282828] dark:text-white p-2">
             Title: {groupData.title}
           </div>
           
-          <div className='w-full h-full flex text-justify bg-amber-500 text-black font-bold mx-auto dark:bg-[#282828] text-white p-2'>
+          <div className='w-full h-full flex text-justify bg-[#f0f0f0] light:text-black font-bold mx-auto dark:bg-[#282828] dark:text-white p-2'>
                 {console.log(groupData._id)}Group Members :- 
                {membersdata?.map(data=>(
                 <div>{" "}{data.username}{" "},</div>

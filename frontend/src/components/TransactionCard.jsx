@@ -62,10 +62,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
 
   return (
     <div>
-    <Card variant="light" border="success" className='mx-4 my-4' >
-      <Card.Header className='font-bold' style={{backgroundColor:thememode=="dark"?"rgb(177, 225, 190)":"white"}}> Category{" "}:-{" "}{transactionData.category}</Card.Header>
-      <Card.Body style={{backgroundColor:thememode=="dark"?"rgb(202, 227, 208)":"white"}}>
-        <div className='flex justify-between items-center border-2'>
+    <Card variant="light" border="secondary" className='mx-4 my-4 dark:text-white'>
+      <Card.Header className='font-bold' style={{backgroundColor:thememode=="dark"?"#3a3a3a":"white"}}> Category{" "}:-{" "}{transactionData.category}</Card.Header>
+      <Card.Body style={{backgroundColor:thememode=="dark"?"#282828":"white"}}>
+        <div className='flex justify-between items-center'>
         <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}> Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
       <div className='flex justify-between gap-2'>

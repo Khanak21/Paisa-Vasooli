@@ -161,9 +161,9 @@ console.log(membersdata)
   );
 
   return (
-    <div className=' h-[150vh] dark:bg-[#181818] dark:text-white' >
+    <div className=' h-[150vh] dark:bg-[#181818] dark:text-white bg-[#f0f0f0]' >
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white'>
+        <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white bg-[#cac8c8]'>
                 {console.log(id)}Group Members :- 
                {membersdata?.map(data=>(
                 <div>{" "}{data.username},{" "}</div>
