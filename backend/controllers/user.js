@@ -1,7 +1,7 @@
 import User from "../models/user.js"
 
 export const addStock = async(req,res)=>{
-    const stock = req.body.input
+    const stock = req.body
     const userId = req.params.userId
     console.log(userId,stock)
     try{
@@ -23,7 +23,6 @@ export const getStocks = async(req,res)=>{
     try{
         const user = await User.findById(userId);
         const val=user.stocks;
-
         res.status(200).json({ message: 'Stocks retrieved successfully', val });
 
     }catch(err){
