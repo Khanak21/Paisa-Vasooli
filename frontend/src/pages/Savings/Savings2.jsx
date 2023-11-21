@@ -127,7 +127,8 @@ function Savings2({ user,setUser,thememode,toggle}) {
     getSavings()
   },[user._id])
   return (
-    <>
+    <div className="min-h-screen w-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"rgb(85, 98, 106)":"white" }}>
+
     <Navbar thememode={thememode} toggle={toggle}/>
     <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"white" }}>
 
@@ -253,7 +254,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
         </div>
       )}
     </div>
-    </>
+    </div>
   );
 }
 
