@@ -148,13 +148,13 @@ const currenciData = UCurrency(currenci);
   return (
   <>
    <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="outer" style={{ backgroundColor: thememode === 'dark' ? 'rgb(85, 98, 106)' : 'white'}}>
+    <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? 'rgb(85, 98, 106)' : 'white'}}>
       
 
       <div className="hero-section "  >
-        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? 'white' : 'green'}}>
+        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? 'white' : 'green',backgroundColor: thememode === 'dark' ? '#282828' : 'white'}}>
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Title</label>
+            <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
             <input
               type="text"
               name="title"
@@ -162,12 +162,12 @@ const currenciData = UCurrency(currenci);
               placeholder="Input due-title"
               value={dueItem.title}
               onChange={handleBillInput('title')}
-              className="w-[33rem] p-2"
+              className="w-[70%] p-2"
               />
           </div>
 
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="Date" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-Date</label>
+            <label htmlFor="Date" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-Date</label>
             <input
               type="date"
               name="date"
@@ -175,13 +175,13 @@ const currenciData = UCurrency(currenci);
               placeholder="Input date of due"
               value={dueItem.dueDate}
               onChange={handleBillInput('dueDate')}
-              className="w-[33rem] p-2"
+              className="w-[70%] p-2"
              
             />
           </div>
 
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="amount" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Amount</label> <br />
+            <label htmlFor="amount" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Amount</label> <br />
             <input
               type="number"
               name="amount"
@@ -189,12 +189,13 @@ const currenciData = UCurrency(currenci);
               placeholder="Input amount in Rs."
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
-              className="w-[33rem] p-2 "
+              className="w-[70%] p-2 rounded-md text-center"
+              
             />
           </div>
 
           <div className="due flex justify-between w-full gap-4 dueperson ">
-            <label htmlFor="PersonDue " style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-To-Person</label> <br />
+            <label htmlFor="PersonDue " className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-To-Person</label> <br />
             <input
               type="text"
               name="toWhom"
@@ -202,7 +203,8 @@ const currenciData = UCurrency(currenci);
               value={dueItem.toWhom}
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
-              className="w-[33rem] p-2 dueperson"
+              className="w-[70%] p-2"
+             
             />
           </div>
 
@@ -244,25 +246,10 @@ const currenciData = UCurrency(currenci);
               value={dueItem.recurring}
               onChange={handleBillInput('recurring')}
               placeholder="recurring"
-              className="w-[33rem] p-2"
+              className="w-[70%] p-2"
              
             />
-          </div> */}
-
-        <div className="due flex justify-between w-full gap-4">
-          <label htmlFor="PersonDue" style={{ color: thememode === 'dark' ? 'white' : 'black' }}>Recurring</label>
-          <select
-            name="recurring"
-            value={dueItem.recurring}
-            onChange={handleBillInput('recurring')}
-            className="w-[33rem] p-2"
-          >
-            <option value="">Select:</option>x
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
-        </div>
+  </div>*/}
 
           <div className="add-btn flex bg-green-600 justify-center items-center hover:cursor-pointer " onClick={handleSubmit}>
             Add Due
@@ -273,7 +260,7 @@ const currenciData = UCurrency(currenci);
         <div className="storing-dues">
           <div className="overflow-y-auto w-full">
             {BillData?.map((bill) => (
-              <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} />
+              <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} thememode={thememode}/>
             ))}
           </div>
         </div>

@@ -11,6 +11,7 @@ import Grouphome from './Grouphome.jsx';
 import './GroupCard.css'
 import { useNavigate } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { MdContentCopy } from "react-icons/md";
 
 const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle,user}) => {
   const navigate = useNavigate()
@@ -80,9 +81,9 @@ const handlePaid=()=>{
 console.log(allgroupsdata)
   return (
 
-    <div className='flex justify-between items-start card-parent h-full p-1 ' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+    <div className='flex justify-center items-center card-parent h-full p-1 '>
 
-     <Card  border="success" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"rgb(189, 218, 196)":"white"}} >
+     <Card  border="success" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"#282828":"white",color:thememode==="dark"?"white":"black"}} >
 
       <Card.Body className='w-full'>
 
@@ -94,9 +95,9 @@ console.log(allgroupsdata)
 
           <Card.Text className='text-md w-fit justify-start items-center '>
             <b> Group Code </b>{" "}:- <br/>
-            <div className='flex'><input type="text" value= {groupData.groupCode} name="" id="" />
+            <div className='flex'><input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} />
             <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
-            <button>Copy to Clipboard</button>
+            <button><MdContentCopy  className='ml-2 text-xl'/></button>
             </CopyToClipboard>
             {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>}
             <button className='mx-2 w-80 bg-blue-600 rounded-md text-white' onClick={handleAddFriendShow}>or Add Friend</button></div>

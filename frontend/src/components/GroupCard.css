@@ -15,10 +15,10 @@
     width:40%;
   }
   .group-chat{          
-    width:55%;
+    width:55%; 
     padding: 0;
     position:absolute;            
-    height:100%; 
-    top:22%;
+    height:100%;     
+    top:22%;   
     right:2%;        
   }

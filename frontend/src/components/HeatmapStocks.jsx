@@ -1,8 +1,9 @@
 // TradingViewWidget.jsx
 import React, { useEffect, useRef, memo } from 'react';
 
-function HeatmapStocks() {
+function HeatmapStocks({thememode}) {
   const container = useRef();
+  
 
   useEffect(
     () => {
@@ -19,13 +20,13 @@ function HeatmapStocks() {
           "blockColor": "change",
           "locale": "in",
           "symbolUrl": "",
-          "colorTheme": "light",
+          "colorTheme": "dark",
           "hasTopBar": false,
           "isDataSetEnabled": false,
           "isZoomEnabled": true,
           "hasSymbolTooltip": true,
           "width": "100%",
-          "height": "100%"
+          "height": "40%"
         }`;
       container.current.appendChild(script);
     },
@@ -35,7 +36,6 @@ function HeatmapStocks() {
   return (
     <div className="tradingview-widget-container" ref={container}>
       <div className="tradingview-widget-container__widget"></div>
-      <div className="tradingview-widget-copyright"><a href="https://in.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="blue-text">Track all markets on TradingView</span></a></div>
     </div>
   );
 }

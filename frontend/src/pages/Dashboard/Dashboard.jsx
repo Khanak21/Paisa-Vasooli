@@ -8,11 +8,13 @@ import { CSVLink, CSVDownload } from "react-csv"
 import StockChart from '../../components/StockChart';
 import { useTranslation } from "react-i18next"; 
 import i18next from "i18next"
+import './Dashboard.css'
 const languages = [
   { value: "", text: "Options" },
   { value: "en", text: "English" },
   { value: "hi", text: "Hindi" },
 ];
+
 
 const Dashboard = ({user,thememode,toggle,setUser}) => {
   const { t } = useTranslation();
@@ -238,7 +240,7 @@ useEffect(()=>{
   
 
   return (
-    <div className='min-h-screen w-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}}>
       
         <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
@@ -254,10 +256,12 @@ useEffect(()=>{
                     );
                 })}
             </select>
-        <div className='flex w-full justify-center h-20 p-4' style={{backgroundColor:thememode=="dark"?"black":"white"}}>
-          <div className='flex justify-start items-center gap-4'>
 
-            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
+     <div className='w-screen h-full flex flex-col justify-center items-start '>
+       
+          <div className='flex w-full justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+
+            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div>
               {t("income")}
@@ -273,10 +277,10 @@ useEffect(()=>{
             </div>
 
 
-           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
+           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div> 
-                Balance
+               Total Balance
               </div>
                 <div>
               
@@ -285,7 +289,7 @@ useEffect(()=>{
               </div>
           </div>
 
-          <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
+          <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
                 <div className='text-md flex justify-evenly gap-2'>
                  <span>Total</span><span> Expense </span>
@@ -299,14 +303,14 @@ useEffect(()=>{
           </div>
 
           </div>
-        </div>
+      
         
         {/* -----------------------Filters------------------------ */}
-        <div className='flex px-4 py-4 justify-center items-center h-[100%]' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+        <div className='flex px-4 py-4 justify-center items-center h-[100%] filter w-full' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
            <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode=="dark"?"white":"black"}}>Filters:</div>
         
         {/* Category */}
-              <select className='mx-2 border-2 rounded-md p-3' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
+              <select className='mx-2 border-2 rounded-md p-3 category-all' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
                 <option value="">All Categories</option>
                    {
                       uniqueCategories.map(cat=>(
@@ -323,17 +327,18 @@ useEffect(()=>{
         <Button style={{}} variant="success" onClick={handleFilter} className='mx-2 p-2 my-2'>Apply Filter</Button>
 
           {/* ----------------------Exporting data-------------------------- */}
-        <CSVLink className='' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success" className='my-2  p-2'>Export</Button></CSVLink>
+        <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success" className='my-2  p-2'>Export</Button></CSVLink>
         </div>
 
 
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
-      <div className='min-h-screen w-full '  style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}> 
+      <div className='min-h-screen w-full '> 
         <div style={{width:"50%"}}>
           {filteredData?.map(trans=>(
             //  console.log("mapped data",trans)
             <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} /> 
             ))}
+        </div>
         </div>
       </div>
 

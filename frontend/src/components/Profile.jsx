@@ -9,11 +9,11 @@ function Profile({ user, thememode, toggle }) {
     <>
       <Navbar thememode={thememode} toggle={toggle} />
       <div
-        className='flex flex-col h-screen w-screen justify-start items-center p-3 border-green-700'
+        className='flex flex-col min-h-screen w-screen justify-start items-center p-3 border-green-700'
         style={{ backgroundColor: thememode === 'dark' ? 'rgb(85, 98, 106)' : 'white' }}
       >
         <div
-          className='flex flex-col mx-auto w-[50%] h-[250px] border-1 border-black p-2 rounded-sm'
+          className='flex flex-col mx-auto w-[50%] h-[250px] border-1 border-black p-2 rounded-sm profile-head'
           style={{ backgroundColor: thememode === 'dark' ? 'black' : 'rgb(0, 150, 65)', color: thememode == 'dark' ? 'white' : 'black' }}
         >
           <div className=' flex justify-center  items-center w-[70%] h-[80%] mx-auto p-1'>
@@ -67,10 +67,8 @@ function Profile({ user, thememode, toggle }) {
               className='w-full flex justify-between items-center gap-1 border-1 p-1 border-black rounded-md'
               style={{ backgroundColor: thememode == 'dark' ? 'rgb(222, 221, 221)' : 'white' }}
             >
-              <div className='w-[30%] text-md p-1'>
-                <b>{friend}</b>
-              </div>
-              <input type='text' id={`friend-${index}`} value={friend} readOnly />
+             
+              <input type='text' id={`friend-${index}`} className='w-[100%]' value={friend} readOnly />
             </label>
           ))}
 

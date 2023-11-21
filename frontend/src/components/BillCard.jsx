@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const BillCard = ({ billflag,setbillflag,user,BillData }) => {
+const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
   const [show, setShow] = useState(false);
   const [BillInput, setBillInput] = useState({
     userId: user._id,
@@ -63,10 +63,10 @@ const BillCard = ({ billflag,setbillflag,user,BillData }) => {
 
   return (
     <div>
-      <Card variant="light" border="success" className="mx-4 my-4">
+      <Card variant="light" border="success" className="mx-4 my-4"  style={{backgroundColor:thememode=="dark" ? "#282828":"",color:thememode=="dark"?"white":"black"}}>
         <Card.Body>
-          <Card.Text className="" style={{backgroundColor:"rgb(134, 199, 255)"}}>Title:-{"  "} {BillData.title}</Card.Text>
-          <div className="flex justify-between items-center border-2 gap-3 p-2">
+          <Card.Text className="rounded-sm bg-green-600" >Title:-{"  "} {BillData.title}</Card.Text>
+          <div className="flex justify-between items-center gap-3 p-2">
             <div className='flex flex-col justify-center items-start'>
             <Card.Text className="text-md align-middle items-center "><b>To :-{" "}{BillData.toWhom} </b></Card.Text>
             <Card.Text className="text-sm align-middle items-center"><b>Amount :-{" " }&#8377; {BillData.amount} </b> </Card.Text>
@@ -75,7 +75,7 @@ const BillCard = ({ billflag,setbillflag,user,BillData }) => {
           <div className='flex flex-col w-[60%] justify-end items-start gap-2 '>
             <Card.Text className="flex items-center justify-evenly  text-md w-full">
                <br/>
-             <b>Date:-{" "}  {BillData.dueDate.split('T')[0]} </b>
+             <b>Date:-{" "}  {BillData.dueDate?.substring(0,10)} </b>
              <AiTwotoneCalendar size={20} />
             </Card.Text>
 

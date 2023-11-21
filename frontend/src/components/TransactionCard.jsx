@@ -75,7 +75,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
         
         </div>
         <Card.Text className='font-bold my-1'>
-        Description{" "} :-  {transactionData.desc}
+          Transaction Description{" "} :  {transactionData.desc}
+        </Card.Text>
+        <Card.Text className='font-bold my-1'>
+          Transaction Date{" "} :  {transactionData.date.substring(0,10)}
         </Card.Text>
       </Card.Body>
     </Card>

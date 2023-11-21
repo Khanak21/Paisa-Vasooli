@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 let tvScriptLoadingPromise;
 
-export default function TradingViewWidget({sym}) {
+export default function TradingViewWidget({sym,thememode}) {
   const onLoadScriptRef = useRef();
 
   useEffect(
@@ -37,7 +37,7 @@ export default function TradingViewWidget({sym}) {
             symbol: `${sym}`,
             interval: "D",
             timezone: "Etc/UTC",
-            theme: "light",
+            theme: thememode=="dark"?"dark":"light",
             style: "1",
             locale: "in",
             enable_publishing: false,

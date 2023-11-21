@@ -64,23 +64,25 @@ function Vault({thememode,toggle,user}) {
   },[])
 
   return (
-    <div>
+    <div className="min-h-screen w-screen"  style={{ backgroundColor: thememode === 'dark' ? 'rgb(85, 98, 106)' : 'white' }}>
       <Navbar thememode={thememode} toggle={toggle}/>
+      <div >
       <div className="flex justify-center font-bold text-4xl m-2 p-2">Vault</div>
       <div className="flex m-6 justify-center align-middle ">
        
-        <input type="file" className="w-60 flex justify-center align-middle mx-2" onChange={(event) => {setfileUpload(event.target.files[0]);}}/>
+        <input type="file" className="w-60 flex justify-center align-middle mx-2 border-none" onChange={(event) => {setfileUpload(event.target.files[0]);}}/>
          <button onClick={uploadFile} className="text-white  rounded-md p-2 bg-[#198754]">Upload file</button>
         
       </div>
-      <div className="flex flex-wrap">{fileUrls.map((file) => (
+      <div className="flex flex-wrap" style={{backgroundColor:"white"}}>{fileUrls.map((file) => (
         <div key={file.fileName}>
-          <div className="m-2 w-82 h-34 rounded-md shadow-md font-semibold px-2 py-2 border-1 border-black border-dashed flex align-middle justify-center"  style={{"cursor":"pointer"}} alt={file.fileName} onClick={() => downloadCSV(file.fileName)}>
+          <div className="m-2 w-82 h-34 rounded-md shadow-md font-semibold px-2 py-2 border-1 border-black border-dashed flex align-middle justify-center cursor-pointer" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#282828":"white",borderColor:thememode==="dark"?"white":"black" }} alt={file.fileName} onClick={() => downloadCSV(file.fileName)}>
             <AiOutlineFile style={{ fontSize: '80px' }}/>
             {file.fileName}
             </div>
         </div>
       ))}</div>
+    </div>
     </div>
   );
 }

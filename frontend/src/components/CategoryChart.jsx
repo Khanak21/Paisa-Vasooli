@@ -1,57 +1,101 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS } from 'chart.js/auto'
-import { Chart }            from 'react-chartjs-2'
 
-const CategoryChart = ({ allCategories,categoryData }) => {
-  const colors = generateColors(allCategories.length);
-  // console.log(allCategories)
+const CategoryChart = ({ allCategories, categoryData, thememode }) => {
+  const colors = generateColors(allCategories.length, thememode);
+
+  const lightTheme = {
+    colorText: 'black',
+    income: 'rgba(75,192,192,0.5)',
+    incomeBorder: 'rgba(75,192,192,1)',
+    expenses: 'rgba(255,99,132,0.5)',
+    expensesBorder: 'rgba(255,99,132,1)',
+  };
+
+  const darkTheme = {
+    colorText: 'white',
+    income: 'rgba(34,139,34,0.5)',
+    incomeBorder: 'rgba(34,139,34,1)',
+    expenses: 'rgba(165,42,42,0.5)',
+    expensesBorder: 'rgba(165,42,42,1)',
+  };
+
+  const theme = thememode === 'dark' ? darkTheme : lightTheme;
+
   const data = {
-    labels: categoryData.map(data=>data._id),
+    labels: categoryData.map((data) => data._id),
     datasets: [
-      // {
-      //   label: 'Income',
-      //   backgroundColor: 'rgba(75,192,192,0.2)',
-      //   borderColor: 'rgba(75,192,192,1)',
-      //   borderWidth: 1,
-      //   data: categoryData.map(data=>data.totalIncome),
-      // }
+      {
+        label: 'Income',
+        backgroundColor: colors.incomeBackgroundColors,
+        borderColor: colors.incomeBorderColors,
+        borderWidth: 1,
+        data: categoryData.map((data) => data.totalIncome),
+      },
       {
         label: 'Expenses',
-        backgroundColor: colors.backgroundColors,
-        borderColor: colors.borderColors,
+        backgroundColor: colors.expensesBackgroundColors,
+        borderColor: colors.expensesBorderColors,
         borderWidth: 1,
-        data: categoryData.map(data=>data.totalExpense),
+        data: categoryData.map((data) => data.totalExpense),
       },
     ],
   };
 
   const options = {
-    maintainAspectRatio: false, // Set to false to allow manual adjustment
+    maintainAspectRatio: false,
     responsive: true,
-    // Set your desired height and width
-    height: 400,
-    width: 400,
+    height: 500,
+    width: 600,
   };
 
-  return <Pie data={data} options={options}/>;
+  const option = {
+    scales: {
+      x: {
+        ticks: {
+          color: theme.colorText,
+        },
+      },
+      y: {
+        ticks: {
+          color: theme.colorText,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: theme.colorText,
+        },
+      },
+    },
+  };
+
+  return <Pie data={data} options={options} option={option} />;
 };
 
-export default CategoryChart
+export default CategoryChart;
 
 // Function to generate dynamic colors
-const generateColors = (count) => {
+const generateColors = (count, thememode) => {
   const backgroundColors = [];
   const borderColors = [];
 
-  for (let i = 0; i < count; i++) {
-    const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256
-    )}, ${Math.floor(Math.random() * 256)}, 0.2)`;
+  const generateColor = (index) => {
+    const hue = (index * (360 / count)) % 360;
+    const lightness = thememode === 'dark' ? 25 : 75;
+    return `hsl(${hue}, 100%, ${lightness}%)`;
+  };
 
-    backgroundColors.push(randomColor);
-    borderColors.push(randomColor.replace(/[^,]+(?=\))/, '1'));
+  for (let i = 0; i < count; i++) {
+    backgroundColors.push(generateColor(i));
+    borderColors.push(generateColor(i));
   }
 
-  return { backgroundColors, borderColors };
+  return {
+    incomeBackgroundColors: backgroundColors,
+    incomeBorderColors: borderColors,
+    expensesBackgroundColors: backgroundColors,
+    expensesBorderColors: borderColors,
+  };
 };
