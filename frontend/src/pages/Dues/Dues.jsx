@@ -17,6 +17,7 @@ function Dues({ user, thememode, toggle,setUser }) {
     amount: '',
     toWhom: '',
     recurring: '',
+    currency:''
   });
 
   const [filterInput, setFilterInput] = useState({
@@ -62,18 +63,19 @@ function Dues({ user, thememode, toggle,setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log('Currency data:', currenciData);
+    console.log(currenciData[dueItem.currency]);
+    dueItem.amount =Math.floor(dueItem.amount / currenciData[dueItem.currency]);
+      console.log(dueItem.amount)
     try {
       const res = await axios.post('http://localhost:3001/api/bills/addBill', { dueItem });
       console.log(res.data);
       const val = res.data.bill;
       setBillData((prev) => [...prev, val]);
       mailsendstart();
-
       const currdate = new Date();
       const dueDateStr = dueItem.dueDate;
       const duedate = new Date(dueDateStr);
-
       if (currdate.getFullYear() === duedate.getFullYear() && currdate.getMonth() === duedate.getMonth() && currdate.getDate() === duedate.getDate()) {
         mailsendrecurring(dueItem.recurring);
       }
@@ -84,6 +86,7 @@ function Dues({ user, thememode, toggle,setUser }) {
         amount: '',
         toWhom: '',
         recurring: '',
+        currency:''
       });
     } catch (err) {
       console.log(err.response.data);
@@ -119,6 +122,28 @@ function Dues({ user, thememode, toggle,setUser }) {
     };
     getBills();
   },[billflag])
+
+  const UCurrency=(currency)=>{
+    const [data, setData] = useState({})
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`);
+          const result = await response.json();
+          setData(result[currency]);
+        } catch (error) {
+          console.error('Error fetching currency data:', error);
+        }
+      };
+      fetchData();
+    }, [currency]);
+    useEffect(() => {
+      console.log(data); // Log the state after it has been updated
+    }, [data]);
+    return data
+}
+const [currenci, setCurrenci] = useState('inr');
+const currenciData = UCurrency(currenci);
 
   return (
   <>
@@ -183,8 +208,37 @@ function Dues({ user, thememode, toggle,setUser }) {
             />
           </div>
 
-          <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="PersonDue" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
+
+          <div className="due flex justify-between w-full gap-4 dueperson ">
+            <label htmlFor="PersonDue " style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Currency:</label> <br />
+            <select
+                    name="currency"
+                    id="currency"
+                    value={dueItem.currency}
+                    onChange={handleBillInput('currency')}
+                    className="w-[33rem] p-2"
+                    required
+                  >
+                    <option>Select:</option>
+                    <option value="inr">inr</option>
+                    <option value="usd">usd</option>
+                    <option value="eur">eur</option>
+                    <option value="gbp">gbp</option>
+                    <option value="jpy">jpy</option>
+                    <option value="aud">aud</option>
+                    <option value="cad">cad</option>
+                    <option value="cny">cny</option>
+                    <option value="hkd">hkd</option>
+                    <option value="sgd">sgd</option>
+                    <option value="chf">chf</option>
+                    <option value="sek">sek</option>
+                    <option value="mxn">mxn</option>
+                  </select>
+          </div>
+
+
+          {/* <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="PersonDue" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
             <input
               type="text"
               name="recurring"
@@ -195,7 +249,7 @@ function Dues({ user, thememode, toggle,setUser }) {
               className="w-[70%] p-2"
              
             />
-          </div>
+  </div>*/}
 
           <div className="add-btn flex bg-green-600 justify-center items-center hover:cursor-pointer " onClick={handleSubmit}>
             Add Due

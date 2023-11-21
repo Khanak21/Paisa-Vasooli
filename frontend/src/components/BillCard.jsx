@@ -95,16 +95,16 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
         <Modal.Body>
           {/* Add Bill input section */}
           <label htmlFor="amount" className='font-bold'>Amount: </label>
-          <input type="number" name={'amount'} value={amount} onChange={handleBillInput('amount')} required />
+          <input type="number" defaultValue={BillData.amount} name={'amount'}  onChange={handleBillInput('amount')} required />
 
           <label htmlFor="person" className='font-bold'>toWhom: </label>
-          <input name={'person'} type="text" value={toWhom} onChange={handleBillInput('toWhom')} required />
+          <input name={'person'} type="text" defaultValue={BillData.toWhom}  onChange={handleBillInput('toWhom')} required />
 
           <label htmlFor="title" className='font-bold'>Title:</label>
-          <input type="text" name={'title'} value={title} onChange={handleBillInput('title')} required />
+          <input type="text" name={'title'} defaultValue={BillData.title} onChange={handleBillInput('title')} required />
 
           <label htmlFor="date" className='font-bold'>Date:</label>
-          <input type="date" name={'dueDate'} value={dueDate} onChange={handleBillInput('dueDate')} required />
+          <input type="date" name={'dueDate'} defaultValue={BillData.dueDate.split('T')[0]} onChange={handleBillInput('dueDate')} required />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={handleSubmit} required>

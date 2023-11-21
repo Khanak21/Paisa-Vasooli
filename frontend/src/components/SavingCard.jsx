@@ -120,7 +120,7 @@ const handleDelete = async()=>{
         </Modal.Header>
         <Modal.Body>
         <label htmlFor="title">Title:</label>
-          <input type="text" name={'title'} value={title} onChange={handleSavingInput('title')} required />
+          <input type="text" name={'title'} defaultValue={props.title} onChange={handleSavingInput('title')} required />
           <label htmlFor="person">currAmt: </label>
           <input name={'currAmt'} type="text" value={currAmt} onChange={handleSavingInput('currAmt')} required />
           <label htmlFor="targetAmt">targetAmt:</label>
