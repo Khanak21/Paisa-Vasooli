@@ -66,3 +66,4 @@ export const acceptRequest = async(req,res)=>{
    }catch(err){
     res.json("Error")
    }
+  }

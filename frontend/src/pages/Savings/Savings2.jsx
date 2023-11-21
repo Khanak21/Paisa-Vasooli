@@ -13,6 +13,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   const [currentAmount, setCurrentAmount] = useState();
   const [amount, setAmount] = useState();
   const [items, setItems] = useState([]);
+  const [Currency,setCurrency]=useState();
   const [editAmount, setEditAmount] = useState("");
   const [editCurrent, setEditCurrent] = useState("");
   const [editItemId, setEditItemId] = useState(null);
@@ -32,6 +33,10 @@ function Savings2({ user,setUser,thememode,toggle}) {
   const handleAmount = (event) => {
     setAmount(event.target.value);
   };
+
+  const handleCurrency = (event) =>{
+    setCurrency(event.target.value)
+  }
 
   const addItem = () => {
     const newItem = {
@@ -82,14 +87,44 @@ function Savings2({ user,setUser,thememode,toggle}) {
   //   setIsVisible(true);
   // };
 
-  const handleAddSaving = async () => {
+  const UCurrency=(currency)=>{
+    const [data, setData] = useState({})
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`);
+          const result = await response.json();
+          setData(result[currency]);
+        } catch (error) {
+          console.error('Error fetching currency data:', error);
+        }
+      };
+      fetchData();
+    }, [currency]);
+    useEffect(() => {
+      console.log(data); // Log the state after it has been updated
+    }, [data]);
+    return data
+}
+const [currenci, setCurrenci] = useState('inr');
+const currenciData = UCurrency(currenci);
+
+  const handleAddSaving = async (e) => {
     try {
       const saving = {
         userId: user._id,
         title: inputTitle,
         currAmt: currentAmount,
         targetAmt: amount,
+        Currency:Currency
       };
+      e.preventDefault()
+      console.log('Currency data:', currenciData);
+      console.log(currenciData[Currency]);
+      saving.currAmt =Math.floor(saving.currAmt / currenciData[Currency]);
+      console.log(saving.currAmt)
+      saving.targetAmt =Math.floor(saving.targetAmt / currenciData[Currency]);
+      console.log(saving.targetAmt)
       const res = await axios.post("http://localhost:3001/api/savings/addSaving", { saving });
       console.log(res.data.saving);
       const val = res.data.saving;
@@ -187,6 +222,33 @@ function Savings2({ user,setUser,thememode,toggle}) {
                 onChange={handleAmount}
                 style={{ color: thememode === "dark" ? "black" : "black"}}
               />
+            </div>
+
+            <div className="savings-holder">
+              <label htmlFor="">Currency</label> <br />
+              <select
+                    name="currency"
+                    id="currency"
+                    value={Currency}
+                    onChange={handleCurrency}
+                    className="w-[33rem] p-2"
+                    required
+                  >
+                    <option>Select:</option>
+                    <option value="inr">inr</option>
+                    <option value="usd">usd</option>
+                    <option value="eur">eur</option>
+                    <option value="gbp">gbp</option>
+                    <option value="jpy">jpy</option>
+                    <option value="aud">aud</option>
+                    <option value="cad">cad</option>
+                    <option value="cny">cny</option>
+                    <option value="hkd">hkd</option>
+                    <option value="sgd">sgd</option>
+                    <option value="chf">chf</option>
+                    <option value="sek">sek</option>
+                    <option value="mxn">mxn</option>
+                  </select>
             </div>
 
             <div className="savings-holder" onClick={addItem}>

@@ -2,14 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios"
 import Navbar from '../components/Navbar';
 import { useParams } from 'react-router-dom';
-<<<<<<< Updated upstream
 
 const SimplifyDebt = ({user,thememode,toggle}) => {
-=======
-// import io from 'socket.io-client';
-// const socket = io('http://localhost:3001');
-const SimplifyDebt = ({user}) => {
->>>>>>> Stashed changes
     console.log(user)
     const {id} = useParams()
   const [inputFields, setInputFields] = useState([]);

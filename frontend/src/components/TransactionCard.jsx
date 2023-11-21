@@ -63,10 +63,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
   return (
     <div>
     <Card variant="light" border="success" className='mx-4 my-4' >
-      <Card.Header className='font-bold' style={{backgroundColor:thememode=="dark"?"rgb(177, 225, 190)":"white"}}>Transaction Category{" "}:-{" "}{transactionData.category}</Card.Header>
+      <Card.Header className='font-bold' style={{backgroundColor:thememode=="dark"?"rgb(177, 225, 190)":"white"}}> Category{" "}:-{" "}{transactionData.category}</Card.Header>
       <Card.Body style={{backgroundColor:thememode=="dark"?"rgb(202, 227, 208)":"white"}}>
         <div className='flex justify-between items-center border-2'>
-        <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}>Transaction Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
+        <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}> Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
       <div className='flex justify-between gap-2'>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
@@ -75,7 +75,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
         
         </div>
         <Card.Text className='font-bold my-1'>
-          Transaction Data{" "} :-  {transactionData.desc}
+        Description{" "} :-  {transactionData.desc}
         </Card.Text>
       </Card.Body>
     </Card>
@@ -147,16 +147,16 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
           <br />
 
           <label htmlFor="amount">Amount: </label>
-          <input type="number" name={'amount'} value={amount} onChange={handleTransInput('amount')} required style={{color:type==='expense'?"red":"green"}}/>
+          <input type="number" defaultValue={transactionData.amount} name={'amount'}  onChange={handleTransInput('amount')} required style={{color:type==='expense'?"red":"green"}}/>
 
           <label htmlFor="category">Category: </label>
-          <input name={'category'} type="text" value={category} onChange={handleTransInput('category')} required />
+          <input name={'category'} defaultValue={transactionData.category} type="text"  onChange={handleTransInput('category')} required />
 
           <label htmlFor="desc">Description:</label>
-          <input type="text" name={'desc'} value={desc} onChange={handleTransInput('desc')} />
+          <input type="text" defaultValue={transactionData.desc} name={'desc'}  onChange={handleTransInput('desc')} />
 
           <label htmlFor="date">Date:</label>
-          <input type="date" name={'date'} value={date} onChange={handleTransInput('date')} required />
+          <input type="date" defaultValue={transactionData.date && transactionData.date.substring(0, 10)} name={'date'} onChange={handleTransInput('date')} required />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={handleSubmit} required>

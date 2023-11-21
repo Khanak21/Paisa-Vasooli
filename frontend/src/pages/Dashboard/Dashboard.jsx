@@ -7,6 +7,7 @@ import TransactionCard from '../../components/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
 import StockChart from '../../components/StockChart';
 import { useTranslation } from "react-i18next"; 
+import i18next from "i18next"
 const languages = [
   { value: "", text: "Options" },
   { value: "en", text: "English" },
@@ -14,14 +15,18 @@ const languages = [
 ];
 
 const Dashboard = ({user,thememode,toggle,setUser}) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const [lang, setLang] = useState("en");
   const handleChange = (e) => {
+    // i18next.changeLanguage(e.target.value)
     setLang(e.target.value);
-    let loc = "http://localhost:3000/dashboard"
-    window.location.replace(
-        loc + "?lng=" + e.target.value
-    );
+    i18next.changeLanguage(e.target.value).catch((err)=>{
+      console.log(err)
+    })
+    // let loc = "http://localhost:3000/dashboard"
+    // window.location.replace(
+    //     loc + "?lng=" + e.target.value
+    // );
 };
   const [updateFlag, setUpdateFlag] = useState(false); 
   const [show,setShow] = useState(false)
@@ -237,7 +242,7 @@ useEffect(()=>{
       
         <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
-        <select value={lang} onChange={handleChange}>
+        <select onChange={(e)=> handleChange(e)}>
                 {languages.map((item) => {
                     return (
                         <option
@@ -255,7 +260,7 @@ useEffect(()=>{
             <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div>
-              {/* {t("income")} */}
+              {t("income")}
               </div>
 
              <div> 

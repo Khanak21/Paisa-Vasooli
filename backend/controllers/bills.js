@@ -6,7 +6,7 @@ export const addBill = async(req,res)=>{
 
     const bill = billSchema(
         req.body.dueItem
-)
+    )
 
     try{
         // if(!userId || !title || !amount  || !toWhom){
