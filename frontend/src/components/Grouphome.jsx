@@ -127,21 +127,21 @@ console.log("bill split data:",billSplitData)
    <>
           <Navbar thememode={thememode} toggle={toggle}/>
 
-        <div className='flex flex-col justify-center items-start'>
+        <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode=="dark"?"#181818":""}}>
 
 
-          <div className="h-6 text-center bg-amber-500 w-full text-black font-bold">
-            Title 
+          <div className="text-center bg-amber-500 w-full text-black font-bold dark:bg-[#282828] text-white p-2">
+            Title: {groupData.title}
           </div>
           
-          <div className='w-full h-[80px] text-justify bg-amber-500 text-black font-bold mx-auto '>
-                {console.log(groupData._id)}
+          <div className='w-full h-full flex text-justify bg-amber-500 text-black font-bold mx-auto dark:bg-[#282828] text-white p-2'>
+                {console.log(groupData._id)}Group Members :- 
                {membersdata?.map(data=>(
-                <div>Group Members :- {" "}{data.username}{" "}</div>
+                <div>{" "}{data.username}{" "},</div>
                 ))}
            </div>
-           <div className="w-full bg-orange-200 min-h-screen">
-            <Button variant='success' onClick={handleShow} className=''>Split Bill</Button>
+           <div className=" min-h-screen w-[98%] flex-col align-middle justify-center dark:text-white">
+            <Button variant='success' onClick={handleShow} className='m-2'>Split Bill</Button>
             <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
           <Modal.Title>Split Bill</Modal.Title>
@@ -162,17 +162,15 @@ console.log("bill split data:",billSplitData)
   
        {
         billSplitData[billSplitData.length-1]?.map((mem)=>(
-          <div  key={mem.userId} className='mx-auto w-[50%] flex flex-col justify-start gap-2 items-center'>
-             <div><b>Name {" "}</b>{mem.name}</div> 
-             <div><b>Amount {" "}</b>{mem.amount}</div>
+          <div  key={mem.userId} className='mx-auto w-[50%] flex justify-around gap-2 items-center'>
+             <div><b>Name: {" "}</b>{mem.name}</div> 
+             <div><b>Amount: {" "}</b>{mem.amount}</div>
              {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
             {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
            </div>
 
         ))
       }
-
-             <b>Chat</b>
           </div>
         </div> 
         </>

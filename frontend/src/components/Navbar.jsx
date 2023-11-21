@@ -9,15 +9,37 @@ import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 import ToggleBtn from './ToggleBtn';
 
-import Profile from './Profile';
+import Profile from '../pages/Profile';
 import { FaRegEnvelope } from "react-icons/fa";
-import Inbox from '../pages/inbox.jsx'
+import Inbox from '../pages/Inbox.jsx'
 
 
 
 
 
-function Navbar({thememode,toggle,setUser,user}) {
+function Navbar({thememode,toggle,setUser,user,pfp}) {
+  const [navuser,setNavuser] = useState({})
+ 
+  useEffect(()=>{
+    const check=async()=>{
+      try{
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+          console.log(loggedInUser);
+          const foundUser = JSON.parse(loggedInUser);
+          console.log("found user",foundUser  )
+          setNavuser(foundUser)
+          await setUser(foundUser);
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
+    check()
+  },[user?._id])
+  console.log(navuser)
+  console.log(pfp)
+  console.log(user);
   const [showNav, setShowNav] = useState(false);
   // const [isLoggedin,setIsloggedIn]=useState(true)
   // console.log(thememode)
@@ -30,16 +52,20 @@ function Navbar({thememode,toggle,setUser,user}) {
   //   localStorage.clear();
     navigate('/login');
   };
+  
+  
 
   function Logout() {
     localStorage.clear();
     navigate('/login');
   }
 
+  
+
   return (
-    <div className="flex gap-30 justify-between items-center bg-green-800 w-full h-[80px] main-navbar" style={{backgroundColor:thememode==="dark"?"black":"green"}}>
-        <div className='text-2xl italic text-white font-extrabold h-full navbar-title p-1'>
-          <div className='w-full h-fit'>  Paisa Vasooli</div>
+    <div className="flex gap-30 justify-between items-center bg-green-800 ">
+        <div className='text-2xl italic text-white font-extrabold'>
+            Paisa Vasooli
          
         </div>
           
@@ -57,15 +83,15 @@ function Navbar({thememode,toggle,setUser,user}) {
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/charts")}}>Charts</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/stocks")}}>Stocks</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/vault")}}>Vault</div>
-
+   
         <div className="inside font-bold text-white hover:cursor-pointer " onClick={()=>{Logout()}}>Logout</div>
         <div className="inside2 font-bold text-white hover:cursor-pointer " onClick={toggle} >Theme Toggle</div>
         
       </div>
       <div className="logout absolute border border-white rounded-md p-2 right-1 font-bold text-white hover:cursor-pointer hover:border-gray-300 hover:shadow-xl" onClick={handleLogout}>
-       Logout
-      </div>
-        <div className="toggle-nav flex flex-col justify-center items-center hover:cursor-pointer">
+  Logout
+</div>
+        <div className="toggle-nav flex align-middle justify-center items-center hover:cursor-pointer">
        
          <ToggleBtn  thememode={thememode} toggle={toggle} /> 
             
@@ -76,10 +102,12 @@ function Navbar({thememode,toggle,setUser,user}) {
 
         </div>
 
-        <div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
-          <FontAwesomeIcon icon={faUser}  />
+        <div className='font-bold text-white hover:cursor-pointer p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
+          {/* <FontAwesomeIcon icon={faUser}  /> */}
+          <img src={navuser?.image || 'ProfileImg.jpeg'} className='w-[50px] h-[50px]  rounded-full'></img>
         </div>
-     </div>
+        
+     
 
 
       <div className="icons" style={{color:thememode==="dark"?"white":"black",border:thememode==="dark"?"1px solid white":"1px solid black"}}>
@@ -98,6 +126,7 @@ function Navbar({thememode,toggle,setUser,user}) {
           <FontAwesomeIcon icon={faTimes} size="xl" />
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -17,7 +17,8 @@ const languages = [
 
 
 const Dashboard = ({user,thememode,toggle,setUser}) => {
-  const { t } = useTranslation();
+  // console.log(user)
+  // const { t } = useTranslation();
   const [lang, setLang] = useState("en");
   const handleChange = (e) => {
     // i18next.changeLanguage(e.target.value)
@@ -259,12 +260,12 @@ useEffect(()=>{
 
      <div className='w-screen h-full flex flex-col justify-center items-start '>
        
-          <div className='flex w-full justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+          <div className='flex w-full justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode=="dark"?"#181818":"white"}}>
 
             <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div>
-              {t("income")}
+              {("Total Income")}
               </div>
 
              <div> 

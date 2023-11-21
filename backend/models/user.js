@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
     },
     inbox:{
         type:[String]
+    },
+    image:{
+        type: String,
+        default:null
     }
 })
 

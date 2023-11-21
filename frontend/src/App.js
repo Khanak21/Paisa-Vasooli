@@ -17,13 +17,14 @@ import Savings2 from './pages/Savings/Savings2';
 import SimplifyDebt from './pages/SimplifyDebt'
 import Grouphome from './components/Grouphome';
 
-import Profile from './components/Profile';
-import Inbox from './pages/inbox.jsx'
+import Profile from './pages/Profile';
+import Inbox from './pages/Inbox.jsx';
 
 
 function App() {
   const [user,setUser]=useState({})
   const [groupData,setgroupData]=useState([])
+  const [pfp,setPfp] = useState(user.image ? user.image : null)
 
   console.log(user)
 
@@ -68,7 +69,7 @@ function App() {
           <Route path="/" element={<Login user={user} setUser={setUser} thememode={thememode} toggle={toggle} />} />
           <Route path="/login" element={<Login user={user} setUser={setUser}thememode={thememode} toggle={toggle}/>} />
           <Route path="/signup" element={<Signup user={user} setUser={setUser}thememode={thememode} toggle={toggle}/>} />
-          <Route path="/navbar" element={<Navbar user={user} thememode={thememode} toggle={toggle} setUser={setUser} />} />
+          <Route path="/navbar" element={<Navbar user={user} thememode={thememode} toggle={toggle} setUser={setUser} pfp={pfp} setPfp={pfp}/>} />
           <Route path="/dashboard" element={<Dashboard user={user}thememode={thememode} toggle={toggle} setUser={setUser}/>} />
           <Route path="/transcard" element={<TransactionCard thememode={thememode} toggle={toggle}/>} />
           <Route path="/dues" element={<Dues user={user}thememode={thememode} toggle={toggle}/>} />
@@ -82,7 +83,7 @@ function App() {
           <Route path="/btn" element={<ToggleBtn thememode={thememode} toggle={toggle}/>}/>
           <Route path="/save" element={<Savings2 user={user} thememode={thememode} toggle={toggle} />} />
           <Route path='/simplify' element={<SimplifyDebt user={user} thememode={thememode} toggle={toggle}/>}></Route>
-           <Route path="/profile" element={<Profile user={user} thememode={thememode} toggle={toggle}/>} />
+           <Route path="/profile" element={<Profile user={user} thememode={thememode} toggle={toggle} pfp={pfp} setPfp={pfp} setUser={setUser}/>} />
            <Route path="/billsplit" element={<Grouphome user={user} thememode={thememode} toggle={toggle}/>}/>
            <Route path="/inbox" element={<Inbox user={user} setUser={setUser} thememode={thememode} toggle={toggle}/>} />
 

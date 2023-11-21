@@ -169,7 +169,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
             <button onClick={handleAddFriendShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Invite Friend</button>
 
           </div>
-        <div className='flex  flex-col justify-evenly items-center gap-6 w-full h-fit'>
+        <div className='flex flex-col lg:grid lg:grid-cols-2 justify-evenly items-center gap-6 w-full h-fit'>
           
           {groupData?.map(data=>{
             return(
