@@ -11,7 +11,7 @@ import ToggleBtn from './ToggleBtn';
 
 import Profile from './Profile';
 import { FaRegEnvelope } from "react-icons/fa";
-import Inbox from '../pages/inbox.jsx'
+import Inbox from '../pages/Inbox.jsx'
 
 
 
