@@ -6,9 +6,10 @@ import axios from "axios"
 import TransactionCard from '../../components/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
 import StockChart from '../../components/StockChart';
-import { useTranslation } from "react-i18next"; 
+import { useTranslation,initReactI18next } from "react-i18next"; 
 import i18next from "i18next"
 import './Dashboard.css'
+import NavbarTest from '../../components/NavbarTest';
 const languages = [
   { value: "", text: "Options" },
   { value: "en", text: "English" },
@@ -20,6 +21,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
   // console.log(user)
   // const { t } = useTranslation();
   const [lang, setLang] = useState("en");
+  
   const handleChange = (e) => {
     // i18next.changeLanguage(e.target.value)
     setLang(e.target.value);
@@ -56,12 +58,15 @@ console.log(user._id)
     })
 
     const [transactionData,setTransactionData]=useState([])
+    console.log(transactionData)
     const [filteredData,setFilteredData]=useState(transactionData)
+    const [filterstate,setFilterState]=useState(false)
+    console.log(filteredData)
 
     const [uniqueCategories, setUniqueCategories] = useState([]);
     const [stats,setStats] = useState({})
 
-    // console.log(uniqueCategories)
+    console.log(uniqueCategories)
     const headers = [
       { label: "Transaction Type", key: "type" },
       { label: "Amount", key: "amount" },
@@ -96,6 +101,7 @@ useEffect(()=>{
       const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
       console.log(res.data)
       setFilteredData(res.data.trans)
+      setTransactionData(res.data.trans)
     }catch(err){
         console.log(err)
     }
@@ -112,6 +118,7 @@ useEffect(()=>{
           const res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
           console.log(res.data)
           setFilteredData(res.data.trans)
+          setFilterState(true)
         }catch(err){
           console.log(err)
         }
@@ -199,7 +206,7 @@ useEffect(()=>{
     useEffect(() => {
       const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
       setUniqueCategories([...categoriesSet]);
-    },[updateFlag]);
+    },[updateFlag,transactionData]);
 
      // Replace with your dynamic currency value
     const currencyData = UCurrency('inr');
@@ -221,6 +228,7 @@ useEffect(()=>{
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])
         setUpdateFlag((prevFlag) => !(prevFlag));
+        handleClose()
       }catch(err){
         console.log(err.response.data)
       }
@@ -238,6 +246,29 @@ useEffect(()=>{
       currency:'',
   })
   }
+
+  //---------------------MULTI LANGUAGE SUPPORT-----------------------
+  i18next.use(initReactI18next).init({
+    resources : {
+      en:{
+        translation : {
+          welcome : "Welcome to my app",
+          sub_title : "This is a really good app and I love it"
+        }
+      },
+      hi : {
+        translation : {
+          welcome : "मेरे ऐप में आपका स्वागत है",
+          sub_title : "यह वास्तव में एक अच्छा ऐप है और मुझे यह पसंद है"
+        }
+      },
+      fr : {
+        translation : {
+          welcome : "Bienvenue dans mon application"
+        }
+      }
+    }
+  })
   
 
   return (
@@ -265,7 +296,7 @@ useEffect(()=>{
             <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div>
-              {("Total Income")}
+              Income
               </div>
 
              <div> 
@@ -279,9 +310,9 @@ useEffect(()=>{
 
 
            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
-             <div className='flex  justify-between p-4 font-bold gap-6'>
+             <div className='flex  justify-between p-4 font-bold gap-6' >
               <div> 
-               Total Balance
+               Balance
               </div>
                 <div>
               
@@ -293,7 +324,7 @@ useEffect(()=>{
           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
                 <div className='text-md flex justify-evenly gap-2'>
-                 <span>Total</span><span> Expense </span>
+                 <span> Expense </span>
                 </div>
               <div>
           
@@ -335,9 +366,9 @@ useEffect(()=>{
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
       <div className='min-h-screen w-full flex flex-col align-middle'> 
         <div style={{width:"100%"}}>
-          {filteredData?.map(trans=>(
+          {(filterstate==false ? transactionData : filteredData)?.map(trans=>(
             //  console.log("mapped data",trans)
-            <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} /> 
+            <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} setTransactionData={setTransactionData} setUpdateFlag={setUpdateFlag}/> 
             ))}
         </div>
         </div>

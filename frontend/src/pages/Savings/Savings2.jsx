@@ -256,9 +256,9 @@ const currenciData = UCurrency(currenci);
             </div>
 
             <div className="savings-holder" onClick={addItem}>
-              <Button variant="success" onClick={handleAddSaving} style={{color:thememode==="dark"?"white":"white"}}>
+              <button className="rounded-md p-1 text-white w-full bg-[#8656cd]" onClick={handleAddSaving}>
                 Add Saving
-              </Button>
+              </button>
             </div>
           </div>
 

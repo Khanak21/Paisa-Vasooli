@@ -19,6 +19,7 @@ import Grouphome from './components/Grouphome';
 
 import Profile from './pages/Profile';
 import Inbox from './pages/Inbox.jsx';
+import NavbarTest from './components/NavbarTest.jsx';
 
 
 function App() {
