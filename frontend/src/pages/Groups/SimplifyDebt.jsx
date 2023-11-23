@@ -157,7 +157,7 @@ console.log(membersdata)
   useEffect(()=>{
     const getMembers = async()=>{
       try{
-        const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`)//add user Id
+        const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`)
         console.log(res.data)
         setmembersdata(res.data)
       }catch(err){

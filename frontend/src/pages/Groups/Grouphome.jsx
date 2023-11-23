@@ -36,6 +36,7 @@ export const Grouphome = ({user,thememode,toggle}) => {
     const handleOpenGroup = () => {
     setShowGroupHome(true);
 };
+console.log(groupData)
 
     const [input, setInput] = useState({
       amount: '',
@@ -109,7 +110,7 @@ console.log("bill split data:",billSplitData)
     const getMembers = async()=>{
       try{
         const res = await axios.get(`http://localhost:3001/api/group/getmembers/${groupData._id}`)//add user Id
-        console.log(res.data)
+        console.log("members",res.data)
         setmembersdata(res.data)
       }catch(err){
         console.log(err)

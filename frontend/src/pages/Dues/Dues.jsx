@@ -263,7 +263,7 @@ const currenciData = UCurrency(currenci);
 
       <div className="hero-right h-full">
         <div className="storing-dues">
-          <div className="overflow-y-auto w-full">
+          <div className="overflow-y-scroll w-full max-h-[500px]">
             {BillData?.map((bill) => (
               <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} thememode={thememode}/>
             ))}

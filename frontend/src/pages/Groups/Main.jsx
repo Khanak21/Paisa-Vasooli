@@ -162,7 +162,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
   return (
     <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='flex flex-col gap-2 justify-start items-start h-screen' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+        <div className='flex flex-col gap-2 justify-start items-start min-h-screen' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
         <div className='flex justify-between w-full'>
         <div><div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'> Friends & Groups</div>
         <div className='mx-4 mt-4 text-gray-600 dark:text-gray-400 '>Streamline Bill Splitting and Debt Settlement Among Friends</div>

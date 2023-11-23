@@ -13,16 +13,20 @@ import { useNavigate } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { MdContentCopy } from "react-icons/md";
 
+
 const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle,user}) => {
   const navigate = useNavigate()
 const [show, setShow] = useState(false);
 const [showGroupHome, setShowGroupHome] = useState(false);
 const [showAddFriend, setShowAddFriend] = useState(false);
 const [friends,setFriends] = useState([])
-
 const [checkedState, setCheckedState] = useState(
   new Array(user.friends.length).fill(false)
 );
+
+// const copy = () => toast("Copied to Clipboard");
+
+
 
 const handleOnChange = (position) => {
   const updatedCheckedState = checkedState.map((item, index) =>
@@ -99,10 +103,12 @@ console.log(allgroupsdata)
               <div className='flex'>
               <input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} />
             <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
-            <button><MdContentCopy  className='ml-2 text-xl'/></button>
+            <button>
+              <MdContentCopy  className='ml-2 text-xl'/>
+            </button>
             </CopyToClipboard>
             </div>
-            {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>}
+            {/* {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>} */}
             <button className='mx-2 px-2 bg-[#8656cd] rounded-md text-white lg:w-80 md:w-80' onClick={handleAddFriendShow}>or Add Friend</button>
             </div>
           

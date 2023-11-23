@@ -107,7 +107,7 @@
 } 
 .hero-right{ 
     width:50%;
-    padding: 25px;
+    /* padding: 25px; */
     /* border:2px solid black;  */
     display:flex;
     height: 100%;
