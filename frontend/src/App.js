@@ -18,7 +18,7 @@ import SimplifyDebt from './pages/SimplifyDebt'
 import Grouphome from './components/Grouphome';
 
 import Profile from './pages/Profile';
-import Inbox from './pages/Inbox.jsx';
+import Inbox from './pages/inbox.jsx';
 import NavbarTest from './components/NavbarTest.jsx';
 
 

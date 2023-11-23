@@ -65,7 +65,7 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
     <div>
       <Card variant="light" border="secondary" className="mx-4 my-4 p-1"  style={{backgroundColor:thememode=="dark" ? "#282828":"",color:thememode=="dark"?"white":"black"}}>
         <Card.Body>
-          <Card.Header >Title:-{"  "} {BillData.title}</Card.Header>
+          <Card.Text className="rounded-sm bg-green-600" style={{ backgroundColor: 'rgb(157, 122, 253)' }}>Title:-{"  "} {BillData.title}</Card.Text>
           <div className="flex justify-between items-center gap-3 p-2">
             <div className='flex flex-col justify-center items-start'>
             <Card.Text className="text-md align-middle items-center "><b>To :-{" "}{BillData.toWhom} </b></Card.Text>
