@@ -9,7 +9,6 @@ import StockChart from '../../components/StockChart';
 import { useTranslation,initReactI18next } from "react-i18next"; 
 import i18next from "i18next"
 import './Dashboard.css'
-import NavbarTest from '../../components/NavbarTest';
 const languages = [
   { value: "", text: "Options" },
   { value: "en", text: "English" },

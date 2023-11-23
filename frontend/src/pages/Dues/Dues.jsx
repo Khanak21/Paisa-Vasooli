@@ -239,21 +239,24 @@ const currenciData = UCurrency(currenci);
           </div>
 
 
-          {/* <div className="due flex justify-between w-full gap-4">
+          <div className="due flex justify-between w-full gap-4">
             <label htmlFor="PersonDue" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
-            <input
-              type="text"
+            <select
               name="recurring"
               id=""
               value={dueItem.recurring}
               onChange={handleBillInput('recurring')}
-              placeholder="recurring"
               className="w-[70%] p-2"
-             
-            />
-  </div>*/}
+            >
+              <option value="">Select</option>
+              <option value="daily">Daily</option>
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+            </select>
 
-          <div className="add-btn flex bg-[#8656cd] justify-center items-center hover:cursor-pointer " onClick={handleSubmit}>
+          </div>
+
+          <div className="add-btn flex justify-center items-center hover:cursor-pointer "  style={{ backgroundColor: 'rgb(157, 122, 253)' }} onClick={handleSubmit}>
             Add Due
           </div>
         </div>

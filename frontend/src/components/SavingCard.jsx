@@ -94,7 +94,8 @@ const handleDelete = async()=>{
                   aria-valuenow={percentage}
                   aria-valuemin="0"
                   aria-valuemax="100"
-                  style={{ width: `${percentage}%`}}
+                  // style={{ width: `${percentage}%`}}
+                  style={{ backgroundColor: 'rgb(157, 122, 253)',width: `${percentage}%`}}
                 >
                   
                 </div>

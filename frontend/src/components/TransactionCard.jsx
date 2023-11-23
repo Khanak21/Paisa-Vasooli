@@ -83,7 +83,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
         </Card.Text>
         <Card.Text className='my-1'>
           Transaction Date{" "} :  {transactionData.date.substring(0,10)}
-        </Card.Text>
+        </Card.Text> 
       </Card.Body>
     </Card>
     
