@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
-const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
+const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransactionData,setUpdateFlag }) => {
   const [show, setShow] = useState(false)
   const [transInput, setTransInput] = useState({
         userId:user._id,
@@ -54,6 +54,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
     try {
       const res = await axios.delete(`http://localhost:3001/api/transactions/deleteTransaction/${id}`);
       console.log(res.data);
+      console.log(transactionData)
+      // const updated=transactionData.filter(data=>data._id!=id)
+      // setTransactionData(updated)
+      setUpdateFlag((prevFlag) => !prevFlag);
       // You might want to update the UI or state here if needed
     } catch (err) {
       console.log(err);
@@ -63,10 +67,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
   return (
     <div>
     <Card variant="light" border="secondary" className='mx-4 my-4 dark:text-white'>
-      <Card.Header className='font-bold' style={{backgroundColor:thememode=="dark"?"#3a3a3a":"white"}}> Category{" "}:-{" "}{transactionData.category}</Card.Header>
+      <Card.Header className='font-bold text-xl' style={{backgroundColor:thememode=="dark"?"#3a3a3a":"white"}}> Category{" "}:-{" "}{transactionData.category}</Card.Header>
       <Card.Body style={{backgroundColor:thememode=="dark"?"#282828":"white"}}>
         <div className='flex justify-between items-center'>
-        <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}> Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
+        <Card.Text className='text-md align-middle items-center my-1' style={{color:transactionData.type=="expense"?'red':'green'}}> Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
       <div className='flex justify-between gap-2'>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
@@ -74,10 +78,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
       </div>
         
         </div>
-        <Card.Text className='font-bold my-1'>
+        <Card.Text className='my-1'>
           Transaction Description{" "} :  {transactionData.desc}
         </Card.Text>
-        <Card.Text className='font-bold my-1'>
+        <Card.Text className='my-1'>
           Transaction Date{" "} :  {transactionData.date.substring(0,10)}
         </Card.Text>
       </Card.Body>

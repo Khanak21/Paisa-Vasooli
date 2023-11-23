@@ -251,7 +251,7 @@ const currenciData = UCurrency(currenci);
             />
   </div>*/}
 
-          <div className="add-btn flex bg-green-600 justify-center items-center hover:cursor-pointer " onClick={handleSubmit}>
+          <div className="add-btn flex bg-[#8656cd] justify-center items-center hover:cursor-pointer " onClick={handleSubmit}>
             Add Due
           </div>
         </div>

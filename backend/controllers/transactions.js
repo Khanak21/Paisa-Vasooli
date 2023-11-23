@@ -39,6 +39,8 @@ export const getTransactions=async(req,res)=>{
     // console.log(req.params.userId)
     try{
         const trans = await Transaction.find({userId:userId})
+        .sort({ date: -1 }) // Sort by date in descending order
+        .exec();
         res.json({trans})
     }catch(err){
         res.json({message:"No transactions found"})
@@ -95,8 +97,12 @@ export const getTransactionsByFilter = async(req,res)=>{
             $lte: new Date(endDate+"T23:59:59.999+00:00"),
           };
         }
-        console.log(filter)
-        const trans = await Transaction.find(filter);
+
+        console.log("filter",filter)
+        const trans = await Transaction.find(filter)
+        .sort({ date: -1 }) // Sort by date in descending order
+        .exec();
+        console.log("trans",trans)
     
         res.json({ trans });
       } catch (err) {
