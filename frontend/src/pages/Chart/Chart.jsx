@@ -110,25 +110,29 @@ const Chart = ({user,setUser,thememode,toggle}) => {
   return (
     <div  style={{backgroundColor:thememode==="dark"?"#181818":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
+        <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Visualise your Transactions</div>
+      <div className='m-4 text-gray-600 dark:text-gray-400'>Analyze how much you spent or earned on a weekly, monthly, yearly or category-wise basis</div>
+      
     <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#181818":"white",color: thememode=="dark"?"white":"black"}}>
-      <div className='w-full flex justify-evenly items-center'>
-          <div className='font-bold text-5xl  flex justify-center items-center' style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Weekly Chart</div>
+      <div className='w-full flex flex-col lg:flex-row justify-evenly items-center'>
+          <div className='font-bold text-5xl  flex justify-center items-center' style={{color:thememode=="dark"?"white":"#8656cd"}}>Weekly Chart</div>
         <div className='w-[800px]'>
         <WeeklyChart weeklyData={weeklyData} thememode={thememode} toggle={toggle}/>
         </div>
 
     </div>
 
-    <div className='w-full flex justify-evenly items-center'>
+    <div className='w-full flex lg:justify-evenly items-center flex-col lg:flex-row-reverse '>
+    <div className='font-bold text-5xl flex justify-center items-center '  style={{color:thememode=="dark"?"white":"#8656cd"}}>Monthly Chart</div>
+
         <div className='w-[800px]'>
         <MonthlyChart monthlyData={monthlyData} thememode={thememode}/>
         </div>
-    <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Monthly Chart</div>
 
     </div>
 
-    <div className='w-full flex justify-evenly items-center'>
-    <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>Yearly Chart</div>
+    <div className='w-full flex justify-evenly items-center flex-col lg:flex-row'>
+    <div className='font-bold text-5xl flex justify-center items-center '  style={{color:thememode=="dark"?"white":"#8656cd"}}>Yearly Chart</div>
         <div className='w-[800px]'>
            
         <YearlyChart yearlyData={yearlyData} thememode={thememode}/>
@@ -137,13 +141,14 @@ const Chart = ({user,setUser,thememode,toggle}) => {
 
    
 
-      <div className='w-full flex justify-evenly items-center'>
+      <div className='w-full flex justify-evenly items-center flex-col lg:flex-row-reverse'>
+      <div className='font-bold text-5xl flex justify-center items-center'  style={{color:thememode=="dark"?"white":"#8656cd"}}>
+          Category-wise Expenses
+        </div>
         <div className='w-[800px] h-[600px]'>
           <CategoryChart categoryData={categoryData} allCategories={allCategories} thememode={thememode} toggle={toggle}/>
         </div>
-        <div className='font-bold text-5xl flex justify-center items-center'  style={{fontFamily:'Sofia Sans Condensed, sans-serif',fontStyle:"italic",color:thememode=="dark"?"white":"darkblue"}}>
-          Category-wise Expenses
-        </div>
+        
        </div>
 
       </div>

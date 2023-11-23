@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
-import Signup from './pages/Signup/Signup';
+import Signup from './pages/Signup/Signup.jsx';
 import Login from './pages/Login/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';

@@ -54,31 +54,40 @@ const Stocks = ({user,thememode,toggle}) => {
     <div>
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className="mx-auto my-auto h-[200vh] block justify-center items-center" style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} >
-        <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}> Explore the Trendy Stocks...</div>
-       <HeatmapStocks thememode={thememode}/>
-       <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
-    
-         <div className='m-4 dark:text-white text-xl font-bold flex justify-center'>
-       <label htmlFor='stocks' >Add Stocks: </label>
-       <input name={"input"}
-                   type="text"
-                   value={input}
-                   onChange={handleInput}
-                   required
-                   className='w-[60%] mx-2'
-                   ></input>
-                   <button onClick={handleSubmit} className='mx-2 bg-[#198754]  text-white p-2 rounded-md dark:bg-[#3a3a3a]'>Save</button>
-                   </div>
-                 <div className=' w-full flex lg:grid lg:grid-cols-12'>  {stockData.map((stock, index) => (
-                       <div className=' bg-green-500 w-[60px] rounded-sm m-2 flex' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px" }}>
-                         {stock.input}
-                      </div>
-      ))}
-                  </div>
+          
+        <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}></div>
 
-       <div className='p-4'>
-        <TradingViewWidget sym={sym} stockflag={stockflag} thememode={thememode} />
-         </div>
+        {/* ---------------------------Search Stocks and crypto-------------------------------- */}
+        <div className='flex justify-left p-2 font-extrabold text-5xl mx-4 my-3 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0] ' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
+    
+    <div className='m-4 dark:text-white text-xl font-bold flex justify-center'>
+  <label htmlFor='stocks' >Add Stocks: </label>
+  <input name={"input"}
+              type="text"
+              value={input}
+              onChange={handleInput}
+              required
+              className='w-[60%] mx-2'
+              ></input>
+              <button onClick={handleSubmit} className='mx-2 bg-[#8656cd]  text-white p-2 rounded-md'>Save</button>
+              </div>
+           
+
+  <div className='p-4 '>
+  <div className=' w-full flex '>  {stockData.map((stock, index) => (
+                  <div className='h-fit mx-2 mb-4 bg-[#8656cd]  text-white p-2 rounded-md' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px" }}>
+                    {stock.input}
+                 </div>
+ ))}
+             </div>
+   <TradingViewWidget sym={sym} stockflag={stockflag} thememode={thememode} />
+    </div>
+
+        
+        <div className='font-extrabold text-5xl mx-4 my-2 dark:text-[#f0f0f0]'>EXPLORE MORE...</div>
+      <div className='mx-4 my-4 text-gray-600 dark:text-gray-400'>Explore the latest trends in the current stock market</div>
+       <HeatmapStocks thememode={thememode}/>
+     
 
 
 

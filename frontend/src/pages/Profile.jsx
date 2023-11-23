@@ -58,19 +58,19 @@ function Profile({ user, thememode, toggle,setUser}) {
     <>
       <Navbar thememode={thememode} toggle={toggle} />
       <div
-        className='flex flex-col justify-start items-center p-3 border-green-700 h-[120vh]' 
+        className='flex flex-col justify-start items-center p-3 border-[#8656cd] h-[130vh]' 
         style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}
       >
         <div
           className='flex flex-col mx-auto w-[50%] h-[250px] border-1 border-black p-2 rounded-sm'
-          style={{ backgroundColor: thememode === 'dark' ? 'black' : 'rgb(0, 150, 65)', color: thememode == 'dark' ? 'white' : 'black' }}
+          style={{ backgroundColor: thememode === 'dark' ? '#8656cd' : '#8656cd', color: thememode == 'dark' ? 'white' : 'black' }}
         >
           <div className=' flex justify-center align-middle items-center w-[70%] h-[80%] mx-auto p-1'>
             <img src={url || 'ProfileImg.jpeg'} className='w-[100px] h-[100px] rounded-full static' alt='' />
             <br />{' '} <AiFillEdit onClick={handleShow} className='bg-white rounded-full h-8 w-8 p-1 -translate-x-4 translate-y-6 dark:text-black' style={{display:show==false ? "":"none",cursor:"pointer"}}/>
            <div className='flex flex-col bg-white p-2 rounded-md m-2' style={{display:show==true ? "":"none"}}>
-            <div className='flex'> <input type="file" className='border-none' onChange={handleChange}/><RxCross2  onClick={handleShow}/></div>
-            <button className="m-2 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600" onClick={handleUpload}>
+            <div className='flex'> <input type="file" className='border-none' onChange={handleChange}/><RxCross2  className="text-black" onClick={handleShow}/></div>
+            <button className="m-2 bg-[#8656cd] text-white p-2 rounded-md hover:bg-purple-500" onClick={handleUpload}>
           Upload
         </button></div>
           </div>
@@ -127,7 +127,7 @@ function Profile({ user, thememode, toggle,setUser}) {
           ))}
 
           <div className='w-full flex justify-end items-center p-2'>
-            <button className='bg-green-600 p-3 rounded-lg'>Edit</button>
+            <button className='bg-[#8656cd] p-3 rounded-lg hover:bg-purple-500 text-white'>Edit</button>
           </div>
         </div>
       </div>

@@ -172,14 +172,11 @@ const currenciData = UCurrency(currenci);
           Toggle Theme
         </div>
       </div> */}
+       <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Savings Tracker</div>
+      <div className='m-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
      
       <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black"}}>
-        <div className="main-head" style={{ color: thememode === "dark" ? "white" : "black" }}>
-          <h2>
-            <b>Have any financial goals ?</b>
-          </h2>
-          <p>Track them here</p>
-        </div>
+       
 
         <div className="main-content p-1" style={{
   color: thememode === "dark" ? "white" : "black",

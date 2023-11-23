@@ -276,7 +276,7 @@ useEffect(()=>{
       
         <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
-        <select onChange={(e)=> handleChange(e)}>
+        {/* <select onChange={(e)=> handleChange(e)}>
                 {languages.map((item) => {
                     return (
                         <option
@@ -287,7 +287,7 @@ useEffect(()=>{
                         </option>
                     );
                 })}
-            </select>
+            </select> */}
 
      <div className='h-full flex flex-col justify-center items-start '>
        

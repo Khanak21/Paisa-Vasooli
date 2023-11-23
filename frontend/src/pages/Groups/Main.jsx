@@ -163,10 +163,16 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className='flex flex-col gap-2 justify-start items-start h-screen' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
-          <div className=' flex justify-evenly items-start w-full my-2'>
+        <div className='flex justify-between w-full'>
+        <div><div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'> Friends & Groups</div>
+        <div className='mx-4 mt-4 text-gray-600 dark:text-gray-400 '>Streamline Bill Splitting and Debt Settlement Among Friends</div>
+        </div>
+        <button onClick={handleAddFriendShow} className='bg-[#8656cd] text-white p-4 rounded-lg m-4'>+ Invite Friend</button>
+        </div>
+          <div className=' flex justify-left items-start w-full mb-4 mt-2 mx-4'>
+          
             <button onClick={handleGroupShow} className='bg-[#8656cd] text-white p-4 rounded-lg mx-2'>+ Create Group</button>
             <button onClick={handleGroupJoinShow} className='bg-[#8656cd] text-white p-4 rounded-lg mx-2'>Join Group</button>
-            <button onClick={handleAddFriendShow} className='bg-[#8656cd] text-white p-4 rounded-lg mx-2'>+ Invite Friend</button>
 
           </div>
         <div className='flex flex-col lg:grid lg:grid-cols-2 justify-evenly items-center gap-6 w-full h-fit dark:bg-[#181818]'>
@@ -203,7 +209,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
                    ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit}  required>Save</Button>
+          <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit}  required>Save</button>
         </Modal.Footer>
       </Modal>
 
@@ -221,11 +227,11 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
                    ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleJoin}  required>Save</Button>
+          <button className="bg-[#8656cd] p-2 rounded-md text-white" onClick={handleJoin}  required>Save</button>
         </Modal.Footer>
       </Modal>
 
-
+{/* 
       <Modal show={showFriend} onHide={handleFriendClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Transaction</Modal.Title>
@@ -235,7 +241,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         <Modal.Footer>
           <Button variant="success" onClick={handleSubmit} required>Save</Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
 
       <Modal show={showAddFriend} onHide={handleAddFriendClose} animation={false} centered>
         <Modal.Header closeButton>
@@ -251,7 +257,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
                    ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSendRequest}  required>Invite</Button>
+          <button className="bg-[#8656cd] p-2 rounded-md text-white" onClick={handleSendRequest}  required>Invite</button>
         </Modal.Footer>
       </Modal>
         </div>

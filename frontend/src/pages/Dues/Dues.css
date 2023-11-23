@@ -4,7 +4,7 @@
 }
 
 .outer{
-    height:100vh;
+    /* height:200vh; */
 
     margin:0 auto;
     /* height: 100vh; */
@@ -14,7 +14,7 @@
     background-color: rgb(255, 255, 255);
     gap:20px;
     align-items: flex-start;
-    height:700px;
+    /* height:700px; */
    
 }
 .Tt{
@@ -41,7 +41,7 @@
     display: flex;
     justify-content: space-between;                 
     gap:2px;
-    height:100vh;   
+    /* height:100vh;    */
     font-size: large;
     width:100%;
     max-height:650px;

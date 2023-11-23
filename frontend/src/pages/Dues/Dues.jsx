@@ -147,13 +147,15 @@ const currenciData = UCurrency(currenci);
 
   return (
   <>
-   <Navbar thememode={thememode} toggle={toggle}/>
+   <Navbar thememode={thememode} toggle={toggle}/> 
     <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
+      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Bills and Dues</div>
+      <div className='mx-4 text-gray-600 dark:text-gray-400'>Manage your recurring bills and dues here. Receive reminders through email</div>
       
 
-      <div className="hero-section "  >
-        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? '' : 'green',backgroundColor: thememode === 'dark' ? '#282828' : 'white'}}>
-          <div className="due flex justify-between w-full gap-4">
+      <div className="hero-section h-full"  >
+        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? '#8656cd' : '#8656cd',backgroundColor: thememode === 'dark' ? '#282828' : 'white'}}>
+          <div className="due flex justify-between w-full gap-4 ">
             <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
             <input
               type="text"

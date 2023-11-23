@@ -163,13 +163,18 @@ console.log(membersdata)
   return (
     <div className=' h-[150vh] dark:bg-[#181818] dark:text-white bg-[#f0f0f0]' >
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white bg-[#cac8c8]'>
-                {console.log(id)}Group Members :- 
-               {membersdata?.map(data=>(
-                <div>{" "}{data.username},{" "}</div>
-                ))}
-           </div>
-        <div className='text-4xl m-4 flex justify-center' style={{color:thememode=="dark"?"white":"black"}}>Simplify your debts!</div>
+       
+       <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Simplify Debts</div>
+      <div className='m-4 text-gray-600 dark:text-gray-400'>Track who paid how much to whom and clear debts with minimum transactions </div>
+      <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white bg-[#cac8c8]'>
+             
+             <div className='flex-col'>
+             Group Members :
+              {membersdata?.map(data=>(
+               <div >{" "}{data.username}{" "}</div>
+               ))}
+               </div>
+          </div>
         <form onSubmit={handleSubmit}  className=' p-3 mx-auto flex flex-col gap-3 justify-center'>
           {inputFields.map((field, index) => (
           <div className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg ' >
@@ -200,7 +205,7 @@ console.log(membersdata)
               className='w-80 m-4'
 
             />
-            <button type="button" className='bg-[#198754] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
+            <button type="button" className='bg-[#8656cd] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
               Remove
             </button>
 </div>
@@ -208,17 +213,16 @@ console.log(membersdata)
         ))}
         
       </form>
-     <div className='flex w-full justify-center'> <button type="button" onClick={handleAddField} className='bg-[#198754] p-2 rounded-md text-white w-60 m-4'>
+     <div className='flex w-full justify-center'> <button type="button" onClick={handleAddField} className='bg-[#8656cd] p-2 rounded-md text-white w-60 m-4'>
           Add Field
         </button>
       
         <div>
-          <button type="submit" className='bg-[#198754] w-60 p-2 rounded-md text-white m-4 ' onClick={handleSubmit}>Simplify</button></div></div>
+          <button type="submit" className='bg-[#8656cd] w-60 p-2 rounded-md text-white m-4 ' onClick={handleSubmit}>Simplify</button></div></div>
 
       {
         data?.map(debt=>(
             <div className='flex items-center bg-gray-100 rounded-2xl justify-between p-2 mx-auto w-[60%] dark:bg-[#282828]'>
-                 <div className='w-[30%]'><h4>Statement:-</h4></div>
                 <div className='w-[60%] text-2xl flex align-middle p-3'>{debt[0]}{" "} owes {debt[1]} {" "}&#x20B9;{debt[2]}</div>
 
                 {user.username==debt[1] && <button onClick={async()=>{
@@ -230,7 +234,7 @@ console.log(membersdata)
                         console.log(err)
                     }
                 }}
-                className='bg-[#198754] p-2 rounded-md text-white m-2'
+                className='bg-[#8656cd] p-2 rounded-md text-white m-2'
                 >{debt[3] ===true ? "Approved" : "Approve"}</button>}
                 {user.username==debt[0] && debt[3]==true && <div>Approved by {debt[1]}✅</div>}
             </div>
@@ -246,7 +250,7 @@ console.log(membersdata)
                     placeholder="Type your comment here"
                     className="w-80 m-4 p-2 border border-gray-300 rounded-md"
                 />
-                <button onClick={handleAddComment} className="bg-[#198754] p-2 rounded-md text-white m-2">
+                <button onClick={handleAddComment} className="bg-[#8656cd] p-2 rounded-md text-white m-2">
                     Add Comment
                 </button>
                 </div>
