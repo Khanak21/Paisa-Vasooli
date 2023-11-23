@@ -14,6 +14,8 @@ export const Grouphome = ({user,thememode,toggle}) => {
   console.log(groupData)
     const [showGroup, setShowGroup] = useState(false);
     const [show, setShow] = useState(false);
+    const [showPart, setShowPart] = useState(false);
+
 
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
@@ -22,6 +24,8 @@ export const Grouphome = ({user,thememode,toggle}) => {
     const handleGroupShow = () => setShowGroup(true);
     const handleGroupJoinClose = () => setShowGroupJoin(false);
     const handleGroupJoinShow = () => setShowGroupJoin(true);
+    const handleShowPart = () => setShowPart(true);
+    const handleClosePart = () => setShowPart(false);
 
     const handleFriendClose = () => setShowFriend(false);
     const handleFriendShow = () => setShowFriend(true);
@@ -127,21 +131,26 @@ console.log("bill split data:",billSplitData)
    <>
           <Navbar thememode={thememode} toggle={toggle}/>
 
-        <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode=="dark"?"#181818":""}}>
+        <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
 
 
-          <div className="text-center bg-[#f0f0f0] w-full light:text-black font-bold dark:bg-[#282828] dark:text-white p-2">
-            Title: {groupData.title}
+       
+          <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Split Bills</div>
+          <div className="m-3 pt-3 text-4xl bg-[#f0f0f0] light:text-black font-bold dark:bg-[#181818] dark:text-white p-2">
+            Group Title: {groupData.title}
           </div>
+        
           
-          <div className='w-full h-full flex text-justify bg-[#f0f0f0] light:text-black font-bold mx-auto dark:bg-[#282828] dark:text-white p-2'>
-                {console.log(groupData._id)}Group Members :- 
-               {membersdata?.map(data=>(
-                <div>{" "}{data.username}{" "},</div>
-                ))}
-           </div>
-           <div className=" min-h-screen w-[98%] flex-col align-middle justify-center dark:text-white">
-            <Button variant='success' onClick={handleShow} className='m-2'>Split Bill</Button>
+        
+          
+           <div className=" min-h-screen w-[98%] flex-col align-middle justify-center dark:text-white m-3">
+          <div className='flex'> <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-full p-1 m-2'>
+            Participants
+           </button>
+            <button className="bg-[#8656cd] text-white p-1 rounded-lg m-2 w-full" onClick={handleShow}>Split Bill</button></div>
+
+
+            
             <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
           <Modal.Title>Split Bill</Modal.Title>
@@ -156,8 +165,25 @@ console.log("bill split data:",billSplitData)
                    ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit} required>Split Bill</Button>
+          <button onClick={handleSubmit} required className='bg-[#8656cd] text-white rounded-lg w-full p-1 m-2'>Split Bill</button>
         </Modal.Footer>
+        
+      </Modal>
+
+      <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
+            <Modal.Header closeButton>
+          <Modal.Title>Group Participants</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+           <div className='flex-col'>
+              {membersdata?.map(data=>(
+               <div >{" "}{data.username}{" "}</div>
+               ))}
+               </div>
+           
+        
+        </Modal.Body>
+      
       </Modal>
   
        {
@@ -166,7 +192,7 @@ console.log("bill split data:",billSplitData)
              <div><b>Name: {" "}</b>{mem.name}</div> 
              <div><b>Amount: {" "}</b>{mem.amount}</div>
              {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
-            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
+            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-[#8656cd] text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
            </div>
 
         ))

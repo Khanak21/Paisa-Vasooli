@@ -72,7 +72,7 @@ function Vault({thememode,toggle,user}) {
       <div className="flex m-6 justify-center align-middle ">
        
         <input type="file" className="w-60 flex justify-center align-middle mx-2 border-none" onChange={(event) => {setfileUpload(event.target.files[0]);}}/>
-         <button onClick={uploadFile} className="text-white  rounded-md p-2 bg-[#198754]">Upload file</button>
+         <button onClick={uploadFile} className="text-white  rounded-md p-2 bg-[#8656cd]">Upload file</button>
         
       </div>
       <div className="flex flex-wrap dark:bg-[#181818]">{fileUrls.map((file) => (

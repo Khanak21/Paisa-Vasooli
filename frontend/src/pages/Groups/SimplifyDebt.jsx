@@ -2,16 +2,34 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios"
 import Navbar from '../../components/Navbar/Navbar';
 import { useParams } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
+
 
 const SimplifyDebt = ({user,thememode,toggle}) => {
     console.log(user)
     const {id} = useParams()
   const [inputFields, setInputFields] = useState([]);
+  const [groupData,setgroupData]=useState([])
   const [data,setData] = useState([])
   const [commentflag,setcommentflag] = useState(false);
+  const [showPart, setShowPart] = useState(false);
+  const handleShowPart = () => setShowPart(true);
+  const handleClosePart = () => setShowPart(false);
+
   console.log(inputFields)
   console.log(data)
   const [membersdata,setmembersdata]=useState([])
+  const getgroup=async()=>{
+    try{
+      const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
+      console.log(res.data)
+      setgroupData(res.data)
+      console.log("use effect",groupData)
+    }catch(err){
+      console.log(err)
+    }
+  }
+
 console.log(membersdata)
   const handleInputChange = (index, fieldName, value) => {
     const updatedInputFields = [...inputFields];
@@ -159,21 +177,49 @@ console.log(membersdata)
       ))}
     </select>
   );
+  
+  useEffect(()=>{
+     
+    getgroup()
+  },[])
 
   return (
     <div className=' h-[150vh] dark:bg-[#181818] dark:text-white bg-[#f0f0f0]' >
         <Navbar thememode={thememode} toggle={toggle}/>
-       
-       <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Simplify Debts</div>
-      <div className='m-4 text-gray-600 dark:text-gray-400'>Track who paid how much to whom and clear debts with minimum transactions </div>
+      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Simplify Debts</div>
+      <div className='flex justify-between'>
+          <div className="m-3 pt-3 text-4xl bg-[#f0f0f0] light:text-black font-bold dark:bg-[#181818] dark:text-white p-2">
+            Group Title: {groupData.title}
+          </div>
+          <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-1/4 p-1 h-10 my-4 mx-4'>
+            Participants
+           </button>
+           </div>
+           <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
+            <Modal.Header closeButton>
+          <Modal.Title>Group Participants</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+           <div className='flex-col'>
+              {membersdata?.map(data=>(
+               <div >{" "}{data.username}{" "}</div>
+               ))}
+               </div>
+           
+        
+        </Modal.Body>
+      
+      </Modal>
+  
+      
       <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white bg-[#cac8c8]'>
-             
+{/*              
              <div className='flex-col'>
              Group Members :
               {membersdata?.map(data=>(
                <div >{" "}{data.username}{" "}</div>
                ))}
-               </div>
+               </div> */}
           </div>
         <form onSubmit={handleSubmit}  className=' p-3 mx-auto flex flex-col gap-3 justify-center'>
           {inputFields.map((field, index) => (
@@ -222,7 +268,7 @@ console.log(membersdata)
 
       {
         data?.map(debt=>(
-            <div className='flex items-center bg-gray-100 rounded-2xl justify-between p-2 mx-auto w-[60%] dark:bg-[#282828]'>
+            <div className='flex items-center bg-gray-300 rounded-2xl justify-between p-2 mx-auto w-[60%] dark:bg-[#282828]'>
                 <div className='w-[60%] text-2xl flex align-middle p-3'>{debt[0]}{" "} owes {debt[1]} {" "}&#x20B9;{debt[2]}</div>
 
                 {user.username==debt[1] && <button onClick={async()=>{
@@ -241,14 +287,16 @@ console.log(membersdata)
         ))
       }
 
-           <div className='w-full p-4'> <label htmlFor="commentText">Add Comment:</label>
+<h3 className='underline underline-offset-8 decoration-[#8656cd] m-4'>Comments:</h3>
+
+           <div className='m-4'>
                 <input
                     type="text"
                     id="commentText"
                     value={commentText}
                     onChange={handleCommentChange}
                     placeholder="Type your comment here"
-                    className="w-80 m-4 p-2 border border-gray-300 rounded-md"
+                    className="w-[50%] m-2 p-2 border border-gray-300 rounded-md text-black"
                 />
                 <button onClick={handleAddComment} className="bg-[#8656cd] p-2 rounded-md text-white m-2">
                     Add Comment
@@ -256,7 +304,6 @@ console.log(membersdata)
                 </div>
 
                 <div className="m-4">
-        <h3>Comments:</h3>
         {comments.map((comment) => (
           <div key={comment._id} className="border p-2 my-2 rounded-md">
             <p>{comment.text}</p>
