@@ -30,7 +30,7 @@ This project was made during the Codesangam 2023 Event conducted by CC Club MNNI
 ### Advanced features
 
 - **OAuth**: User can login with google account
-- **Multiple currencies support**: Transactions can be added in any currency with real-time exchange rates conversion
+- **Multiple currencies support**: Transactions can be added in multiple currencies with real-time exchange rates conversion
 - **Track stocks or crypto**: User can add which stocks/crypto he wants to track, and compare multiple stocks in real time
 - **Export Transactions:** Download transaction data in CSV format for record-keeping.
 - **Vault**: Vault to upload and store expense receipts
