@@ -11,7 +11,7 @@ import ToggleBtn from './ToggleBtn';
 
 import Profile from '../pages/Profile';
 import { FaRegEnvelope } from "react-icons/fa";
-import Inbox from '../pages/Inbox.jsx'
+import Inbox from '../pages/inbox.jsx'
 
 
 function Navbar({thememode,toggle,setUser,user,pfp}) {

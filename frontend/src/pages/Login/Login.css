@@ -11,11 +11,11 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background-color: #198754;
+  background-color: rgb(157, 122, 253);
 }
 .container-login {
   width:567px;
-  background-color: #fff;
+  background-color: #f0f0f0;
   padding: 25px 30px;
   border-radius: 40px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
@@ -80,7 +80,7 @@ input {
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background-color: #198754;
+    background-color: rgb(157, 122, 253);
 }
 .Hello{
   text-decoration: none;
