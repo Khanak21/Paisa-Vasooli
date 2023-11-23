@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import {Button} from 'react-bootstrap'
 import { AiTwotoneCalendar } from 'react-icons/ai';
-import Grouphome from './Grouphome.jsx'; 
+import Grouphome from '../../pages/Groups/Grouphome.jsx'; 
 import './GroupCard.css'
 import { useNavigate } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';

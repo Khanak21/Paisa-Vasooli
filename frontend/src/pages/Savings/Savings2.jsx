@@ -2,9 +2,9 @@ import React, { useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from 'react-bootstrap';
-import SavingCard from "../../components/SavingCard";
+import SavingCard from "../../components/Cards/SavingCard";
 import axios from "axios";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import './Savings.css';
 
 function Savings2({ user,setUser,thememode,toggle}) {

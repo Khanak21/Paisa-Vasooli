@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 import './Dues.css'
 import axios from "axios";
-import BillCard from "../../components/BillCard.jsx"
-import Navbar from '../../components/Navbar.jsx';
-import ToggleBtn from '../../components/ToggleBtn.jsx';
+import BillCard from "../../components/Cards/BillCard.jsx"
+import Navbar from '../../components/Navbar/Navbar.jsx';
+import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
 
 
 function Dues({ user, thememode, toggle,setUser }) {

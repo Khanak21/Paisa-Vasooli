@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react'
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/Navbar/Navbar.jsx'
 import Modal from 'react-bootstrap/Modal';
 import {Button} from 'react-bootstrap'
 import axios from 'axios';
-import GroupCard from '../../components/GroupCard.jsx'
+import GroupCard from '../../components/GroupCard/GroupCard.jsx'
 
 export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => {
   console.log(groupData)

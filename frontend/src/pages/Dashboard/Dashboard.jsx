@@ -1,11 +1,10 @@
 import React,{useState,useEffect} from 'react'
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/Navbar/Navbar'
 import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
-import TransactionCard from '../../components/TransactionCard';
+import TransactionCard from '../../components/Cards/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
-import StockChart from '../../components/StockChart';
 import { useTranslation,initReactI18next } from "react-i18next"; 
 import i18next from "i18next"
 import './Dashboard.css'

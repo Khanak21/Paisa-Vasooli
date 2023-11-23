@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import TradingViewWidget from '../../components/TradingViewWidget'
-import Navbar from '../../components/Navbar'
-import StockWidget from '../../components/StockWidget'
+import TradingViewWidget from '../../components/Stocks/TradingViewWidget'
+import Navbar from '../../components/Navbar/Navbar'
 import axios from "axios"
-import StockChart from '../../components/StockChart'
-import HeatmapStocks from '../../components/HeatmapStocks'
+import HeatmapStocks from '../../components/Stocks/HeatmapStocks'
 
 const Stocks = ({user,thememode,toggle}) => {
     const [input,setInput]=useState()

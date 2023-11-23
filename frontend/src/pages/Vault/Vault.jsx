@@ -9,7 +9,7 @@ import {
 import { storage } from "../firebase";
 import { v4 } from "uuid";
 import axios from "axios";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import {AiOutlineFile} from "react-icons/ai"
 function Vault({thememode,toggle,user}) {
   const [fileUpload, setfileUpload] = useState(null);

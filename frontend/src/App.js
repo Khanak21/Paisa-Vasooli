@@ -1,24 +1,24 @@
 
 import React, { useState,useEffect } from 'react';
 import './App.css';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar.jsx';
 import Signup from './pages/Signup/Signup.jsx';
 import Login from './pages/Login/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
-import TransactionCard from './components/TransactionCard';
+import TransactionCard from './components/Cards/TransactionCard.jsx';
 import Dues from "./pages/Dues/Dues"
 import Vault from "./pages/Vault/Vault"
 import Chart from './pages/Chart/Chart';
 import Stocks from './pages/Stocks/Stocks';
 import { Main } from './pages/Groups/Main';
-import ToggleBtn from './components/ToggleBtn';
+import ToggleBtn from './components/Navbar/ToggleBtn.jsx';
 import Savings2 from './pages/Savings/Savings2';
-import SimplifyDebt from './pages/SimplifyDebt'
-import Grouphome from './components/Grouphome';
+import SimplifyDebt from './pages/Groups/SimplifyDebt.jsx'
+import Grouphome from './pages/Groups/Grouphome.jsx';
 
-import Profile from './pages/Profile';
-import Inbox from './pages/inbox.jsx';
+import Profile from './pages/Profile/Profile.jsx';
+import Inbox from './pages/Inbox/inbox.jsx';
 
 
 function App() {

@@ -1,10 +1,10 @@
 import React, { useEffect,useState } from 'react'
-import WeeklyChart from '../../components/WeeklyChart'
-import MonthlyChart from '../../components/MonthlyChart'
-import YearlyChart from '../../components/YearlyChart'
+import WeeklyChart from '../../components/Charts/WeeklyChart'
+import MonthlyChart from '../../components/Charts/MonthlyChart'
+import YearlyChart from '../../components/Charts/YearlyChart'
 import axios from 'axios'
-import Navbar from '../../components/Navbar'
-import CategoryChart from '../../components/CategoryChart'
+import Navbar from '../../components/Navbar/Navbar'
+import CategoryChart from '../../components/Charts/CategoryChart'
 const Chart = ({user,setUser,thememode,toggle}) => {
     const [weeklyData,setWeeklyData]=useState([])
     const [monthlyData,setMonthlyData]=useState([])

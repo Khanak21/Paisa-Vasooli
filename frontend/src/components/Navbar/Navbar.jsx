@@ -7,11 +7,11 @@ import 'tailwindcss/components.css'; // Import Tailwind CSS components styles
 import 'tailwindcss/utilities.css'; // Import Tailwind CSS utilities styles
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
-import ToggleBtn from './ToggleBtn';
+import ToggleBtn from './ToggleBtn.jsx';
 
-import Profile from '../pages/Profile';
+import Profile from '../../pages/Profile/Profile.jsx';
 import { FaRegEnvelope } from "react-icons/fa";
-import Inbox from '../pages/inbox.jsx'
+import Inbox from '../../pages/Inbox/inbox.jsx'
 
 
 function Navbar({thememode,toggle,setUser,user,pfp}) {

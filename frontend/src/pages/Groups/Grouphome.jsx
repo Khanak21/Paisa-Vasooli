@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import Card from 'react-bootstrap/Card';
-import Navbar from './Navbar.jsx'
+import Navbar from '../../components/Navbar/Navbar.jsx'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
-import GroupCard from './GroupCard.jsx'
+import GroupCard from '../../components/GroupCard/GroupCard.jsx'
 import { useParams } from 'react-router-dom';
 
 export const Grouphome = ({user,thememode,toggle}) => {
