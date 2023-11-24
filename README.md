@@ -45,6 +45,7 @@ This project was made during the Codesangam 2023 Event conducted by CC Club MNNI
 - **Comments**: Add comments to a group
 - **Profile page with custom picture:** Users can choose and upload profile pictures as per their choice
 - **Stock Heatmap**: Check out current trends in trendy stocks though a heatmap
+- **Rewards:** In-App achievement badges for achieving certain financial targets
 
 ## Images
 Few Images from the site
@@ -106,5 +107,4 @@ npm run serve
 - **Integration with payment apps**: Getting transaction data from UPI apps and displaying it on website
 - **Authentication:** Enhancing user security,privacy and authentication
 - **Stock prediction:** Integrating ML to display stock predictions of user-selected stocks
-- **Rewards and Points:** In-App Points, Rewards and badges for achieving a financial target
 - **Contacts as friends:** Automatically adding all contacts related to a gmail account in friends' list
