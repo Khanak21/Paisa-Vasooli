@@ -3,37 +3,42 @@
 Paisa Vasooli is a website built with the MERN stack to help you manage and track your expenses. 
 This project was made during the Codesangam 2023 Event conducted by CC Club MNNIT Allahabad, the topic being "Thoth's Steller Ledger"
 
+## Team Members
+1. Khanak Patwari : Frontend and Backend
+2. Sahil Gupta : Frontend and Backend
+3. Shikhar Pandya : Frontend
+
 ## Features
 
 ### Basic features
 
-- **User Authentication:** Login Signup page with Secure user authentication system to protect user data.
-- **Add Transactions:** Easily add income or expense transactions, and edit or delete them if need be.
-- **Customizable Categories:** Add personalised categories to transactions.
+- **User Authentication:** Authentication through Login Signup page
+- **Add Transactions:** Easily add income or expense transactions, and edit or delete them if need be
+- **Customizable Categories:** Add personalised categories to transactions
 - **Stats and transaction history:** View total income,expense, balance statistics and past transaction history on dashboard
-- **Dark theme:** Feature to switch to dark mode theme.
+- **Dark theme:** Feature to switch to dark mode theme
 - **Recurring Bills:** Notifications sent for recurring bills
-- **Dues Reminder:** Reminders sent for due transactions.
+- **Dues Reminder:** Reminders sent for due transactions
 - **Savings Tracker:** Create budgets or financial goals and track the progress.
-- **Add Friends:**  Sent friend requests to people and easily add them in any groups from the friends' list.
+- **Add Friends:**  Sent friend requests to people and easily add them in any groups from the friends' list
 - **Make Groups:** Create groups for splitting bills and simplifying debts among friends.
 - **Split Expenses:** Split bills equally between friends in groups
 - **Debt Simplification:** Simplify debts between friends in groups with minimum cash flow
 - **Approval from receiver:** Approval asked from receiver before settling up bill split or debts in groups
-- **Data Analysis and Visualisation:** Various Charts and graphs to visualise spending and earning on a weekly,monthly,category-wise basis.
+- **Data Analysis and Visualisation:** Various Charts and graphs to visualise spending and earning on a weekly,monthly,category-wise basis
 
 ### Advanced features
 
 - **OAuth**: User can login with google account
-- **Multiple currencies support**: Transactions can be added in any currency with real-time exchange rates conversion
+- **Multiple currencies support**: Transactions can be added in multiple currencies with real-time exchange rates conversion
 - **Track stocks or crypto**: User can add which stocks/crypto he wants to track, and compare multiple stocks in real time
 - **Export Transactions:** Download transaction data in CSV format for record-keeping.
-- **Vault**: Vault to uplod and store expense receipts
+- **Vault**: Vault to upload and store expense receipts
 
 ### Unique Features
   
-- **Filter and Search:** Filter transactions based on categories, date ranges, or both, and search for specific transactions.
-- **Responsive Design:** Ensures a seamless experience on various devices.
+- **Filter and Search:** Filter transactions based on categories, date ranges, or both, and search for specific transactions
+- **Responsive Design:** Ensures a seamless experience on various devices
 - **Inbox**: Receive friend request invitations and acceptance messages 
 - **Email reminders**: Reminders for dues and bills are sent on user's mail
 - **Group codes**: Apart from friends,users can share group code with other people not added as friends to join the group
@@ -94,15 +99,12 @@ npm start
 npm run serve
 ```
 
-6. Access the application at `http://localhost:3000`
+6. Access the application at `http://localhost:3000/`
 
 ## Future Additions
 - **Payment Gateways:** Connection to payement apps to enable seamless on-site transactions in groups
 - **Integration with payment apps**: Getting transaction data from UPI apps and displaying it on website
 - **Authentication:** Enhancing user security,privacy and authentication
 - **Stock prediction:** Integrating ML to display stock predictions of user-selected stocks
-
-## Team Members
-1. Khanak Patwari : Frontend and Backend
-2. Sahil Gupta : Frontend and Backend
-3. Shikhar Pandya : Frontend
+- **Rewards and Points:** In-App Points, Rewards and badges for achieving a financial target
+- **Contacts as friends:** Automatically adding all contacts related to a gmail account in friends' list
