@@ -12,7 +12,7 @@ const Inbox = ({ user,setUser,thememode,toggle }) => {
   const handleAccept=async(key)=>{
     try{
         console.log(key)
-        const res= await axios.put(`http://localhost:3001/api/friend/acceptRequest/${user._id}`,{friendName:key})
+        const res= await axios.put(`https://paisa-vasooli.onrender.com/api/friend/acceptRequest/${user._id}`,{friendName:key})
         alert(res.data.message)
         console.log(res.data)
         setUser(res.data.res1);

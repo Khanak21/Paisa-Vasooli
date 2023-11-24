@@ -53,7 +53,7 @@ function Login({user,setUser}) {
   // const blabla = (event)=>{
   //   const logig =async()=>{
   //     try{
-  //       const res = await axios.get("http://localhost:3001/api/google/google")
+  //       const res = await axios.get("https://paisa-vasooli.onrender.com/api/google/google")
   //       console.log(res.data);
   //       setUser(res.data)
   //       navigate('/dues')
@@ -75,7 +75,7 @@ function Login({user,setUser}) {
       // Handle form submission logic here
       const Logi =async()=>{
         try{
-          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,email,password})
+          const res = await axios.post("https://paisa-vasooli.onrender.com/api/auth/signin",{username,email,password})
           console.log("response data:",res.data);
           setUser(res.data)
           // store the user in localStorage
@@ -106,7 +106,7 @@ const googlesekar = (req,res)=>{
     console.log(result);
     console.log(result.user.photoURL);
     axios
-          .post("http://localhost:3001/api/auth/google", {
+          .post("https://paisa-vasooli.onrender.com/api/auth/google", {
             username: result.user.displayName,
             email: result.user.email,
             image: result.user.photoURL,

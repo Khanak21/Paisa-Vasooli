@@ -112,7 +112,7 @@ useEffect(()=>{
   //function to retrieve all user transactions
   const ifnocategselect=async()=>{
     try{
-      const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
+      const res = await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getTransactions/${user._id}`);
       console.log(res.data)
       setFilteredData(res.data.trans)
       setTransactionData(res.data.trans)
@@ -131,7 +131,7 @@ useEffect(()=>{
         console.log("filters:",filterInput)
         const addFilter = async()=>{
         try{
-          const res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
+          const res = await axios.post("https://paisa-vasooli.onrender.com/api/transactions/getTransactionsByFilter",{filterInput})
           console.log(res.data)
           setFilteredData(res.data.trans)
           setFilterState(true)
@@ -147,7 +147,7 @@ useEffect(()=>{
         try{
           const reqmail = user.email
           console.log(reqmail)
-          const res = await axios.post("http://localhost:3001/api/mail/sendmail",{reqmail})
+          const res = await axios.post("https://paisa-vasooli.onrender.com/api/mail/sendmail",{reqmail})
           .then(() => alert("Message Sent Succesfully"))
           .catch((err) => console.log(err));
         }catch(err){
@@ -159,7 +159,7 @@ useEffect(()=>{
       const addBadge=async(img)=>{
         try{
           console.log(img)
-          const res = await axios.post(`http://localhost:3001/api/user/addbadge/${user._id}`,{img})
+          const res = await axios.post(`https://paisa-vasooli.onrender.com/api/user/addbadge/${user._id}`,{img})
           console.log(res.data.user)
           // setTransactionData(prev=>[...prev,val])
           // setUpdateFlag((prevFlag) => !(prevFlag));
@@ -215,7 +215,7 @@ useEffect(()=>{
     //function to fetch total income,balance and expense
     const getTotalStats = async()=>{
       try{
-        const res = await axios.get(`http://localhost:3001/api/transactions/getTotalStats/${user._id}`)
+        const res = await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getTotalStats/${user._id}`)
         console.log(res.data)
         setStats(res.data)
       }catch(err){
@@ -229,7 +229,7 @@ useEffect(()=>{
     const getTrans = async()=>{
       try{
         // console.log("Sending request with data:", transInput);
-        const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`)//add user Id
+        const res = await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getTransactions/${user._id}`)//add user Id
         console.log(res.data)
         const numberOfIncomeTransactions = res.data.trans.filter((transaction) => transaction.type === 'income').length;
         console.log(numberOfIncomeTransactions)
@@ -269,7 +269,7 @@ useEffect(()=>{
       const addTrans = async()=>{
       try{
         console.log(transInput)
-        const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{userId:user._id,type,category,desc,date,currency,amount})
+        const res = await axios.post("https://paisa-vasooli.onrender.com/api/transactions/addTransaction",{userId:user._id,type,category,desc,date,currency,amount})
         console.log(res.data)
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])

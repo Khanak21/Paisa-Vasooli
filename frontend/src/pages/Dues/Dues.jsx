@@ -42,7 +42,7 @@ function Dues({ user, thememode, toggle,setUser }) {
     try {
       const reqmail = user.email;
       console.log(reqmail);
-      const res = await axios.post('http://localhost:3001/api/mail/sendstartmail', { reqmail });
+      const res = await axios.post('https://paisa-vasooli.onrender.com/api/mail/sendstartmail', { reqmail });
       alert('Message Sent Successfully');
     } catch (err) {
       console.error('Error sending start mail:', err);
@@ -55,7 +55,7 @@ function Dues({ user, thememode, toggle,setUser }) {
       const duedate = dueItem.dueDate;
       const recurring = dueItem.recurring
       console.log(reqmail);
-      const res = await axios.post('http://localhost:3001/api/mail/sendmailrecurring', { reqmail, duedate, recurring });
+      const res = await axios.post('https://paisa-vasooli.onrender.com/api/mail/sendmailrecurring', { reqmail, duedate, recurring });
       alert('Message Sent Successfully');
     } catch (err) {
       console.error('Error sending recurring mail:', err);
@@ -69,7 +69,7 @@ function Dues({ user, thememode, toggle,setUser }) {
     dueItem.amount =Math.floor(dueItem.amount / currenciData[dueItem.currency]);
       console.log(dueItem.amount)
     try {
-      const res = await axios.post('http://localhost:3001/api/bills/addBill', { dueItem });
+      const res = await axios.post('https://paisa-vasooli.onrender.com/api/bills/addBill', { dueItem });
       console.log(res.data);
       const val = res.data.bill;
       setBillData((prev) => [...prev, val]);
@@ -115,7 +115,7 @@ function Dues({ user, thememode, toggle,setUser }) {
   useEffect(()=>{
     const getBills = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/api/bills/getBills/${user._id}`);
+        const res = await axios.get(`https://paisa-vasooli.onrender.com/api/bills/getBills/${user._id}`);
         console.log(res.data);
         setBillData(res.data.bill);
       } catch (err) {

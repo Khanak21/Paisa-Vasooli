@@ -33,7 +33,7 @@ function Vault({thememode,toggle,user}) {
         console.log(url)
         const addUrl= async()=>{
           try{
-            const res = await axios.post(`http://localhost:3001/api/user/addUrl/${user._id}`,{url,fileName})
+            const res = await axios.post(`https://paisa-vasooli.onrender.com/api/user/addUrl/${user._id}`,{url,fileName})
             console.log("file url",res.data)
 
           }catch(err){
@@ -59,7 +59,7 @@ function Vault({thememode,toggle,user}) {
     const getFiles = async()=>{
       try{
         // console.log("Sending request with data:", transInput);
-        const res = await axios.get(`http://localhost:3001/api/user/getUrls/${user._id}`)//add user Id
+        const res = await axios.get(`https://paisa-vasooli.onrender.com/api/user/getUrls/${user._id}`)//add user Id
         console.log(res.data)
         setfileUrls(res.data.files)
       }catch(err){

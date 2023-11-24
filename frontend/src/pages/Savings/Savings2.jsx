@@ -129,7 +129,7 @@ const currenciData = UCurrency(currenci);
       console.log(saving.currAmt)
       saving.targetAmt =Math.floor(saving.targetAmt / currenciData[Currency]);
       console.log(saving.targetAmt)
-      const res = await axios.post("http://localhost:3001/api/savings/addSaving", { saving });
+      const res = await axios.post("https://paisa-vasooli.onrender.com/api/savings/addSaving", { saving });
       console.log(res.data.saving);
       const val = res.data.saving;
       setSavingData(prev => [...prev, val]);
@@ -142,7 +142,7 @@ const currenciData = UCurrency(currenci);
   const addBadge=async(img)=>{
     try{
       console.log(img)
-      const res = await axios.post(`http://localhost:3001/api/user/addbadge/${user._id}`,{img})
+      const res = await axios.post(`https://paisa-vasooli.onrender.com/api/user/addbadge/${user._id}`,{img})
       console.log(res.data.user)
     }catch(err){
       console.log(err.response.data)
@@ -169,7 +169,7 @@ const currenciData = UCurrency(currenci);
     //function to fetch savings data
     const getSavings = async()=>{
       try{
-        const res = await axios.get(`http://localhost:3001/api/savings/getSavings/${user._id}`)//add user Id
+        const res = await axios.get(`https://paisa-vasooli.onrender.com/api/savings/getSavings/${user._id}`)//add user Id
         console.log("savings data:",res.data)
         setSavingData(res.data.savings)
         const numberOfSavings = res.data.savings.filter(saving => saving.currAmt >= saving.targetAmt).length;

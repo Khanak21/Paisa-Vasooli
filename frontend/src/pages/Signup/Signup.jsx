@@ -63,7 +63,7 @@ function Signup({user,setUser})
   //     setEntries([entries, Entry]);
   //     const reg =async()=>{
   //       try{
-  //         const res = await axios.post("http://localhost:3001/api/auth/signup",{username,email,password}).catch(function(err){
+  //         const res = await axios.post("https://paisa-vasooli.onrender.com/api/auth/signup",{username,email,password}).catch(function(err){
   //           console.log(err)})
   //           console.log(res.data);
   //           setUser(res.data.newUser)
@@ -106,7 +106,7 @@ function Signup({user,setUser})
     signInWithPopup(auth,provider).then((result)=>{
       console.log(result);
       axios
-            .post("http://localhost:3001/api/auth/google", {
+            .post("https://paisa-vasooli.onrender.com/api/auth/google", {
               username: result.user.displayName,
               email: result.user.email,
               img: result.user.photoURL,
@@ -129,7 +129,7 @@ function Signup({user,setUser})
       setEntries([entries, Entry]);
   
       try {
-        const res = await axios.post("http://localhost:3001/api/auth/signup", {
+        const res = await axios.post("https://paisa-vasooli.onrender.com/api/auth/signup", {
           username,
           email,
           password,
