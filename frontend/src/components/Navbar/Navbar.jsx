@@ -16,7 +16,7 @@ import Inbox from '../../pages/Inbox/inbox.jsx'
 
 
 
-function Navbar({thememode,toggle,setUser,user}) {
+function Navbar({thememode,toggle,setUser,user,setFlag,flag}) {
   const [navuser,setNavuser] = useState({})
  
   // ------------ hook to handle the user details ------------------ 
@@ -36,7 +36,8 @@ function Navbar({thememode,toggle,setUser,user}) {
       }
     }
     check()
-  },[user?._id])
+  },[user?._id,flag])
+
   console.log(navuser)
   console.log(user);
   const [showNav, setShowNav] = useState(false);
@@ -83,6 +84,8 @@ function Navbar({thememode,toggle,setUser,user}) {
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/charts")}}>Charts</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/stocks")}}>Stocks</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/vault")}}>Vault</div>
+        <div className="font-bold text-white hover:cursor-pointer lg:hidden" onClick={()=>{navigate("/inbox")}}>Inbox</div>
+
    
         <div className="inside font-bold text-white hover:cursor-pointer " onClick={()=>{Logout()}}>Logout</div>
         <div className="inside2 font-bold text-white hover:cursor-pointer " onClick={toggle} >Theme Toggle</div>

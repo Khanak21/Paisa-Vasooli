@@ -48,6 +48,12 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     console.log(filteredData)
     const [uniqueCategories, setUniqueCategories] = useState([]);
     const [stats,setStats] = useState({})
+    const bigincome = 'BadeLog.png'
+    const bigexpense = 'AAKR.png'
+    const [incomeshow,setIncomeshow] = useState(false)
+    const [expenseshow,setExpenseshow] = useState(false)
+    const incomebadge = 'SoBeautiful.png'
+    const expensebadge = 'SoElegant.png'
 
     console.log(uniqueCategories)
     const headers = [
@@ -68,10 +74,16 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleIncomeClose = () => setIncomeshow(false);
+    const handleIncomeShow = () => setIncomeshow(true);
+    const handleExpenseClose = () => setExpenseshow(false);
+    const handleExpenseShow = () => setExpenseshow(true);
+
      //functions to handle input
     const handleTransInput = name=>e=>{
           setTransInput({...transInput,[name]:e.target.value})
     }
+
 
     // ----------------------- Filter Input ----------------------------------  
     const handleFilterInput = name=>e=>{
@@ -142,8 +154,22 @@ useEffect(()=>{
           console.log(err.response.data)
         }
       }
+
+      //function to add badge
+      const addBadge=async(img)=>{
+        try{
+          console.log(img)
+          const res = await axios.post(`http://localhost:3001/api/user/addbadge/${user._id}`,{img})
+          console.log(res.data.user)
+          // setTransactionData(prev=>[...prev,val])
+          // setUpdateFlag((prevFlag) => !(prevFlag));
+          // handleClose()
+        }catch(err){
+          console.log(err.response.data)
+        }
+      }
   
-      //
+      //function to handle multiple currencies
       const UCurrency=(currency)=>{
         const [data, setData] = useState({})
         useEffect(() => {
@@ -199,19 +225,29 @@ useEffect(()=>{
     getTotalStats()
   },[updateFlag])
     
-    useEffect(()=>{
-      const getTrans = async()=>{
-        try{
-          // console.log("Sending request with data:", transInput);
-          const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`)//add user Id
-          console.log(res.data)
-          setTransactionData(res.data.trans)
-        }catch(err){
-          console.log(err)
+  useEffect(()=>{
+    const getTrans = async()=>{
+      try{
+        // console.log("Sending request with data:", transInput);
+        const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`)//add user Id
+        console.log(res.data)
+        const numberOfIncomeTransactions = res.data.trans.filter((transaction) => transaction.type === 'income').length;
+        console.log(numberOfIncomeTransactions)
+        if(numberOfIncomeTransactions==50){
+          addBadge(incomebadge)
         }
+        const numberOfExpenseTransactions = res.data.trans.filter((transaction) => transaction.type === 'expense').length;
+        console.log(numberOfExpenseTransactions)
+        if(numberOfExpenseTransactions==50){
+          addBadge(expensebadge)
+        }
+        setTransactionData(res.data.trans)
+      }catch(err){
+        console.log(err)
       }
-      getTrans()
-    },[updateFlag])
+    }
+    getTrans()
+  },[updateFlag])
 
     useEffect(() => {
       const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
@@ -238,6 +274,14 @@ useEffect(()=>{
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])
         setUpdateFlag((prevFlag) => !(prevFlag));
+        if(amount>=100000 && type=="expense"){
+          addBadge(bigexpense)
+          handleExpenseShow()
+        }
+        if(amount>=100000 && type=="income"){
+          addBadge(bigincome)
+          handleIncomeShow()
+        }
         handleClose()
       }catch(err){
         console.log(err.response.data)
@@ -298,6 +342,7 @@ useEffect(()=>{
                     );
                 })}
             </select> */}
+      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
 
      <div className='h-full flex flex-col justify-center items-start '>
        
@@ -463,6 +508,27 @@ useEffect(()=>{
         </Modal.Body>
         <Modal.Footer>
           <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit} required>Save</button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={incomeshow} onHide={handleIncomeClose} animation={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Congratulations! You are rewarded with a Badge!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <img src="BadeLog.png" alt="Badge Image" className="w-100" />
+        </Modal.Body>
+        <Modal.Footer>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={expenseshow} onHide={handleExpenseClose} animation={false} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Congratulations! You are rewarded with a Badge!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <img src="AAKR.png" alt="Badge Image" className="w-100" />
+        </Modal.Body>
+        <Modal.Footer>
         </Modal.Footer>
       </Modal>
       

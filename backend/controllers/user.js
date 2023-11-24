@@ -89,3 +89,39 @@ export const getInbox = async(req,res)=>{
         res.json("user not found")
     }
 }
+
+export const addBadge=async(req,res)=>{
+    const image = req.body.img
+    const userId = req.params.id
+    console.log(userId,image)
+    try{
+        // const usere =  await User.findById(userId);
+        // if (usere.badges.includes(image)) {
+        //     return res.status(400).json({ message: 'This badge already exists' });
+        // }
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $push: { badges: image } },
+            { new: true } 
+        );
+       
+        // console.log(user)
+        res.status(200).json({ user });
+
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
+export const getBadges=async(req,res)=>{
+    const userId = req.params.id
+    console.log(userId);
+    try{
+        const user = await User.findById(userId)
+        const badges = user.badges;
+        res.status(200).json({ badges });
+    }catch(err){
+        console.error(err);
+    }
+}

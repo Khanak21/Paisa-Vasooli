@@ -66,6 +66,14 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
     };
     delBill(id);
   };
+  
+  //function to track past due payments
+  const paymentTime=()=>{
+    let duedate=new Date(BillData.dueDate)
+    let currDate=new Date();
+  
+    return currDate>duedate;
+  };
 
   return (
     <div>
@@ -74,8 +82,10 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
 
         <Card.Body>
           <Card.Text className="rounded-sm bg-green-600" style={{ backgroundColor: 'rgb(157, 122, 253)' }}>Title:-{"  "} {BillData.title}</Card.Text>
-            <div className="flex justify-between items-center gap-3 p-2">
-            <div className='flex flex-col justify-center items-start'>
+          
+          <div className="flex justify-between items-center gap-3 p-2 " style={{color:paymentTime()==true?"red":"green"}}>
+          <div className='flex flex-col justify-center items-start'>
+
             <Card.Text className="text-md align-middle items-center "><b>To :-{" "}{BillData.toWhom} </b></Card.Text>
             <Card.Text className="text-sm align-middle items-center"><b>Amount :-{" " }&#8377; {BillData.amount} </b> </Card.Text>
             </div>

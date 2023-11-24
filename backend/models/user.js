@@ -40,6 +40,9 @@ const userSchema = new mongoose.Schema({
     image:{
         type: String,
         default:null
+    },
+    badges:{
+        type:[String]
     }
 })
 

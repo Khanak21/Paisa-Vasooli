@@ -136,6 +136,17 @@ const currenciData = UCurrency(currenci);
       console.log(err);
     } 
   };
+// adding saving badge
+  const savingbadge = 'JLLAW.png';
+  const addBadge=async(img)=>{
+    try{
+      console.log(img)
+      const res = await axios.post(`http://localhost:3001/api/user/addbadge/${user._id}`,{img})
+      console.log(res.data.user)
+    }catch(err){
+      console.log(err.response.data)
+    }
+  }
 
   useEffect(()=>{
     //function to retrieve user data from local storage
@@ -157,10 +168,14 @@ const currenciData = UCurrency(currenci);
     //function to fetch savings data
     const getSavings = async()=>{
       try{
-        // console.log("Sending request with data:", transInput);
         const res = await axios.get(`http://localhost:3001/api/savings/getSavings/${user._id}`)//add user Id
         console.log("savings data:",res.data)
         setSavingData(res.data.savings)
+        const numberOfSavings = res.data.savings.filter(saving => saving.currAmt >= saving.targetAmt).length;
+        console.log(numberOfSavings);
+        if(numberOfSavings==5){
+          addBadge(savingbadge)
+        }
       }catch(err){
         console.log(err)
       }

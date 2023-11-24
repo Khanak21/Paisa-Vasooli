@@ -53,6 +53,7 @@ function Dues({ user, thememode, toggle,setUser }) {
     try {
       const reqmail = user.email;
       const duedate = dueItem.dueDate;
+      const recurring = dueItem.recurring
       console.log(reqmail);
       const res = await axios.post('http://localhost:3001/api/mail/sendmailrecurring', { reqmail, duedate, recurring });
       alert('Message Sent Successfully');
@@ -76,7 +77,8 @@ function Dues({ user, thememode, toggle,setUser }) {
       const currdate = new Date();
       const dueDateStr = dueItem.dueDate;
       const duedate = new Date(dueDateStr);
-      if (currdate.getFullYear() === duedate.getFullYear() && currdate.getMonth() === duedate.getMonth() && currdate.getDate() === duedate.getDate()) {
+      const oneDayInMillis = 24 * 60 * 60 * 1000;
+      if (currdate.getFullYear() === duedate.getFullYear() && currdate.getMonth() === duedate.getMonth() && currdate.getDate() === duedate.getDate() && currdate.getTime() + oneDayInMillis === duedate.getTime()) {
         mailsendrecurring(dueItem.recurring);
       }
 

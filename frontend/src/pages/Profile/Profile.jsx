@@ -12,9 +12,27 @@ function Profile({ user, thememode, toggle,setUser}) {
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(user.image);
   const [show,setShow]=useState(false)
+  const [flag,setFlag]=useState(false)
   console.log(user)
 
   console.log(image)
+
+  React.useEffect(()=>{
+    const check=async()=>{
+      try{
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+          console.log(loggedInUser);
+          const foundUser = JSON.parse(loggedInUser);
+          console.log("found user",foundUser)
+          setUser(foundUser);
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
+    check()
+  },[user?._id])
 
 
   //function to take image input
@@ -35,8 +53,9 @@ function Profile({ user, thememode, toggle,setUser}) {
             const addUrl= async()=>{
               try{
                 const res = await axios.put(`http://localhost:3001/api/user/addImg/${user._id}`,{url})
-                // setUser(res.data.user)
-                // localStorage.setItem("user",res.data.user)
+                setUser(res.data.user)
+                localStorage.setItem("user",JSON.stringify(res.data.user))
+                setFlag(prev=>!prev)
                 console.log("img url",res.data)
               }catch(err){
                 console.log(err)
@@ -54,15 +73,30 @@ function Profile({ user, thememode, toggle,setUser}) {
         console.log(error.message);
       });
   };
+  
   const handleShow=()=>{
     setShow(prev=>!prev)
   }
 
+  const [badges, setBadges] = useState([]);
+  React.useEffect(() => {
+    const getBadges = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/user/getBadges/${user._id}`);
+        setBadges(response.data.badges);
+        console.log(response.data.badges)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBadges();
+  }, [user._id]);
+
   return (
     <>
-      <Navbar thememode={thememode} toggle={toggle} />
+      <Navbar thememode={thememode} toggle={toggle} flag={flag} setFlag={setFlag}/>
       <div
-        className='flex flex-col justify-start items-center p-3 border-[#8656cd] h-[130vh]' 
+        className='flex flex-col justify-start items-center p-3 border-[#8656cd] h-full' 
         style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}
       >
         <div
@@ -131,9 +165,24 @@ function Profile({ user, thememode, toggle,setUser}) {
             </label>
           ))}
 
-          <div className='w-full flex justify-end items-center p-2'>
-            <button className='bg-[#8656cd] p-3 rounded-lg hover:bg-purple-500 text-white'>Edit</button>
-          </div>
+      <div
+        className='flex flex-col mx-auto w-[50%] h-auto justify-start items-center p-3 border-1 border-black gap-3 rounded-sm'
+        style={{ backgroundColor: thememode === 'dark' ? 'rgb(195, 189, 189)' : 'white', border: '4px solid black' }}
+      >
+        <div className='w-full text-xl font-bolder mb-2' style={{ color: thememode === 'dark' ? 'black' : 'black' }}>
+          Badges
+        </div>
+        <div className='flex'>
+        {badges?.map((badge, index) => (
+          <img
+          key={index}
+          src={badge}
+          alt={`Badge ${index + 1}`}
+          className='w-32 h-32 m-2 object-cover'
+        />
+        ))}
+        </div>
+      </div>
         </div>
       </div>
     </>

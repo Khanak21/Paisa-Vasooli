@@ -23,8 +23,8 @@ export function sendstartEmail (recievermail){
   
       const mail_configs = {
         from: process.env.Email,
-        to: "sahsrk124@gmail.com" ,
-        subject: "KODING 101 PASSWORD RECOVERY",
+        to: recievermail.reqmail,
+        subject: "Welcome to Paisa-Vasooli",
         html: `<!DOCTYPE html>
   <html lang="en" >
   <head>
@@ -37,18 +37,14 @@ export function sendstartEmail (recievermail){
   <!-- partial:index.partial.html -->
   <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
     <div style="margin:50px auto;width:70%;padding:20px 0">
-      <div style="border-bottom:1px solid #eee">
-        <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Koding 101</a>
-      </div>
       <p style="font-size:1.1em">Hi,</p>
-      <p>Thank you for choosing Koding 101. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
-      <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">nicee</h2>
-      <p style="font-size:0.9em;">Regards,<br />Koding 101</p>
+      <p>Thank you for choosing Paisa-Vasooli. Use this website to save your transactions,interact with friends,clearing dues. </p>
+      <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">Bye!</h2>
+      <p style="font-size:0.9em;">Regards,<br />Paisa-Vasooli</p>
       <hr style="border:none;border-top:1px solid #eee" />
       <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-        <p>Koding 101 Inc</p>
-        <p>1600 Amphitheatre Parkway</p>
-        <p>California</p>
+        <p>Paisa-Vasooli</p>
+        <p>India</p>=
       </div>
     </div>
   </div>
@@ -57,6 +53,7 @@ export function sendstartEmail (recievermail){
   </body>
   </html>`,
       };
+
       transporter.sendMail(mail_configs, function (error, info) {
         if (error) {
           console.log(error);

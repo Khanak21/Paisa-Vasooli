@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-const SavingCard = ({user,props,savingData,setSavingData,items,thememode,toggle}) => {
+const SavingCard = ({user,props,savingData,setSavingData,items,thememode,toggle,updateFlag,setUpdateFlag}) => {
   console.log()
   const [show, setShow] = useState(false);
   const [flag,setflag] = useState(false)
@@ -33,50 +33,45 @@ const handleSavingInput = (name) => (e) => {
 
 // ----------------- submission ----------
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const editSavings = async () => {
-    try {
-      const res = await axios.put(`http://localhost:3001/api/savings/editSaving/${props._id}`, { SavingInput });
-      console.log(res.data);
-      setSavingInput({
-        userId: user._id,
-        title: '',
-        currAmt: '',
-        targetAmt: '',
-      });
-      setflag((prev)=>!(prev))
-    } catch (err) {
-      console.log(err);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const editSavings = async () => {
+      try {
+        let requestBody = {
+          currAmt,
+        };
+
+        if (targetAmt !== '') {
+          requestBody.targetAmt = targetAmt;
+        }
+        const res = await axios.put(`http://localhost:3001/api/savings/editSaving/${props._id}`, {requestBody});
+        console.log(res.data);
+        setSavingInput({
+          userId: user._id,
+          title: '',
+          currAmt: '',
+          targetAmt: '',
+        });
+        setflag((prev)=>!(prev))
+        setUpdateFlag(prev=>!prev)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    editSavings();
   };
-  editSavings();
-};
-// ------------- deletion ------------------- 
-const handleDelete = async()=>{
-    try{
-        const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${props._id}`)
-        console.log(res.data.saving)
-        const sav=res.data.saving
-        setSavingData(savingData.filter(data=>data._id!=sav._id))
 
-    }catch(err){
-        console.log(err)
-    }
-}
-  // Add your state variables here
-  // const [type, setType] = useState('');
-  // const [amount, setAmount] = useState('');
-  // ...
+  const handleDelete = async()=>{
+      try{
+          const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${props._id}`)
+          console.log(res.data.saving)
+          const sav=res.data.saving
+          setSavingData(savingData.filter(data=>data._id!=sav._id))
 
-  // Add your state update functions here
-  // const handleTransInput = (fieldName) => (event) => {
-  //   // Update state based on the field name
-  // };
-
-  // const handleSubmit = () => {
-  //   // Handle form submission
-  // };
+      }catch(err){
+          console.log(err)
+      }
+  }
 
   return (
     
@@ -87,7 +82,6 @@ const handleDelete = async()=>{
 
         <Card.Header className=' font-semibold text-center text-lg flex justify-evenly bg-[#8656cd] '>Title{" "}- <div>
          {props.title}</div></Card.Header>
-
 
         <Card.Body>
           <div className="flex justify-between gap-3 align-middle items-center p-3 w-full">
@@ -134,9 +128,9 @@ const handleDelete = async()=>{
           <input type="text" name={'targetAmt'} value={targetAmt} onChange={handleSavingInput('targetAmt')} required />
         </Modal.Body>
         <Modal.Footer>
-          <button className="bg-[#8656cd] text-white p-2 rounded-md" onClick={handleSubmit}>
+          <Button variant="success" onClick={handleSubmit}>
             Save
-          </button>
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

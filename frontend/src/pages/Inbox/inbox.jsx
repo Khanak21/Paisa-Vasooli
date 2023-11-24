@@ -33,7 +33,7 @@ const Inbox = ({ user,setUser,thememode,toggle }) => {
       if (loggedInUser) {
         console.log(loggedInUser);
         const foundUser = JSON.parse(loggedInUser);
-        console.log("found user",foundUser  )
+        console.log("found user",foundUser)
         setinboxuser(foundUser)
         await setUser(foundUser);
       }
