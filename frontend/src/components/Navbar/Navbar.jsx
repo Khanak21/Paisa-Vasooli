@@ -14,7 +14,7 @@ import { FaRegEnvelope } from "react-icons/fa";
 import Inbox from '../../pages/Inbox/inbox.jsx'
 
 
-function Navbar({thememode,toggle,setUser,user,pfp}) {
+function Navbar({thememode,toggle,setUser,user}) {
   const [navuser,setNavuser] = useState({})
  
   useEffect(()=>{
@@ -35,7 +35,6 @@ function Navbar({thememode,toggle,setUser,user,pfp}) {
     check()
   },[user?._id])
   console.log(navuser)
-  console.log(pfp)
   console.log(user);
   const [showNav, setShowNav] = useState(false);
   // const [isLoggedin,setIsloggedIn]=useState(true)
@@ -46,7 +45,7 @@ function Navbar({thememode,toggle,setUser,user,pfp}) {
   //   console.log("User before logout:", user);
   //   setUser({});
   //   console.log("User after logout:", user);
-  //   localStorage.clear();
+    localStorage.clear();
     navigate('/login');
   };
   

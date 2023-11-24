@@ -43,14 +43,15 @@ export const acceptRequest = async(req,res)=>{
     const friendName = req.body.friendName// id of friend
     const username = (await User.findById(userId)).username
     const friendUser = await User.findOne({username:friendName})
+    console.log(req.body.friendName)
 
    try{ 
     if (!friendUser) {
-        return res.json({ message: 'Friend not found' });
+        return res.status(200).json({ message: 'Friend not found' });
       }
   
       if (friendUser.friends.includes(username)) {
-        return res.json({ message: 'You are already friends with this user' });
+        return res.status(200).json({ message: 'You are already friends with this user' });
       }
         const res1 = await User.findByIdAndUpdate(
         userId,

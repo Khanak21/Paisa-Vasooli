@@ -16,12 +16,16 @@ function Profile({ user, thememode, toggle,setUser}) {
 
   console.log(image)
 
+
+  //function to take image input
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   };
 
+
+  //function to handle image upload
   const handleUpload = () => {
     const imageRef = ref(storage,`images/${image.name}`);
     uploadBytes(imageRef, image)
@@ -65,6 +69,7 @@ function Profile({ user, thememode, toggle,setUser}) {
           className='flex flex-col mx-auto w-[50%] h-[250px] border-1 border-black p-2 rounded-sm'
           style={{ backgroundColor: thememode === 'dark' ? '#8656cd' : '#8656cd', color: thememode == 'dark' ? 'white' : 'black' }}
         >
+          {/* ----------------------------------------------------Profile picture section----------------------------------------------- */}
           <div className=' flex justify-center align-middle items-center w-[70%] h-[80%] mx-auto p-1'>
             <img src={url || 'ProfileImg.jpeg'} className='w-[100px] h-[100px] rounded-full static' alt='' />
             <br />{' '} <AiFillEdit onClick={handleShow} className='bg-white rounded-full h-8 w-8 p-1 -translate-x-4 translate-y-6 dark:text-black' style={{display:show==false ? "":"none",cursor:"pointer"}}/>
@@ -83,7 +88,7 @@ function Profile({ user, thememode, toggle,setUser}) {
         >
          
 
-          {/* Existing labels and input fields */}
+          {/* ------------------------------------------------------Existing labels and input fields---------------------------------------------------- */}
           <label
             htmlFor='username'
             className='w-full flex justify-between items-center gap-1 border-1 p-1 border-black rounded-md'

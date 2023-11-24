@@ -13,20 +13,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     const [showAddFriend, setShowAddFriend] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [groupflag,setgroupflag] = useState(false)
-
-    const handleGroupClose = () => setShowGroup(false);
-    const handleGroupShow = () => setShowGroup(true);
-
-    const handleGroupJoinClose = () => setShowGroupJoin(false);
-    const handleGroupJoinShow = () => setShowGroupJoin(true);
-
-    const handleAddFriendShow = () => setShowAddFriend(true);
-    const handleAddFriendClose = () => setShowAddFriend(false);
-
-
-    const handleFriendClose = () => setShowFriend(false);
-    const handleFriendShow = () => setShowFriend(true);
-
+    const [friendName,setFriendName] = useState("")
     const [groupInput,setgroupInput] = useState({
       userId:user._id,
       title:'',
@@ -36,11 +23,22 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       userId:user._id,
       JoingCode:''
     })
-    const [friendName,setFriendName] = useState("")
-
     const {title} = groupInput
     const {groupCode} = groupInput
     const {JoingCode} = joincode
+
+
+    //modal opening and closing logic
+    const handleGroupClose = () => setShowGroup(false);
+    const handleGroupShow = () => setShowGroup(true);
+
+    const handleGroupJoinClose = () => setShowGroupJoin(false);
+    const handleGroupJoinShow = () => setShowGroupJoin(true);
+
+    const handleAddFriendShow = () => setShowAddFriend(true);
+    const handleAddFriendClose = () => setShowAddFriend(false);
+
+    //handling input
     const handleGroupInput = name=>e=>{
       setgroupInput({...groupInput,[name]:e.target.value})
     }
@@ -51,6 +49,8 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       console.log(e.target.value)
       setFriendName(e.target.value)
     }
+
+    //generating random group join code logic
     const uuid = () => {
       var S4 = () => {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -71,6 +71,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       );
     };
 
+    //function to send friend request
     const handleSendRequest = async()=>{
       try{
         const res= await axios.put(`http://localhost:3001/api/friend/sendRequest/${user._id}`,{friendName})
@@ -82,9 +83,8 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       }
     }
 
-
+    //create group function
     const handleSubmit =e=>{  
-      console.log("yoyy")
       console.log(groupInput)
       let groupCode = uuid()
       console.log(groupCode)
@@ -108,6 +108,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       })
     }
 
+    //function to join group
     const handleJoin =e=>{  
       console.log("yoyy")
       console.log(JoingCode)
@@ -130,6 +131,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     }
 
     useEffect(()=>{
+       //retrieving user data from local storage
         const check=async()=>{
             try{
               const loggedInUser = localStorage.getItem("user");
@@ -147,6 +149,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     },[user._id])
 
     useEffect(()=>{
+      //function to get all the groups a user is in
       const getGroups = async()=>{
         try{
           const res = await axios.get(`http://localhost:3001/api/group/getgroups/${user._id}`)//add user Id
@@ -175,6 +178,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
             <button onClick={handleGroupJoinShow} className='bg-[#8656cd] text-white p-4 rounded-lg mx-2'>Join Group</button>
 
           </div>
+          {/* -----------------------------Group Cards--------------------------------- */}
         <div className='flex flex-col lg:grid lg:grid-cols-2 justify-evenly items-center gap-6 w-full h-fit dark:bg-[#181818]'>
           
           {groupData?.map(data=>{
@@ -195,6 +199,9 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
 
         </div>
 
+    {/* ------------------------------------------------Modals------------------------------------------------ */}
+
+    {/* ADD GROUP MODAL */}
     <Modal show={showGroup} onHide={handleGroupClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Group</Modal.Title>
@@ -213,6 +220,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         </Modal.Footer>
       </Modal>
 
+      {/* JOIN GROUP MODAL */}
       <Modal show={showGroupJoin} onHide={handleGroupJoinClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Join Group</Modal.Title>
@@ -231,18 +239,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         </Modal.Footer>
       </Modal>
 
-{/* 
-      <Modal show={showFriend} onHide={handleFriendClose} animation={false} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Transaction</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit} required>Save</Button>
-        </Modal.Footer>
-      </Modal> */}
-
+       {/* ADD FRIEND MODAL */}
       <Modal show={showAddFriend} onHide={handleAddFriendClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Friend</Modal.Title>

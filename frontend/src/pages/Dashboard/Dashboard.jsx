@@ -18,24 +18,12 @@ const languages = [
 const Dashboard = ({user,thememode,toggle,setUser}) => {
   // console.log(user)
   // const { t } = useTranslation();
+
   const [lang, setLang] = useState("en");
-  
-  const handleChange = (e) => {
-    // i18next.changeLanguage(e.target.value)
-    setLang(e.target.value);
-    i18next.changeLanguage(e.target.value).catch((err)=>{
-      console.log(err)
-    })
-    // let loc = "http://localhost:3000/dashboard"
-    // window.location.replace(
-    //     loc + "?lng=" + e.target.value
-    // );
-};
   const [updateFlag, setUpdateFlag] = useState(false); 
   const [show,setShow] = useState(false)
   // console.log(user)
-console.log(user._id)
-  //states
+  console.log(user._id)
     const [transInput,setTransInput] = useState({
         userId:user._id,
         type: 'expense',
@@ -50,9 +38,6 @@ console.log(user._id)
       category:'',
       startDate:'',
       endDate:'',
-
-      // month:'',
-      // year:''
     })
 
     const [transactionData,setTransactionData]=useState([])
@@ -60,7 +45,6 @@ console.log(user._id)
     const [filteredData,setFilteredData]=useState(transactionData)
     const [filterstate,setFilterState]=useState(false)
     console.log(filteredData)
-
     const [uniqueCategories, setUniqueCategories] = useState([]);
     const [stats,setStats] = useState({})
 
@@ -73,16 +57,17 @@ console.log(user._id)
       { label: "Date", key: "date" }
 
     ];
+
     // console.log("transanction data being logged:",transactionData)
 
     const {type,category,desc,date,currency} = transInput
     let {amount} = transInput
 
-    //functions
+    //functions to handle modal visibility
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-     
+     //functions to handle input
     const handleTransInput = name=>e=>{
           setTransInput({...transInput,[name]:e.target.value})
     }
@@ -91,9 +76,24 @@ console.log(user._id)
       setFilterInput({...filterInput,[name]:e.target.value})
 
 }
+  
+//   const handleChange = (e) => {
+//     // i18next.changeLanguage(e.target.value)
+//     setLang(e.target.value);
+//     i18next.changeLanguage(e.target.value).catch((err)=>{
+//       console.log(err)
+//     })
+//     // let loc = "http://localhost:3000/dashboard"
+//     // window.location.replace(
+//     //     loc + "?lng=" + e.target.value
+//     // );
+// };
+
 console.log("filters:",filterInput)
 const isFilterEmpty =filterInput.category === "" && filterInput.startDate === "" && filterInput.endDate === "";
+
 useEffect(()=>{
+  //function to retrieve all user transactions
   const ifnocategselect=async()=>{
     try{
       const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
@@ -108,6 +108,8 @@ useEffect(()=>{
     ifnocategselect()
   }
 },[updateFlag])
+
+   //function to retrieve user transactions with filter
     const handleFilter = e=>{
         e.preventDefault()
         console.log("filters:",filterInput)
@@ -123,6 +125,8 @@ useEffect(()=>{
       }
       addFilter()
     }
+
+    //function to send mail
       const mailsend=async()=>{
         try{
           const reqmail = user.email
@@ -135,7 +139,7 @@ useEffect(()=>{
         }
       }
   
-      
+      //
       const UCurrency=(currency)=>{
         const [data, setData] = useState({})
         useEffect(() => {
@@ -155,10 +159,12 @@ useEffect(()=>{
         }, [data]);
         return data
     }
+
     const [currenci, setCurrenci] = useState('inr');
     const currenciData = UCurrency(currenci);
     
     useEffect(()=>{
+      //function to retrive user data from local storage
       const check=async()=>{
         try{
           const loggedInUser = localStorage.getItem("user");
@@ -174,7 +180,9 @@ useEffect(()=>{
       }
       check()
     },[user._id])
+
     useEffect(()=>{
+    //function to fetch total income,balance and expense
     const getTotalStats = async()=>{
       try{
         const res = await axios.get(`http://localhost:3001/api/transactions/getTotalStats/${user._id}`)

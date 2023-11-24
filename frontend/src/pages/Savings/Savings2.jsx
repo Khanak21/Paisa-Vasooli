@@ -20,8 +20,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   const [isVisible, setIsVisible] = useState(false);
   const [savingData, setSavingData] = useState([]);
 
-
- 
+ //function to handle savings input
   const handleInputTitle = (event) => {
     setInputTitle(event.target.value);
   };
@@ -46,12 +45,12 @@ function Savings2({ user,setUser,thememode,toggle}) {
       goalAmount: amount,
     };
     setItems([...items, newItem]);
-
     setInputTitle("");
     setCurrentAmount(0);
     setAmount(0);
   };
 
+  //function to edit details
   const handleEditAmount = (event) => {
     setEditAmount(event.target.value);
   };
@@ -60,12 +59,14 @@ function Savings2({ user,setUser,thememode,toggle}) {
     setEditCurrent(event.target.value);
   };
 
+  //function to delete data
   const deleteData = () => {
     setEditAmount("");
     setEditCurrent("");
     setEditItemId(null);
   };
 
+  //function to handle submit
   const handleSubmitEdit = () => {
     setItems((prevItems) =>
       prevItems.map((item) =>
@@ -86,6 +87,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   //   setEditItemId(itemId);
   //   setIsVisible(true);
   // };
+
 
   const UCurrency=(currency)=>{
     const [data, setData] = useState({})
@@ -109,6 +111,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
 const [currenci, setCurrenci] = useState('inr');
 const currenciData = UCurrency(currenci);
 
+  //function to add saving
   const handleAddSaving = async (e) => {
     try {
       const saving = {
@@ -135,6 +138,7 @@ const currenciData = UCurrency(currenci);
   };
 
   useEffect(()=>{
+    //function to retrieve user data from local storage
         const check=async()=>{
       try{
         const loggedInUser = localStorage.getItem("user");
@@ -149,6 +153,8 @@ const currenciData = UCurrency(currenci);
       }
     }
     check()
+
+    //function to fetch savings data
     const getSavings = async()=>{
       try{
         // console.log("Sending request with data:", transInput);
@@ -161,17 +167,12 @@ const currenciData = UCurrency(currenci);
     }
     getSavings()
   },[user._id])
+
   return (
     <div className="min-h-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
 
     <Navbar thememode={thememode} toggle={toggle}/>
     <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
-
-      {/* <div className="header flex justify-end items-center" style={{ color: thememode === "dark" ? "orange" : "white", backgroundColor: thememode === "dark" ? "rgb(11, 9, 9)" : "green" }}>
-        <div className="toggle p-1" onClick={toggle} >
-          Toggle Theme
-        </div>
-      </div> */}
        <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Savings Tracker</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
      
@@ -258,23 +259,14 @@ const currenciData = UCurrency(currenci);
               </button>
             </div>
           </div>
-
+          
+          {/* Saving Cards list */}
           <div className="main-right flex flex-col justify-center items-start gap-5 h-[500px]">
             <div className="overflow-y-scroll w-full mt-2 rounded-md">
             {savingData?.map((sav)=>(
             <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData} thememode={thememode} toggle={toggle}/> 
           ))
           }
-              {/* {items.map((item) => (
-                <SavingCard
-                  key={item.id}
-                  title={item.title}
-                  currentAmount={item.currentAmount}
-                  goalAmount={item.goalAmount}
-                  className="w-full h-full"
-                  props={{thememode:thememode,toggle:toggle}}
-                />
-              ))} */}
             </div>
           </div>
         </div>

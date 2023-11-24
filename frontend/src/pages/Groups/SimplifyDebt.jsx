@@ -19,8 +19,10 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
   console.log(inputFields)
   console.log(data)
   const [membersdata,setmembersdata]=useState([])
+
   const getgroup=async()=>{
     try{
+      //function to fetch group data
       const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
       console.log(res.data)
       setgroupData(res.data)
@@ -31,6 +33,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
   }
 
 console.log(membersdata)
+  //function to handle input
   const handleInputChange = (index, fieldName, value) => {
     const updatedInputFields = [...inputFields];
     updatedInputFields[index][fieldName] = value;
@@ -47,10 +50,10 @@ console.log(membersdata)
     setInputFields(updatedInputFields);
   };
   
+  //function for adding field
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(inputFields);
-    
       const resultMap = inputFields.reduce((result, item) => {
         const key = item.paidBy;
       
@@ -72,6 +75,7 @@ console.log(membersdata)
       
       const outputArray = Object.values(resultMap);
       
+      //function to simplify debts
       const simplify = async()=>{
         try{
           const res = await axios.post(`http://localhost:3001/api/group/simplifyDebt/${id}`,{outputArray})
@@ -86,6 +90,7 @@ console.log(membersdata)
       
   };
   useEffect(()=>{
+    //function to fetch all debts
      const getdebts = async()=>{
         try{
             const res = await axios.get(`http://localhost:3001/api/group/getDebts/${id}`)
@@ -103,7 +108,8 @@ console.log(membersdata)
     const handleCommentChange = (e) => {
         setCommentText(e.target.value);
     };
-
+     
+    //function to add comment
     const handleAddComment = async () => {
       try {
           const res = await axios.post(`http://localhost:3001/api/group/addcomment`, {
@@ -126,6 +132,8 @@ console.log(membersdata)
       }
   };
   const [comments, setComments] = useState([]);
+
+  //function to retrieve comments
   const getcomments = async()=>{
     try {
       const response = await axios.get(`http://localhost:3001/api/group/getcomments/${id}`);
@@ -154,6 +162,8 @@ console.log(membersdata)
   //   };
   // }, [socket]);
 
+
+//function to retrieve members in a group
   useEffect(()=>{
     const getMembers = async()=>{
       try{
@@ -166,7 +176,8 @@ console.log(membersdata)
     }
     getMembers()
   },[])
-
+ 
+  //members list
   const Dropdown = ({ options, value, onChange }) => (
     <select value={value} onChange={onChange} className="w-80 m-4 p-2 border border-gray-300 rounded-md" disabled={options.length <= 1}>
       <option value="" disabled>Select members</option>
@@ -191,13 +202,16 @@ console.log(membersdata)
           <div className="m-3 pt-3 text-4xl bg-[#f0f0f0] light:text-black font-bold dark:bg-[#181818] dark:text-white p-2">
             Group Title: {groupData.title}
           </div>
+        {/* Participants List */}
           <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-1/4 p-1 h-10 my-4 mx-4'>
             Participants
            </button>
            </div>
-           <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
-            <Modal.Header closeButton>
-          <Modal.Title>Group Participants</Modal.Title>
+
+        {/* Group members list */}
+        <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
+        <Modal.Header closeButton>
+        <Modal.Title>Group Participants</Modal.Title>
         </Modal.Header>
         <Modal.Body>
            <div className='flex-col'>
@@ -205,13 +219,10 @@ console.log(membersdata)
                <div >{" "}{data.username}{" "}</div>
                ))}
                </div>
-           
-        
         </Modal.Body>
-      
       </Modal>
   
-      
+
       <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white bg-[#cac8c8]'>
 {/*              
              <div className='flex-col'>
@@ -265,6 +276,7 @@ console.log(membersdata)
       
         <div>
           <button type="submit" className='bg-[#8656cd] w-60 p-2 rounded-md text-white m-4 ' onClick={handleSubmit}>Simplify</button></div></div>
+          {/* List of all Debts */}
 
       {
         data?.map(debt=>(
@@ -286,8 +298,8 @@ console.log(membersdata)
             </div>
         ))
       }
-
-<h3 className='underline underline-offset-8 decoration-[#8656cd] m-4'>Comments:</h3>
+    {/* Comments section */}
+        <h3 className='underline underline-offset-8 decoration-[#8656cd] m-4'>Comments:</h3>
 
            <div className='m-4'>
                 <input

@@ -128,9 +128,9 @@ const handleDelete = async()=>{
           <input type="text" name={'targetAmt'} value={targetAmt} onChange={handleSavingInput('targetAmt')} required />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit}>
+          <button className="bg-[#8656cd] text-white p-2 rounded-md" onClick={handleSubmit}>
             Save
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>

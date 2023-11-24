@@ -164,7 +164,7 @@ const currenciData = UCurrency(currenci);
               placeholder="Input due-title"
               value={dueItem.title}
               onChange={handleBillInput('title')}
-              className="w-[70%] p-2"
+              className="w-[70%] p-2 dark:bg-[#3a3a3a]"
               />
           </div>
 
@@ -177,7 +177,7 @@ const currenciData = UCurrency(currenci);
               placeholder="Input date of due"
               value={dueItem.dueDate}
               onChange={handleBillInput('dueDate')}
-              className="w-[70%] p-2"
+              className="w-[70%] p-2 dark:bg-[#3a3a3a] dark:text-gray-400"
              
             />
           </div>
@@ -191,7 +191,7 @@ const currenciData = UCurrency(currenci);
               placeholder="Input amount in Rs."
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
-              className="w-[70%] p-2 rounded-md text-center"
+              className="w-[70%] p-2 rounded-md text-center dark:bg-[#3a3a3a]"
               
             />
           </div>
@@ -205,7 +205,7 @@ const currenciData = UCurrency(currenci);
               value={dueItem.toWhom}
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
-              className="w-[70%] p-2"
+              className="w-[70%] p-2 dark:bg-[#3a3a3a]"
              
             />
           </div>
@@ -218,7 +218,7 @@ const currenciData = UCurrency(currenci);
                     id="currency"
                     value={dueItem.currency}
                     onChange={handleBillInput('currency')}
-                    className="w-[33rem] p-2"
+                    className="w-[33rem] p-2 bg-[#f0f0f0] rounded-md dark:bg-[#3a3a3a] dark:text-gray-400"
                     required
                   >
                     <option>Select:</option>
@@ -246,7 +246,7 @@ const currenciData = UCurrency(currenci);
               id=""
               value={dueItem.recurring}
               onChange={handleBillInput('recurring')}
-              className="w-[70%] p-2"
+              className="w-[70%] p-2 dark:bg-[#3a3a3a] rounded-md bg-[#f0f0f0] dark:text-gray-400"
             >
               <option value="">Select</option>
               <option value="daily">Daily</option>

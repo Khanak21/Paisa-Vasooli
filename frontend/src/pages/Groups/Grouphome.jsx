@@ -15,8 +15,6 @@ export const Grouphome = ({user,thememode,toggle}) => {
     const [showGroup, setShowGroup] = useState(false);
     const [show, setShow] = useState(false);
     const [showPart, setShowPart] = useState(false);
-
-
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
 
@@ -46,13 +44,14 @@ console.log(groupData)
     console.log(input)
 
     const [billSplitData,setBillSplitData] = useState([])
-console.log("bill split data:",billSplitData)
+    console.log("bill split data:",billSplitData)
     const handleClose  = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleInput = (name) => (e) => {
       setInput({ ...input, [name]: e.target.value });
     };
 
+    //function to split bill among group members
     const handleSubmit = async()=>{
       try{
         const res= await axios.post(`http://localhost:3001/api/group/splitbill`,{input})
@@ -62,17 +61,19 @@ console.log("bill split data:",billSplitData)
         console.log(err)
       }
     }
-    const handlePaid = async()=>{
-      try{
-        const res=await axios.put(`http://localhost:3001/api/group/markpaid/${groupData._id}`,{userId:id})
-        setPaid(prev=>!prev)
+
+    // const handlePaid = async()=>{
+    //   try{
+    //     const res=await axios.put(`http://localhost:3001/api/group/markpaid/${groupData._id}`,{userId:id})
+    //     setPaid(prev=>!prev)
   
-        console.log(res.data)
-      }catch(err){
-        console.log(err)
-      }
-    }
+    //     console.log(res.data)
+    //   }catch(err){
+    //     console.log(err)
+    //   }
+    // }
   
+    //function to fetch group data
     const getgroup=async()=>{
       try{
         const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
@@ -86,6 +87,7 @@ console.log("bill split data:",billSplitData)
     }
     
  
+  //Approve paid debts
   const handleApproved = async(memid)=>{
     try{
       const res=await axios.put(`http://localhost:3001/api/group/markapproved/${groupData._id}`,{userId:memid})
@@ -98,14 +100,12 @@ console.log("bill split data:",billSplitData)
     }
   }
 
-
-   
-
     useEffect(()=>{
      
       getgroup()
     },[])
 
+  // function to fetch group members' data
    useEffect(()=>{
     const getMembers = async()=>{
       try{
@@ -141,9 +141,6 @@ console.log("bill split data:",billSplitData)
             Group Title: {groupData.title}
           </div>
         
-          
-        
-          
            <div className=" min-h-screen w-[98%] flex-col align-middle justify-center dark:text-white m-3">
           <div className='flex'> <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-full p-1 m-2'>
             Participants
@@ -151,7 +148,7 @@ console.log("bill split data:",billSplitData)
             <button className="bg-[#8656cd] text-white p-1 rounded-lg m-2 w-full" onClick={handleShow}>Split Bill</button></div>
 
 
-            
+            {/* -----------------------------------------Bill Split Modal-------------------------------------- */}
             <Modal show={show} onHide={handleClose} animation={false} centered>
             <Modal.Header closeButton>
           <Modal.Title>Split Bill</Modal.Title>
@@ -171,6 +168,7 @@ console.log("bill split data:",billSplitData)
         
       </Modal>
 
+      {/* -----------------------------------------Group Participants-------------------------------------- */}
       <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
             <Modal.Header closeButton>
           <Modal.Title>Group Participants</Modal.Title>
@@ -186,7 +184,8 @@ console.log("bill split data:",billSplitData)
         </Modal.Body>
       
       </Modal>
-  
+
+      {/* ---------------------------------------------------------Bill Split--------------------------------------------------- */}
        {
         billSplitData[billSplitData.length-1]?.map((mem)=>(
           <div  key={mem.userId} className='mx-auto w-[50%] flex justify-around gap-2 items-center'>

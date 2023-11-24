@@ -107,9 +107,9 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
           <input type="date" name={'dueDate'} defaultValue={BillData?.dueDate?.substring(0,10)} onChange={handleBillInput('dueDate')} required />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit} required>
+          <button className="bg-[#8656cd] text-white p-2 rounded-md" onClick={handleSubmit} required>
             Save
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>

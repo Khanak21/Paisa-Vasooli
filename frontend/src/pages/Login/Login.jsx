@@ -28,7 +28,7 @@ function Login({user,setUser}) {
       return emailRegex.test(email);
     };
 
-
+  //function to handle input
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
@@ -50,26 +50,28 @@ function Login({user,setUser}) {
 
   }
   
-  const blabla = (event)=>{
-    const logig =async()=>{
-      try{
-        const res = await axios.get("http://localhost:3001/api/google/google")
-        console.log(res.data);
-        setUser(res.data)
-        navigate('/dues')
-        // setUser(res.data).then(console.log("userdata"+user))
-      }catch(err){
-          console.log(err);
-      }
-    }
-    logig()
-  }
+  // const blabla = (event)=>{
+  //   const logig =async()=>{
+  //     try{
+  //       const res = await axios.get("http://localhost:3001/api/google/google")
+  //       console.log(res.data);
+  //       setUser(res.data)
+  //       navigate('/dues')
+  //       // setUser(res.data).then(console.log("userdata"+user))
+  //     }catch(err){
+  //         console.log(err);
+  //     }
+  //   }
+  //   logig()
+  // }
+
   const submitFunction = (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     // if (isPasswordValid && isUsernameValid) {
       const Entry = { username: username, password: password, email: email };
       // setAllEntry([allEntry, Entry]);
       // console.log(allEntry);
+      
       // Handle form submission logic here
       const Logi =async()=>{
         try{

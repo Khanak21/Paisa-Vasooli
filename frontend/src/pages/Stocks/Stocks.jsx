@@ -5,23 +5,28 @@ import axios from "axios"
 import HeatmapStocks from '../../components/Stocks/HeatmapStocks'
 
 const Stocks = ({user,thememode,toggle}) => {
+
     const [input,setInput]=useState()
     const[flag,setflag]=useState(false)
     const[stockflag,setstockflag]=useState(false)
     const[sym,setsym] = useState("MSFT")
-    // const [data,setData] = useState([{ ticker: 'AAPL', company: 'Apple' }])
     const [stockData,setStockData]=useState(['AAPL'])
     console.log(stockData)
+
     //handling user input for ticker symbol and company/crypto name
     const handleInput = e=>{
         setInput(e.target.value)
         console.log(input)
     }
+
+    //function to set ticker symbol
     const handleSETSYM = async(e)=>{
       setsym(e)
-      console.log("mausam",sym)
+      console.log("symbol",sym)
       setstockflag(prev=>!prev)
     }
+
+    //function to add stock symbol
     const handleSubmit = async()=>{
         try{
             const res=await axios.post(`http://localhost:3001/api/user/addStock/${user._id}`,{input})
@@ -34,6 +39,8 @@ const Stocks = ({user,thememode,toggle}) => {
             console.log(err)
         }
     }
+
+    //function to fetch user stocks
     useEffect(()=>{
       const getStocks = async()=>{ try{ const res=await axios.get(`http://localhost:3001/api/user/getStocks/${user._id}`)
         console.log("widget",res.data)
@@ -55,7 +62,7 @@ const Stocks = ({user,thememode,toggle}) => {
           
         <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}></div>
 
-        {/* ---------------------------Search Stocks and crypto-------------------------------- */}
+        {/* -----------------------------Search Stocks and crypto-------------------------------- */}
         <div className='flex justify-left p-2 font-extrabold text-5xl mx-4 my-3 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0] ' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
     
     <div className='m-4 dark:text-white text-xl font-bold flex justify-center'>
@@ -81,6 +88,7 @@ const Stocks = ({user,thememode,toggle}) => {
    <TradingViewWidget sym={sym} stockflag={stockflag} thememode={thememode} />
     </div>
 
+        {/* -----------------------------Stock Heatmap-------------------------------- */}
         
         <div className='font-extrabold text-5xl mx-4 my-2 dark:text-[#f0f0f0]'>EXPLORE MORE...</div>
       <div className='mx-4 my-4 text-gray-600 dark:text-gray-400'>Explore the latest trends in the current stock market</div>

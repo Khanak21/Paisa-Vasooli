@@ -20,6 +20,7 @@ function Signup({user,setUser})
   const [isUsername,isUsernameValid]=useState(false)
 
 
+  //function to take password input
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
@@ -32,12 +33,14 @@ function Signup({user,setUser})
     isPassValid(newPassword.length >= 8);
   };
   
+  //function to take email input
   const handleEmail=(event)=>{
     const k=event.target.value;
     setEmail(k);
     // setValidemail(emailValidation(k));
  }
 
+  //function to take username input
   const handleUsernameChange = (event) => {
     event.preventDefault();
     const newUsername = event.target.value;
@@ -45,6 +48,7 @@ function Signup({user,setUser})
     isUsernameValid(newUsername.length >= 5);
   };
   
+  //confim password function
   const confirm=(event)=>{
     event.preventDefault();
     const k=event.target.value
@@ -97,7 +101,11 @@ function Signup({user,setUser})
 
   //   }
   // };
-  const googlesekar = (req,res)=>{
+
+
+  //Google OAuth function
+  const googlelogin = (req,res)=>{
+
     signInWithPopup(auth,provider).then((result)=>{
       console.log(result);
       axios
@@ -115,7 +123,7 @@ function Signup({user,setUser})
     }).catch((err)=>{console.log(err)})
   }
 
-
+  // Handle form submission logic here
   const submitFunction = async (event) => {
     event.preventDefault();
   
@@ -135,7 +143,7 @@ function Signup({user,setUser})
         console.log(user);
         localStorage.setItem('user', JSON.stringify(res.data.newUser))
         navigate('/dashboard');
-        // Handle form submission logic here
+
         // Making the credentials empty after submitting
         setEmail("");
         setPassword("");
@@ -159,8 +167,7 @@ function Signup({user,setUser})
     }
   };
   
- 
-
+  
   return (
     <form action="" onSubmit={submitFunction}>
       <div className="super-container">
@@ -238,7 +245,7 @@ function Signup({user,setUser})
             >
               Submit
             </div>
-            <GoogleButton  onClick={googlesekar}/>  
+            <GoogleButton  onClick={googlelogin}/>  
             </div>
             
             <div className="forgotPass">

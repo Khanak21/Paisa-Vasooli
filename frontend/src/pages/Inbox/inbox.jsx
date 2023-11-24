@@ -3,24 +3,31 @@ import Navbar from '../../components/Navbar/Navbar';
 import axios from "axios"
 
 const Inbox = ({ user,setUser,thememode,toggle }) => {
-  useEffect(() => {
+ 
 
-  }, [user.inbox,user.friends]);
+  const [inboxuser,setinboxuser] = useState({})
 
+
+  //function to accept friend request
   const handleAccept=async(key)=>{
     try{
         console.log(key)
         const res= await axios.put(`http://localhost:3001/api/friend/acceptRequest/${user._id}`,{friendName:key})
         alert(res.data.message)
+        console.log(res.data)
         setUser(res.data.res1);
+        localStorage.setItem('user', JSON.stringify(res.data.res1))
+        setinboxuser(res.data.res1)
+
 
     }catch(err){
         console.log(err)
     }
   }
-const [inboxuser,setinboxuser] = useState({})
-useEffect(()=>{
-  const check=async()=>{
+
+  //fetching data from local storage
+  useEffect(()=>{
+   const check=async()=>{
     try{
       const loggedInUser = localStorage.getItem("user");
       if (loggedInUser) {
@@ -35,15 +42,21 @@ useEffect(()=>{
     }
   }
   check()
+
 },[user?._id])
 console.log(inboxuser)
+useEffect(() => {
+
+}, [user.inbox,user.friends,inboxuser]);
+
   return (
 
     <div className='dark:bg-[#181818] h-[100vh]'>
       <Navbar thememode={thememode} toggle={toggle} />
       <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Inbox</div>
 
-      <div >
+      <div>
+        
       {inboxuser.inbox?.toReversed().map((msg, index) => {
         const tokens = msg.split(' ');
         const key = tokens[0];

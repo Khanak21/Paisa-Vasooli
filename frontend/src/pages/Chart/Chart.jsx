@@ -14,26 +14,9 @@ const Chart = ({user,setUser,thememode,toggle}) => {
     const [expenseArray,setExpenseArray]=useState([])
     const [categoryData,setCategoryData]=useState([])
 
-
-
-
-    // useEffect(()=>{
-    //     const check=async()=>{
-    //       try{
-    //         const loggedInUser = localStorage.getItem("user");
-    //         if (loggedInUser) {
-    //           console.log(loggedInUser);
-    //           const foundUser = JSON.parse(loggedInUser);
-    //           console.log("found user",foundUser  )
-    //           await setUser(foundUser);
-    //         }
-    //       }catch(err){
-    //         console.log(err)
-    //       }
-    //     }
-    //     check()
-    //   },[user._id])
     useEffect(()=>{
+
+        //local storage
         const check=async()=>{
             try{
               const loggedInUser = localStorage.getItem("user");
@@ -48,6 +31,8 @@ const Chart = ({user,setUser,thememode,toggle}) => {
             }
           }
           check()
+       
+      //fetching previous week's transaction data
        const getWeeklyData = async()=>{
         try{
             const res = await axios.get(`http://localhost:3001/api/transactions/getWeeklyTransaction/${user._id}`)
@@ -58,6 +43,8 @@ const Chart = ({user,setUser,thememode,toggle}) => {
             console.log(err)
         }
        } 
+
+       //fetching monthly transaction data
        const getMonthlyData = async()=>{
         try{
             const res = await axios.get(`http://localhost:3001/api/transactions/getMonthlyTransaction/${user._id}`)
@@ -68,6 +55,8 @@ const Chart = ({user,setUser,thememode,toggle}) => {
             console.log(err)
         }
        } 
+
+       //fetching yearly transaction data
        const getYearlyData = async()=>{
         try{
             const res = await axios.get(`http://localhost:3001/api/transactions/getYearlyTransaction/${user._id}`)
@@ -77,6 +66,8 @@ const Chart = ({user,setUser,thememode,toggle}) => {
             console.log(err)
         }
        } 
+
+       //fetching category-wise transactions
        const getCategory = async()=>{
         try{
           const res= await axios.get(`http://localhost:3001/api/transactions/getCategoryWiseTransaction/${user._id}`)
@@ -109,37 +100,44 @@ const Chart = ({user,setUser,thememode,toggle}) => {
 
   return (
     <div  style={{backgroundColor:thememode==="dark"?"#181818":"white"}} >
+
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Visualise your Transactions</div>
+
+      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Visualise your Transactions</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Analyze how much you spent or earned on a weekly, monthly, yearly or category-wise basis</div>
       
     <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#181818":"white",color: thememode=="dark"?"white":"black"}}>
+    
+        {/* ---------------------------------------------------------Weekly chart---------------------------------------------------------- */}
+
       <div className='w-full flex flex-col lg:flex-row justify-evenly items-center'>
-          <div className='font-bold text-5xl  flex justify-center items-center' style={{color:thememode=="dark"?"white":"#8656cd"}}>Weekly Chart</div>
+        <div className='font-bold text-5xl  flex justify-center items-center' style={{color:thememode=="dark"?"white":"#8656cd"}}>Weekly Chart</div>
         <div className='w-[800px]'>
         <WeeklyChart weeklyData={weeklyData} thememode={thememode} toggle={toggle}/>
         </div>
 
     </div>
 
-    <div className='w-full flex lg:justify-evenly items-center flex-col lg:flex-row-reverse '>
-    <div className='font-bold text-5xl flex justify-center items-center '  style={{color:thememode=="dark"?"white":"#8656cd"}}>Monthly Chart</div>
+      {/* ---------------------------------------------------------Monthly chart---------------------------------------------------------- */}
 
+    <div className='w-full flex lg:justify-evenly items-center flex-col lg:flex-row-reverse '>
+    <div className='font-bold text-5xl flex justify-center items-center '  style={{color:thememode=="dark"?"white":"#8656cd"}}>Monthly Chart</div>         
         <div className='w-[800px]'>
         <MonthlyChart monthlyData={monthlyData} thememode={thememode}/>
         </div>
-
     </div>
+
+      {/* ---------------------------------------------------------Yearly chart---------------------------------------------------------- */}
 
     <div className='w-full flex justify-evenly items-center flex-col lg:flex-row'>
     <div className='font-bold text-5xl flex justify-center items-center '  style={{color:thememode=="dark"?"white":"#8656cd"}}>Yearly Chart</div>
         <div className='w-[800px]'>
-           
         <YearlyChart yearlyData={yearlyData} thememode={thememode}/>
         </div>
     </div>
 
    
+        {/* ---------------------------------------------------------Category chart---------------------------------------------------------- */}
 
       <div className='w-full flex justify-evenly items-center flex-col lg:flex-row-reverse'>
       <div className='font-bold text-5xl flex justify-center items-center'  style={{color:thememode=="dark"?"white":"#8656cd"}}>
