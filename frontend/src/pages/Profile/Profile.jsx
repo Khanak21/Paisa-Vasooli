@@ -52,7 +52,7 @@ function Profile({ user, thememode, toggle,setUser}) {
           .then((url) => {
             const addUrl= async()=>{
               try{
-                const res = await axios.put(`http://localhost:3001/api/user/addImg/${user._id}`,{url})
+                const res = await axios.put(`https://paisa-vasooli.onrender.com/api/user/addImg/${user._id}`,{url})
                 setUser(res.data.user)
                 localStorage.setItem("user",JSON.stringify(res.data.user))
                 setFlag(prev=>!prev)
@@ -82,7 +82,7 @@ function Profile({ user, thememode, toggle,setUser}) {
   React.useEffect(() => {
     const getBadges = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/user/getBadges/${user._id}`);
+        const response = await axios.get(`https://paisa-vasooli.onrender.com/api/user/getBadges/${user._id}`);
         setBadges(response.data.badges);
         console.log(response.data.badges)
       } catch (error) {
@@ -169,7 +169,7 @@ function Profile({ user, thememode, toggle,setUser}) {
         className='flex flex-col mx-auto w-[50%] h-auto justify-start items-center p-3 border-1 border-black gap-3 rounded-sm'
         style={{ backgroundColor: thememode === 'dark' ? 'rgb(195, 189, 189)' : 'white', border: '4px solid black' }}
       >
-        <div className='w-full text-xl font-bolder mb-2' style={{ color: thememode === 'dark' ? 'black' : 'black' }}>
+        <div className='w-full text-xl font-bolder mb-2 flex justify-center ' style={{ color: thememode === 'dark' ? 'black' : 'black' }}>
           Badges
         </div>
         <div className='flex'>

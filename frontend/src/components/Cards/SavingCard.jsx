@@ -128,9 +128,9 @@ const handleSavingInput = (name) => (e) => {
           <input type="text" name={'targetAmt'} value={targetAmt} onChange={handleSavingInput('targetAmt')} required />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit}>
+          <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit}>
             Save
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>

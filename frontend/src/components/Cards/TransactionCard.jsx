@@ -45,6 +45,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
         date:'',
         currency:'',
     });
+    setUpdateFlag(prev=>!prev)
     } catch (err) {
       console.log(err);
     }
@@ -82,7 +83,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
           Transaction Description{" "} :  {transactionData.desc}
         </Card.Text>
         <Card.Text className='my-1'>
-          Transaction Date{" "} :  {transactionData.date.substring(0,10)}
+          Transaction Date{" "} :  {transactionData?.date?.substring(0,10)}
         </Card.Text> 
       </Card.Body>
     </Card>
@@ -154,21 +155,21 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
           <br />
 
           <label htmlFor="amount">Amount: </label>
-          <input type="number" defaultValue={transactionData.amount} name={'amount'}  onChange={handleTransInput('amount')} required style={{color:type==='expense'?"red":"green"}}/>
+          <input type="number" value={amount} name={'amount'}  onChange={handleTransInput('amount')} required style={{color:type==='expense'?"red":"green"}}/>
 
           <label htmlFor="category">Category: </label>
-          <input name={'category'} defaultValue={transactionData.category} type="text"  onChange={handleTransInput('category')} required />
+          <input name={'category'} value={category} type="text"  onChange={handleTransInput('category')} required />
 
           <label htmlFor="desc">Description:</label>
-          <input type="text" defaultValue={transactionData.desc} name={'desc'}  onChange={handleTransInput('desc')} />
+          <input type="text" value={desc} name={'desc'}  onChange={handleTransInput('desc')} />
 
           <label htmlFor="date">Date:</label>
-          <input type="date" defaultValue={transactionData.date && transactionData.date.substring(0, 10)} name={'date'} onChange={handleTransInput('date')} required />
+          <input type="date" value={date} name={'date'} onChange={handleTransInput('date')} required />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit} required>
+          <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit} required>
             Save
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>

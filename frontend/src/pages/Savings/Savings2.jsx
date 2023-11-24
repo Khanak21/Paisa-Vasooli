@@ -19,6 +19,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   const [editItemId, setEditItemId] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [savingData, setSavingData] = useState([]);
+  const [updateFlag,setUpdateFlag] =useState(false)
 
  //function to handle savings input
   const handleInputTitle = (event) => {
@@ -181,7 +182,7 @@ const currenciData = UCurrency(currenci);
       }
     }
     getSavings()
-  },[user._id])
+  },[user._id,updateFlag])
 
   return (
     <div className="min-h-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
@@ -279,7 +280,7 @@ const currenciData = UCurrency(currenci);
           <div className="main-right flex flex-col justify-center items-start gap-5 h-[500px]">
             <div className="overflow-y-scroll w-full mt-2 rounded-md">
             {savingData?.map((sav)=>(
-            <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData} thememode={thememode} toggle={toggle}/> 
+            <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData} thememode={thememode} toggle={toggle} updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/> 
           ))
           }
             </div>
