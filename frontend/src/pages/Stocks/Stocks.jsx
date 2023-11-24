@@ -5,6 +5,7 @@ import axios from "axios"
 import HeatmapStocks from '../../components/Stocks/HeatmapStocks'
 
 const Stocks = ({user,thememode,toggle}) => {
+
     const [input,setInput]=useState()
     const[flag,setflag]=useState(false)
     const[stockflag,setstockflag]=useState(false)
@@ -17,11 +18,14 @@ const Stocks = ({user,thememode,toggle}) => {
         setInput(e.target.value)
         console.log(input)
     }
+    // ---------- handling the setSym ---------------- 
     const handleSETSYM = async(e)=>{
       setsym(e)
       console.log("mausam",sym)
       setstockflag(prev=>!prev)
     }
+
+    // ---------- function to manage the submit -------------------
     const handleSubmit = async()=>{
         try{
             const res=await axios.post(`http://localhost:3001/api/user/addStock/${user._id}`,{input})

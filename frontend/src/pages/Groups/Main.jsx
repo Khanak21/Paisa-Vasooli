@@ -13,13 +13,13 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     const [showAddFriend, setShowAddFriend] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [groupflag,setgroupflag] = useState(false)
-
+    // --------------------- closing and opening function ------- 
     const handleGroupClose = () => setShowGroup(false);
     const handleGroupShow = () => setShowGroup(true);
-
+    
     const handleGroupJoinClose = () => setShowGroupJoin(false);
     const handleGroupJoinShow = () => setShowGroupJoin(true);
-
+       
     const handleAddFriendShow = () => setShowAddFriend(true);
     const handleAddFriendClose = () => setShowAddFriend(false);
 
@@ -82,7 +82,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       }
     }
 
-
+// ------------------------------ submit ---------------------- 
     const handleSubmit =e=>{  
       console.log("yoyy")
       console.log(groupInput)
@@ -107,7 +107,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         title:''
       })
     }
-
+  //  ----------------function to handle joining ---------------------- 
     const handleJoin =e=>{  
       console.log("yoyy")
       console.log(JoingCode)

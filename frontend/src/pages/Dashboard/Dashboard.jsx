@@ -55,6 +55,7 @@ console.log(user._id)
       // year:''
     })
 
+
     const [transactionData,setTransactionData]=useState([])
     console.log(transactionData)
     const [filteredData,setFilteredData]=useState(transactionData)
@@ -82,17 +83,22 @@ console.log(user._id)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-     
+    //  ---------------Input ------------------------ 
     const handleTransInput = name=>e=>{
           setTransInput({...transInput,[name]:e.target.value})
     }
+
+    // ----------------------- Filter Input ----------------------------------  
     const handleFilterInput = name=>e=>{
       console.log(filterInput)
       setFilterInput({...filterInput,[name]:e.target.value})
 
 }
 console.log("filters:",filterInput)
+// -----------------checking whether filter empty or not ------------------------- 
 const isFilterEmpty =filterInput.category === "" && filterInput.startDate === "" && filterInput.endDate === "";
+
+
 useEffect(()=>{
   const ifnocategselect=async()=>{
     try{
@@ -108,6 +114,7 @@ useEffect(()=>{
     ifnocategselect()
   }
 },[updateFlag])
+    //  ------------------- handling filter data-----------------------------
     const handleFilter = e=>{
         e.preventDefault()
         console.log("filters:",filterInput)

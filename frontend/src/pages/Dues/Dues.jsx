@@ -29,15 +29,15 @@ function Dues({ user, thememode, toggle,setUser }) {
 
   const [deleteDiv, setdeleteDiv] = useState(false);
   const [BillData, setBillData] = useState([]);
-
+    // ---------------input ----------------------- 
   const handleBillInput = (name) => (e) => {
     setdueItem({ ...dueItem, [name]: e.target.value });
   };
-
+  //  --------------handling filter input --------------- 
   const handleFilterInput = (name) => (e) => {
     setFilterInput({ ...filterInput, [name]: e.target.value });
   };
-
+  // -----------------function to manage mails ------------------- 
   const mailsendstart = async () => {
     try {
       const reqmail = user.email;
@@ -60,7 +60,7 @@ function Dues({ user, thememode, toggle,setUser }) {
       console.error('Error sending recurring mail:', err);
     }
   };
-
+// ----------------------- Submit ------------------- 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Currency data:', currenciData);
@@ -145,7 +145,7 @@ function Dues({ user, thememode, toggle,setUser }) {
 const [currenci, setCurrenci] = useState('inr');
 const currenciData = UCurrency(currenci);
 
-  return (
+return (
   <>
    <Navbar thememode={thememode} toggle={toggle}/> 
     <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
@@ -241,7 +241,7 @@ const currenciData = UCurrency(currenci);
 
           <div className="due flex justify-between w-full gap-4">
             <label htmlFor="PersonDue" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
-            <select
+             <select
               name="recurring"
               id=""
               value={dueItem.recurring}
@@ -252,7 +252,7 @@ const currenciData = UCurrency(currenci);
               <option value="daily">Daily</option>
               <option value="monthly">Monthly</option>
               <option value="weekly">Weekly</option>
-            </select>
+            </select> 
 
           </div>
 
@@ -278,3 +278,4 @@ const currenciData = UCurrency(currenci);
 }
 
 export default Dues;
+

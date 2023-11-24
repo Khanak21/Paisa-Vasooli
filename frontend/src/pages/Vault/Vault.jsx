@@ -11,14 +11,16 @@ import { v4 } from "uuid";
 import axios from "axios";
 import Navbar from "../../components/Navbar/Navbar";
 import {AiOutlineFile} from "react-icons/ai"
+
+
 function Vault({thememode,toggle,user}) {
   const [fileUpload, setfileUpload] = useState(null);
   const [fileUrls, setfileUrls] = useState([]);
   console.log(fileUrls)
   console.log("vault user",user)
-
+   
   const filesListRef = ref(storage, "files/");
-
+// ------------  function to upload file --------------- 
   const uploadFile = () => {
     if (fileUpload == null) return;
     const dateTime = new Date().toISOString();
@@ -42,7 +44,8 @@ function Vault({thememode,toggle,user}) {
       });
     });
   };
-
+  
+  // ---------------------- function to download CSV file ------------------------- 
   const downloadCSV = async (fileName) => {
     const fileRef = ref(storage, `files/${fileName}`);
     const url = await getDownloadURL(fileRef);

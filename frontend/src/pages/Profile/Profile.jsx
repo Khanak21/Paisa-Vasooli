@@ -15,13 +15,13 @@ function Profile({ user, thememode, toggle,setUser}) {
   console.log(user)
 
   console.log(image)
-
+// ---------------- function to handle the change  ---------------- 
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   };
-
+// ---------------- function to handle upload ----------------------- 
   const handleUpload = () => {
     const imageRef = ref(storage,`images/${image.name}`);
     uploadBytes(imageRef, image)

@@ -2,6 +2,7 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
 const WeeklyChart = ({ weeklyData, thememode }) => {
+   // -------------colors for the lightTheme -------------------- 
   const lightTheme = {
     colorText: 'black',
     income: 'rgba(75,192,192,0.5)', 
@@ -9,6 +10,7 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
     expenses: 'rgba(255,99,132,0.5)',
     expensesBorder: 'rgba(255,99,132,1)',
   };
+  //  ---------------- colors for the darkTheme ----------------------- 
 
   const darkTheme = {
     colorText: 'white',
@@ -17,12 +19,14 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
     expenses: 'rgba(165,42,42,0.5)',
     expensesBorder: 'rgba(165,42,42,1)',
   };
-
+     // ---------- object according to theme -------------- 
   const colors = thememode === 'dark' ? darkTheme : lightTheme;
 
   const data = {
     labels: weeklyData?.map((data) => data.date),
     datasets: [
+
+         // ------------- Income ------------------  
       {
         label: 'Income',
         backgroundColor: colors.income,
@@ -30,6 +34,8 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
         borderWidth: 1,
         data: weeklyData?.map((data) => data.totalIncome),
       },
+
+      // ------------- Expense ---------------------- 
       {
         label: 'Expenses',
         backgroundColor: colors.expenses,
