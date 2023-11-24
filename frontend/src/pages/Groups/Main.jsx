@@ -74,7 +74,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     //function to send friend request
     const handleSendRequest = async()=>{
       try{
-        const res= await axios.put(`https://paisa-vasooli.onrender.com/api/friend/sendRequest/${user._id}`,{friendName})
+        const res= await axios.put(`http://localhost:3001/api/friend/sendRequest/${user._id}`,{friendName})
         console.log(res)
         alert(res.data.message)
         setFriendName("")
@@ -91,7 +91,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       const addgroup =async()=>{
           try{
             console.log(groupInput)
-            const res = await axios.post("https://paisa-vasooli.onrender.com/api/group/creategroup",{groupInput: { ...groupInput, groupCode: groupCode },})
+            const res = await axios.post("http://localhost:3001/api/group/creategroup",{groupInput: { ...groupInput, groupCode: groupCode },})
             console.log(res.data.newgroup)
             const val=res.data.newgroup
             setgroupData(prev=>[...prev,val])
@@ -115,7 +115,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       const addgroup =async()=>{
           try{
             console.log(JoingCode)
-            const res = await axios.post("https://paisa-vasooli.onrender.com/api/group/joingroup",{joincode})
+            const res = await axios.post("http://localhost:3001/api/group/joingroup",{joincode})
             console.log(res.data.newgroup)
             setgroupflag((prev)=>!(prev))
             console.log(groupData)
@@ -152,7 +152,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       //function to get all the groups a user is in
       const getGroups = async()=>{
         try{
-          const res = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getgroups/${user._id}`)//add user Id
+          const res = await axios.get(`http://localhost:3001/api/group/getgroups/${user._id}`)//add user Id
           console.log(res.data)
           setgroupData(res.data)
         }catch(err){

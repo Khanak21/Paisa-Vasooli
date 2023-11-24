@@ -23,7 +23,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
   const getgroup=async()=>{
     try{
       //function to fetch group data
-      const res = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getgroup/${id}`)
+      const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
       console.log(res.data)
       setgroupData(res.data)
       console.log("use effect",groupData)
@@ -78,7 +78,7 @@ console.log(membersdata)
       //function to simplify debts
       const simplify = async()=>{
         try{
-          const res = await axios.post(`https://paisa-vasooli.onrender.com/api/group/simplifyDebt/${id}`,{outputArray})
+          const res = await axios.post(`http://localhost:3001/api/group/simplifyDebt/${id}`,{outputArray})
           console.log(res.data)
           const val=res.data
           setData(res.data)
@@ -93,7 +93,7 @@ console.log(membersdata)
     //function to fetch all debts
      const getdebts = async()=>{
         try{
-            const res = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getDebts/${id}`)
+            const res = await axios.get(`http://localhost:3001/api/group/getDebts/${id}`)
             console.log(res.data)
             if(res.data)setData(res.data)
           }catch(err){
@@ -112,7 +112,7 @@ console.log(membersdata)
     //function to add comment
     const handleAddComment = async () => {
       try {
-          const res = await axios.post(`https://paisa-vasooli.onrender.com/api/group/addcomment`, {
+          const res = await axios.post(`http://localhost:3001/api/group/addcomment`, {
                   userId: user._id, 
                   text:commentText,
                   groupId:id,
@@ -136,7 +136,7 @@ console.log(membersdata)
   //function to retrieve comments
   const getcomments = async()=>{
     try {
-      const response = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getcomments/${id}`);
+      const response = await axios.get(`http://localhost:3001/api/group/getcomments/${id}`);
       setComments(response.data.commentss);
       console.log(comments)
     } catch (error) {
@@ -167,7 +167,7 @@ console.log(membersdata)
   useEffect(()=>{
     const getMembers = async()=>{
       try{
-        const res = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getmembers/${id}`)
+        const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`)
         console.log(res.data)
         setmembersdata(res.data)
       }catch(err){
@@ -285,7 +285,7 @@ console.log(membersdata)
 
                 {user.username==debt[1] && <button onClick={async()=>{
                      try{
-                        const res = await axios.post(`https://paisa-vasooli.onrender.com/api/group/approveDebt/${id}`,debt)
+                        const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`,debt)
                         setData(res.data.simplifyDebt)
                         console.log(res.data)
                     }catch(err){
