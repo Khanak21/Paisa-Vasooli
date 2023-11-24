@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios"
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar/Navbar';
 import { useParams } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
+
 
 const SimplifyDebt = ({user,thememode,toggle}) => {
     console.log(user)
     const {id} = useParams()
   const [inputFields, setInputFields] = useState([]);
+  const [groupData,setgroupData]=useState([])
   const [data,setData] = useState([])
   const [commentflag,setcommentflag] = useState(false);
+  const [showPart, setShowPart] = useState(false);
+  const handleShowPart = () => setShowPart(true);
+  const handleClosePart = () => setShowPart(false);
+
   console.log(inputFields)
   console.log(data)
   const [membersdata,setmembersdata]=useState([])
+  const getgroup=async()=>{
+    try{
+      const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
+      console.log(res.data)
+      setgroupData(res.data)
+      console.log("use effect",groupData)
+    }catch(err){
+      console.log(err)
+    }
+  }
 
+console.log(membersdata)
   const handleInputChange = (index, fieldName, value) => {
     const updatedInputFields = [...inputFields];
     updatedInputFields[index][fieldName] = value;
@@ -139,7 +157,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
   useEffect(()=>{
     const getMembers = async()=>{
       try{
-        const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`)//add user Id
+        const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`)
         console.log(res.data)
         setmembersdata(res.data)
       }catch(err){
@@ -159,30 +177,65 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
       ))}
     </select>
   );
+  
+  useEffect(()=>{
+     
+    getgroup()
+  },[])
 
   return (
-    <div className='w-screen h-screen' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+    <div className=' h-[150vh] dark:bg-[#181818] dark:text-white bg-[#f0f0f0]' >
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='w-full flex justify-center bg-amber-500 text-black font-bold'>
-                {console.log(id)}
-               {membersdata?.map(data=>(
-                <div>Group Members :- {" "}{data.username}{" "}</div>
-                ))}
+      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Simplify Debts</div>
+      <div className='flex justify-between'>
+          <div className="m-3 pt-3 text-4xl bg-[#f0f0f0] light:text-black font-bold dark:bg-[#181818] dark:text-white p-2">
+            Group Title: {groupData.title}
+          </div>
+          <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-1/4 p-1 h-10 my-4 mx-4'>
+            Participants
+           </button>
            </div>
-        <div className='text-4xl m-4 w-full flex justify-center' style={{color:thememode=="dark"?"white":"black"}}>Simplify your debts!</div>
+           <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
+            <Modal.Header closeButton>
+          <Modal.Title>Group Participants</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+           <div className='flex-col'>
+              {membersdata?.map(data=>(
+               <div >{" "}{data.username}{" "}</div>
+               ))}
+               </div>
+           
+        
+        </Modal.Body>
+      
+      </Modal>
+  
+      
+      <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white bg-[#cac8c8]'>
+{/*              
+             <div className='flex-col'>
+             Group Members :
+              {membersdata?.map(data=>(
+               <div >{" "}{data.username}{" "}</div>
+               ))}
+               </div> */}
+          </div>
         <form onSubmit={handleSubmit}  className=' p-3 mx-auto flex flex-col gap-3 justify-center'>
           {inputFields.map((field, index) => (
-          <div className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg' style={{border:thememode=="dark"?"2px solid white":"1px solid black"}}>
+          <div className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg ' >
             <div key={index} className='gap-3'>
-             <div>
+             <div 
+                className='text-gray-400'
+                >
               <label htmlFor={`paidBy-${index}`}>Paid By</label>
               <Dropdown
                 options={membersdata}
                 value={field.paidBy}
                 onChange={(e) => handleInputChange(index, 'paidBy', e.target.value)}
-              />
+           />
             </div>
-            <div>
+            <div className='text-gray-400'>
               <label htmlFor={`paidFor-${index}`}>Paid To</label>
               <Dropdown
                 options={membersdata}
@@ -198,7 +251,7 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
               className='w-80 m-4'
 
             />
-            <button type="button" className='bg-[#198754] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
+            <button type="button" className='bg-[#8656cd] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
               Remove
             </button>
 </div>
@@ -206,17 +259,16 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
         ))}
         
       </form>
-     <div className='flex w-full justify-center'> <button type="button" onClick={handleAddField} className='bg-[#198754] p-2 rounded-md text-white w-60 m-4'>
+     <div className='flex w-full justify-center'> <button type="button" onClick={handleAddField} className='bg-[#8656cd] p-2 rounded-md text-white w-60 m-4'>
           Add Field
         </button>
       
         <div>
-          <button type="submit" className='bg-[#198754] w-60 p-2 rounded-md text-white m-4 ' onClick={handleSubmit}>Simplify</button></div></div>
+          <button type="submit" className='bg-[#8656cd] w-60 p-2 rounded-md text-white m-4 ' onClick={handleSubmit}>Simplify</button></div></div>
 
       {
         data?.map(debt=>(
-            <div className='flex items-center bg-gray-100 rounded-2xl justify-between p-2 mx-auto w-[60%]'>
-                 <div className='w-[30%]'><h4>Statement:-</h4></div>
+            <div className='flex items-center bg-gray-300 rounded-2xl justify-between p-2 mx-auto w-[60%] dark:bg-[#282828]'>
                 <div className='w-[60%] text-2xl flex align-middle p-3'>{debt[0]}{" "} owes {debt[1]} {" "}&#x20B9;{debt[2]}</div>
 
                 {user.username==debt[1] && <button onClick={async()=>{
@@ -228,28 +280,30 @@ const SimplifyDebt = ({user,thememode,toggle}) => {
                         console.log(err)
                     }
                 }}
-                className='bg-[#198754] p-2 rounded-md text-white m-2'
+                className='bg-[#8656cd] p-2 rounded-md text-white m-2'
                 >{debt[3] ===true ? "Approved" : "Approve"}</button>}
                 {user.username==debt[0] && debt[3]==true && <div>Approved by {debt[1]}✅</div>}
             </div>
         ))
       }
 
-              <label htmlFor="commentText">Add Comment:</label>
+<h3 className='underline underline-offset-8 decoration-[#8656cd] m-4'>Comments:</h3>
+
+           <div className='m-4'>
                 <input
                     type="text"
                     id="commentText"
                     value={commentText}
                     onChange={handleCommentChange}
                     placeholder="Type your comment here"
-                    className="w-80 m-4 p-2 border border-gray-300 rounded-md"
+                    className="w-[50%] m-2 p-2 border border-gray-300 rounded-md text-black"
                 />
-                <button onClick={handleAddComment} className="bg-[#198754] p-2 rounded-md text-white m-2">
+                <button onClick={handleAddComment} className="bg-[#8656cd] p-2 rounded-md text-white m-2">
                     Add Comment
                 </button>
+                </div>
 
                 <div className="m-4">
-        <h3>Comments:</h3>
         {comments.map((comment) => (
           <div key={comment._id} className="border p-2 my-2 rounded-md">
             <p>{comment.text}</p>

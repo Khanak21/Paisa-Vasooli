@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 let tvScriptLoadingPromise;
 
-export default function TradingViewWidget({sym,thememode}) {
+export default function TradingViewWidget({sym,stockflag,thememode}) {
   const onLoadScriptRef = useRef();
 
   useEffect(
@@ -47,7 +47,7 @@ export default function TradingViewWidget({sym,thememode}) {
         }
       }
     },
-    []
+    [stockflag]
   );
 
   return (

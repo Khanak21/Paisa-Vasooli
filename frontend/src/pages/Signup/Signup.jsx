@@ -19,7 +19,7 @@ function Signup({user,setUser})
   const [isPass,isPassValid]=useState(false)
   const [isUsername,isUsernameValid]=useState(false)
 
-
+//  -------------- function to handle password change ----------------------- 
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const newPassword = event.target.value;
@@ -31,6 +31,8 @@ function Signup({user,setUser})
     setPassword(newPassword);
     isPassValid(newPassword.length >= 8);
   };
+
+  // ------------ function to handle the email -------------------- 
   
   const handleEmail=(event)=>{
     const k=event.target.value;
@@ -38,13 +40,14 @@ function Signup({user,setUser})
     // setValidemail(emailValidation(k));
  }
 
+//  -------------------- function to handle the username change ------------------ 
   const handleUsernameChange = (event) => {
     event.preventDefault();
     const newUsername = event.target.value;
     setUsername(newUsername);
     isUsernameValid(newUsername.length >= 5);
   };
-  
+  // --------------------------- function to check confirm ------------------ 
   const confirm=(event)=>{
     event.preventDefault();
     const k=event.target.value
@@ -97,6 +100,8 @@ function Signup({user,setUser})
 
   //   }
   // };
+
+
   const googlesekar = (req,res)=>{
     signInWithPopup(auth,provider).then((result)=>{
       console.log(result);
@@ -115,7 +120,7 @@ function Signup({user,setUser})
     }).catch((err)=>{console.log(err)})
   }
 
-
+  // -------------------- function to handle submit ----------------------- 
   const submitFunction = async (event) => {
     event.preventDefault();
   
@@ -237,6 +242,8 @@ function Signup({user,setUser})
             onClick={submitFunction}
             >
               Submit
+
+              {/* ----------------- signup with google -----------------------  */}
             </div>
             <GoogleButton  onClick={googlesekar}/>  
             </div>

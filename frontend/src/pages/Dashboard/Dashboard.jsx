@@ -1,28 +1,35 @@
 import React,{useState,useEffect} from 'react'
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/Navbar/Navbar'
 import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
-import TransactionCard from '../../components/TransactionCard';
+import TransactionCard from '../../components/Cards/TransactionCard';
 import { CSVLink, CSVDownload } from "react-csv"
-import StockChart from '../../components/StockChart';
-import { useTranslation } from "react-i18next"; 
+import { useTranslation,initReactI18next } from "react-i18next"; 
+import i18next from "i18next"
+import './Dashboard.css'
 const languages = [
   { value: "", text: "Options" },
   { value: "en", text: "English" },
   { value: "hi", text: "Hindi" },
 ];
-import './Dashboard.css'
+
 
 const Dashboard = ({user,thememode,toggle,setUser}) => {
+  // console.log(user)
   // const { t } = useTranslation();
   const [lang, setLang] = useState("en");
+  
   const handleChange = (e) => {
+    // i18next.changeLanguage(e.target.value)
     setLang(e.target.value);
-    let loc = "http://localhost:3000/dashboard"
-    window.location.replace(
-        loc + "?lng=" + e.target.value
-    );
+    i18next.changeLanguage(e.target.value).catch((err)=>{
+      console.log(err)
+    })
+    // let loc = "http://localhost:3000/dashboard"
+    // window.location.replace(
+    //     loc + "?lng=" + e.target.value
+    // );
 };
   const [updateFlag, setUpdateFlag] = useState(false); 
   const [show,setShow] = useState(false)
@@ -48,13 +55,17 @@ console.log(user._id)
       // year:''
     })
 
+
     const [transactionData,setTransactionData]=useState([])
+    console.log(transactionData)
     const [filteredData,setFilteredData]=useState(transactionData)
+    const [filterstate,setFilterState]=useState(false)
+    console.log(filteredData)
 
     const [uniqueCategories, setUniqueCategories] = useState([]);
     const [stats,setStats] = useState({})
 
-    // console.log(uniqueCategories)
+    console.log(uniqueCategories)
     const headers = [
       { label: "Transaction Type", key: "type" },
       { label: "Amount", key: "amount" },
@@ -72,23 +83,29 @@ console.log(user._id)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-     
+    //  ---------------Input ------------------------ 
     const handleTransInput = name=>e=>{
           setTransInput({...transInput,[name]:e.target.value})
     }
+
+    // ----------------------- Filter Input ----------------------------------  
     const handleFilterInput = name=>e=>{
       console.log(filterInput)
       setFilterInput({...filterInput,[name]:e.target.value})
 
 }
 console.log("filters:",filterInput)
+// -----------------checking whether filter empty or not ------------------------- 
 const isFilterEmpty =filterInput.category === "" && filterInput.startDate === "" && filterInput.endDate === "";
+
+
 useEffect(()=>{
   const ifnocategselect=async()=>{
     try{
       const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
       console.log(res.data)
       setFilteredData(res.data.trans)
+      setTransactionData(res.data.trans)
     }catch(err){
         console.log(err)
     }
@@ -97,6 +114,7 @@ useEffect(()=>{
     ifnocategselect()
   }
 },[updateFlag])
+    //  ------------------- handling filter data-----------------------------
     const handleFilter = e=>{
         e.preventDefault()
         console.log("filters:",filterInput)
@@ -105,6 +123,7 @@ useEffect(()=>{
           const res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
           console.log(res.data)
           setFilteredData(res.data.trans)
+          setFilterState(true)
         }catch(err){
           console.log(err)
         }
@@ -192,7 +211,7 @@ useEffect(()=>{
     useEffect(() => {
       const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
       setUniqueCategories([...categoriesSet]);
-    },[updateFlag]);
+    },[updateFlag,transactionData]);
 
      // Replace with your dynamic currency value
     const currencyData = UCurrency('inr');
@@ -214,6 +233,7 @@ useEffect(()=>{
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])
         setUpdateFlag((prevFlag) => !(prevFlag));
+        handleClose()
       }catch(err){
         console.log(err.response.data)
       }
@@ -231,14 +251,37 @@ useEffect(()=>{
       currency:'',
   })
   }
+
+  //---------------------MULTI LANGUAGE SUPPORT-----------------------
+  i18next.use(initReactI18next).init({
+    resources : {
+      en:{
+        translation : {
+          welcome : "Welcome to my app",
+          sub_title : "This is a really good app and I love it"
+        }
+      },
+      hi : {
+        translation : {
+          welcome : "मेरे ऐप में आपका स्वागत है",
+          sub_title : "यह वास्तव में एक अच्छा ऐप है और मुझे यह पसंद है"
+        }
+      },
+      fr : {
+        translation : {
+          welcome : "Bienvenue dans mon application"
+        }
+      }
+    }
+  })
   
 
   return (
-    <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}}>
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
       
         <Navbar thememode={thememode} toggle={toggle}/>
         {/* --------------------------User monetary stats------------------------ */}
-        <select value={lang} onChange={handleChange}>
+        {/* <select onChange={(e)=> handleChange(e)}>
                 {languages.map((item) => {
                     return (
                         <option
@@ -249,16 +292,16 @@ useEffect(()=>{
                         </option>
                     );
                 })}
-            </select>
+            </select> */}
 
-     <div className='w-screen h-full flex flex-col justify-center items-start '>
+     <div className='h-full flex flex-col justify-center items-start '>
        
-          <div className='flex w-full justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+          <div className='flex w-[99vw] justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
 
-            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center chill'>
+            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div>
-              {/* {t("income")} */}Total Income
+              Income
               </div>
 
              <div> 
@@ -271,10 +314,10 @@ useEffect(()=>{
             </div>
 
 
-           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center chill'>
-             <div className='flex  justify-between p-4 font-bold gap-6'>
+           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
+             <div className='flex  justify-between p-4 font-bold gap-6' >
               <div> 
-               Total Balance
+               Balance
               </div>
                 <div>
               
@@ -283,10 +326,10 @@ useEffect(()=>{
               </div>
           </div>
 
-          <div className='  w-60 rounded-md flex flex-col justify-center bg-[#198754] h-10 text-white items-center chill'>
+          <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
                 <div className='text-md flex justify-evenly gap-2'>
-                 <span>Total</span><span> Expense </span>
+                 <span> Expense </span>
                 </div>
               <div>
           
@@ -300,7 +343,7 @@ useEffect(()=>{
       
         
         {/* -----------------------Filters------------------------ */}
-        <div className='flex px-4 py-4 justify-center items-center h-[100%] filter w-full' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}}>
+        <div className='flex px-4 py-4 justify-center items-center h-[100%] filter w-[99vw]' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
            <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode=="dark"?"white":"black"}}>Filters:</div>
         
         {/* Category */}
@@ -318,26 +361,26 @@ useEffect(()=>{
  
         <input type="date" id="startDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
         <input type="date" id="endDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
-        <Button style={{}} variant="success" onClick={handleFilter} className='mx-2 p-2 my-2'>Apply Filter</Button>
+        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#8656cd] text-white p-2 rounded-md lg:w-80'>Apply Filter</button>
 
           {/* ----------------------Exporting data-------------------------- */}
-        <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><Button variant="success" className='my-2  p-2'>Export</Button></CSVLink>
+        <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className='my-2  p-2 bg-[#8656cd] text-white p-2 rounded-md'>Export</button></CSVLink>
         </div>
 
 
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
-      <div className='min-h-screen w-full '> 
-        <div style={{width:"50%"}}>
-          {filteredData?.map(trans=>(
+      <div className='min-h-screen w-full flex flex-col align-middle'> 
+        <div style={{width:"100%"}}>
+          {(filterstate==false ? transactionData : filteredData)?.map(trans=>(
             //  console.log("mapped data",trans)
-            <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} /> 
+            <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} setTransactionData={setTransactionData} setUpdateFlag={setUpdateFlag}/> 
             ))}
         </div>
         </div>
       </div>
 
     {/* --------------------------------------Add transaction modal-------------------------------- */}
-    <button onClick={handleShow} className='bg-[#198754] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 right-8'>+</button>
+    <button onClick={handleShow} className='bg-[#8656cd] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 right-8'>+</button>
     <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Transaction</Modal.Title>
@@ -414,7 +457,7 @@ useEffect(()=>{
             ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit} required>Save</Button>
+          <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit} required>Save</button>
         </Modal.Footer>
       </Modal>
       

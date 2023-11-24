@@ -5,8 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
-
-const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
+// ------------- TransactionCard -------------------------- 
+const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransactionData,setUpdateFlag }) => {
   const [show, setShow] = useState(false)
   const [transInput, setTransInput] = useState({
         userId:user._id,
@@ -23,14 +23,14 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
   }
 
   const { type, amount, category, desc, date,currency } = transInput;
-
+//  ---------------- Input --------------------- 
   const handleTransInput = (name) => (e) => {
     setTransInput({ ...transInput, [name]: e.target.value });
   };
-
+  // -------------------- functions to handle open and close  --------------- 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+//  ---------------- function to handle submit ----------------  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -49,11 +49,15 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
       console.log(err);
     }
   };
-
+//  --------------function to delete --------------- 
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(`http://localhost:3001/api/transactions/deleteTransaction/${id}`);
       console.log(res.data);
+      console.log(transactionData)
+      // const updated=transactionData.filter(data=>data._id!=id)
+      // setTransactionData(updated)
+      setUpdateFlag((prevFlag) => !prevFlag);
       // You might want to update the UI or state here if needed
     } catch (err) {
       console.log(err);
@@ -62,11 +66,11 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
 
   return (
     <div>
-    <Card variant="light" border="success" className='mx-4 my-4' style={{backgroundColor:thememode=="dark"?"#282828":"white",color:thememode=="dark"?"white":"black"}}>
-      <Card.Header className='font-bold' >Transaction Category{" "}:{" "}{transactionData.category}</Card.Header>
-      <Card.Body >
+    <Card variant="light" border="secondary" className='mx-4 my-4 dark:text-white'>
+      <Card.Header className='font-bold text-xl' style={{backgroundColor:thememode=="dark"?"#3a3a3a":"white"}}> Category{" "}:-{" "}{transactionData.category}</Card.Header>
+      <Card.Body style={{backgroundColor:thememode=="dark"?"#282828":"white"}}>
         <div className='flex justify-between items-center'>
-        <Card.Text className='text-md align-middle items-center my-1 font-bold' style={{color:transactionData.type=="expense"?'red':'green'}}>Transaction Amount{" "}:  &#8377;{" "}{transactionData.amount}</Card.Text>
+        <Card.Text className='text-md align-middle items-center my-1' style={{color:transactionData.type=="expense"?'red':'green'}}> Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
       <div className='flex justify-between gap-2'>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
@@ -74,12 +78,12 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
       </div>
         
         </div>
-        <Card.Text className='font-bold my-1'>
+        <Card.Text className='my-1'>
           Transaction Description{" "} :  {transactionData.desc}
         </Card.Text>
-        <Card.Text className='font-bold my-1'>
+        <Card.Text className='my-1'>
           Transaction Date{" "} :  {transactionData.date.substring(0,10)}
-        </Card.Text>
+        </Card.Text> 
       </Card.Body>
     </Card>
     
@@ -150,16 +154,16 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle }) => {
           <br />
 
           <label htmlFor="amount">Amount: </label>
-          <input type="number" name={'amount'} value={amount} onChange={handleTransInput('amount')} required style={{color:type==='expense'?"red":"green"}}/>
+          <input type="number" defaultValue={transactionData.amount} name={'amount'}  onChange={handleTransInput('amount')} required style={{color:type==='expense'?"red":"green"}}/>
 
           <label htmlFor="category">Category: </label>
-          <input name={'category'} type="text" value={category} onChange={handleTransInput('category')} required />
+          <input name={'category'} defaultValue={transactionData.category} type="text"  onChange={handleTransInput('category')} required />
 
           <label htmlFor="desc">Description:</label>
-          <input type="text" name={'desc'} value={desc} onChange={handleTransInput('desc')} />
+          <input type="text" defaultValue={transactionData.desc} name={'desc'}  onChange={handleTransInput('desc')} />
 
           <label htmlFor="date">Date:</label>
-          <input type="date" name={'date'} value={date} onChange={handleTransInput('date')} required />
+          <input type="date" defaultValue={transactionData.date && transactionData.date.substring(0, 10)} name={'date'} onChange={handleTransInput('date')} required />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="success" onClick={handleSubmit} required>

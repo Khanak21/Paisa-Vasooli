@@ -12,6 +12,8 @@ const SavingCard = ({user,props,savingData,setSavingData,items,thememode,toggle}
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 console.log(props._id)
+
+// -------------- getting the  user data randomply ----------- 
 const percentage=Math.round((props.currAmt*100/props.targetAmt) * 100) / 100
 console.log(percentage)
 const [SavingInput, setSavingInput] = useState({
@@ -23,9 +25,13 @@ const [SavingInput, setSavingInput] = useState({
 console.log(savingData)
 const { title, currAmt, targetAmt } = SavingInput;
 
+// ----------------- handle edit ------------ 
 const handleSavingInput = (name) => (e) => {
   setSavingInput({ ...SavingInput, [name]: e.target.value });
 };
+
+
+// ----------------- submission ----------
 
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -46,7 +52,7 @@ const handleSubmit = (e) => {
   };
   editSavings();
 };
-
+// ------------- deletion ------------------- 
 const handleDelete = async()=>{
     try{
         const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${props._id}`)
@@ -76,10 +82,10 @@ const handleDelete = async()=>{
     
     <div className='flex flex-col justify-center items-start gap-8 w-full p-1 h-[300px]' style={{backgroundColor:thememode=="dark"?"":"white",color:thememode=="dark"?"white":"black",}}>
     
-      <Card variant="light" border="success" className="w-full flex flex-col gap-3  rounded-lg border-2 h-40 p-1 " style={{backgroundColor:thememode=="dark"?"#3a3a3a":"white",border: thememode === "dark" ? "3px solid white" : "1px solid black",color: thememode=="dark"?"white":"black"}}>
+      <Card variant="light" border="secondary" className="w-full flex flex-col gap-3  rounded-lg border-2 h-40 p-1 " style={{backgroundColor:thememode=="dark"?"#3a3a3a":"white",border: thememode === "dark" ? "3px solid white" : "1px solid black",color: thememode=="dark"?"white":"black"}}>
 
 
-        <Card.Header className='bg-slate-300 font-semibold text-center text-lg flex justify-evenly' style={{backgroundColor:thememode=="dark"?"green":"rgb(193, 255, 210)"}}>Title{" "}- <div>
+        <Card.Header className=' font-semibold text-center text-lg flex justify-evenly bg-[#8656cd] '>Title{" "}- <div>
          {props.title}</div></Card.Header>
 
 
@@ -89,12 +95,13 @@ const handleDelete = async()=>{
               <div className="w-full">
               <div>Complete (success) </div>
                 <div
-                  className="text-sm h-5 w-full bg-green-800 rounded-lg text-white p-2 flex justify-center items-center"
+                  className="text-sm h-5 w-full bg-[#8656cd] rounded-lg text-white p-2 flex justify-center items-center"
                   role="progressbar"
                   aria-valuenow={percentage}
                   aria-valuemin="0"
                   aria-valuemax="100"
-                  style={{ width: `${percentage}%`}}
+                  // style={{ width: `${percentage}%`}}
+                  style={{ backgroundColor: 'rgb(157, 122, 253)',width: `${percentage}%`}}
                 >
                   
                 </div>
@@ -120,7 +127,7 @@ const handleDelete = async()=>{
         </Modal.Header>
         <Modal.Body>
         <label htmlFor="title">Title:</label>
-          <input type="text" name={'title'} value={title} onChange={handleSavingInput('title')} required />
+          <input type="text" name={'title'} defaultValue={props.title} onChange={handleSavingInput('title')} required />
           <label htmlFor="person">currAmt: </label>
           <input name={'currAmt'} type="text" value={currAmt} onChange={handleSavingInput('currAmt')} required />
           <label htmlFor="targetAmt">targetAmt:</label>

@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react'
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/Navbar/Navbar.jsx'
 import Modal from 'react-bootstrap/Modal';
 import {Button} from 'react-bootstrap'
 import axios from 'axios';
-import GroupCard from '../../components/GroupCard.jsx'
+import GroupCard from '../../components/GroupCard/GroupCard.jsx'
 
 export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => {
   console.log(groupData)
@@ -13,13 +13,13 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     const [showAddFriend, setShowAddFriend] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [groupflag,setgroupflag] = useState(false)
-
+    // --------------------- closing and opening function ------- 
     const handleGroupClose = () => setShowGroup(false);
     const handleGroupShow = () => setShowGroup(true);
-
+    
     const handleGroupJoinClose = () => setShowGroupJoin(false);
     const handleGroupJoinShow = () => setShowGroupJoin(true);
-
+       
     const handleAddFriendShow = () => setShowAddFriend(true);
     const handleAddFriendClose = () => setShowAddFriend(false);
 
@@ -82,7 +82,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
       }
     }
 
-
+// ------------------------------ submit ---------------------- 
     const handleSubmit =e=>{  
       console.log("yoyy")
       console.log(groupInput)
@@ -107,7 +107,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         title:''
       })
     }
-
+  //  ----------------function to handle joining ---------------------- 
     const handleJoin =e=>{  
       console.log("yoyy")
       console.log(JoingCode)
@@ -160,16 +160,22 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     },[groupflag])
 
   return (
-    <div className='min-h-screen w-screen flex flex-col justify-center' style={{backgroundColor:thememode=="dark"?"rgb(85, 98, 106)":"white"}} >
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className='flex flex-col gap-2 justify-start items-start' style={{backgroundColor:thememode=="dark"?"#181818":"white"}}>
-          <div className=' flex justify-evenly items-start w-full my-2'>
-            <button onClick={handleGroupShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Create Group</button>
-            <button onClick={handleGroupJoinShow} className='bg-[#198754] text-white p-4 rounded-lg'>Join Group</button>
-            <button onClick={handleAddFriendShow} className='bg-[#198754] text-white p-4 rounded-lg'>+ Invite Friend</button>
+        <div className='flex flex-col gap-2 justify-start items-start min-h-screen' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+        <div className='flex justify-between w-full'>
+        <div><div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'> Friends & Groups</div>
+        <div className='mx-4 mt-4 text-gray-600 dark:text-gray-400 '>Streamline Bill Splitting and Debt Settlement Among Friends</div>
+        </div>
+        <button onClick={handleAddFriendShow} className='bg-[#8656cd] text-white p-4 rounded-lg m-4'>+ Invite Friend</button>
+        </div>
+          <div className=' flex justify-left items-start w-full mb-4 mt-2 mx-4'>
+          
+            <button onClick={handleGroupShow} className='bg-[#8656cd] text-white p-4 rounded-lg mx-2'>+ Create Group</button>
+            <button onClick={handleGroupJoinShow} className='bg-[#8656cd] text-white p-4 rounded-lg mx-2'>Join Group</button>
 
           </div>
-        <div className='flex  flex-col justify-evenly items-center gap-6 w-full h-fit'>
+        <div className='flex flex-col lg:grid lg:grid-cols-2 justify-evenly items-center gap-6 w-full h-fit dark:bg-[#181818]'>
           
           {groupData?.map(data=>{
             return(
@@ -203,7 +209,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
                    ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit}  required>Save</Button>
+          <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit}  required>Save</button>
         </Modal.Footer>
       </Modal>
 
@@ -221,11 +227,11 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
                    ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleJoin}  required>Save</Button>
+          <button className="bg-[#8656cd] p-2 rounded-md text-white" onClick={handleJoin}  required>Save</button>
         </Modal.Footer>
       </Modal>
 
-
+{/* 
       <Modal show={showFriend} onHide={handleFriendClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Transaction</Modal.Title>
@@ -235,7 +241,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         <Modal.Footer>
           <Button variant="success" onClick={handleSubmit} required>Save</Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
 
       <Modal show={showAddFriend} onHide={handleAddFriendClose} animation={false} centered>
         <Modal.Header closeButton>
@@ -251,7 +257,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
                    ></input>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleSendRequest}  required>Invite</Button>
+          <button className="bg-[#8656cd] p-2 rounded-md text-white" onClick={handleSendRequest}  required>Invite</button>
         </Modal.Footer>
       </Modal>
         </div>

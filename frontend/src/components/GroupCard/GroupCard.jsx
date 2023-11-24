@@ -7,11 +7,12 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import {Button} from 'react-bootstrap'
 import { AiTwotoneCalendar } from 'react-icons/ai';
-import Grouphome from './Grouphome.jsx'; 
+import Grouphome from '../../pages/Groups/Grouphome.jsx'; 
 import './GroupCard.css'
 import { useNavigate } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { MdContentCopy } from "react-icons/md";
+
 
 const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle,user}) => {
   const navigate = useNavigate()
@@ -19,10 +20,13 @@ const [show, setShow] = useState(false);
 const [showGroupHome, setShowGroupHome] = useState(false);
 const [showAddFriend, setShowAddFriend] = useState(false);
 const [friends,setFriends] = useState([])
-
 const [checkedState, setCheckedState] = useState(
   new Array(user.friends.length).fill(false)
 );
+
+// const copy = () => toast("Copied to Clipboard");
+
+
 
 const handleOnChange = (position) => {
   const updatedCheckedState = checkedState.map((item, index) =>
@@ -81,39 +85,45 @@ const handlePaid=()=>{
 console.log(allgroupsdata)
   return (
 
-    <div className='flex justify-center items-center card-parent h-full p-1 '>
+    <div className='flex justify-center items-center card-parent h-full p-1'>
 
-     <Card  border="success" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"#282828":"white",color:thememode==="dark"?"white":"black"}} >
+     <Card  border="secondary" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"#282828":"white",color:thememode==="dark"?"white":"black"}} >
 
-      <Card.Body className='w-full'>
+      <Card.Body className='w-full p-1 '>
 
         <div className='flex flex-col justify-start items-start gap-1'>
 
-          <Card.Text className='text-md justify-start items-center font-extrabold '>
+          <Card.Header className='w-full'>
           <b> Group Title</b>{" "}:-{" "}{groupData.title}
-          </Card.Text>
-
-          <Card.Text className='text-md w-fit justify-start items-center '>
+          </Card.Header>
+<div className='p-2'>
+          <Card.Text className='text-md w-fit justify-start items-center'>
             <b> Group Code </b>{" "}:- <br/>
-            <div className='flex'><input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} />
+            <div className='flex align-middle'>
+              <div className='flex'>
+              <input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} />
             <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
-            <button><MdContentCopy  className='ml-2 text-xl'/></button>
+            <button>
+              <MdContentCopy  className='ml-2 text-xl'/>
+            </button>
             </CopyToClipboard>
-            {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>}
-            <button className='mx-2 w-80 bg-blue-600 rounded-md text-white' onClick={handleAddFriendShow}>or Add Friend</button></div>
+            </div>
+            {/* {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>} */}
+            <button className='mx-2 px-2 bg-[#8656cd] rounded-md text-white lg:w-80 md:w-80' onClick={handleAddFriendShow}>or Add Friend</button>
+            </div>
           
           </Card.Text>
 
         </div>
 
-       <div className='w-5/10 my-2 flex flex-col justify-center items-start gap-3'>
+       <div className='w-full p-2 my-2 flex flex-col justify-center items-start gap-3'>
         
-        <Button className='rounded-sm p-1' variant="primary" onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
+        <button className='rounded-md p-1 text-white w-full bg-[#8656cd]' onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
            Simplify Debt
-        </Button>
-        <Button className='rounded-sm p-1' variant="primary" onClick={()=>navigate(`/billsplit/${groupData._id}`)} style={{"cursor":"pointer"}}>
+        </button>
+        <button className='rounded-md p-1 text-white w-full bg-[#8656cd]' onClick={()=>navigate(`/billsplit/${groupData._id}`)} style={{"cursor":"pointer"}}>
            Split bill
-        </Button>
+        </button>
        
         <div className='flex justify-between items-center w-full'>
           <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
@@ -121,7 +131,7 @@ console.log(allgroupsdata)
         </div>
        
        </div>
-
+</div>
       </Card.Body>
 
     </Card>
@@ -161,7 +171,7 @@ console.log(allgroupsdata)
         </ul>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleAddFriendsToGroup}  required>Add to group</Button>
+          <button className="rounded-md p-1 text-white w-full bg-[#8656cd]" onClick={handleAddFriendsToGroup}  required>Add to group</button>
         </Modal.Footer>
       </Modal>
   </div>
