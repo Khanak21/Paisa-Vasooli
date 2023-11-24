@@ -50,13 +50,15 @@ This project was made during the Codesangam 2023 Event conducted by CC Club MNNI
 ## Images
 Few Images from the site
 
-<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/983d5bf5-ae1f-4990-996f-599d3474e10f">
+<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/2542f74c-1f35-4f5c-99f5-3dfa05eb1577">
 
-<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/39524285-e052-4949-aefa-f26e20468963">
+<img width="955" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/72d6c2ca-8af6-4d6f-94f8-8753f2bdd006">
 
-<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/ebfacd6c-ab28-43a9-a4a9-666daa2b0c91">
+<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/49f33955-682f-43f4-a141-8887e12d88fc">
 
-<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/689fa5ca-28ab-4168-95c5-b204b43b8adb">
+<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/a1b0b8ab-9752-4dd9-b89c-7bcbd2f594bd">
+
+<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/127b26af-3af9-4fd1-888b-b2ce2dae8d81">
 
 ## Tech Stack
 
