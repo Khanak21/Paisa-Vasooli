@@ -47,8 +47,8 @@ function Savings2({ user,setUser,thememode,toggle}) {
     };
     setItems([...items, newItem]);
     setInputTitle("");
-    setCurrentAmount(0);
-    setAmount(0);
+    setCurrentAmount();
+    setAmount();
   };
 
   //function to edit details
