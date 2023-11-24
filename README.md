@@ -110,3 +110,7 @@ npm run serve
 - **Authentication:** Enhancing user security,privacy and authentication
 - **Stock prediction:** Integrating ML to display stock predictions of user-selected stocks
 - **Contacts as friends:** Automatically adding all contacts related to a gmail account in friends' list
+- **Drag and Drop:** Drag and Drop feature for file upload in vault
+
+## Deployed Link
+Access the deployed site here: https://paisavasooli.netlify.app/
