@@ -12,6 +12,8 @@ const SavingCard = ({user,props,savingData,setSavingData,items,thememode,toggle}
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 console.log(props._id)
+
+// -------------- getting the  user data randomply ----------- 
 const percentage=Math.round((props.currAmt*100/props.targetAmt) * 100) / 100
 console.log(percentage)
 const [SavingInput, setSavingInput] = useState({
@@ -23,9 +25,13 @@ const [SavingInput, setSavingInput] = useState({
 console.log(savingData)
 const { title, currAmt, targetAmt } = SavingInput;
 
+// ----------------- handle edit ------------ 
 const handleSavingInput = (name) => (e) => {
   setSavingInput({ ...SavingInput, [name]: e.target.value });
 };
+
+
+// ----------------- submission ----------
 
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -46,7 +52,7 @@ const handleSubmit = (e) => {
   };
   editSavings();
 };
-
+// ------------- deletion ------------------- 
 const handleDelete = async()=>{
     try{
         const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${props._id}`)

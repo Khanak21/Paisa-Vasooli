@@ -6,7 +6,9 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 
+
 const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
+
   const [show, setShow] = useState(false);
   const [BillInput, setBillInput] = useState({
     userId: user._id,
@@ -16,16 +18,19 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
     toWhom: '',
     recurring: '',
   });
-
+  
   const { title, amount, toWhom, dueDate } = BillInput;
-
+ 
+  {/*-----------------function to handle the bill's input8--------*/}
   const handleBillInput = (name) => (e) => {
     setBillInput({ ...BillInput, [name]: e.target.value });
   };
 
+  // -------------- handling the closing and opening of edit ------------- 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+ 
+  // --------------funtion to handle the submitting the edit data --------------------- 
   const handleSubmit = (e) => {
     e.preventDefault();
     const editBill = async () => {
@@ -47,7 +52,8 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
     };
     editBill();
   };
-
+ 
+  // ----------------  handling the delete function -------------------- 
   const handleDelete = (id) => {
     const delBill = async (id) => {
       try {
@@ -63,10 +69,12 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
 
   return (
     <div>
+      {/* ---------- ----- Card component -------------------  */}
       <Card variant="light" border="secondary" className="mx-4 my-4 p-1"  style={{backgroundColor:thememode=="dark" ? "#282828":"",color:thememode=="dark"?"white":"black"}}>
+
         <Card.Body>
           <Card.Text className="rounded-sm bg-green-600" style={{ backgroundColor: 'rgb(157, 122, 253)' }}>Title:-{"  "} {BillData.title}</Card.Text>
-          <div className="flex justify-between items-center gap-3 p-2">
+            <div className="flex justify-between items-center gap-3 p-2">
             <div className='flex flex-col justify-center items-start'>
             <Card.Text className="text-md align-middle items-center "><b>To :-{" "}{BillData.toWhom} </b></Card.Text>
             <Card.Text className="text-sm align-middle items-center"><b>Amount :-{" " }&#8377; {BillData.amount} </b> </Card.Text>
@@ -79,6 +87,7 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
              <AiTwotoneCalendar size={20} />
             </Card.Text>
 
+      {/* ---------------    The buttons for edit and delete  ---------------  */}
           <div className='flex justify-end w-[80%] gap-4 mr-6'>
             <AiFillEdit onClick={handleShow} style={{ cursor: 'pointer' }} />
             <AiFillDelete onClick={() => handleDelete(BillData._id)} style={{ cursor: 'pointer' }} />
@@ -88,10 +97,14 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
         </Card.Body>
       </Card>
 
+      {/* ------------Modal component----------------  */}
       <Modal show={show} onHide={handleClose} animation={false} centered>
+        
         <Modal.Header closeButton>
           <Modal.Title className='font-bolder'>Edit Bill</Modal.Title>
         </Modal.Header>
+        
+        
         <Modal.Body>
           {/* Add Bill input section */}
           <label htmlFor="amount" className='font-bold'>Amount: </label>
@@ -106,11 +119,13 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
           <label htmlFor="date" className='font-bold'>Date:</label>
           <input type="date" name={'dueDate'} defaultValue={BillData?.dueDate?.substring(0,10)} onChange={handleBillInput('dueDate')} required />
         </Modal.Body>
+
         <Modal.Footer>
           <button className="bg-[#8656cd] text-white p-2 rounded-md" onClick={handleSubmit} required>
             Save
           </button>
         </Modal.Footer>
+        
       </Modal>
     </div>
   );

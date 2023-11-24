@@ -46,8 +46,8 @@ function Vault({thememode,toggle,user}) {
       });
     });
   };
-
-  //function to download file on click
+  
+  // ---------------------- function to download CSV file ------------------------- 
   const downloadCSV = async (fileName) => {
     const fileRef = ref(storage, `files/${fileName}`);
     const url = await getDownloadURL(fileRef);

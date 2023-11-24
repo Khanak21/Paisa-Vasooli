@@ -14,9 +14,12 @@ import { FaRegEnvelope } from "react-icons/fa";
 import Inbox from '../../pages/Inbox/inbox.jsx'
 
 
+
+
 function Navbar({thememode,toggle,setUser,user}) {
   const [navuser,setNavuser] = useState({})
  
+  // ------------ hook to handle the user details ------------------ 
   useEffect(()=>{
     const check=async()=>{
       try{
@@ -40,7 +43,8 @@ function Navbar({thememode,toggle,setUser,user}) {
   // const [isLoggedin,setIsloggedIn]=useState(true)
   // console.log(thememode)
   const navigate=useNavigate()
- 
+  
+  //  ------------- function to logout ----------------------- 
   const handleLogout = () => {
   //   console.log("User before logout:", user);
   //   setUser({});
@@ -59,8 +63,9 @@ function Navbar({thememode,toggle,setUser,user}) {
   
 
   return (
-    <div className="flex gap-30 justify-between items-center bg-[#8656cd] ">
-        <div className='text-2xl mx-2 text-white font-extrabold'>
+    <div className="flex gap-30 justify-between items-center bg-[#8656cd] navbar-parent">
+      {/* ------------------ wesite name -------------------  */}
+         <div className='text-2xl mx-2 text-white font-extrabold paisa'>
             Paisa Vasooli
         </div>
           
@@ -86,43 +91,47 @@ function Navbar({thememode,toggle,setUser,user}) {
       <div className="logout absolute border border-white rounded-md p-2 right-1 font-bold text-white hover:cursor-pointer hover:border-gray-300 hover:shadow-xl" onClick={handleLogout}>
   Logout
 </div>
-        <div className="toggle-nav flex align-middle justify-center items-center hover:cursor-pointer">
-       
-         <ToggleBtn  thememode={thememode} toggle={toggle} /> 
-            
-        </div>
-    <div className='w-[20em] flex justify-evenly items-center icon-bar'>
-        <div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon ' onClick={()=>{navigate("/inbox")}}>
-        <FaRegEnvelope className="text-white cursor-pointer" />
-
-        </div>
-
-        <div className='font-bold text-white hover:cursor-pointer p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
-          {/* <FontAwesomeIcon icon={faUser}  /> */}
-          <img src={navuser?.image || 'ProfileImg.jpeg'} className='w-[50px] h-[50px]  rounded-full'></img>
-        </div>
         
-     
+    <div className='w-[20em] flex justify-evenly items-center icon-bar'>
 
 
-      <div className="icons" style={{color:thememode==="dark"?"white":"black"}}>
-        <div
-          className={showNav ? 'icon-menu activemenu' : 'icon-menu'}
-          onClick={() => setShowNav(!showNav)}
-          
-        >
-          <FontAwesomeIcon icon={faBars} size="xl" />
-        </div>
+ {/* ----------------- buttons + toggle ----------------  */}
+<div className='w-fit relative top-4 right-1 toggle-nav'>
+  <ToggleBtn  thememode={thememode} toggle={toggle} /> 
+</div>
+<div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon envelop' onClick={()=>{navigate("/inbox")}}>
 
-        <div
-          className={showNav ? 'icon-crossX activeman' : 'icon-crossX'}
-          onClick={() => setShowNav(!showNav)}
-        >
-          <FontAwesomeIcon icon={faTimes} size="xl" />
-        </div>
-      </div>
-    </div>
-    </div>
+<FaRegEnvelope className="text-white cursor-pointer" />
+
+</div>
+
+<div className='font-bold text-white hover:cursor-pointer p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
+  {/* <FontAwesomeIcon icon={faUser}  /> */}
+  <img src={navuser?.image || 'ProfileImg.jpeg'} className='w-[50px] h-[50px]  rounded-full'></img>
+</div>
+
+
+
+{/* ------------ Hamburger menu icon & Cross icon -------------------------------  */}
+
+<div className="icons" style={{color:thememode==="dark"?"white":"black"}}>
+<div
+  className={showNav ? 'icon-menu activemenu' : 'icon-menu'}
+  onClick={() => setShowNav(!showNav)}
+  
+>
+  <FontAwesomeIcon icon={faBars} size="xl" />
+</div>
+
+<div
+  className={showNav ? 'icon-crossX activeman' : 'icon-crossX'}
+  onClick={() => setShowNav(!showNav)}
+>
+  <FontAwesomeIcon icon={faTimes} size="xl" />
+</div>
+</div>
+</div>
+</div>
   );
 }
 

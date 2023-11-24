@@ -100,11 +100,13 @@ const Chart = ({user,setUser,thememode,toggle}) => {
 
   return (
     <div  style={{backgroundColor:thememode==="dark"?"#181818":"white"}} >
-
+         {/* ------------ Navbar ------------------------ */}
         <Navbar thememode={thememode} toggle={toggle}/>
 
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Visualise your Transactions</div>
+        {/* ----------------------- title --------------------------------  */}
+        <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Visualise your Transactions</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Analyze how much you spent or earned on a weekly, monthly, yearly or category-wise basis</div>
+      
       
     <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#181818":"white",color: thememode=="dark"?"white":"black"}}>
     
@@ -118,7 +120,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
 
     </div>
 
-      {/* ---------------------------------------------------------Monthly chart---------------------------------------------------------- */}
+         {/* ------------------------- Monthly Chart -------------------------  */}
 
     <div className='w-full flex lg:justify-evenly items-center flex-col lg:flex-row-reverse '>
     <div className='font-bold text-5xl flex justify-center items-center '  style={{color:thememode=="dark"?"white":"#8656cd"}}>Monthly Chart</div>         

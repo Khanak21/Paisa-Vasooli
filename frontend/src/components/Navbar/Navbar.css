@@ -44,7 +44,7 @@
   color: rgb(157, 122, 253);
   font-size: larger;
 }
-
+ 
 .icon-menu,            
 .icon-crossX { 
   width: 2.2rem;
@@ -78,6 +78,7 @@
 }
 
 
+
 @media (max-width: 62em) {
   .main-navbar{
     height:fit-content;   
@@ -109,13 +110,26 @@
     border-radius: 5px;
     text-align: center;
   }
-
- 
+  .navbar-parent{
+   
+    align-items:flex-start;
+    justify-content: space-evenly;
+  }
+  .paisa{
+   display: none;  
+  }
+  .icons{
+    justify-content: flex-end;
+    align-items: center;
+  }
   .icon-menu {
     display: block;
     z-index: 10;
   }
-
+ .icon-bar{
+   align-items: center;
+   justify-content: flex-end;
+ }
   .box {
     height: 30px;
     font-size: 40x;
@@ -125,7 +139,7 @@
   .content-link.active{
     display: flex;
     scale:1;
-    background-color: #077944;
+    background-color: #8656cd;
     /* position: absolute; */
     width: 100vw;
     padding:30px;
@@ -134,7 +148,8 @@
     left: 0;
     top: 0;
     flex-direction: column;
-    justify-content: center;
+    margin-left: 7em;
+    justify-content: flex-start;
     align-items: center;
     /* box-shadow: 0px 15px 30px -3px rgba(7, 7, 185, 0.5); */
     gap: 20px;
@@ -150,7 +165,7 @@
   
   .activemenu{
     display: none;
-  }
+  }    
 
   .activeman {
     display: block;
@@ -161,8 +176,11 @@
     border:1px solid white;
   }
   .toggle-nav{
+    display: none; 
+   
+  }
+  .envelop{
     display: none;
-    background-color: rgb(209, 233, 0);
   }
 
 }

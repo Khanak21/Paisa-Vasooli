@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
-
+// ------------- TransactionCard -------------------------- 
 const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransactionData,setUpdateFlag }) => {
   const [show, setShow] = useState(false)
   const [transInput, setTransInput] = useState({
@@ -23,14 +23,14 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
   }
 
   const { type, amount, category, desc, date,currency } = transInput;
-
+//  ---------------- Input --------------------- 
   const handleTransInput = (name) => (e) => {
     setTransInput({ ...transInput, [name]: e.target.value });
   };
-
+  // -------------------- functions to handle open and close  --------------- 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+//  ---------------- function to handle submit ----------------  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -49,7 +49,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
       console.log(err);
     }
   };
-
+//  --------------function to delete --------------- 
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(`http://localhost:3001/api/transactions/deleteTransaction/${id}`);

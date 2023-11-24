@@ -40,6 +40,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
       endDate:'',
     })
 
+
     const [transactionData,setTransactionData]=useState([])
     console.log(transactionData)
     const [filteredData,setFilteredData]=useState(transactionData)
@@ -71,6 +72,8 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     const handleTransInput = name=>e=>{
           setTransInput({...transInput,[name]:e.target.value})
     }
+
+    // ----------------------- Filter Input ----------------------------------  
     const handleFilterInput = name=>e=>{
       console.log(filterInput)
       setFilterInput({...filterInput,[name]:e.target.value})
@@ -90,6 +93,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
 // };
 
 console.log("filters:",filterInput)
+// -----------------checking whether filter empty or not ------------------------- 
 const isFilterEmpty =filterInput.category === "" && filterInput.startDate === "" && filterInput.endDate === "";
 
 useEffect(()=>{
