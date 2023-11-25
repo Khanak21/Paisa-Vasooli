@@ -101,24 +101,24 @@ function Login({user,setUser}) {
     // }
   };
   
-const googlesekar = (req,res)=>{
-  signInWithPopup(auth,provider).then((result)=>{
-    console.log(result);
-    console.log(result.user.photoURL);
-    axios
-          .post("http://localhost:3001/api/auth/google", {
-            username: result.user.displayName,
-            email: result.user.email,
-            image: result.user.photoURL,
-          })
-          .then((res) => {
-            console.log(res.data)
-            setUser(res.data)
-          localStorage.setItem(`user${user._id}`, JSON.stringify(res.data))
-            navigate("/dashboard")
-          });
-  }).catch((err)=>{console.log(err)})``
-}
+  const googlesekar = (req,res)=>{
+    signInWithPopup(auth,provider).then((result)=>{
+      console.log(result);
+      console.log(result.user.photoURL);
+      axios
+            .post("http://localhost:3001/api/auth/google", {
+              username: result.user.displayName,
+              email: result.user.email,
+              image: result.user.photoURL,
+            })
+            .then((res) => {
+              console.log(res.data)
+              setUser(res.data)
+            localStorage.setItem("user", JSON.stringify(res.data))
+              navigate("/dashboard")
+            });
+    }).catch((err)=>{console.log(err)})
+  }
    
   return (
     <>
