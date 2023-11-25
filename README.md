@@ -111,6 +111,7 @@ npm run serve
 - **Stock prediction:** Integrating ML to display stock predictions of user-selected stocks
 - **Contacts as friends:** Automatically adding all contacts related to a gmail account in friends' list
 - **Drag and Drop:** Drag and Drop feature for file upload in vault
+- **Pro Version:** Adding a paid version with specific features unlocked, and locked otherwise
 
 ## Deployed Link
 Access the deployed site here: https://paisavasooli.netlify.app/
