@@ -152,27 +152,29 @@ function Profile({ user, thememode, toggle,setUser}) {
 
           
           {user?.friends?.map((friend, index) => (
-            <label
-              key={index}
-              htmlFor={`friend-${index}`}
-              className='w-full flex justify-between items-center gap-1 border-1 p-1 border-black rounded-md'
-              style={{ backgroundColor: thememode == 'dark' ? 'rgb(222, 221, 221)' : 'white' }}
-            >
+            // <label
+            //   key={index}
+            //   htmlFor={`friend-${index}`}
+            //   className='w-full flex justify-between items-center gap-1 border-1 p-1 border-black rounded-md'
+            //   style={{ backgroundColor: thememode == 'dark' ? 'rgb(222, 221, 221)' : 'white' }}
+            // >
+            <>
               <div className='w-[30%] text-md p-1'>
-                <b>{friend}</b>
+                {/* <b>{friend}</b> */}
               </div>
               <input type='text' id={`friend-${index}`} value={friend} readOnly />
-            </label>
+            </>
+            // </label>
           ))}
 
       <div
-        className='flex flex-col mx-auto w-[50%] h-auto justify-start items-center p-3 border-1 border-black gap-3 rounded-sm'
-        style={{ backgroundColor: thememode === 'dark' ? 'rgb(195, 189, 189)' : 'white', border: '4px solid black' }}
+        className='flex flex-col mx-auto w-[50%] h-auto justify-start items-center p-3 gap-3 rounded-sm'
+        style={{ backgroundColor: thememode === 'dark' ? 'rgb(195, 189, 189)' : 'white'}}
       >
         <div className='w-full text-xl font-bolder mb-2 flex justify-center ' style={{ color: thememode === 'dark' ? 'black' : 'black' }}>
           Badges
         </div>
-        <div className='flex'>
+        <div className='flex flex-warp'>
         {badges?.map((badge, index) => (
           <img
           key={index}
