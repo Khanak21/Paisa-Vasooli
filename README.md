@@ -38,7 +38,7 @@ This project was made during the Codesangam 2023 Event conducted by CC Club MNNI
 ### Unique Features
   
 - **Filter and Search:** Filter transactions based on categories, date ranges, or both, and search for specific transactions
-- **Responsive Design:** Ensures a seamless experience on various devices
+- **Responsive Design:** Ensures a seamless experience on laptops, desktops and tablets
 - **Inbox**: Receive friend request invitations and acceptance messages 
 - **Email reminders**: Reminders for dues and bills are sent on user's mail
 - **Group codes**: Apart from friends,users can share group code with other people not added as friends to join the group
