@@ -34,24 +34,28 @@ export const ErrorMessage = (status,message)=>{
 
 export const signup = async (req, res, next) => {
   try {
+    console.log("signup",req.body);
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
     // Check if the email is already in use
     const existingUserEmail = await User.findOne({ email: req.body.email });
     if (existingUserEmail) {
+      console.log("Email already in use")
       return res.status(400).json({ success: false, message: "Email is already in use." });
     }
 
     // Check if the username is already in use
     const existingUsername = await User.findOne({ username: req.body.username });
     if (existingUsername) {
+      console.log("Username already in use");
       return res.status(400).json({ success: false, message: "Username is already in use." });
     }
 
     const newUser = new User({ ...req.body, password: hash });
 
     await newUser.save();
+    console.log("signed up",newUser)
     res.status(200).json({ newUser });
   } catch (err) {
     next(err);

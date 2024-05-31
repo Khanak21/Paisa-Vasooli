@@ -113,9 +113,10 @@ useEffect(()=>{
   const ifnocategselect=async()=>{
     try{
       const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
-      console.log(res.data)
+      console.log("transaction data",res.data)
       setFilteredData(res.data.trans)
       setTransactionData(res.data.trans)
+      // localStorage.setItem("transactions",JSON.stringify(res.data.trans))
     }catch(err){
         console.log(err)
     }
@@ -123,8 +124,10 @@ useEffect(()=>{
   if(isFilterEmpty){
     ifnocategselect()
   }
-},[updateFlag])
-
+},[updateFlag,user._id,isFilterEmpty])
+ 
+const datat = localStorage.getItem("transactions")
+console.log(datat)
    //function to retrieve user transactions with filter
     const handleFilter = e=>{
         e.preventDefault()
@@ -249,6 +252,7 @@ useEffect(()=>{
           addBadge(expensebadge)
         }
         setTransactionData(res.data.trans)
+        // localStorage.setItem("transactions",JSON.stringify(res.data.trans));
       }catch(err){
         console.log(err)
       }
@@ -281,6 +285,7 @@ useEffect(()=>{
         console.log(res.data)
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])
+        // localStorage.setItem("transactions",JSON.stringify([...transactionData,val]))
         setUpdateFlag((prevFlag) => !(prevFlag));
         if(amount>=100000 && type=="expense"){
           addBadge(bigexpense)
@@ -384,7 +389,7 @@ useEffect(()=>{
  
         <input type="date" id="startDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
         <input type="date" id="endDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
-        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#8656cd] text-white p-2 rounded-md lg:w-80'>Apply Filter</button>
+        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#8656cd] text-white p-2 rounded-md lg:w-80'>Apply</button>
 
           {/* ----------------------Exporting data-------------------------- */}
         <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className='my-2  p-2 bg-[#8656cd] text-white p-2 rounded-md'>Export</button></CSVLink>

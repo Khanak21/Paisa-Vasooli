@@ -1,330 +1,317 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios"
+import axios from "axios";
 import Navbar from '../../components/Navbar/Navbar';
 import { useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
+import { ReactComponent as Cash } from './cash-on-wallet.svg';
 
+const SimplifyDebt = ({ user, thememode, toggle }) => {
+    const { id } = useParams();
+    const [inputFields, setInputFields] = useState([]);
+    const [groupData, setGroupData] = useState([]);
+    const [data, setData] = useState([]);
+    const [commentFlag, setCommentFlag] = useState(false);
+    const [showPart, setShowPart] = useState(false);
+    const handleShowPart = () => setShowPart(true);
+    const handleClosePart = () => setShowPart(false);
+    const [membersData, setMembersData] = useState([]);
+    const [commentText, setCommentText] = useState('');
+    const [comments, setComments] = useState([]);
 
-const SimplifyDebt = ({user,thememode,toggle}) => {
-    console.log(user)
-    const {id} = useParams()
-  const [inputFields, setInputFields] = useState([]);
-  const [groupData,setgroupData]=useState([])
-  const [data,setData] = useState([])
-  const [commentflag,setcommentflag] = useState(false);
-  const [showPart, setShowPart] = useState(false);
-  const handleShowPart = () => setShowPart(true);
-  const handleClosePart = () => setShowPart(false);
+    const getGroup = async () => {
+        try {
+            const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`);
+            setGroupData(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-  console.log(inputFields)
-  console.log(data)
-  const [membersdata,setmembersdata]=useState([])
-
-  const getgroup=async()=>{
-    try{
-      //function to fetch group data
-      const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
-      console.log(res.data)
-      setgroupData(res.data)
-      console.log("use effect",groupData)
-    }catch(err){
-      console.log(err)
-    }
-  }
-
-console.log(membersdata)
-  //function to handle input
-  const handleInputChange = (index, fieldName, value) => {
-    const updatedInputFields = [...inputFields];
-    updatedInputFields[index][fieldName] = value;
-    setInputFields(updatedInputFields);
-  };
-
-  const handleAddField = () => {
-    setInputFields([...inputFields, { paidBy: '', paidFor: '', amount: '' }]);
-  };
-
-  const handleRemoveField = (index) => {
-    const updatedInputFields = [...inputFields];
-    updatedInputFields.splice(index, 1);
-    setInputFields(updatedInputFields);
-  };
-  
-  //function for adding field
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // console.log(inputFields);
-      const resultMap = inputFields.reduce((result, item) => {
-        const key = item.paidBy;
-      
-        if (result[key]) {
-          if (result[key].paidFor[item.paidFor]) {
-            result[key].paidFor[item.paidFor] += parseInt(item.amount, 10);
-          } else {
-            result[key].paidFor[item.paidFor] = parseInt(item.amount, 10);
-          }
+    const handleInputChange = (index, fieldName, value) => {
+        const updatedInputFields = [...inputFields];
+        if (fieldName === 'paidFor') {
+            const newPaidFor = [...updatedInputFields[index][fieldName]];
+            if (newPaidFor.includes(value)) {
+                newPaidFor.splice(newPaidFor.indexOf(value), 1);
+            } else {
+                newPaidFor.push(value);
+            }
+            updatedInputFields[index][fieldName] = newPaidFor;
         } else {
-          result[key] = {
-            paidBy: item.paidBy,
-            paidFor: { [item.paidFor]: parseInt(item.amount, 10) },
-          };
+            updatedInputFields[index][fieldName] = value;
         }
-      
-        return result;
-      }, {});
-      
-      const outputArray = Object.values(resultMap);
-      
-      //function to simplify debts
-      const simplify = async()=>{
-        try{
-          const res = await axios.post(`http://localhost:3001/api/group/simplifyDebt/${id}`,{outputArray})
-          console.log(res.data)
-          const val=res.data
-          setData(res.data)
-        }catch(err){
-          console.log(err)
-        }
-      }
-      simplify()
-      
-  };
-  useEffect(()=>{
-    //function to fetch all debts
-     const getdebts = async()=>{
-        try{
-            const res = await axios.get(`http://localhost:3001/api/group/getDebts/${id}`)
-            console.log(res.data)
-            if(res.data)setData(res.data)
-          }catch(err){
-            console.log(err)
-          }
-     }
-     getdebts()
-  },[])
+        setInputFields(updatedInputFields);
+    };
 
-  const [commentText, setCommentText] = useState('');
+    const handleAddField = () => {
+        setInputFields([...inputFields, { paidBy: '', paidFor: [], amount: '' }]);
+    };
+
+    const handleRemoveField = (index) => {
+        const updatedInputFields = [...inputFields];
+        updatedInputFields.splice(index, 1);
+        setInputFields(updatedInputFields);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const resultMap = inputFields.reduce((result, item) => {
+            const key = item.paidBy;
+            const splitAmount = item.amount / item.paidFor.length;
+
+            if (result[key]) {
+                item.paidFor.forEach(paidForPerson => {
+                    if (result[key].paidFor[paidForPerson]) {
+                        result[key].paidFor[paidForPerson] += splitAmount;
+                    } else {
+                        result[key].paidFor[paidForPerson] = splitAmount;
+                    }
+                });
+            } else {
+                result[key] = {
+                    paidBy: item.paidBy,
+                    paidFor: {}
+                };
+                item.paidFor.forEach(paidForPerson => {
+                    result[key].paidFor[paidForPerson] = splitAmount;
+                });
+            }
+
+            return result;
+        }, {});
+
+        const outputArray = Object.values(resultMap);
+        const simplify = async () => {
+            try {
+                const res = await axios.post(`http://localhost:3001/api/group/simplifyDebt/${id}`, { outputArray });
+                setData(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        simplify();
+        setInputFields([]);
+    };
+
+    useEffect(() => {
+        const getDebts = async () => {
+            try {
+                const res = await axios.get(`http://localhost:3001/api/group/getDebts/${id}`);
+                setData(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getDebts();
+    }, [id]);
 
     const handleCommentChange = (e) => {
         setCommentText(e.target.value);
     };
-     
-    //function to add comment
+
     const handleAddComment = async () => {
-      try {
-          const res = await axios.post(`http://localhost:3001/api/group/addcomment`, {
-                  userId: user._id, 
-                  text:commentText,
-                  groupId:id,
-                  username:user.username
-          });
-          console.log(res.data)
-          // socket.emit('comment', {
-          //   userId: user._id,
-          //   text: commentText,
-          //   groupId: id,
-          //   username: user.username,
-          // });
-          setCommentText('')
-          setcommentflag((prev)=>!(prev))
-      } catch (err) {
-          console.log(err);
-      }
-  };
-  const [comments, setComments] = useState([]);
+        try {
+            const res = await axios.post(`http://localhost:3001/api/group/addcomment`, {
+                userId: user._id,
+                text: commentText,
+                groupId: id,
+                username: user.username
+            });
+            setCommentText('');
+            setCommentFlag(prev => !prev);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-  //function to retrieve comments
-  const getcomments = async()=>{
-    try {
-      const response = await axios.get(`http://localhost:3001/api/group/getcomments/${id}`);
-      setComments(response.data.commentss);
-      console.log(comments)
-    } catch (error) {
-      console.error('Error fetching comments:', error);
-    }
-  }
-  useEffect(()=>{
-    getcomments()
-  },[commentflag,comments.length])
-  // useEffect(()=>{
-  //   getcomments()
-  // },[comments.length])
+    const getComments = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/api/group/getcomments/${id}`);
+            setComments(response.data.commentss);
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    };
 
-  // useEffect(() => {
-  //   // Listen for incoming comments from the server
-  //   socket.on('comment', (data) => {
-  //     setComments((prevComments) => [...prevComments, data]);
-  //   });
+    useEffect(() => {
+        getComments();
+    }, [commentFlag, comments.length]);
 
-  //   return () => {
-  //     // Clean up the socket connection when the component unmounts
-  //     socket.disconnect();
-  //   };
-  // }, [socket]);
+    const getMembers = async () => {
+        try {
+            const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`);
+            setMembersData(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
+    useEffect(() => {
+        getGroup();
+        getMembers();
+    }, [id]);
 
-//function to retrieve members in a group
-  useEffect(()=>{
-    const getMembers = async()=>{
-      try{
-        const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`)
-        console.log(res.data)
-        setmembersdata(res.data)
-      }catch(err){
-        console.log(err)
-      }
-    }
-    getMembers()
-  },[])
- 
-  //members list
-  const Dropdown = ({ options, value, onChange }) => (
-    <select value={value} onChange={onChange} className="w-80 m-4 p-2 border border-gray-300 rounded-md" disabled={options.length <= 1}>
-      <option value="" disabled>Select members</option>
-      {options.map((option, index) => (
-        <option key={index} value={option.username}>
-          {option.username}
-        </option>
-      ))}
-    </select>
-  );
-  
-  useEffect(()=>{
-     
-    getgroup()
-  },[])
+    const CheckboxGroup = ({ options, selectedValues, onChange }) => (
+        <div >
+            {options.map((option, index) => (
+                <div key={index} className='w-full flex justify-between align-middle items-center text-slate-700 m-2 dark:text-white'>
+                  <label className='w-[80%] dark:text-slate-200'>{option.username}</label>
+                    <input
+                        type="checkbox"
+                        value={option.username}
+                        checked={selectedValues.includes(option.username)}
+                        onChange={(e) => onChange(e.target.value)}  
+                        className='h-6'
+                    />
+                    
+                </div>
+            ))}
+        </div>
+    );
 
-  return (
-    <div className=' h-[150vh] dark:bg-[#181818] dark:text-white bg-[#f0f0f0]' >
-        <Navbar thememode={thememode} toggle={toggle}/>
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Simplify Debts</div>
-      <div className='flex justify-between'>
-          <div className="m-3 pt-3 text-4xl bg-[#f0f0f0] light:text-black font-bold dark:bg-[#181818] dark:text-white p-2">
-            Group Title: {groupData.title}
-          </div>
-        {/* Participants List */}
-          <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-1/4 p-1 h-10 my-4 mx-4'>
-            Participants
-           </button>
-           </div>
-
-        {/* Group members list */}
-        <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
-        <Modal.Header closeButton>
-        <Modal.Title>Group Participants</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-           <div className='flex-col'>
-              {membersdata?.map(data=>(
-               <div >{" "}{data.username}{" "}</div>
-               ))}
-               </div>
-        </Modal.Body>
-      </Modal>
-  
-
-      <div className='w-full flex justify-center bg-amber-500 dark:bg-[#282828] dark:text-white bg-[#cac8c8]'>
-{/*              
-             <div className='flex-col'>
-             Group Members :
-              {membersdata?.map(data=>(
-               <div >{" "}{data.username}{" "}</div>
-               ))}
-               </div> */}
-          </div>
-        <form onSubmit={handleSubmit}  className=' p-3 mx-auto flex flex-col gap-3 justify-center'>
-          {inputFields.map((field, index) => (
-          <div className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg ' >
-            <div key={index} className='gap-3'>
-             <div 
-                className='text-gray-400'
-                >
-              <label htmlFor={`paidBy-${index}`}>Paid By</label>
-              <Dropdown
-                options={membersdata}
-                value={field.paidBy}
-                onChange={(e) => handleInputChange(index, 'paidBy', e.target.value)}
-           />
-            </div>
-            <div className='text-gray-400'>
-              <label htmlFor={`paidFor-${index}`}>Paid To</label>
-              <Dropdown
-                options={membersdata}
-                value={field.paidFor}
-                onChange={(e) => handleInputChange(index, 'paidFor', e.target.value)}
-              />
-            </div>
-            <input
-              type="number"
-              value={field.amount}
-              onChange={(e) => handleInputChange(index, 'amount', e.target.value)}
-              placeholder="Amount"
-              className='w-80 m-4'
-
-            />
-            <button type="button" className='bg-[#8656cd] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
-              Remove
-            </button>
-</div>
-          </div>
-        ))}
-        
-      </form>
-     <div className='flex w-full justify-center'> <button type="button" onClick={handleAddField} className='bg-[#8656cd] p-2 rounded-md text-white w-60 m-4'>
-          Add Field
-        </button>
+    return (
+        <div className='pb-2 dark:bg-[#181818] dark:text-white bg-[#f0f0f0]'>
+            <Navbar thememode={thememode} toggle={toggle} />
       
-        <div>
-          <button type="submit" className='bg-[#8656cd] w-60 p-2 rounded-md text-white m-4 ' onClick={handleSubmit}>Simplify</button></div></div>
-          {/* List of all Debts */}
-
-      {
-        data?.map(debt=>(
-            <div className='flex items-center bg-gray-300 rounded-2xl justify-between p-2 mx-auto w-[60%] dark:bg-[#282828]'>
-                <div className='w-[60%] text-2xl flex align-middle p-3'>{debt[0]}{" "} owes {debt[1]} {" "}&#x20B9;{debt[2]}</div>
-
-                {user.username==debt[1] && <button onClick={async()=>{
-                     try{
-                        const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`,debt)
-                        setData(res.data.simplifyDebt)
-                        console.log(res.data)
-                    }catch(err){
-                        console.log(err)
-                    }
-                }}
-                className='bg-[#8656cd] p-2 rounded-md text-white m-2'
-                >{debt[3] ===true ? "Approved" : "Approve"}</button>}
-                {user.username==debt[0] && debt[3]==true && <div>Approved by {debt[1]}✅</div>}
+            <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Simplify Debts</div>
+            <div className='flex justify-between'>
+                <div className="mx-4 text-2xl bg-[#f0f0f0] text-slate-500 dark:bg-[#181818] dark:text-[#f0f0f0] p-2">
+                     {groupData.title}
+                </div>
+                  
+                <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-1/4 h-10 mx-4'>
+                    Participants
+                </button>
             </div>
-        ))
-      }
-    {/* Comments section */}
-        <h3 className='underline underline-offset-8 decoration-[#8656cd] m-4'>Comments:</h3>
+            <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Group Participants</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className='flex-col'>
+                        {membersData?.map(data => (
+                            <div key={data._id}>{" "}{data.username}{" "}</div>
+                        ))}
+                    </div>
+                </Modal.Body>
+            </Modal>
+            <div className={`grid grid-cols-2`}>
+            <div className='overflow-auto h-[65vh]'>
+            <form onSubmit={handleSubmit} className='p-3 mx-auto flex flex-col gap-3 justify-center'>
+                {inputFields.map((field, index) => (
+                    <div key={index} className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg'>
+                        <div className='gap-3'>
+                            <div className='text-slate-500 mb-2'>
+                                <label htmlFor={`paidBy-${index}`} className='dark:text-white'>Paid By</label>
+                                <select
+                                    value={field.paidBy}
+                                    onChange={(e) => handleInputChange(index, 'paidBy', e.target.value)}
+                                    className="w-80 p-2 border border-gray-300 rounded-md"
+                                >
+                                    <option value="" disabled>Select a member</option>
+                                    {membersData.map((member, i) => (
+                                        <option key={i} value={member.username}>{member.username}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className='text-slate-500'>
+                                <label htmlFor={`paidFor-${index}`} className='dark:text-white'>Paid For</label>
+                                <CheckboxGroup
+                                    options={membersData}
+                                    selectedValues={field.paidFor}
+                                    onChange={(value) => handleInputChange(index, 'paidFor', value)}
+                                />
+                            </div>
+                            <label htmlFor={`amount-${index}`} className='text-slate-500 dark:text-white'>Amount</label>
+                            <div className='flex-col'>
+                            <input
+                                type="number"
+                                value={field.amount}
+                                onChange={(e) => handleInputChange(index, 'amount', e.target.value)}
+                                placeholder="Amount"
+                                className='w-80 h-10 '
+                            />
+                            <button type="button" className='bg-[#8656cd] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
+                                Remove
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </form>
 
-           <div className='m-4'>
+            <div className='flex w-full justify-center'>
+                <button onClick={handleAddField} className='bg-[#8656cd] p-2 rounded-md text-white m-2'>Add Payment</button>
+                <button type="submit" onClick={handleSubmit} className='bg-[#8656cd] p-2 rounded-md text-white m-2'>Simplify Debt</button>
+            </div>
+            </div>
+            <div className='relative overflow-auto h-[65vh]'>
+            {data && data.length > 0 ? (
+              <>
+                <div className='absolute inset-0 flex justify-center items-center opacity-20 pointer-events-none'>
+                  <Cash />
+                </div>
+                <div className='relative z-10'>
+                  {data.map(debt => (
+                    <div key={debt[0]} className='flex items-center bg-gray-300 rounded-2xl justify-between m-2 w-[95%] dark:bg-[#282828] text-sm'>
+                      <div className='w-[60%] flex align-middle p-3'>{debt[0]}{" "} &#8594; {debt[1]} {" "}&#x20B9;{debt[2]}</div>
+                      {user.username === debt[1] && (
+                        <button onClick={async () => {
+                          try {
+                            const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`, debt);
+                            setData(res.data.simplifyDebt);
+                            console.log(res.data);
+                          } catch (err) {
+                            console.log(err);
+                          }
+                        }}
+                          className='bg-[#8656cd] p-1 rounded-md text-white m-2'>
+                          {debt[3] === true ? "Approved" : "Approve"}
+                        </button>
+                      )}
+                      {user.username === debt[0] && debt[3] === true && <div>Approved by {debt[1]}✅</div>}
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className='flex justify-center items-center h-full py-10 pr-20 opacity-50'>
+                <Cash />
+              </div>
+            )}
+          </div>
+            
+            </div>
+
+            <h3 className='mx-4 mt-4'>Comments:</h3>
+            <div className='mx-4'>
                 <input
                     type="text"
                     id="commentText"
                     value={commentText}
                     onChange={handleCommentChange}
                     placeholder="Type your comment here"
-                    className="w-[50%] m-2 p-2 border border-gray-300 rounded-md text-black"
+                    className="w-[50%] h-10 p-2 border border-gray-300 rounded-md text-black"
                 />
                 <button onClick={handleAddComment} className="bg-[#8656cd] p-2 rounded-md text-white m-2">
                     Add Comment
                 </button>
-                </div>
+            </div>
+            <div className="mt-4 mx-4 mb-20 ">
+            {comments.map((comment) => (
+                <div key={comment._id} className="rounded-full text-sm w-[70%] bg-[#d1d5db]">
+                 <p className='px-3 py-2'>{comment.username === user.username ?'You' : comment.username}:{comment.text}</p>
+        </div>
+    ))}
+    
+    
+</div>
 
-                <div className="m-4">
-        {comments.map((comment) => (
-          <div key={comment._id} className="border p-2 my-2 rounded-md">
-            <p>{comment.text}</p>
-            <p>By: {comment.username === user.username ? 'You' : comment.username}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+
+
+        </div>
+    );
 };
 
 export default SimplifyDebt;
+

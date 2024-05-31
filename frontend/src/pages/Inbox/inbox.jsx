@@ -8,22 +8,7 @@ const Inbox = ({ user,setUser,thememode,toggle }) => {
   const [inboxuser,setinboxuser] = useState({})
 
 
-  //function to accept friend request
-  const handleAccept=async(key)=>{
-    try{
-        console.log(key)
-        const res= await axios.put(`http://localhost:3001/api/friend/acceptRequest/${user._id}`,{friendName:key})
-        alert(res.data.message)
-        console.log(res.data)
-        setUser(res.data.res1);
-        localStorage.setItem('user', JSON.stringify(res.data.res1))
-        setinboxuser(res.data.res1)
-
-
-    }catch(err){
-        console.log(err)
-    }
-  }
+  
 
   //fetching data from local storage
   useEffect(()=>{
@@ -48,7 +33,22 @@ console.log(inboxuser)
 useEffect(() => {
 
 }, [user.inbox,user.friends,inboxuser]);
+//function to accept friend request
+const handleAccept=async(key)=>{
+  try{
+      console.log("friend name key",key)
+      const res= await axios.put(`http://localhost:3001/api/friend/acceptRequest/${user._id}`,{friendName:key})
+      alert(res.data.message)
+      console.log(res.data)
+      setUser(res.data.res1);
+      localStorage.setItem('user', JSON.stringify(res.data.res1))
+      setinboxuser(res.data.res1)
 
+
+  }catch(err){
+      console.log(err)
+  }
+}
   return (
 
     <div className='dark:bg-[#181818] h-[100vh]'>
@@ -59,7 +59,16 @@ useEffect(() => {
         
       {inboxuser.inbox?.toReversed().map((msg, index) => {
         const tokens = msg.split(' ');
-        const key = tokens[0];
+        let i=0
+        let key=""
+        while(i<tokens.length){
+          if(tokens[i]=="sent")break
+           key+=tokens[i];
+           key+=" "
+           i++;
+        }
+        key=key.trim()
+        // const key = tokens[0];
 
         return (
           <div key={key}>

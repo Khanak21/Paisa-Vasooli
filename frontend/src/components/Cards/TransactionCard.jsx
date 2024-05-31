@@ -128,7 +128,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
             </div>
 
           </div>
-          <Card.Text className='font-bold my-2'>Transaction description :- {"  "}{transactionData.desc}</Card.Text>
+         {transactionData.desc && <Card.Text className='font-bold my-2'>Transaction description :- {"  "}{transactionData.desc}</Card.Text>}
         </Card.Body>
       </Card>
 

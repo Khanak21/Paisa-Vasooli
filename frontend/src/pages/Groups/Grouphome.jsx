@@ -57,6 +57,7 @@ console.log(groupData)
         const res= await axios.post(`http://localhost:3001/api/group/splitbill`,{input})
         console.log(res.data)
         setBillSplitData(res.data.billSplit)
+        handleClose()
       }catch(err){
         console.log(err)
       }

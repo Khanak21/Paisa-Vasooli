@@ -43,7 +43,7 @@ export const acceptRequest = async(req,res)=>{
     const friendName = req.body.friendName// id of friend
     const username = (await User.findById(userId)).username
     const friendUser = await User.findOne({username:friendName})
-    console.log(req.body.friendName)
+    console.log("friend name",req.body.friendName)
 
    try{ 
     if (!friendUser) {

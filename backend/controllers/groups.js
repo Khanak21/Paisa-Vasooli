@@ -203,23 +203,42 @@ export const markApproved = async (req, res) => {
 };
 
 
-export const simplifyDebt = async(req,res)=>{
-    const debts = req.body.outputArray
-    const id=req.params.id
 
-    try{
-        const splits = Splitwise(debts);
-        splits.forEach(subArray => subArray.push(false));
-        const updatedgroup = await group.findByIdAndUpdate(
-            id,
-            {$set:{simplifyDebt:splits}},
-            {new:true}
-           )
-    console.log(splits);
-    res.json(splits)
-    }catch(err){
-        res.json("unable to simplify")
-    }
+export const simplifyDebt = async(req,res)=>{
+  const debts = req.body.outputArray
+  console.log("debts",debts)
+  const id=req.params.id
+  try{
+    const curgroup = await group.findById(id)
+    console.log("Groupp",curgroup)
+    curgroup.simplifyDebt?.map(arr=>{
+      if(arr[3]==false){
+        let obj={}
+        obj['paidBy'] = arr[1]
+        obj['paidFor'] = {}; //Initialisation before adding item
+        obj['paidFor'][arr[0]]=arr[2]
+        debts.push(obj)
+        // console.log("obj",obj)
+      }
+    })
+      console.log("debts after pushing obj",debts)
+  }catch(err){
+    console.log("Can't fetch group")
+  }
+  try{
+      const splits = Splitwise(debts);
+      // console.log(array,splits)
+      splits.forEach(subArray => subArray.push(false));
+      const updatedgroup = await group.findByIdAndUpdate(
+          id,
+          {$set:{simplifyDebt:splits}},
+          {new:true}
+         )
+  console.log(splits);
+  res.json(splits)
+  }catch(err){
+      res.json("unable to simplify")
+  }
 }
 
 
