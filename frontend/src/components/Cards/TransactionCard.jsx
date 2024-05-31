@@ -80,10 +80,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
         
         </div>
         <Card.Text className='my-1'>
-          Transaction Description{" "} :  {transactionData.desc}
+          Description{" "} :  {transactionData.desc}
         </Card.Text>
         <Card.Text className='my-1'>
-          Transaction Date{" "} :  {transactionData?.date?.substring(0,10)}
+          Date{" "} :  {transactionData?.date?.substring(0,10)}
         </Card.Text> 
       </Card.Body>
     </Card>

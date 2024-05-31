@@ -16,9 +16,6 @@ const languages = [
 
 
 const Dashboard = ({user,thememode,toggle,setUser}) => {
-  // console.log(user)
-  // const { t } = useTranslation();
-
   const [lang, setLang] = useState("en");
   const [updateFlag, setUpdateFlag] = useState(false); 
   const [show,setShow] = useState(false)
@@ -31,7 +28,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
         category:'',
         desc:'',
         date:'',
-        currency:''
+        currency:'inr'
     })
     const [filterInput,setFilterInput] = useState({
       userId:user._id,
@@ -39,8 +36,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
       startDate:'',
       endDate:'',
     })
-
-
+    const [errorMessage, setErrorMessage] = useState("");
     const [transactionData,setTransactionData]=useState([])
     console.log(transactionData)
     const [filteredData,setFilteredData]=useState(transactionData)
@@ -64,14 +60,11 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
       { label: "Date", key: "date" }
 
     ];
-
-    // console.log("transanction data being logged:",transactionData)
-
     const {type,category,desc,date,currency} = transInput
     let {amount} = transInput
 
     //functions to handle modal visibility
-    const handleClose = () => setShow(false);
+    const handleClose = () => {setShow(false);setErrorMessage("")};
     const handleShow = () => setShow(true);
 
     const handleIncomeClose = () => setIncomeshow(false);
@@ -80,29 +73,26 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     const handleExpenseShow = () => setExpenseshow(true);
 
      //functions to handle input
-    const handleTransInput = name=>e=>{
-          setTransInput({...transInput,[name]:e.target.value})
+    const handleTransInput = name=>(e)=>{
+      if(name=='type' ||name=='category'||name=='desc'){
+        const capitalizedValue = capitalizeFirstLetter(e.target.value);
+        setTransInput({...transInput,[name]:capitalizedValue})
+      }
+      else{
+        setTransInput({...transInput,[name]:e.target.value})
+      }
     }
 
+    const capitalizeFirstLetter = (string) => {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    };
 
     // ----------------------- Filter Input ----------------------------------  
     const handleFilterInput = name=>e=>{
       console.log(filterInput)
       setFilterInput({...filterInput,[name]:e.target.value})
-
 }
   
-//   const handleChange = (e) => {
-//     // i18next.changeLanguage(e.target.value)
-//     setLang(e.target.value);
-//     i18next.changeLanguage(e.target.value).catch((err)=>{
-//       console.log(err)
-//     })
-//     // let loc = "http://localhost:3000/dashboard"
-//     // window.location.replace(
-//     //     loc + "?lng=" + e.target.value
-//     // );
-// };
 
 console.log("filters:",filterInput)
 // -----------------checking whether filter empty or not ------------------------- 
@@ -198,7 +188,7 @@ console.log(datat)
     const [currenci, setCurrenci] = useState('inr');
     const currenciData = UCurrency(currenci);
     // console.log
-    console.log(currenciData['INR'])
+    // console.log(currenciData['INR'])
     
     useEffect(()=>{
       //function to retrive user data from local storage
@@ -275,12 +265,14 @@ console.log(datat)
       // // console.log(transInput)
       // // addTransaction(transInput)
       const currencysmall = currency.toUpperCase();
-      console.log(currenciData[currencysmall]);
       amount =Math.floor(amount / currenciData[currencysmall]);
       console.log(amount)
       const addTrans = async()=>{
       try{
-        console.log(transInput)
+        if(transInput.amount===''||transInput.category===''||transInput.currency===''||transInput.date===''||transInput.desc===''||transInput.type===''||transInput.userId===''){
+          setErrorMessage("All the fields should be filled");
+          return ;
+        }
         const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{userId:user._id,type,category,desc,date,currency,amount})
         console.log(res.data)
         const val=res.data.transaction
@@ -295,6 +287,7 @@ console.log(datat)
           addBadge(bigincome)
           handleIncomeShow()
         }
+        setErrorMessage("");
         handleClose()
       }catch(err){
         console.log(err.response.data)
@@ -319,7 +312,7 @@ console.log(datat)
     <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
       
         <Navbar thememode={thememode} toggle={toggle}/>
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-3 decoration-[#8656cd] dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
+      <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#8656cd] dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
       <div className='mt-2 mx-4 text-gray-600 dark:text-gray-400'>Let's add some transactions!</div>
 
      <div className='h-full flex flex-col justify-center items-start '>
@@ -485,6 +478,7 @@ console.log(datat)
             ></input>
         </Modal.Body>
         <Modal.Footer>
+          {errorMessage&&<p className='text-red-500'>{errorMessage}</p>}
           <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit} required>Save</button>
         </Modal.Footer>
       </Modal>
@@ -509,9 +503,6 @@ console.log(datat)
         <Modal.Footer>
         </Modal.Footer>
       </Modal>
-      
-            
-             
         </div>
 
   )

@@ -6,6 +6,9 @@ import SavingCard from "../../components/Cards/SavingCard";
 import axios from "axios";
 import Navbar from "../../components/Navbar/Navbar";
 import './Savings.css';
+import Table from 'react-bootstrap/Table';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import Modal from 'react-bootstrap/Modal';
 
 function Savings2({ user,setUser,thememode,toggle}) {
   console.log(thememode);
@@ -89,12 +92,62 @@ function Savings2({ user,setUser,thememode,toggle}) {
     deleteData();
     setIsVisible(false);
   };
+  const[show,setShow] =useState(false);
+  const [sellectedsav,setselectedsav] = useState(null);
+  const [sav,setsav]=useState({
+    userId:user._id,
+    targetAmt:'',
+    currAmt:'',
+    currency:'',
+    title:''
+  })
+  const handleSaving = (name) => (e) => {
+    if(name=='title'){
+      const capitalizedTitle = capitalizeFirstLetter(e.target.value);
+      setsav({ ...sav, [name]: capitalizedTitle });
+    }
+    else{
+      setsav({ ...sav, [name]: e.target.value });
+    }
+  };
 
-  // const openModel = (itemId) => {
-  //   setEditItemId(itemId);
-  //   setIsVisible(true);
-  // };
-
+  const [errorMessage,setErrorMessage]= useState("");
+  const handleClose = () => {setShow(false);setselectedsav(null);setErrorMessage("")}
+  const handleShow = (sav) => {
+  setShow(true);
+  setselectedsav(sav)
+  setsav({
+    userId: user._id,
+    targetAmt:sav.targetAmt,
+    currAmt:sav.currAmt,
+    title:sav.title,
+    });
+  }
+  const handlesavedit = (e,obj) => {
+    e.preventDefault();
+    const editSavings = async () => {
+      try {
+        if(sav.userId===''||sav.currAmt===''||sav.currency===''||sav.targetAmt===''||sav.title===''){
+          setErrorMessage("All entries should be filled");
+          return;
+        }
+        const res = await axios.put(`http://localhost:3001/api/savings/editSaving/${obj._id}`, {sav});
+        console.log(res.data);
+        setsav({
+          userId: user._id,
+          title: '',
+          currAmt: '',
+          targetAmt: '',
+        });
+        setUpdateFlag(prev=>!prev)
+        setErrorMessage('');
+        handleClose()
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    editSavings();
+  };
 
   const UCurrency=(currency)=>{
     const [data, setData] = useState({})
@@ -197,24 +250,36 @@ const currenciData = UCurrency(currenci);
     getSavings()
   },[user._id,updateFlag])
 
+  const handleDelete = (id) => {
+  const delsaving = async(id)=>{
+    try{
+        const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${id}`)
+        console.log(res.data)
+        setUpdateFlag((prev)=>!(prev))
+
+    }catch(err){
+        console.log(err)
+    }
+}
+delsaving(id);
+
+  }
+
   return (
     <div className="min-h-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
 
     <Navbar thememode={thememode} toggle={toggle}/>
     <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
-       <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Savings Tracker</div>
+       <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#8656cd] dark:text-[#f0f0f0]'>Savings Tracker</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
      
       <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black"}}>
-       
-
         <div className="main-content p-1" style={{
-  color: thememode === "dark" ? "white" : "black",
-  backgroundColor: thememode === "dark" ? "#282828" : "#E5E4E2",
-  borderRadius: thememode==="dark" ? "20px" : "20px"
-}}
-
->
+          color: thememode === "dark" ? "white" : "black",
+          backgroundColor: thememode === "dark" ? "#282828" : "#E5E4E2",
+          borderRadius: thememode==="dark" ? "20px" : "20px"
+          }}
+        >
           <div className="main-left">
             <div className="savings-holder"  >
               <label htmlFor="">Title</label>
@@ -291,12 +356,71 @@ const currenciData = UCurrency(currenci);
           
           {/* Saving Cards list */}
           <div className="main-right flex flex-col justify-center items-start gap-5 h-[500px]">
-            <div className="overflow-y-scroll w-full mt-2 rounded-md">
+            {/* <div className="overflow-y-scroll w-full mt-2 rounded-md">
             {savingData?.map((sav)=>(
             <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData} thememode={thememode} toggle={toggle} updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/> 
           ))
           }
-            </div>
+            </div> */}
+            <div className="storing-dues">
+          <div className="overflow-y-scroll w-full max-h-[500px]">
+          <Table striped borderless hover variant={thememode == 'dark' ? 'dark' : ''}>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Current Amount</th>
+                <th>Goal Amount</th>
+                <th>Completion(%)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            {savingData?.map((sav)=>(
+              <>
+              <tr key = {sav._id}>
+              <td>{sav.title}</td>
+              <td>&#8377; {sav.currAmt}</td>
+              <td>&#8377; {sav.targetAmt}</td>
+              <td>{Math.min((sav.currAmt / sav.targetAmt) * 100, 100)} %</td>
+              <td>
+                <div className='flex justify-end w-[80%] gap-4 mr-6'>
+                  <AiFillEdit onClick={() => handleShow(sav)} style={{ cursor: 'pointer' }} />
+                  <AiFillDelete onClick={() => handleDelete(sav._id)} style={{ cursor: 'pointer' }} />
+                </div>
+              </td>
+              </tr>
+              </>
+            ))}
+            </tbody>
+          </Table>
+          </div>
+        </div>
+        <Modal show={show} onHide={handleClose} animation={false} centered>
+        
+        <Modal.Header closeButton>
+          <Modal.Title className='font-bolder'>Edit Saving</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <form onSubmit={(e) => handlesavedit(e, sellectedsav)}>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-bold text-sm">Title</label>
+                  <input type="text" className="border border-gray-300 p-2 rounded w-full text-sm" value={sav.title} onChange={handleSaving('title')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Current Amount</label>
+                  <input type="date" className="border border-gray-300 p-2 rounded w-full text-sm" value={sav.currAmt} onChange={handleSaving('currAmt')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Target Amount</label>
+                  <input type="number" className="border border-gray-300 p-2 rounded w-full text-sm" value={sav.targetAmt} onChange={handleSaving('targetAmt')} />
+                </div>
+              </div>
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              <button type="submit" className="mt-4 bg-[#8656cd] text-white py-2 px-4 rounded">Save Changes</button>
+            </form>
+        </Modal.Body>
+      </Modal>
           </div>
         </div>
       </div>
