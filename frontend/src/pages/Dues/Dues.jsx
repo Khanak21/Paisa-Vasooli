@@ -188,7 +188,7 @@ const handleBill = (name) => (e) => {
 };
 
 // -------------- handling the closing and opening of edit ------------- 
-const handleClose = () => {setShow(false);setselectedbill(null)}
+const handleClose = () => {setShow(false);setselectedbill(null);setErrorMessage("")}
 const handleShow = (bill) => {
   setShow(true);
   setselectedbill(bill)
@@ -371,7 +371,6 @@ return (
             </thead>
             <tbody>
             {BillData?.map((bill) => (
-              // <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} thememode={thememode}/>
               <>
               <tr key = {bill._id}>
               <td>{bill.title}</td>
