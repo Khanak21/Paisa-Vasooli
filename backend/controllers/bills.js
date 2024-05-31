@@ -3,15 +3,11 @@ import  billSchema from "../models/bills.js";
 //controllers for bills and dues
 export const addBill = async(req,res)=>{
     const {userId,title,amount,currency,toWhom,recurring,dueDate} =req.body
-
+    console.log(req.body);
     const bill = billSchema(
         req.body.dueItem
     )
-
     try{
-        // if(!userId || !title || !amount  || !toWhom){
-        //     return res.status(400).json({message: 'All fields are required!'})
-        // }
         await bill.save()
         res.status(200).json({bill})
 
@@ -34,9 +30,17 @@ export const getBills = async(req,res)=>{
 }
 
 export const editBill = async(req,res)=>{
+    console.log("mast",req.body.Bill);
+    const updateFields = {
+        title: req.body.Bill.titleedit,
+        dueDate: req.body.Bill.dueDateedit,
+        amount: req.body.Bill.amountedit,
+        toWhom: req.body.Bill.toWhomedit,
+      };
+      console.log("badhiya",updateFields)
     try{
-        const bill = await billSchema.findByIdAndUpdate(req.params.id,{$set:req.body.BillInput},{new:true});
-        res.json({message:"bill edited"})
+        const bill = await billSchema.findByIdAndUpdate(req.params.id,{$set:updateFields},{new:true});
+        res.status(200).json(bill)
     }catch(err){
         res.json({message:"cannot edit the bill/bill not found"})
 

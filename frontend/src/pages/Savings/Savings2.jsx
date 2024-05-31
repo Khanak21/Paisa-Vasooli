@@ -13,7 +13,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   const [currentAmount, setCurrentAmount] = useState();
   const [amount, setAmount] = useState();
   const [items, setItems] = useState([]);
-  const [Currency,setCurrency]=useState();
+  const [Currency,setCurrency]=useState('inr');
   const [editAmount, setEditAmount] = useState("");
   const [editCurrent, setEditCurrent] = useState("");
   const [editItemId, setEditItemId] = useState(null);
@@ -22,9 +22,15 @@ function Savings2({ user,setUser,thememode,toggle}) {
   const [updateFlag,setUpdateFlag] =useState(false)
 
  //function to handle savings input
-  const handleInputTitle = (event) => {
-    setInputTitle(event.target.value);
-  };
+
+ const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+ const handleInputTitle = (event) => {
+  const capitalizedTitle = capitalizeFirstLetter(event.target.value);
+  setInputTitle(capitalizedTitle);
+};
 
   const handleCurrentAmount = (event) => {
     setCurrentAmount(event.target.value);
@@ -95,9 +101,10 @@ function Savings2({ user,setUser,thememode,toggle}) {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`);
+          const response = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=LQvy3LtRMZSLNj7WvwKX3tPoA37h6FdzWNaLbw4f&currencies=INR%2CMXN%2CSEK%2CCHF%2CSGD%2CHKD%2CCNY%2CCAD%2CAUD%2CJPY%2CGBP%2CEUR%2CUSD%2CCAD&base_currency=INR`);
           const result = await response.json();
-          setData(result[currency]);
+          setData(result.data);
+          console.log(result.data);
         } catch (error) {
           console.error('Error fetching currency data:', error);
         }
@@ -122,17 +129,23 @@ const currenciData = UCurrency(currenci);
         targetAmt: amount,
         Currency:Currency
       };
+      console.log(saving)
       e.preventDefault()
       console.log('Currency data:', currenciData);
-      console.log(currenciData[Currency]);
-      saving.currAmt =Math.floor(saving.currAmt / currenciData[Currency]);
+      const currencysmall = Currency.toUpperCase();
+      console.log(currenciData[currencysmall]);
       console.log(saving.currAmt)
-      saving.targetAmt =Math.floor(saving.targetAmt / currenciData[Currency]);
+      saving.currAmt =Math.floor(saving.currAmt / currenciData[currencysmall]);
+      console.log(saving.currAmt)
+      saving.targetAmt =Math.floor(saving.targetAmt / currenciData[currencysmall]);
       console.log(saving.targetAmt)
       const res = await axios.post("http://localhost:3001/api/savings/addSaving", { saving });
       console.log(res.data.saving);
       const val = res.data.saving;
       setSavingData(prev => [...prev, val]);
+      setInputTitle("");
+      setCurrentAmount("");
+      setAmount("");
     } catch (err) {
       console.log(err);
     } 

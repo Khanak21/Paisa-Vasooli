@@ -6,7 +6,9 @@ import axios from "axios";
 import BillCard from "../../components/Cards/BillCard.jsx"
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
-
+import Table from 'react-bootstrap/Table';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import Modal from 'react-bootstrap/Modal';
 
 function Dues({ user, thememode, toggle,setUser }) {
   const [billflag,setbillflag] = useState(false)
@@ -16,9 +18,13 @@ function Dues({ user, thememode, toggle,setUser }) {
     dueDate: '',
     amount: '',
     toWhom: '',
-    recurring: '',
-    currency:''
+    recurring: 'daily',
+    currency:'inr'
   });
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   const [filterInput, setFilterInput] = useState({
     userId: user._id,
@@ -29,9 +35,17 @@ function Dues({ user, thememode, toggle,setUser }) {
 
   const [deleteDiv, setdeleteDiv] = useState(false);
   const [BillData, setBillData] = useState([]);
+  const [errorMessageAdd, setErrorMessageAdd] = useState("");
+  console.log(BillData)
     // ---------------input ----------------------- 
   const handleBillInput = (name) => (e) => {
-    setdueItem({ ...dueItem, [name]: e.target.value });
+    if(name=='title' ||name=='toWhom'){
+      const capitalizedTitle = capitalizeFirstLetter(e.target.value);
+      setdueItem({ ...dueItem, [name]: capitalizedTitle });
+    }
+    else{
+      setdueItem({ ...dueItem, [name]: e.target.value });
+    }
   };
   //  --------------handling filter input --------------- 
   const handleFilterInput = (name) => (e) => {
@@ -48,7 +62,6 @@ function Dues({ user, thememode, toggle,setUser }) {
       console.error('Error sending start mail:', err);
     }
   };
-
   const mailsendrecurring = async (recurring) => {
     try {
       const reqmail = user.email;
@@ -64,10 +77,12 @@ function Dues({ user, thememode, toggle,setUser }) {
 // ----------------------- Submit ------------------- 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Currency data:', currenciData);
-    console.log(currenciData[dueItem.currency]);
-    dueItem.amount =Math.floor(dueItem.amount / currenciData[dueItem.currency]);
-      console.log(dueItem.amount)
+    const currencysmall = dueItem.currency.toUpperCase();
+    dueItem.amount =Math.floor(dueItem.amount / currenciData[currencysmall]);
+    if(dueItem.amount==''||dueItem.currency===''||dueItem.dueDate===''||dueItem.recurring===''||dueItem.title===''||dueItem.toWhom===''||dueItem.userId===''){
+      setErrorMessageAdd("All entries should be filled");
+      return ;
+    }
     try {
       const res = await axios.post('http://localhost:3001/api/bills/addBill', { dueItem });
       console.log(res.data);
@@ -81,15 +96,15 @@ function Dues({ user, thememode, toggle,setUser }) {
       if (currdate.getFullYear() === duedate.getFullYear() && currdate.getMonth() === duedate.getMonth() && currdate.getDate() === duedate.getDate() && currdate.getTime() + oneDayInMillis === duedate.getTime()) {
         mailsendrecurring(dueItem.recurring);
       }
-
       setdueItem({
         title: '',
         dueDate: '',
         amount: '',
         toWhom: '',
-        recurring: '',
-        currency:''
+        recurring: 'daily',
+        currency:'inr'
       });
+      setErrorMessageAdd("");
     } catch (err) {
       console.log(err.response.data);
     }
@@ -130,9 +145,9 @@ function Dues({ user, thememode, toggle,setUser }) {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`);
+          const response = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=LQvy3LtRMZSLNj7WvwKX3tPoA37h6FdzWNaLbw4f&currencies=INR%2CMXN%2CSEK%2CCHF%2CSGD%2CHKD%2CCNY%2CCAD%2CAUD%2CJPY%2CGBP%2CEUR%2CUSD%2CCAD&base_currency=INR`);
           const result = await response.json();
-          setData(result[currency]);
+          setData(result.data);
         } catch (error) {
           console.error('Error fetching currency data:', error);
         }
@@ -147,23 +162,105 @@ function Dues({ user, thememode, toggle,setUser }) {
 const [currenci, setCurrenci] = useState('inr');
 const currenciData = UCurrency(currenci);
 
+//Table entry data
+const [errorMessage, setErrorMessage] = useState("");
+const [show, setShow] = useState(false);
+const [sellectedbill,setselectedbill] = useState(null);
+const [Bill, setBill] = useState({
+  userId: user._id,
+  titleedit: '',
+  dueDateedit: '',
+  amountedit: '',
+  toWhomedit: '',
+});
+
+const {titleedit, amountedit, toWhomedit, dueDateedit } = Bill;
+
+const handleBill = (name) => (e) => {
+  // setBill({ ...Bill, [name]: e.target.value });
+  if(name=='titleedit' ||name=='toWhomedit'){
+    const capitalizedTitle = capitalizeFirstLetter(e.target.value);
+    setBill({ ...Bill, [name]: capitalizedTitle });
+  }
+  else{
+    setBill({ ...Bill, [name]: e.target.value });
+  }
+};
+
+// -------------- handling the closing and opening of edit ------------- 
+const handleClose = () => {setShow(false);setselectedbill(null)}
+const handleShow = (bill) => {
+  setShow(true);
+  setselectedbill(bill)
+  setBill({
+    userId: user._id,
+    titleedit: bill.title,
+    dueDateedit: bill.dueDate.slice(0,10),
+    amountedit: bill.amount,
+    toWhomedit: bill.toWhom,
+    });
+}
+
+// --------------funtion to handle the submitting the edit data --------------------- 
+const handleSubmitBill = (e,obj) => {
+  e.preventDefault();
+  const editBill = async () => {
+    try {
+      console.log(obj);
+      if(Bill.amountedit===''||Bill.dueDateedit===''||Bill.titleedit===''||Bill.toWhomedit===''||Bill.userId===''){
+        setErrorMessage("All entries should be filled");
+        return;
+      }
+      const res = await axios.put(`http://localhost:3001/api/bills/editBill/${obj._id}`, {Bill});
+      console.log(res.data);
+      setBill({
+      userId: user._id,
+      titleedit: '',
+      dueDateedit: '',
+      amountedit: '',
+      toWhomedit: '',
+      });
+      setbillflag((prev)=>!(prev))
+      setErrorMessage("");
+      handleClose();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  editBill();
+};
+
+// ----------------  handling the delete function -------------------- 
+const handleDelete = (id) => {
+  const delBill = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${id}`);
+      console.log(res.data);
+      setbillflag((prev)=>!(prev))
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  delBill(id);
+};
+
 return (
   <>
    <Navbar thememode={thememode} toggle={toggle}/> 
     <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Bills and Dues</div>
+      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Bills and Dues</div>
       <div className='mx-4 text-gray-600 dark:text-gray-400'>Manage your recurring bills and dues here. Receive reminders through email</div>
       
 
       <div className="hero-section h-full"  >
-        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? '#8656cd' : '#8656cd',backgroundColor: thememode === 'dark' ? '#282828' : 'white'}}>
+        <div className="hero-left " style={{ borderColor: thememode === 'dark' ? '#8656cd' : '#8656cd',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>
           <div className="due flex justify-between w-full gap-4 ">
             <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
             <input
               type="text"
               name="title"
               id=""
-              placeholder="Input due-title"
+              placeholder="Enter title"
               value={dueItem.title}
               onChange={handleBillInput('title')}
               className="w-[70%] p-2 dark:bg-[#3a3a3a]"
@@ -171,16 +268,14 @@ return (
           </div>
 
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="Date" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-Date</label>
+            <label htmlFor="Date" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due date</label>
             <input
               type="date"
               name="date"
               id=""
-              placeholder="Input date of due"
               value={dueItem.dueDate}
               onChange={handleBillInput('dueDate')}
-              className="w-[70%] p-2 dark:bg-[#3a3a3a] dark:text-gray-400"
-             
+              className="w-[70%] p-2 dark:bg-[#3a3a3a] "
             />
           </div>
 
@@ -193,13 +288,13 @@ return (
               placeholder="Input amount in Rs."
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
-              className="w-[70%] p-2 rounded-md text-center dark:bg-[#3a3a3a]"
+              className="w-[70%] p-2  dark:bg-[#3a3a3a]"
               
             />
           </div>
 
-          <div className="due flex justify-between w-full gap-4 dueperson ">
-            <label htmlFor="PersonDue " className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-To-Person</label> <br />
+          <div className="due flex justify-between w-full gap-4  ">
+            <label htmlFor="PersonDue " className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due To</label> <br />
             <input
               type="text"
               name="toWhom"
@@ -208,19 +303,18 @@ return (
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
               className="w-[70%] p-2 dark:bg-[#3a3a3a]"
-             
             />
           </div>
 
 
-          <div className="due flex justify-between w-full gap-4 dueperson ">
-            <label htmlFor="PersonDue " style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Currency:</label> <br />
+          <div className="due flex justify-between w-full gap-4 ">
+            <label htmlFor="Currency " className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Currency</label> <br />
             <select
                     name="currency"
                     id="currency"
                     value={dueItem.currency}
                     onChange={handleBillInput('currency')}
-                    className="w-[33rem] p-2 bg-[#f0f0f0] rounded-md dark:bg-[#3a3a3a] dark:text-gray-400"
+                    className="w-[70%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
                     required
                   >
                     <option>Select:</option>
@@ -242,13 +336,13 @@ return (
 
 
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="PersonDue" style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
+            <label htmlFor="recurring" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
              <select
               name="recurring"
               id=""
               value={dueItem.recurring}
               onChange={handleBillInput('recurring')}
-              className="w-[70%] p-2 dark:bg-[#3a3a3a] rounded-md bg-[#f0f0f0] dark:text-gray-400"
+              className="w-[70%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
             >
               <option value="">Select</option>
               <option value="daily">Daily</option>
@@ -257,7 +351,7 @@ return (
             </select> 
 
           </div>
-
+          {errorMessageAdd && <p className="text-red-500">{errorMessageAdd}</p>}
           <div className="add-btn flex justify-center items-center hover:cursor-pointer "  style={{ backgroundColor: 'rgb(157, 122, 253)' }} onClick={handleSubmit}>
             Add Due
           </div>
@@ -266,18 +360,72 @@ return (
       <div className="hero-right h-full">
         <div className="storing-dues">
           <div className="overflow-y-scroll w-full max-h-[500px]">
+          <Table striped borderless hover variant={thememode == 'dark' ? 'dark' : ''}>
+            <thead>
+              <tr>
+                <th>Due To</th>
+                <th>Amount</th>
+                <th>Due date</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
             {BillData?.map((bill) => (
-              <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} thememode={thememode}/>
+              // <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} thememode={thememode}/>
+              <>
+              <tr key = {bill._id}>
+              <td>{bill.title}</td>
+              <td>&#8377; {bill.amount}</td>
+              <td>{bill.dueDate?.substring(0,10)}</td>
+              <td>
+                <div className='flex justify-end w-[80%] gap-4 mr-6'>
+                  <AiFillEdit onClick={() => handleShow(bill)} style={{ cursor: 'pointer' }} />
+                  <AiFillDelete onClick={() => handleDelete(bill._id)} style={{ cursor: 'pointer' }} />
+                </div>
+              </td>
+              </tr>
+              </>
             ))}
+            </tbody>
+          </Table>
           </div>
         </div>
+        <Modal show={show} onHide={handleClose} animation={false} centered>
+        
+        <Modal.Header closeButton>
+          <Modal.Title className='font-bolder'>Edit Bill</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <form onSubmit={(e) => handleSubmitBill(e, sellectedbill)}>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-bold text-sm">Title</label>
+                  <input type="text" className="border border-gray-300 p-2 rounded w-full text-sm" value={titleedit} onChange={handleBill('titleedit')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Due Date</label>
+                  <input type="date" className="border border-gray-300 p-2 rounded w-full text-sm" value={dueDateedit} onChange={handleBill('dueDateedit')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Amount</label>
+                  <input type="number" className="border border-gray-300 p-2 rounded w-full text-sm" value={amountedit} onChange={handleBill('amountedit')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">To Whom</label>
+                  <input type="text" className="border border-gray-300 p-2 rounded w-full text-sm" value={toWhomedit} onChange={handleBill('toWhomedit')} />
+                </div>
+              </div>
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              <button type="submit" className="mt-4 bg-[#8656cd] text-white py-2 px-4 rounded">Save Changes</button>
+            </form>
+        </Modal.Body>
+      </Modal>
       </div>
       </div>
-
     </div>
+     
   </>
   );
 }
 
 export default Dues;
-
