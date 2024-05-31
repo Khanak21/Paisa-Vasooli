@@ -38,7 +38,7 @@ function Navbar({thememode,toggle,setUser,user,setFlag,flag}) {
     check()
   },[user?._id,flag])
 
-  console.log(navuser)
+  // console.log(navuser)
   console.log(user);
   const [showNav, setShowNav] = useState(false);
   // const [isLoggedin,setIsloggedIn]=useState(true)

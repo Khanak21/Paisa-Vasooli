@@ -6,6 +6,9 @@ import axios from "axios";
 import BillCard from "../../components/Cards/BillCard.jsx"
 import Navbar from '../../components/Navbar/Navbar.jsx';
 import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
+import Table from 'react-bootstrap/Table';
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+
 
 
 function Dues({ user, thememode, toggle,setUser }) {
@@ -29,6 +32,7 @@ function Dues({ user, thememode, toggle,setUser }) {
 
   const [deleteDiv, setdeleteDiv] = useState(false);
   const [BillData, setBillData] = useState([]);
+  console.log(BillData)
     // ---------------input ----------------------- 
   const handleBillInput = (name) => (e) => {
     setdueItem({ ...dueItem, [name]: e.target.value });
@@ -147,16 +151,76 @@ function Dues({ user, thememode, toggle,setUser }) {
 const [currenci, setCurrenci] = useState('inr');
 const currenciData = UCurrency(currenci);
 
+//Table entry data
+
+const [show, setShow] = useState(false);
+const [Bill, setBill] = useState({
+  userId: user._id,
+  title: '',
+  dueDate: '',
+  amount: '',
+  toWhom: '',
+  recurring: '',
+});
+
+const { title, amount, toWhom, dueDate } = Bill;
+
+{/*-----------------function to handle the bill's input8--------*/}
+const handleBill = (name) => (e) => {
+  setBill({ ...Bill, [name]: e.target.value });
+};
+
+// -------------- handling the closing and opening of edit ------------- 
+const handleClose = () => setShow(false);
+const handleShow = () => setShow(true);
+
+// --------------funtion to handle the submitting the edit data --------------------- 
+const handleSubmitBill = (e,id) => {
+  e.preventDefault();
+  const editBill = async () => {
+    try {
+      const res = await axios.put(`http://localhost:3001/api/bills/editBill/${id}`, { Bill });
+      console.log(res.data);
+      setBill({
+      userId: user._id,
+      title: '',
+      dueDate: '',
+      amount: '',
+      toWhom: '',
+      recurring: '',
+      });
+      setbillflag((prev)=>!(prev))
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  editBill();
+};
+
+// ----------------  handling the delete function -------------------- 
+const handleDelete = (id) => {
+  const delBill = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${id}`);
+      console.log(res.data);
+      setbillflag((prev)=>!(prev))
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  delBill(id);
+};
+
 return (
   <>
    <Navbar thememode={thememode} toggle={toggle}/> 
     <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Bills and Dues</div>
+      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Bills and Dues</div>
       <div className='mx-4 text-gray-600 dark:text-gray-400'>Manage your recurring bills and dues here. Receive reminders through email</div>
       
 
       <div className="hero-section h-full"  >
-        <div className="hero-left" style={{ borderColor: thememode === 'dark' ? '#8656cd' : '#8656cd',backgroundColor: thememode === 'dark' ? '#282828' : 'white'}}>
+        <div className="hero-left " style={{ borderColor: thememode === 'dark' ? '#8656cd' : '#8656cd',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>
           <div className="due flex justify-between w-full gap-4 ">
             <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
             <input
@@ -171,7 +235,7 @@ return (
           </div>
 
           <div className="due flex justify-between w-full gap-4">
-            <label htmlFor="Date" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-Date</label>
+            <label htmlFor="Date" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due date</label>
             <input
               type="date"
               name="date"
@@ -199,7 +263,7 @@ return (
           </div>
 
           <div className="due flex justify-between w-full gap-4 dueperson ">
-            <label htmlFor="PersonDue " className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due-To-Person</label> <br />
+            <label htmlFor="PersonDue " className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due To</label> <br />
             <input
               type="text"
               name="toWhom"
@@ -214,7 +278,7 @@ return (
 
 
           <div className="due flex justify-between w-full gap-4 dueperson ">
-            <label htmlFor="PersonDue " style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Currency:</label> <br />
+            <label htmlFor="PersonDue " style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Currency</label> <br />
             <select
                     name="currency"
                     id="currency"
@@ -266,6 +330,34 @@ return (
       <div className="hero-right h-full">
         <div className="storing-dues">
           <div className="overflow-y-scroll w-full max-h-[500px]">
+          <Table striped borderless hover variant={thememode == 'dark' ? 'dark' : ''}>
+            <thead>
+              <tr>
+                <th>Due To</th>
+                <th>Amount</th>
+                <th>Due date</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+            {BillData?.map((bill) => (
+              // <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} thememode={thememode}/>
+              <>
+              <tr key = {bill._id}>
+              <td>{bill.title}</td>
+              <td>&#8377; {bill.amount}</td>
+              <td>{bill.dueDate?.substring(0,10)}</td>
+              <td>
+                <div className='flex justify-end w-[80%] gap-4 mr-6'>
+                  <AiFillEdit onClick={handleShow} style={{ cursor: 'pointer' }} />
+                  <AiFillDelete onClick={() => handleDelete(bill._id)} style={{ cursor: 'pointer' }} />
+                </div>
+              </td>
+              </tr>
+              </>
+            ))}
+            </tbody>
+          </Table>
             {BillData?.map((bill) => (
               <BillCard billflag={billflag} setbillflag={setbillflag} user={user} BillData={bill} key={bill._id} thememode={thememode}/>
             ))}
@@ -275,6 +367,7 @@ return (
       </div>
 
     </div>
+     
   </>
   );
 }

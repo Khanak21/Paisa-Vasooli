@@ -113,9 +113,10 @@ useEffect(()=>{
   const ifnocategselect=async()=>{
     try{
       const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
-      console.log(res.data)
+      console.log("transaction data",res.data)
       setFilteredData(res.data.trans)
       setTransactionData(res.data.trans)
+      // localStorage.setItem("transactions",JSON.stringify(res.data.trans))
     }catch(err){
         console.log(err)
     }
@@ -123,8 +124,10 @@ useEffect(()=>{
   if(isFilterEmpty){
     ifnocategselect()
   }
-},[updateFlag])
-
+},[updateFlag,user._id,isFilterEmpty])
+ 
+const datat = localStorage.getItem("transactions")
+console.log(datat)
    //function to retrieve user transactions with filter
     const handleFilter = e=>{
         e.preventDefault()
@@ -175,9 +178,10 @@ useEffect(()=>{
         useEffect(() => {
           const fetchData = async () => {
             try {
-              const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`);
+              const response = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=LQvy3LtRMZSLNj7WvwKX3tPoA37h6FdzWNaLbw4f&currencies=${currency}&base_currency=INR`);
               const result = await response.json();
-              setData(result[currency]);
+              console.log("currency",result);
+              setData(result.data[currency]);
             } catch (error) {
               console.error('Error fetching currency data:', error);
             }
@@ -242,6 +246,7 @@ useEffect(()=>{
           addBadge(expensebadge)
         }
         setTransactionData(res.data.trans)
+        // localStorage.setItem("transactions",JSON.stringify(res.data.trans));
       }catch(err){
         console.log(err)
       }
@@ -255,16 +260,16 @@ useEffect(()=>{
     },[updateFlag,transactionData]);
 
      // Replace with your dynamic currency value
-    const currencyData = UCurrency('inr');
-    console.log(currencyData['usd'])
+    // const currencyData = UCurrency('inr');
+    // console.log(currencyData['usd'])
     
     const handleSubmit = async(e)=>{
       e.preventDefault()
       console.log('Currency data:', currenciData);
       // // console.log(transInput)
       // // addTransaction(transInput)
-      console.log(currenciData[currency]);
-      amount =Math.floor(amount / currenciData[currency]);
+      // console.log(currenciData[currency]);
+      // amount =Math.floor(amount / currenciData[currency]);
       console.log(amount)
       const addTrans = async()=>{
       try{
@@ -273,6 +278,7 @@ useEffect(()=>{
         console.log(res.data)
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])
+        // localStorage.setItem("transactions",JSON.stringify([...transactionData,val]))
         setUpdateFlag((prevFlag) => !(prevFlag));
         if(amount>=100000 && type=="expense"){
           addBadge(bigexpense)
@@ -300,6 +306,13 @@ useEffect(()=>{
       currency:'',
   })
   }
+  // useEffect(()=>{
+  //   let data=localStorage.getItem("transactions")
+  //   if(data){
+  //     setTransactionData(JSON.parse(data))
+  //     setFilteredData(JSON.parse(data))
+  //   }
+  // },[])
 
   //---------------------MULTI LANGUAGE SUPPORT-----------------------
   i18next.use(initReactI18next).init({
@@ -342,7 +355,7 @@ useEffect(()=>{
                     );
                 })}
             </select> */}
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-3 decoration-[#8656cd] dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
+      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
       <div className='mt-2 mx-4 text-gray-600 dark:text-gray-400'>Let's add some transactions!</div>
 
      <div className='h-full flex flex-col justify-center items-start '>
@@ -412,7 +425,7 @@ useEffect(()=>{
  
         <input type="date" id="startDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
         <input type="date" id="endDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
-        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#8656cd] text-white p-2 rounded-md lg:w-80'>Apply Filter</button>
+        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#8656cd] text-white p-2 rounded-md lg:w-80'>Apply</button>
 
           {/* ----------------------Exporting data-------------------------- */}
         <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className='my-2  p-2 bg-[#8656cd] text-white p-2 rounded-md'>Export</button></CSVLink>

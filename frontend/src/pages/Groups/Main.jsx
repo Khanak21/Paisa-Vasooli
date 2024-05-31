@@ -96,6 +96,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
             const val=res.data.newgroup
             setgroupData(prev=>[...prev,val])
             setgroupflag((prev)=>!(prev))
+            handleGroupClose()
             console.log(groupData)
           }catch(err){
             console.log(err)

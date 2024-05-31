@@ -33,14 +33,14 @@ function Login({user,setUser}) {
     event.preventDefault();
     const newPassword = event.target.value;
     setPassword(newPassword);
-    // setIsPasswordValid(newPassword.length >= 8);
+    setIsPasswordValid(newPassword.length >= 8);
   };
 
   const handleUsernameChange = (event) => {
     event.preventDefault();
     const newUsername = event.target.value;
     setUsername(newUsername);
-    // setIsUsernameValid(newUsername.length >= 5);
+    setIsUsernameValid(newUsername.length >= 5);
   };
 
   const handleEmail=(event)=>{
@@ -69,7 +69,7 @@ function Login({user,setUser}) {
     event.preventDefault(); // Prevent the form from submitting the traditional way
     // if (isPasswordValid && isUsernameValid) {
       const Entry = { username: username, password: password, email: email };
-      // setAllEntry([allEntry, Entry]);
+      setAllEntry([allEntry, Entry]);
       // console.log(allEntry);
       
       // Handle form submission logic here
@@ -93,7 +93,7 @@ function Login({user,setUser}) {
       setEmail("");
       setPassword("")
       setUsername("")
-      alert("Logged in successfully")
+      // alert("Logged in successfully")
     
     // } else {
       // alert("Invalid username or password. Please check the requirements.");

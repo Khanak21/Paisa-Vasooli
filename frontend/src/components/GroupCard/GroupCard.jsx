@@ -48,6 +48,7 @@ const handleAddFriendsToGroup=async()=>{
     console.log(friends)
     const res = await axios.put(`http://localhost:3001/api/group/addfriendsgroup/${groupData._id}`,{friends})
     console.log(res.data)
+    handleAddFriendClose()
 
   }catch(err){
     console.log(err)
@@ -58,6 +59,7 @@ const handleAddFriendClose = () => setShowAddFriend(false);
 const handleAddFriendShow = () => setShowAddFriend(true);
 const handleCopyToClipboard = () => {
   setCopied(true);
+  alert("Copied to clipboard")
 };
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
@@ -121,13 +123,13 @@ console.log(allgroupsdata)
         <button className='rounded-md p-1 text-white w-full bg-[#8656cd]' onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
            Simplify Debt
         </button>
-        <button className='rounded-md p-1 text-white w-full bg-[#8656cd]' onClick={()=>navigate(`/billsplit/${groupData._id}`)} style={{"cursor":"pointer"}}>
-           Split bill
-        </button>
+        {/* <button className='rounded-md p-1 text-white w-full bg-[#8656cd]' onClick={()=>navigate(`/billsplit/${groupData._id}`)} style={{"cursor":"pointer"}}> */}
+           {/* Split bill */}
+        {/* </button> */}
        
         <div className='flex justify-between items-center w-full'>
           <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
-          <AiFillDelete onClick={handleDelete}/>
+          <AiFillDelete onClick={handleDelete} style={{"cursor":"pointer"}}/>
         </div>
        
        </div>
