@@ -1,0 +1,14 @@
+.progress-container {
+    width: 100%;
+    border: 2px solid #8656cd; /* Color and style of the border */
+    border-radius: 10px; /* Rounded corners for the border */
+    padding: 2px; /* Optional: space between the border and the filled bar */
+    box-sizing: border-box; /* Ensures padding is included in the total width/height */
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: rgb(157, 122, 253); /* Color of the filled bar */
+    border-radius: 8px; /* Match or slightly less than the container's border-radius */
+    transition: width 0.3s ease; /* Smooth transition for width changes */
+  }  

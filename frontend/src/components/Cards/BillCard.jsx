@@ -195,7 +195,7 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
         const res = await axios.put(`http://localhost:3001/api/bills/editBill/${BillData._id}`, { BillInput });
         console.log(res.data);
         setBillInput({
-          userId: user._id,
+        userId: user._id,
         title: '',
         dueDate: '',
         amount: '',

@@ -173,15 +173,16 @@ console.log(datat)
       }
   
       //function to handle multiple currencies
+      
       const UCurrency=(currency)=>{
         const [data, setData] = useState({})
         useEffect(() => {
           const fetchData = async () => {
             try {
-              const response = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=LQvy3LtRMZSLNj7WvwKX3tPoA37h6FdzWNaLbw4f&currencies=${currency}&base_currency=INR`);
+              const response = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=LQvy3LtRMZSLNj7WvwKX3tPoA37h6FdzWNaLbw4f&currencies=INR%2CMXN%2CSEK%2CCHF%2CSGD%2CHKD%2CCNY%2CCAD%2CAUD%2CJPY%2CGBP%2CEUR%2CUSD%2CCAD&base_currency=INR`);
               const result = await response.json();
-              console.log("currency",result);
-              setData(result.data[currency]);
+              setData(result.data);
+              console.log(result.data);
             } catch (error) {
               console.error('Error fetching currency data:', error);
             }
@@ -196,6 +197,8 @@ console.log(datat)
 
     const [currenci, setCurrenci] = useState('inr');
     const currenciData = UCurrency(currenci);
+    // console.log
+    console.log(currenciData['INR'])
     
     useEffect(()=>{
       //function to retrive user data from local storage
@@ -219,6 +222,9 @@ console.log(datat)
     //function to fetch total income,balance and expense
     const getTotalStats = async()=>{
       try{
+        const response = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=LQvy3LtRMZSLNj7WvwKX3tPoA37h6FdzWNaLbw4f&currencies=MXN%2CSEK%2CCHF%2CSGD%2CHKD%2CCNY%2CCAD%2CAUD%2CJPY%2CGBP%2CEUR%2CUSD%2CCAD&base_currency=INR`);
+        const result=response.json();
+        console.log(result);
         const res = await axios.get(`http://localhost:3001/api/transactions/getTotalStats/${user._id}`)
         console.log(res.data)
         setStats(res.data)
@@ -260,7 +266,7 @@ console.log(datat)
     },[updateFlag,transactionData]);
 
      // Replace with your dynamic currency value
-    // const currencyData = UCurrency('inr');
+    const currencyData = UCurrency('inr');
     // console.log(currencyData['usd'])
     
     const handleSubmit = async(e)=>{
@@ -268,8 +274,9 @@ console.log(datat)
       console.log('Currency data:', currenciData);
       // // console.log(transInput)
       // // addTransaction(transInput)
-      // console.log(currenciData[currency]);
-      // amount =Math.floor(amount / currenciData[currency]);
+      const currencysmall = currency.toUpperCase();
+      console.log(currenciData[currencysmall]);
+      amount =Math.floor(amount / currenciData[currencysmall]);
       console.log(amount)
       const addTrans = async()=>{
       try{
@@ -306,56 +313,13 @@ console.log(datat)
       currency:'',
   })
   }
-  // useEffect(()=>{
-  //   let data=localStorage.getItem("transactions")
-  //   if(data){
-  //     setTransactionData(JSON.parse(data))
-  //     setFilteredData(JSON.parse(data))
-  //   }
-  // },[])
-
-  //---------------------MULTI LANGUAGE SUPPORT-----------------------
-  i18next.use(initReactI18next).init({
-    resources : {
-      en:{
-        translation : {
-          welcome : "Welcome to my app",
-          sub_title : "This is a really good app and I love it"
-        }
-      },
-      hi : {
-        translation : {
-          welcome : "मेरे ऐप में आपका स्वागत है",
-          sub_title : "यह वास्तव में एक अच्छा ऐप है और मुझे यह पसंद है"
-        }
-      },
-      fr : {
-        translation : {
-          welcome : "Bienvenue dans mon application"
-        }
-      }
-    }
-  })
   
 
   return (
     <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
       
         <Navbar thememode={thememode} toggle={toggle}/>
-        {/* --------------------------User monetary stats------------------------ */}
-        {/* <select onChange={(e)=> handleChange(e)}>
-                {languages.map((item) => {
-                    return (
-                        <option
-                            key={item.value}
-                            value={item.value}
-                        >
-                            {item.text}
-                        </option>
-                    );
-                })}
-            </select> */}
-      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
+      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-3 decoration-[#8656cd] dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
       <div className='mt-2 mx-4 text-gray-600 dark:text-gray-400'>Let's add some transactions!</div>
 
      <div className='h-full flex flex-col justify-center items-start '>
