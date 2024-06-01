@@ -99,60 +99,39 @@ const Chart = ({user,setUser,thememode,toggle}) => {
     
 
   return (
-    <div  style={{backgroundColor:thememode==="dark"?"#181818":"white"}} >
+    <div className='' style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} >
          {/* ------------ Navbar ------------------------ */}
         <Navbar thememode={thememode} toggle={toggle}/>
 
         {/* ----------------------- title --------------------------------  */}
-        <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Visualise your Transactions</div>
-      <div className='m-4 text-gray-600 dark:text-gray-400'>Analyze how much you spent or earned on a weekly, monthly, yearly or category-wise basis</div>
-      
-      
-    <div className='flex flex-col justify-center items-center w-full p-2 gap-3'  style={{backgroundColor:thememode==="dark"?"#181818":"white",color: thememode=="dark"?"white":"black"}}>
-    
-        {/* ---------------------------------------------------------Weekly chart---------------------------------------------------------- */}
-
-      <div className='w-full flex flex-col lg:flex-row justify-evenly items-center'>
-        <div className='font-bold text-5xl  flex justify-center items-center' style={{color:thememode=="dark"?"white":"#000080"}}>Weekly Chart</div>
-        <div className='w-[800px]'>
+        <div className='h-screen'>
+      <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Visualise your Transactions</div>
+      <div className='mx-4 mb-4 text-gray-600 dark:text-gray-400'>Analyze how much you spent or earned on a weekly, monthly, yearly or category-wise basis</div>
+      <div className='flex justify-around p-4'>
+      <div className='grid grid-rows-2 grid-cols-2 gap-4'>
+        <div className=''>
         <WeeklyChart weeklyData={weeklyData} thememode={thememode} toggle={toggle}/>
         </div>
 
-    </div>
-
          {/* ------------------------- Monthly Chart -------------------------  */}
-
-    <div className='w-full flex lg:justify-evenly items-center flex-col lg:flex-row-reverse '>
-    <div className='font-bold text-5xl flex justify-center items-center '  style={{color:thememode=="dark"?"white":"#000080"}}>Monthly Chart</div>         
-        <div className='w-[800px]'>
+        <div className=''>
         <MonthlyChart monthlyData={monthlyData} thememode={thememode}/>
         </div>
-    </div>
-
-      {/* ---------------------------------------------------------Yearly chart---------------------------------------------------------- */}
-
-    <div className='w-full flex justify-evenly items-center flex-col lg:flex-row'>
-    <div className='font-bold text-5xl flex justify-center items-center '  style={{color:thememode=="dark"?"white":"#000080"}}>Yearly Chart</div>
-        <div className='w-[800px]'>
+        <div className=''>
         <YearlyChart yearlyData={yearlyData} thememode={thememode}/>
         </div>
     </div>
 
+
    
         {/* ---------------------------------------------------------Category chart---------------------------------------------------------- */}
-
-      <div className='w-full flex justify-evenly items-center flex-col lg:flex-row-reverse'>
-      <div className='font-bold text-5xl flex justify-center items-center'  style={{color:thememode=="dark"?"white":"#000080"}}>
-          Category-wise Expenses
-        </div>
-        <div className='w-[800px] h-[600px]'>
+        <div className='flex align-middle'>
           <CategoryChart categoryData={categoryData} allCategories={allCategories} thememode={thememode} toggle={toggle}/>
         </div>
         
        </div>
-
-      </div>
-    </div>
+       </div>
+     </div>
   )
 }
 

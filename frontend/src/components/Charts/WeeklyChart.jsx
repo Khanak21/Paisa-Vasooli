@@ -70,7 +70,12 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return(
+  <div className='w-100 h-auto p-4 shadow-md rounded-lg dark:text-white m-auto' style={{backgroundColor:thememode==='dark'? "#2c3034" : "white"}}>
+  <p className='w-full text-center font-bold'>Weekly Statistics</p> 
+  <Bar data={data} options={options} />
+  </div>
+)
 };
 
 export default WeeklyChart;

@@ -58,47 +58,45 @@ const Stocks = ({user,thememode,toggle}) => {
   return ( 
     <div>
         <Navbar thememode={thememode} toggle={toggle}/>
-        <div className="mx-auto my-auto h-[200vh] block justify-center items-center" style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} >
+        <div className="mx-auto my-auto h-screen block justify-center items-center" style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} >
           
         <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}></div>
 
         {/* -----------------------------Search Stocks and crypto-------------------------------- */}
-        <div className='flex justify-left p-2 font-extrabold text-5xl mx-4 my-3 dark:text-[#f0f0f0] ' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
-    
-    <div className='m-4 dark:text-white text-xl font-bold flex justify-center'>
-  <label htmlFor='stocks' >Add Stocks: </label>
+        <div className='flex justify-left font-extrabold text-2xl mx-4 my-1 dark:text-[#f0f0f0] ' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
+    <div className='mx-4 mb-4 text-gray-600 dark:text-gray-400'>Type the stock tick for a company and click on Save to add the stocks you would want to track for easy access later</div>
+        
+  <div className='flex justify-around'>
+  <div className='flex'>
+  <div className=''>
+  <div className='m-4 dark:text-white flex justify-center w-full'>
   <input name={"input"}
               type="text"
               value={input}
               onChange={handleInput}
+              placeholder='Enter stock tick'
               required
-              className='w-[60%] mx-2'
+              className='p-2'
               ></input>
-              <button onClick={handleSubmit} className='mx-2 bg-[#000080]  text-white p-2 rounded-md'>Save</button>
-              </div>
+              <button onClick={handleSubmit} className='m-2 bg-[#8656cd]  text-white rounded-md p-2'>Save</button>
+  </div>
+           
 
-  <div className='p-4 '>
-  <div className=' w-full flex '>  {stockData.map((stock, index) => (
-                  <div className='h-fit mx-2 mb-4 bg-[#000080]  text-white p-2 rounded-md' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px" }}>
-                    {stock.input}
-                 </div>
- ))}
-             </div>
-   <TradingViewWidget sym={sym} stockflag={stockflag} thememode={thememode} />
-    </div>
-
-        {/* -----------------------------Stock Heatmap-------------------------------- */}
-        
-        <div className='font-extrabold text-5xl mx-4 my-2 dark:text-[#f0f0f0]'>EXPLORE MORE...</div>
-      <div className='mx-4 my-4 text-gray-600 dark:text-gray-400'>Explore the latest trends in the current stock market</div>
-       <HeatmapStocks thememode={thememode}/>
-     
-
-
-
+  <div className='px-3 '>
+    <div className=' w-full grid grid-cols-5 '>  
+    {stockData.map((stock, index) => (
+      <div className='h-fit w-fit mx-2 mb-4 border-[#8656cd] dark:text-white shadow-md p-2 rounded-md' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px", backgroundColor:thememode==='dark'?"#2c3034":"white"}}>
+          {stock.input}
       </div>
+    ))}
+    </div>
+  </div>
+  </div>
 
-      
+   <TradingViewWidget sym={sym} stockflag={stockflag} thememode={thememode} />
+   </div>
+    </div>
+    </div>
     </div>
   )
 }

@@ -25,7 +25,7 @@ function HeatmapStocks({thememode}) {
           "isDataSetEnabled": false,
           "isZoomEnabled": true,
           "hasSymbolTooltip": true,
-          "width": "100%",
+          "width": "70%",
           "height": "40%"
         }`;
       container.current.appendChild(script);
@@ -34,7 +34,7 @@ function HeatmapStocks({thememode}) {
   );
 
   return (
-    <div className="tradingview-widget-container" ref={container}>
+    <div className="tradingview-widget-container mx-4" ref={container}>
       <div className="tradingview-widget-container__widget"></div>
     </div>
   );

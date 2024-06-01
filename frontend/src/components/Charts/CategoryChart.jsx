@@ -54,8 +54,8 @@ const CategoryChart = ({ allCategories, categoryData, thememode }) => {
   const options = {
     maintainAspectRatio: false,
     responsive: true,
-    height: 400,
-    width: 500,
+    height: 300,
+    width: 300,
   };
 
   // ----------- using the pre-existing obj to set the properties of chart ----------- 
@@ -83,7 +83,12 @@ const CategoryChart = ({ allCategories, categoryData, thememode }) => {
 
   // ------------ Pie Chart component --------------------- 
 
-  return <Pie data={data} options={options} option={option} />;
+  return (
+  <div className='w-[400px] h-[500px] p-6 shadow-md rounded-lg dark:text-white m-auto' style={{backgroundColor:thememode==='dark'? "#2c3034" : "white"}}>
+  <p className='w-full text-center font-bold'>Category wise data</p>
+  <Pie data={data} options={options} option={option} />
+  </div>
+  )
 };
 
 export default CategoryChart;

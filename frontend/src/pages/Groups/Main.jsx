@@ -4,9 +4,14 @@ import Modal from 'react-bootstrap/Modal';
 import {Button} from 'react-bootstrap'
 import axios from 'axios';
 import GroupCard from '../../components/GroupCard/GroupCard.jsx'
+import {Button as Buttonmui} from '@mui/material';
+import Menu from '@mui/material/Menu';
+import { useTheme } from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
 
 export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => {
   console.log(groupData)
+    const theme = useTheme()
     const [showGroup, setShowGroup] = useState(false);
     const [showGroupJoin, setShowGroupJoin] = useState(false);
     const [showFriend, setShowFriend] = useState(false);
@@ -14,6 +19,14 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [groupflag,setgroupflag] = useState(false)
     const [friendName,setFriendName] = useState("")
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
     const [groupInput,setgroupInput] = useState({
       userId:user._id,
       title:'',
@@ -168,19 +181,56 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className='flex flex-col gap-2 justify-start items-start min-h-screen' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
         <div className='flex justify-between w-full'>
-        <div><div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'> Friends & Groups</div>
-        <div className='mx-4 mt-4 text-gray-600 dark:text-gray-400 '>Streamline Bill Splitting and Debt Settlement Among Friends</div>
+        <div>
+        <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'> Groups</div>
+        <div className='mx-4 text-gray-600 dark:text-gray-400 '>Invite friends, create groups and streamline bill splitting and debt settlements</div>
         </div>
-        <button onClick={handleAddFriendShow} className='bg-[#000080] text-white p-4 rounded-lg m-4'>+ Invite Friend</button>
-        </div>
-          <div className=' flex justify-left items-start w-full mb-4 mt-2 mx-4'>
-          
-            <button onClick={handleGroupShow} className='bg-[#000080] text-white p-4 rounded-lg mx-2'>+ Create Group</button>
-            <button onClick={handleGroupJoinShow} className='bg-[#000080] text-white p-4 rounded-lg mx-2'>Join Group</button>
+      
+        <div>
+      <Buttonmui
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        sx={{
+           backgroundColor:'#000080',
+           margin:'2rem',
+           color:'white',
+           '&:hover': {
+            backgroundColor: '#00009A', 
+            color: 'white',
+          },
+          }}
+      >
+        + NEW 
+      </Buttonmui>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+        PaperProps={{
+          sx: {
+            backgroundColor: thememode === 'dark' ? theme.palette.grey[900] : theme.palette.background.paper,
+            color: thememode === 'dark' ? 'white' : 'black',
+        
+          },
+        }}
+      >
+        <MenuItem onClick={handleGroupShow}>Create new group</MenuItem>
+        <MenuItem onClick={handleGroupJoinShow}>Join Group</MenuItem>
+        <MenuItem onClick={handleAddFriendShow}>Invite a friend</MenuItem>
+      </Menu>
+    </div>
 
-          </div>
+        
+        </div>
           {/* -----------------------------Group Cards--------------------------------- */}
-        <div className='flex flex-col lg:grid lg:grid-cols-2 justify-evenly items-center gap-6 w-full h-fit dark:bg-[#181818]'>
+        <div className='flex flex-col lg:grid lg:grid-cols-4 mx-4 justify-evenly items-center gap-6 w-full h-fit dark:bg-[#181818]'>
           
           {groupData?.map(data=>{
             return(

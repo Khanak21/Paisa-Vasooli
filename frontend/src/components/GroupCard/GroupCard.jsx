@@ -1,21 +1,25 @@
 import React,{useEffect, useState} from 'react'
-import Card from 'react-bootstrap/Card';
-// import {AiTwotoneCalendar} from 'react-icons/ai';
-import {AiFillEdit} from 'react-icons/ai';
-import {AiFillDelete} from 'react-icons/ai';
 import Modal from 'react-bootstrap/Modal';
-import axios from "axios"
-import {Button} from 'react-bootstrap'
-import { AiTwotoneCalendar } from 'react-icons/ai';
-import Grouphome from '../../pages/Groups/Grouphome.jsx'; 
+import axios from "axios" 
 import './GroupCard.css'
 import { useNavigate } from 'react-router-dom';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { MdContentCopy } from "react-icons/md";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import {Button as Buttonmui} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useTheme } from '@mui/material/styles';
+
+const ITEM_HEIGHT = 48;
 
 
 const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle,user}) => {
   const navigate = useNavigate()
+  const theme = useTheme();
 const [show, setShow] = useState(false);
 const [showGroupHome, setShowGroupHome] = useState(false);
 const [showAddFriend, setShowAddFriend] = useState(false);
@@ -23,6 +27,14 @@ const [friends,setFriends] = useState([])
 const [checkedState, setCheckedState] = useState(
   new Array(user.friends.length).fill(false)
 );
+const [anchorEl, setAnchorEl] = React.useState(null);
+const open = Boolean(anchorEl);
+const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+};
+const handleCloseDots = () => {
+  setAnchorEl(null);
+};
 
 // const copy = () => toast("Copied to Clipboard");
 
@@ -56,7 +68,10 @@ const handleAddFriendsToGroup=async()=>{
 }
 const [copied, setCopied] = useState(false);
 const handleAddFriendClose = () => setShowAddFriend(false);
-const handleAddFriendShow = () => setShowAddFriend(true);
+const handleAddFriendShow = () => {
+  handleCloseDots()
+  setShowAddFriend(true);
+}
 const handleCopyToClipboard = () => {
   setCopied(true);
   alert("Copied to clipboard")
@@ -88,8 +103,78 @@ console.log(allgroupsdata)
   return (
 
     <div className='flex justify-center items-center card-parent h-full p-1'>
+      <Card sx={{ 
+        minWidth: 275,
+        backgroundColor: thememode === 'dark' ? theme.palette.grey[900] : theme.palette.background.paper,
+        color:thememode==='dark'?"white":"black" }}>
+      <CardContent>
+        <div className='flex justify-between'>
+        <Typography variant="h5" component="div" sx={{fontFamily:'poppins'}}>
+          {groupData.title}
+        </Typography>
+        <div>
+      <IconButton
+        aria-label="more"
+        id="long-button"
+        aria-controls={open ? 'long-menu' : undefined}
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+        sx={{
+          color:thememode==='dark'?"white":"black"
+        }}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleCloseDots}
+        
+        PaperProps={{
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: '20ch',
+          },
+          sx: {
+            backgroundColor: thememode === 'dark' ? theme.palette.grey[900] : theme.palette.background.paper,
+            color: thememode === 'dark' ? 'white' : 'black',
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: '20ch',
+          },
+        }}
+      >
+           <MenuItem key="addfriend" onClick={handleAddFriendShow}>
+          + Add member
+          </MenuItem>
+          <MenuItem key="editgroup" onClick={handleShow}>
+          Edit group
+          </MenuItem>
+          <MenuItem key="deletegroup" onClick={handleDelete}>
+          Delete group
+          </MenuItem>
+    
+      </Menu>
+    </div>
+    </div>
+        <Typography variant="body2">
+          {groupData.members.length} member{groupData.members.length>1 && "s"}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Buttonmui 
+        size="small"
+        sx={{textDecoration:'underline'}}
+        onClick={()=>navigate(`/simplifydebt/${groupData._id}`)}
+        >Settle transactions⟶</Buttonmui>
+      </CardActions>
+    </Card>
 
-     <Card  border="secondary" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"#282828":"white",color:thememode==="dark"?"white":"black"}} >
+     {/* <Card  border="secondary" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"#282828":"white",color:thememode==="dark"?"white":"black"}} >
 
       <Card.Body className='w-full p-1 '>
 
@@ -109,9 +194,9 @@ console.log(allgroupsdata)
               <MdContentCopy  className='ml-2 text-xl'/>
             </button>
             </CopyToClipboard>
-            </div>
+            </div> */}
             {/* {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>} */}
-            <button className='mx-2 px-2 bg-[#000080] rounded-md text-white lg:w-80 md:w-80' onClick={handleAddFriendShow}>or Add Friend</button>
+            {/* <button className='mx-2 px-2 bg-[#8656cd] rounded-md text-white lg:w-80 md:w-80' onClick={handleAddFriendShow}>or Add Friend</button>
             </div>
           
           </Card.Text>
@@ -123,10 +208,6 @@ console.log(allgroupsdata)
         <button className='rounded-md p-1 text-white w-full bg-[#000080]' onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
            Simplify Debt
         </button>
-        {/* <button className='rounded-md p-1 text-white w-full bg-[#000080]' onClick={()=>navigate(`/billsplit/${groupData._id}`)} style={{"cursor":"pointer"}}> */}
-           {/* Split bill */}
-        {/* </button> */}
-       
         <div className='flex justify-between items-center w-full'>
           <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
           <AiFillDelete onClick={handleDelete} style={{"cursor":"pointer"}}/>
@@ -136,7 +217,7 @@ console.log(allgroupsdata)
 </div>
       </Card.Body>
 
-    </Card>
+    </Card> */}
    
 
     {/* <div className='group-chat'>

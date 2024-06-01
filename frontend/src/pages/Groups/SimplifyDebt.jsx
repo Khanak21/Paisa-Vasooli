@@ -4,6 +4,10 @@ import Navbar from '../../components/Navbar'
 import { useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { ReactComponent as Cash } from './cash-on-wallet.svg';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { MdContentCopy } from "react-icons/md";
+import Tooltip from '@mui/material/Tooltip';
 
 const SimplifyDebt = ({ user, thememode, toggle }) => {
     const { id } = useParams();
@@ -17,6 +21,12 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
     const [membersData, setMembersData] = useState([]);
     const [commentText, setCommentText] = useState('');
     const [comments, setComments] = useState([]);
+    const [copied, setCopied] = useState(false);
+
+    const handleCopyToClipboard = () => {
+        setCopied(true);
+        alert("Copied to clipboard")
+      };
 
     const getGroup = async () => {
         try {
@@ -173,15 +183,37 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
         <div className='pb-2 dark:bg-[#181818] dark:text-white bg-[#f0f0f0]'>
             <Navbar thememode={thememode} toggle={toggle} />
       
-            <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Simplify Debts</div>
+            <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Simplify Debts</div>
             <div className='flex justify-between'>
-                <div className="mx-4 text-2xl bg-[#f0f0f0] text-slate-500 dark:bg-[#181818] dark:text-[#f0f0f0] p-2">
+                <div className="mx-3 text-xl bg-[#f0f0f0] text-slate-500 dark:bg-[#181818] dark:text-[#f0f0f0] p-2">
                      {groupData.title}
                 </div>
+            
+              <div className='flex'>
+              {/* <input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} /> */}
+            <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
+            <Tooltip title="Copy group code to clipboard" arrow>
+            <button>
+            <MdContentCopy  className='ml-2 text-xl'/>
+            </button>
+            </Tooltip>
+            </CopyToClipboard>
+            <Tooltip title="View members" arrow>
+            <PeopleAltIcon  onClick={handleShowPart}
+                    sx={{
+                        cursor:'pointer',
+                        marginRight:'2rem',
+                        marginLeft:'1rem',
+                        marginTop:'.6rem',
+                        color:thememode==='dark'?'white':'black'
+                    }}/>
+            </Tooltip>
+            </div>
+          
                   
-                <button onClick={handleShowPart} className='bg-[#000080] text-white rounded-lg w-1/4 h-10 mx-4'>
-                    Participants
-                </button>
+        
+                    
+        
             </div>
             <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
                 <Modal.Header closeButton>
