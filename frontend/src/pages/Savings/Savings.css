@@ -46,9 +46,7 @@ height:600px;
   height: 70%;
   flex-direction: column;
   justify-content: space-evenly;
-  /* align-items: flex-start; */
   padding: 10px;
-  gap: 31px;
   align-items: flex-start;
 }
 .main-right {

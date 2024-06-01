@@ -96,12 +96,12 @@ function Profile({ user, thememode, toggle,setUser}) {
     <>
       <Navbar thememode={thememode} toggle={toggle} flag={flag} setFlag={setFlag}/>
       <div
-        className='flex flex-col justify-start items-center p-3 border-[#8656cd] h-full' 
+        className='flex flex-col justify-start items-center p-3 border-[#000080] h-full' 
         style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}
       >
         <div
           className='flex flex-col mx-auto w-[50%] h-[250px] border-1 border-black p-2 rounded-sm'
-          style={{ backgroundColor: thememode === 'dark' ? '#8656cd' : '#8656cd', color: thememode == 'dark' ? 'white' : 'black' }}
+          style={{ backgroundColor: thememode === 'dark' ? '#000080' : '#000080', color: thememode == 'dark' ? 'white' : 'black' }}
         >
           {/* ----------------------------------------------------Profile picture section----------------------------------------------- */}
           <div className=' flex justify-center align-middle items-center w-[70%] h-[80%] mx-auto p-1'>
@@ -109,7 +109,7 @@ function Profile({ user, thememode, toggle,setUser}) {
             <br />{' '} <AiFillEdit onClick={handleShow} className='bg-white rounded-full h-8 w-8 p-1 -translate-x-4 translate-y-6 dark:text-black' style={{display:show==false ? "":"none",cursor:"pointer"}}/>
            <div className='flex flex-col bg-white p-2 rounded-md m-2' style={{display:show==true ? "":"none"}}>
             <div className='flex'> <input type="file" className='border-none' onChange={handleChange}/><RxCross2  className="text-black" onClick={handleShow}/></div>
-            <button className="m-2 bg-[#8656cd] text-white p-2 rounded-md hover:bg-purple-500" onClick={handleUpload}>
+            <button className="m-2 bg-[#000080] text-white p-2 rounded-md" onClick={handleUpload}>
           Upload
         </button></div>
           </div>

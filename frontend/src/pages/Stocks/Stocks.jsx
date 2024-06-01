@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TradingViewWidget from '../../components/Stocks/TradingViewWidget'
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar'
 import axios from "axios"
 import HeatmapStocks from '../../components/Stocks/HeatmapStocks'
 
@@ -63,7 +63,7 @@ const Stocks = ({user,thememode,toggle}) => {
         <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}></div>
 
         {/* -----------------------------Search Stocks and crypto-------------------------------- */}
-        <div className='flex justify-left p-2 font-extrabold text-5xl mx-4 my-3 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0] ' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
+        <div className='flex justify-left p-2 font-extrabold text-5xl mx-4 my-3 dark:text-[#f0f0f0] ' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
     
     <div className='m-4 dark:text-white text-xl font-bold flex justify-center'>
   <label htmlFor='stocks' >Add Stocks: </label>
@@ -74,13 +74,12 @@ const Stocks = ({user,thememode,toggle}) => {
               required
               className='w-[60%] mx-2'
               ></input>
-              <button onClick={handleSubmit} className='mx-2 bg-[#8656cd]  text-white p-2 rounded-md'>Save</button>
+              <button onClick={handleSubmit} className='mx-2 bg-[#000080]  text-white p-2 rounded-md'>Save</button>
               </div>
-           
 
   <div className='p-4 '>
   <div className=' w-full flex '>  {stockData.map((stock, index) => (
-                  <div className='h-fit mx-2 mb-4 bg-[#8656cd]  text-white p-2 rounded-md' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px" }}>
+                  <div className='h-fit mx-2 mb-4 bg-[#000080]  text-white p-2 rounded-md' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px" }}>
                     {stock.input}
                  </div>
  ))}

@@ -4,7 +4,7 @@ import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from 'react-bootstrap';
 import SavingCard from "../../components/Cards/SavingCard";
 import axios from "axios";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from '../../components/Navbar'
 import './Savings.css';
 import Table from 'react-bootstrap/Table';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
@@ -270,7 +270,7 @@ delsaving(id);
 
     <Navbar thememode={thememode} toggle={toggle}/>
     <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
-       <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#8656cd] dark:text-[#f0f0f0]'>Savings Tracker</div>
+       <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
      
       <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black"}}>
@@ -348,21 +348,15 @@ delsaving(id);
             </div>
 
             <div className="savings-holder" onClick={addItem}>
-              <button className="rounded-md p-1 text-white w-full bg-[#8656cd]" onClick={handleAddSaving}>
+              <button className="rounded-md p-1 text-white w-full bg-[#000080]" onClick={handleAddSaving}>
                 Add Saving
               </button>
             </div>
           </div>
           
           {/* Saving Cards list */}
-          <div className="main-right flex flex-col justify-center items-start gap-5 h-[500px]">
-            {/* <div className="overflow-y-scroll w-full mt-2 rounded-md">
-            {savingData?.map((sav)=>(
-            <SavingCard user = {user} props={sav} setSavingData={setSavingData} savingData={savingData} thememode={thememode} toggle={toggle} updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/> 
-          ))
-          }
-            </div> */}
-            <div className="storing-dues">
+          <div className="hero-right h-full mt-10">
+        <div className="storing-savings">
           <div className="overflow-y-scroll w-full max-h-[500px]">
           <Table striped borderless hover variant={thememode == 'dark' ? 'dark' : ''}>
             <thead>
@@ -417,7 +411,7 @@ delsaving(id);
                 </div>
               </div>
               {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-              <button type="submit" className="mt-4 bg-[#8656cd] text-white py-2 px-4 rounded">Save Changes</button>
+              <button type="submit" className="mt-4 bg-[#000080] text-white py-2 px-4 rounded">Save Changes</button>
             </form>
         </Modal.Body>
       </Modal>

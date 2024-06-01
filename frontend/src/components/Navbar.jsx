@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -101,7 +100,7 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={()=>{navigate("/dashboard")}}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -110,25 +109,6 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
               letterSpacing: '.1rem',
             color: thememode === 'dark' ? 'white' : '#000080',
               
-              textDecoration: 'none',
-            }}
-          >
-            Paisa Vasooli
-          </Typography>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-            color: thememode === 'dark' ? 'white' : '#000080',
               textDecoration: 'none',
             }}
           >

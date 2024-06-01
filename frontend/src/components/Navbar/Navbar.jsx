@@ -14,8 +14,6 @@ import { FaRegEnvelope } from "react-icons/fa";
 import Inbox from '../../pages/Inbox/inbox.jsx'
 
 
-
-
 function Navbar({thememode,toggle,setUser,user,setFlag,flag}) {
   const [navuser,setNavuser] = useState({})
  

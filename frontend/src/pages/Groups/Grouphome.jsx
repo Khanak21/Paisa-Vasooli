@@ -137,16 +137,16 @@ console.log(groupData)
 
 
        
-          <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Split Bills</div>
+          <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Split Bills</div>
           <div className="m-3 pt-3 text-4xl bg-[#f0f0f0] light:text-black font-bold dark:bg-[#181818] dark:text-white p-2">
             Group Title: {groupData.title}
           </div>
         
            <div className=" min-h-screen w-[98%] flex-col align-middle justify-center dark:text-white m-3">
-          <div className='flex'> <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-full p-1 m-2'>
+          <div className='flex'> <button onClick={handleShowPart} className='bg-[#000080] text-white rounded-lg w-full p-1 m-2'>
             Participants
            </button>
-            <button className="bg-[#8656cd] text-white p-1 rounded-lg m-2 w-full" onClick={handleShow}>Split Bill</button></div>
+            <button className="bg-[#000080] text-white p-1 rounded-lg m-2 w-full" onClick={handleShow}>Split Bill</button></div>
 
 
             {/* -----------------------------------------Bill Split Modal-------------------------------------- */}
@@ -164,7 +164,7 @@ console.log(groupData)
                    ></input>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={handleSubmit} required className='bg-[#8656cd] text-white rounded-lg w-full p-1 m-2'>Split Bill</button>
+          <button onClick={handleSubmit} required className='bg-[#000080] text-white rounded-lg w-full p-1 m-2'>Split Bill</button>
         </Modal.Footer>
         
       </Modal>
@@ -193,7 +193,7 @@ console.log(groupData)
              <div><b>Name: {" "}</b>{mem.name}</div> 
              <div><b>Amount: {" "}</b>{mem.amount}</div>
              {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
-            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-[#8656cd] text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
+            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-[#000080] text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
            </div>
 
         ))

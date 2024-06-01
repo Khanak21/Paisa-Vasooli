@@ -17,35 +17,56 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
         date:'',
         currency:'',
   });
+  const [errorMessage,setErrorMessage]= useState("");
   // Check if transactionData is defined
   if (!transactionData) {
     return null;
   }
-
+  
   const { type, amount, category, desc, date,currency } = transInput;
 //  ---------------- Input --------------------- 
   const handleTransInput = (name) => (e) => {
     setTransInput({ ...transInput, [name]: e.target.value });
   };
   // -------------------- functions to handle open and close  --------------- 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setErrorMessage('')
+  }
+  
+  const handleShow = () => {
+    setShow(true);
+    setTransInput({
+      type:transactionData.type,
+      amount:transactionData.amount,
+      category:transactionData.category,
+      desc:transactionData.desc,
+      date:transactionData.date,
+      currency:transactionData.currency
+    })
+  }
 //  ---------------- function to handle submit ----------------  
   const handleSubmit = async (e) => {
+    if(transInput.amount===''||transInput.category===''||transInput.currency===''||transInput.date===''||transInput.desc===''||transInput.type===''){
+      setErrorMessage("All entries should be filled");
+      return;
+    }
     e.preventDefault();
     try {
       const res = await axios.put(`http://localhost:3001/api/transactions/editTransaction/${transactionData._id}`, { transInput });
       console.log(res.data);
       setTransInput({
         userId:user._id,
-        type:'expense',
+        type:'',
         amount:'',
         category:'',
         desc:'',
         date:'',
         currency:'',
     });
+    setErrorMessage("");
     setUpdateFlag(prev=>!prev)
+    handleClose()
     } catch (err) {
       console.log(err);
     }
@@ -139,8 +160,11 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
           <Modal.Title>Edit Transaction</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <label htmlFor="type">Transaction type: </label>
-          <select
+          <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-bold text-sm">Transaction type:</label>
+                  <select
             name="type"
             id="type"
             selected="Expense"
@@ -152,25 +176,35 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
             <option value="expense" className='font-bold' style={{color:"red"}}>Expense</option>
             <option value="income" className='font-bold' style={{color:"green"}}>Income</option>
           </select>
-          <br />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Amount:</label>
+                  <input type="text" className="border border-gray-300 p-2 rounded w-full text-sm" value={amount} onChange={handleTransInput('amount')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Category:</label>
+                  <input type="text" className="border border-gray-300 p-2 rounded w-full text-sm" value={category} onChange={handleTransInput('category')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Description:</label>
+                  <input type="number" className="border border-gray-300 p-2 rounded w-full text-sm" value={desc} onChange={handleTransInput('desc')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Date:</label>
+                  <input type="date" className="border border-gray-300 p-2 rounded w-full text-sm" value={date} onChange={handleTransInput('date')} />
+                </div>
+              </div>
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              <button type="submit" className="mt-4 bg-[#000080] text-white py-2 px-4 rounded">Save Changes</button>
+            </form>
 
-          <label htmlFor="amount">Amount: </label>
-          <input type="number" value={amount} name={'amount'}  onChange={handleTransInput('amount')} required style={{color:type==='expense'?"red":"green"}}/>
 
-          <label htmlFor="category">Category: </label>
-          <input name={'category'} value={category} type="text"  onChange={handleTransInput('category')} required />
-
-          <label htmlFor="desc">Description:</label>
-          <input type="text" value={desc} name={'desc'}  onChange={handleTransInput('desc')} />
-
-          <label htmlFor="date">Date:</label>
-          <input type="date" value={date} name={'date'} onChange={handleTransInput('date')} required />
         </Modal.Body>
-        <Modal.Footer>
-          <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit} required>
+        {/* <Modal.Footer>
+          <button className='bg-[#000080] p-2 rounded-md text-white' onClick={handleSubmit} required>
             Save
           </button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     </div>
     

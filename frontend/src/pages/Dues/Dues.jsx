@@ -4,7 +4,7 @@ import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
 import './Dues.css'
 import axios from "axios";
 import BillCard from "../../components/Cards/BillCard.jsx"
-import Navbar from '../../components/Navbar/Navbar.jsx';
+import Navbar from '../../components/Navbar'
 import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
 import Table from 'react-bootstrap/Table';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
@@ -253,7 +253,7 @@ return (
       
 
       <div className="hero-section h-full"  >
-        <div className="hero-left " style={{ borderColor: thememode === 'dark' ? '#8656cd' : '#8656cd',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>
+        <div className="hero-left " style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>
           <div className="due flex justify-between w-full gap-4 ">
             <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
             <input
@@ -352,7 +352,7 @@ return (
 
           </div>
           {errorMessageAdd && <p className="text-red-500">{errorMessageAdd}</p>}
-          <div className="add-btn flex justify-center items-center hover:cursor-pointer "  style={{ backgroundColor: 'rgb(157, 122, 253)' }} onClick={handleSubmit}>
+          <div className="add-btn flex justify-center bg-[#000080] items-center hover:cursor-pointer " onClick={handleSubmit}>
             Add Due
           </div>
         </div>
@@ -415,7 +415,7 @@ return (
                 </div>
               </div>
               {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-              <button type="submit" className="mt-4 bg-[#8656cd] text-white py-2 px-4 rounded">Save Changes</button>
+              <button type="submit" className="mt-4 bg-[#000080] text-white py-2 px-4 rounded">Save Changes</button>
             </form>
         </Modal.Body>
       </Modal>

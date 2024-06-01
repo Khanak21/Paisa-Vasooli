@@ -76,13 +76,13 @@ function Vault({thememode,toggle,user}) {
       <Navbar thememode={thememode} toggle={toggle}/>
 
       <div className="dark:text-white h-screen" >
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Storage Vault</div>
+      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Storage Vault</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Export Transaction data with filters of your choice and upload them here in the vault</div>
       <div className="flex m-6 justify-center align-middle ">
        
       {/* File upload section */}
         <input type="file" className="w-60 flex justify-center align-middle mx-2 border-none" onChange={(event) => {setfileUpload(event.target.files[0]);}}/>
-         <button onClick={uploadFile} className="text-white  rounded-md p-2 bg-[#8656cd]">Upload file</button>
+         <button onClick={uploadFile} className="text-white  rounded-md p-2 bg-[#000080]">Upload file</button>
         
       {/* All user files diplayed */}
       </div>
