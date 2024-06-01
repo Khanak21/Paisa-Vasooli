@@ -76,16 +76,6 @@ function Vault({thememode,toggle,user}) {
       <Navbar thememode={thememode} toggle={toggle}/>
 
       <div className="dark:text-white h-screen" >
-<<<<<<< Updated upstream
-      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Storage Vault</div>
-      <div className='m-4 text-gray-600 dark:text-gray-400'>Export Transaction data with filters of your choice and upload them here in the vault</div>
-      <div className="flex m-6 justify-center align-middle ">
-       
-      {/* File upload section */}
-        <input type="file" className="w-60 flex justify-center align-middle mx-2 border-none" onChange={(event) => {setfileUpload(event.target.files[0]);}}/>
-         <button onClick={uploadFile} className="text-white  rounded-md p-2 bg-[#000080]">Upload file</button>
-        
-=======
       <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Storage Vault</div>
       <div className="flex justify-between">
       <div className='mx-4 text-gray-600 dark:text-gray-400'>Export Transaction data with filters of your choice and upload them here in the vault</div>
@@ -94,7 +84,6 @@ function Vault({thememode,toggle,user}) {
       <label for="actual-btn" className="text-white  rounded-md p-1 bg-[#8656cd] mx-1">Choose File</label>
       <input type="file" id="actual-btn" className="w-60 flex justify-center align-middle mx-2 border-none hidden" onChange={(event) => {setfileUpload(event.target.files[0]);}}/>
       <button onClick={uploadFile} className="text-white  rounded-md p-1 bg-[#8656cd]">Upload</button>
->>>>>>> Stashed changes
       {/* All user files diplayed */}
       </div>
       </div>
