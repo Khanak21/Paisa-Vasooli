@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar'
 import { useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { ReactComponent as Cash } from './cash-on-wallet.svg';
@@ -179,7 +179,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                      {groupData.title}
                 </div>
                   
-                <button onClick={handleShowPart} className='bg-[#8656cd] text-white rounded-lg w-1/4 h-10 mx-4'>
+                <button onClick={handleShowPart} className='bg-[#000080] text-white rounded-lg w-1/4 h-10 mx-4'>
                     Participants
                 </button>
             </div>
@@ -231,7 +231,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                                 placeholder="Amount"
                                 className='w-80 h-10 '
                             />
-                            <button type="button" className='bg-[#8656cd] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
+                            <button type="button" className='bg-[#000080] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
                                 Remove
                             </button>
                             </div>
@@ -241,8 +241,8 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
             </form>
 
             <div className='flex w-full justify-center'>
-                <button onClick={handleAddField} className='bg-[#8656cd] p-2 rounded-md text-white m-2'>Add Payment</button>
-                <button type="submit" onClick={handleSubmit} className='bg-[#8656cd] p-2 rounded-md text-white m-2'>Simplify Debt</button>
+                <button onClick={handleAddField} className='bg-[#000080] p-2 rounded-md text-white m-2'>Add Payment</button>
+                <button type="submit" onClick={handleSubmit} className='bg-[#000080] p-2 rounded-md text-white m-2'>Simplify Debt</button>
             </div>
             </div>
             <div className='relative overflow-auto h-[65vh]'>
@@ -265,7 +265,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                             console.log(err);
                           }
                         }}
-                          className='bg-[#8656cd] p-1 rounded-md text-white m-2'>
+                          className='bg-[#000080] p-1 rounded-md text-white m-2'>
                           {debt[3] === true ? "Approved" : "Approve"}
                         </button>
                       )}
@@ -293,7 +293,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                     placeholder="Type your comment here"
                     className="w-[50%] h-10 p-2 border border-gray-300 rounded-md text-black"
                 />
-                <button onClick={handleAddComment} className="bg-[#8656cd] p-2 rounded-md text-white m-2">
+                <button onClick={handleAddComment} className="bg-[#000080] p-2 rounded-md text-white m-2">
                     Add Comment
                 </button>
             </div>

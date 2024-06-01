@@ -111,7 +111,7 @@ console.log(allgroupsdata)
             </CopyToClipboard>
             </div>
             {/* {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>} */}
-            <button className='mx-2 px-2 bg-[#8656cd] rounded-md text-white lg:w-80 md:w-80' onClick={handleAddFriendShow}>or Add Friend</button>
+            <button className='mx-2 px-2 bg-[#000080] rounded-md text-white lg:w-80 md:w-80' onClick={handleAddFriendShow}>or Add Friend</button>
             </div>
           
           </Card.Text>
@@ -120,10 +120,10 @@ console.log(allgroupsdata)
 
        <div className='w-full p-2 my-2 flex flex-col justify-center items-start gap-3'>
         
-        <button className='rounded-md p-1 text-white w-full bg-[#8656cd]' onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
+        <button className='rounded-md p-1 text-white w-full bg-[#000080]' onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
            Simplify Debt
         </button>
-        {/* <button className='rounded-md p-1 text-white w-full bg-[#8656cd]' onClick={()=>navigate(`/billsplit/${groupData._id}`)} style={{"cursor":"pointer"}}> */}
+        {/* <button className='rounded-md p-1 text-white w-full bg-[#000080]' onClick={()=>navigate(`/billsplit/${groupData._id}`)} style={{"cursor":"pointer"}}> */}
            {/* Split bill */}
         {/* </button> */}
        
@@ -173,7 +173,7 @@ console.log(allgroupsdata)
         </ul>
         </Modal.Body>
         <Modal.Footer>
-          <button className="rounded-md p-1 text-white w-full bg-[#8656cd]" onClick={handleAddFriendsToGroup}  required>Add to group</button>
+          <button className="rounded-md p-1 text-white w-full bg-[#000080]" onClick={handleAddFriendsToGroup}  required>Add to group</button>
         </Modal.Footer>
       </Modal>
   </div>

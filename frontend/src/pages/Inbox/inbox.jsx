@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar'
 import axios from "axios"
 
 const Inbox = ({ user,setUser,thememode,toggle }) => {
@@ -53,7 +53,7 @@ const handleAccept=async(key)=>{
 
     <div className='dark:bg-[#181818] h-[100vh]'>
       <Navbar thememode={thememode} toggle={toggle} />
-      <div className='font-extrabold text-5xl mx-4 mt-4 underline underline-offset-8 decoration-[#8656cd] dark:text-[#f0f0f0]'>Inbox</div>
+      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Inbox</div>
 
       <div>
         
@@ -75,7 +75,7 @@ const handleAccept=async(key)=>{
             {msg.includes('sent') ? (
               <div className='m-4 bg-gray-200 p-2 rounded-md flex  justify-between align-middle dark:bg-[#282828] dark:text-white'>
                 <div className='m-3'>{msg}</div>
-                <button className='p-2 m-2 rounded-md text-white' style={{backgroundColor:inboxuser.friends.includes(key) ? "green":"#8656cd"}} onClick={()=>handleAccept(key)}>{inboxuser.friends.includes(key) ? "Accepted" : "Accept"}</button>
+                <button className='p-2 m-2 rounded-md text-white' style={{backgroundColor:inboxuser.friends.includes(key) ? "green":"#000080"}} onClick={()=>handleAccept(key)}>{inboxuser.friends.includes(key) ? "Accepted" : "Accept"}</button>
               </div>
             ) : (
               <div className='m-4 bg-gray-200 p-2 rounded-md dark:bg-[#282828] dark:text-white'>{msg}</div>
