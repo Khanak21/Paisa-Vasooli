@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar'
 import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
@@ -312,14 +312,27 @@ console.log(datat)
     <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
       
         <Navbar thememode={thememode} toggle={toggle}/>
-      <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#8656cd] dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
-      <div className='mt-2 mx-4 text-gray-600 dark:text-gray-400'>Let's add some transactions!</div>
+        {/* --------------------------User monetary stats------------------------ */}
+        {/* <select onChange={(e)=> handleChange(e)}>
+                {languages.map((item) => {
+                    return (
+                        <option
+                            key={item.value}
+                            value={item.value}
+                        >
+                            {item.text}
+                        </option>
+                    );
+                })}
+            </select> */}
+      <div className='font-extrabold text-2xl mx-4 mt-2 px-6 dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
+      <div className='mt-2 mx-4 px-6 text-gray-600 dark:text-gray-400'>Let's add some transactions!</div>
 
      <div className='h-full flex flex-col justify-center items-start '>
        
           <div className='flex w-[99vw] justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
 
-            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
+            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#000080] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
               <div>
               Income
@@ -335,7 +348,7 @@ console.log(datat)
             </div>
 
 
-           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
+           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#000080] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6' >
               <div> 
                Balance
@@ -347,7 +360,7 @@ console.log(datat)
               </div>
           </div>
 
-          <div className='  w-60 rounded-md flex flex-col justify-center bg-[#8656cd] h-10 text-white items-center chill'>
+          <div className='  w-60 rounded-md flex flex-col justify-center bg-[#000080] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
                 <div className='text-md flex justify-evenly gap-2'>
                  <span> Expense </span>
@@ -362,13 +375,15 @@ console.log(datat)
 
           </div>
       
-        
         {/* -----------------------Filters------------------------ */}
-        <div className='flex px-4 py-4 justify-center items-center h-[100%] filter w-[99vw]' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
-           <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode=="dark"?"white":"black"}}>Filters:</div>
+        <div className='grid grid-cols-3'>
+        <div className='col-span-1'>
+        <div className='flex-col px-6 py-4 justify-center items-center h-[100%] filter mx-4 w-fit' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+           {/* <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode=="dark"?"white":"black"}}>Filters:</div> */}
         
         {/* Category */}
-              <select className='mx-2 border-2 rounded-md p-3 category-all' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
+              <label for="category" className='px-2 pb-2 dark:text-white'>Category:</label>
+              <select className='mx-2 border-2 rounded-md p-3 category-all w-full' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
                 <option value="">All Categories</option>
                    {
                       uniqueCategories.map(cat=>(
@@ -379,29 +394,36 @@ console.log(datat)
               </select>
 
         {/* Date */}
- 
-        <input type="date" id="startDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
-        <input type="date" id="endDate" className="mx-2 my-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
-        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#8656cd] text-white p-2 rounded-md lg:w-80'>Apply</button>
-
+        <label for="startDate" className='p-2 dark:text-white'>Start Date:</label>
+        <input type="date" id="startDate" className="mx-2 border-2 rounded-md p-3" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
+        <label for="endDate" className='p-2 dark:text-white'>End Date:</label>
+        <input type="date" id="endDate" className="mx-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
+        
+        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#000080] text-white p-2 rounded-md w-full'>Apply Filter</button>
           {/* ----------------------Exporting data-------------------------- */}
-        <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className='my-2  p-2 bg-[#8656cd] text-white p-2 rounded-md'>Export</button></CSVLink>
+        <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full'>Export CSV</button></CSVLink>
+      
+        </div>
         </div>
 
 
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
-      <div className='min-h-screen w-full flex flex-col align-middle'> 
-        <div style={{width:"100%"}}>
+      <div className='h-[95%] w-full flex flex-col align-middle col-span-2'> 
+        <div style={{width:"100%"}} className='overflow-y-scroll'>
           {(filterstate==false ? transactionData : filteredData)?.map(trans=>(
             //  console.log("mapped data",trans)
             <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} setTransactionData={setTransactionData} setUpdateFlag={setUpdateFlag}/> 
             ))}
         </div>
-        </div>
+       
+      </div>
+        
+      </div>
+
       </div>
 
     {/* --------------------------------------Add transaction modal-------------------------------- */}
-    <button onClick={handleShow} className='bg-[#8656cd] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 right-8'>+</button>
+    <button onClick={handleShow} className='bg-[#000080] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 right-8'>+</button>
     <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Transaction</Modal.Title>
@@ -478,8 +500,7 @@ console.log(datat)
             ></input>
         </Modal.Body>
         <Modal.Footer>
-          {errorMessage&&<p className='text-red-500'>{errorMessage}</p>}
-          <button className='bg-[#8656cd] p-2 rounded-md text-white' onClick={handleSubmit} required>Save</button>
+          <button className='bg-[#000080] p-2 rounded-md text-white' onClick={handleSubmit} required>Save</button>
         </Modal.Footer>
       </Modal>
 

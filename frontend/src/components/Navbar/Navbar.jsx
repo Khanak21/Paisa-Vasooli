@@ -85,8 +85,6 @@ function Navbar({thememode,toggle,setUser,user,setFlag,flag}) {
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/stocks")}}>Stocks</div>
         <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/vault")}}>Vault</div>
         <div className="font-bold text-white hover:cursor-pointer lg:hidden" onClick={()=>{navigate("/inbox")}}>Inbox</div>
-
-   
         <div className="inside font-bold text-white hover:cursor-pointer " onClick={()=>{Logout()}}>Logout</div>
         <div className="inside2 font-bold text-white hover:cursor-pointer " onClick={toggle} >Theme Toggle</div>
         
