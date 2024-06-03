@@ -1,23 +1,32 @@
 import User from "../models/user.js"
 
-export const addStock = async(req,res)=>{
-    const stock = req.body
-    const userId = req.params.userId
-    console.log(userId,stock)
-    try{
-        const user = await User.findByIdAndUpdate(
-            userId,
-            { $push: { stocks: stock } },
-            { new: true }
-        );
+export const addStock = async (req, res) => {
+    const stock = req.body;
+    const userId = req.params.userId;
+    console.log(userId, stock);
+
+    try {
+        const user = await User.findById(userId);
+
+        // Check if the stock already exists
+        const stockExists = user.stocks.some(existingStock => existingStock.input === stock.input);
+
+        if (stockExists) {
+            return res.status(400).json({ message: 'Stock already exists' });
+        }
+
+        // Add the stock if it does not exist
+        user.stocks.push(stock);
+        await user.save();
 
         res.status(200).json({ message: 'Stock added successfully', user });
 
-    }catch(err){
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
+
 export const getStocks = async(req,res)=>{
     const userId = req.params.userId
     try{
@@ -41,6 +50,70 @@ export const getUrls = async(req,res)=>{
     }catch(err){
         console.error(err);
         res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
+export const deleteStock = async (req, res) => {
+    try {
+        const { userId } = req.params; 
+        const { stockId } = req.body;
+
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: "Invalid user ID format" });
+        }
+
+        if (!stockId) {
+            return res.status(400).json({ message: "Stock ID is required" });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "Can't find the user of given ID" });
+        }
+
+        console.log("User stocks", user.stocks);
+
+        // Filter out the stock to be deleted
+        const updatedStocks = user.stocks.filter(stock => stock.input !== stockId);
+        user.stocks = updatedStocks;
+
+        const updatedUser = await user.save();
+        console.log("Updated stocks", user.stocks);
+
+        res.status(200).json({
+            user: updatedUser,
+            stocks: updatedUser.stocks
+        });
+    } catch (error) {
+        console.log("Error while deleting the stock", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+export const delUrl=async (req, res) => {
+    try {
+        const {url} = req.body
+        const {userId}=req.params
+        console.log(userId)
+        const user=await User.findById(userId)
+        console.log("Url frontend",url)
+        const updatedFiles=user.files.filter((file)=>file.url!==url)
+        console.log("updatedFiles",updatedFiles)
+        user.files=updatedFiles
+
+        const k=await user.save()
+        console.log(updatedFiles) 
+
+        if(!k)
+            {
+                res.status(502).json({message:"Can't save the user "})
+            }
+    
+        console.log('File successfully deleted.');
+        return res.send({ message: 'file deleted from firebase storage' ,files:user.files});
+    } catch (error) {
+        console.error("Error while deleting the file:", error);
+        return res.status(400).send(error.message);
     }
 }
 

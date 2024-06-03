@@ -1,6 +1,5 @@
 
 import React, { useState,useEffect } from 'react';
-import './App.css';
 import Navbar from './components/Navbar.jsx';
 import Signup from './pages/Signup/Signup.jsx';
 import Login from './pages/Login/Login';
@@ -16,7 +15,7 @@ import ToggleBtn from './components/Navbar/ToggleBtn.jsx';
 import Savings2 from './pages/Savings/Savings2';
 import SimplifyDebt from './pages/Groups/SimplifyDebt.jsx'
 import Grouphome from './pages/Groups/Grouphome.jsx';
-
+import { ChakraProvider } from '@chakra-ui/react'
 import Profile from './pages/Profile/Profile.jsx';
 import Inbox from './pages/Inbox/inbox.jsx';
 
@@ -66,6 +65,7 @@ function App() {
   return (
     <>
      <BrowserRouter>
+       <ChakraProvider>
         <Routes>
           <Route path="/" element={<Login user={user} setUser={setUser} thememode={thememode} toggle={toggle} />} />
           <Route path="/login" element={<Login user={user} setUser={setUser}thememode={thememode} toggle={toggle}/>} />
@@ -89,6 +89,7 @@ function App() {
           <Route path="/inbox" element={<Inbox user={user} setUser={setUser} thememode={thememode} toggle={toggle}/>} />
 
         </Routes>
+        </ChakraProvider>
       </BrowserRouter>
     </>
   );

@@ -34,7 +34,7 @@ app.use("/api/transactions",transroutes)
 app.use("/api/savings",savingroutes)
 app.use("/api/auth",authroutes)
 app.use("/api/mail",mailroutes)
-app.use("/api/user",userroutes)
+app.use("/api/user",userroutes) 
 app.use("/api/group",grouproutes)
 app.use("/api/friend",friendroutes)
 
@@ -69,7 +69,8 @@ app.use((err,req,res,next)=>{
   
 
 //server listens on port 3001
-app.listen(3001,()=>{
+const PORT=process.env.PORT||3001
+app.listen(PORT,()=>{
     //connecting to database
     connect()
     //connecting to server

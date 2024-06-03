@@ -43,6 +43,9 @@ const userSchema = new mongoose.Schema({
     },
     badges:{
         type:[String]
+    },
+    token:{
+        type:String
     }
 })
 
