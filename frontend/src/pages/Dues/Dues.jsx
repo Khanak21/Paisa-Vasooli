@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import {  useToast } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
-import './Dues.css'
-import axios from "axios";
-import BillCard from "../../components/Cards/BillCard.jsx"
-import Navbar from '../../components/Navbar'
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import './Dues.css';
+import axios from 'axios';
+import BillCard from '../../components/Cards/BillCard.jsx';
+import Navbar from '../../components/Navbar.jsx';
 import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
 import Table from 'react-bootstrap/Table';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
@@ -37,9 +38,10 @@ function Dues({ user, thememode, toggle,setUser }) {
   const [BillData, setBillData] = useState([]);
   const [errorMessageAdd, setErrorMessageAdd] = useState("");
   console.log(BillData)
+  const toast=useToast()
     // ---------------input ----------------------- 
   const handleBillInput = (name) => (e) => {
-    if(name=='title' ||name=='toWhom'){
+    if(name==='title' ||name=='toWhom'){
       const capitalizedTitle = capitalizeFirstLetter(e.target.value);
       setdueItem({ ...dueItem, [name]: capitalizedTitle });
     }
@@ -80,6 +82,13 @@ function Dues({ user, thememode, toggle,setUser }) {
     const currencysmall = dueItem.currency.toUpperCase();
     dueItem.amount =Math.floor(dueItem.amount / currenciData[currencysmall]);
     if(dueItem.amount==''||dueItem.currency===''||dueItem.dueDate===''||dueItem.recurring===''||dueItem.title===''||dueItem.toWhom===''||dueItem.userId===''){
+      toast({
+       title: 'Validation Error',
+        description: 'All fields are required.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
       setErrorMessageAdd("All entries should be filled");
       return ;
     }

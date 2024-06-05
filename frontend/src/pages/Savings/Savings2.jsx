@@ -270,7 +270,7 @@ delsaving(id);
 
     <Navbar thememode={thememode} toggle={toggle}/>
     <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
-       <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
+       <div className='font-extrabold text-2xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
      
       <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black"}}>

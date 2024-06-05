@@ -177,13 +177,13 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     },[groupflag])
 
   return (
-    <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}} >
+    <div style={{backgroundColor:thememode==="dark"?"#181818":"white"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className='flex flex-col gap-2 justify-start items-start min-h-screen' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
         <div className='flex justify-between w-full'>
         <div>
         <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'> Groups</div>
-        <div className='mx-4 text-gray-600 dark:text-gray-400 '>Invite friends, create groups and streamline bill splitting and debt settlements</div>
+        <div className='mx-4 text-gray-600 dark:text-gray-400'>Invite friends, create groups and streamline bill splitting and debt settlements</div>
         </div>
       
         <div>
@@ -213,13 +213,13 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
-        PaperProps={{
-          sx: {
-            backgroundColor: thememode === 'dark' ? theme.palette.grey[900] : theme.palette.background.paper,
-            color: thememode === 'dark' ? 'white' : 'black',
+        // PaperProps={{
+        //   sx: {
+        //     backgroundColor: thememode === 'dark' ? theme.palette.grey[900] : theme?.palette.background.paper,
+        //     color: thememode === 'dark' ? 'white' : 'black',
         
-          },
-        }}
+        //   },
+        // }}
       >
         <MenuItem onClick={handleGroupShow}>Create new group</MenuItem>
         <MenuItem onClick={handleGroupJoinShow}>Join Group</MenuItem>

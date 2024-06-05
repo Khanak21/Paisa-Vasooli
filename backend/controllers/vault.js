@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import multer from "multer";
 import config from "../config/firebase"
-
+import User from '../models/user.js'
 const router = express.Router();
 
 //Initialize a firebase application
@@ -44,6 +44,9 @@ router.post("/", upload.single("filename"), async (req, res) => {
         return res.status(400).send(error.message)
     }
 });
+
+
+
 
 const giveCurrentDateTime = () => {
     const today = new Date();

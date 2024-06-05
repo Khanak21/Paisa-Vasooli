@@ -29,7 +29,7 @@ const theme = createTheme({
     },
   });
  
-const pages = ['Dues', 'Groups', 'Savings'];
+const pages = ['Dues', 'Groups', 'Savings','Vault'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
@@ -255,6 +255,34 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
                   }}
               >
                 Stocks
+              </Button>
+              <Button
+                key="Groups"
+                onClick={()=>{navigate("/vault")}}
+                sx={{
+                    my: 2,
+                    color: thememode === 'dark' ? 'white' : '#000080',
+                    display: 'block',
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      width: '100%',
+                      height: '2px',
+                      backgroundColor: '#000080',
+                      bottom: '-4px', // Adjust this value to move the underline up or down
+                      left: 0,
+                      transform: 'scaleX(0)',
+                      transformOrigin: 'bottom right',
+                      transition: 'transform 0.25s ease-out',
+                    },
+                    '&:hover::after': {
+                      transform: 'scaleX(1)',
+                      transformOrigin: 'bottom left',
+                    },
+                  }}
+              >
+                Vault
               </Button>
           </Box>
 
