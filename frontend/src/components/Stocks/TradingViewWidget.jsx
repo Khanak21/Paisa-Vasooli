@@ -37,7 +37,7 @@ export default function TradingViewWidget({sym,stockflag,thememode}) {
             symbol: `${sym}`,
             interval: "D",
             timezone: "Etc/UTC",
-            theme: thememode=="dark"?"dark":"light",
+            theme: thememode==="dark"?"dark":"light",
             style: "1",
             locale: "in",
             enable_publishing: false,
@@ -47,7 +47,7 @@ export default function TradingViewWidget({sym,stockflag,thememode}) {
         }
       }
     },
-    [stockflag]
+    [stockflag,thememode,sym]
   );
 
   return (

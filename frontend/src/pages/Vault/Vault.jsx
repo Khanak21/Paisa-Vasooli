@@ -14,8 +14,19 @@ function Vault({ thememode, toggle, user }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  // const filesListRef = ref(storage, "files/");
+  // Function to display a toast notification
+  const showToast = (title, description, status) => {
+    toast({
+      title,
+      description,
+      status,
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+    });
+  };
 
+  // Function to convert ISO string to readable date
   function convertToReadableDate(isoString) {
     const date = new Date(isoString);
     return date.toLocaleDateString('en-US', {
@@ -27,14 +38,7 @@ function Vault({ thememode, toggle, user }) {
 
   const uploadFile = () => {
     if (fileUpload == null) {
-      toast({
-        title: "No file selected.",
-        description: "Please select a file to upload.",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-        position: "top-center",
-      });
+      showToast("No file selected.", "Please select a file to upload.", "warning");
       return;
     }
     const dateTime = new Date().toISOString();
@@ -47,6 +51,7 @@ function Vault({ thememode, toggle, user }) {
           try {
             const res = await axios.post(`http://localhost:3001/api/user/addUrl/${user?._id}`, { url, fileName });
             console.log("file url", res.data);
+            showToast("File uploaded successfully.", "", "success");
           } catch (err) {
             console.log(err);
           }
@@ -70,10 +75,11 @@ function Vault({ thememode, toggle, user }) {
         data: { url: url }
       });
 
-       await deleteObject(fileRef);
+      await deleteObject(fileRef);
       console.log("Response ", resp);
       setfileUrls((prev) => prev.filter((file) => file.fileName !== fileName));
       onClose();
+      showToast("File deleted successfully.", "", "success");
     } catch (err) {
       console.log(err);
     }
@@ -98,7 +104,6 @@ function Vault({ thememode, toggle, user }) {
     const timestamp = fileName.substring(lastSpaceIndex + 1);
     return { originalName, timestamp };
   };
-
   return (
     <div className="h-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}>
       <Navbar thememode={thememode} toggle={toggle} />

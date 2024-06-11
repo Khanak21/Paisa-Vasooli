@@ -24,6 +24,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
     const [membersData, setMembersData] = useState([]);
     const [commentText, setCommentText] = useState('');
     const [comments, setComments] = useState([]);
+    // eslint-disable-next-line no-unused-vars
     const [copied, setCopied] = useState(false);
 
     const handleCopyToClipboard = () => {
@@ -130,6 +131,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                 groupId: id,
                 username: user?.username
             });
+            console.log("Simplify-debt ",res)
             setCommentText('');
             setCommentFlag(prev => !prev);
         } catch (err) {
@@ -148,8 +150,10 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 
     useEffect(() => {
         getComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [commentFlag, comments.length]);
 
+    
     const getMembers = async () => {
         try {
             const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`);
@@ -158,11 +162,11 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
             console.log(err);
         }
     };
-
     useEffect(() => {
         getGroup();
         getMembers();
-    }, [id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id,getGroup]);
 
     const CheckboxGroup = ({ options, selectedValues, onChange }) => (
         <div >

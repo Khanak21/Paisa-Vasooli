@@ -29,6 +29,7 @@ export const Grouphome = ({user,thememode,toggle}) => {
     // const handleFriendShow = () => setShowFriend(true);
     const [membersdata,setmembersdata]=useState([])
     // const [paid,setPaid] = useState(false)
+    // eslint-disable-next-line no-unused-vars
     const [approved,setApproved] = useState(false)
     // const [showGroupHome, setShowGroupHome] = useState(false);
 //     const handleOpenGroup = () => {
@@ -104,6 +105,7 @@ console.log(groupData)
     useEffect(()=>{
      
       getgroup()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
   // function to fetch group members' data
@@ -119,6 +121,7 @@ console.log(groupData)
     }
 
     getMembers()
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    },[])
 
     useEffect(() => {
@@ -133,7 +136,7 @@ console.log(groupData)
    <>
           <Navbar thememode={thememode} toggle={toggle}/>
 
-        <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+        <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}}>
 
 
        
@@ -193,7 +196,7 @@ console.log(groupData)
              <div><b>Name: {" "}</b>{mem.name}</div> 
              <div><b>Amount: {" "}</b>{mem.amount}</div>
              {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
-            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-[#000080] text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
+            {(groupData.userId===user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-[#000080] text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
            </div>
 
         ))

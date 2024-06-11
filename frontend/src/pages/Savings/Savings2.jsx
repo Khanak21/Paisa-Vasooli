@@ -169,6 +169,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
     }, [data]);
     return data
 }
+// eslint-disable-next-line no-unused-vars
 const [currenci, setCurrenci] = useState('inr');
 const currenciData = UCurrency(currenci);
 
@@ -249,6 +250,7 @@ const currenciData = UCurrency(currenci);
     }
     getSavings()
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[user._id,updateFlag,setUser])
 
   const handleDelete = (id) => {

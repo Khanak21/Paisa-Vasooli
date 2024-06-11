@@ -13,7 +13,19 @@ const Stocks = ({ user, thememode, toggle }) => {
     const [deleteStockModalOpen, setDeleteStockModalOpen] = useState(false); // State variable for delete stock modal
     const [stockToDelete, setStockToDelete] = useState('');
 
-    const toast = useToast();
+    const toast = useToast(); // Initialize useToast hook
+
+    // Function to display toast notification
+    const showToast = (title, description, status) => {
+        toast({
+            title,
+            description,
+            status,
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+        });
+    };
 
     // Function to open delete stock modal
     const openDeleteStockModal = (stockSymbol) => {
@@ -26,21 +38,21 @@ const Stocks = ({ user, thememode, toggle }) => {
         setDeleteStockModalOpen(false);
     };
 
-        // Function to handle deletion of stock using POST
-        const handleDeleteStock = async () => {
-            try {
-                console.log("stock id", stockToDelete);
-                const response = await axios.post(`http://localhost:3001/api/user/deleteStock/${user._id}`, {
-                    stockId: stockToDelete
-                });
-                setFlag(prev => !prev);
-                console.log(response);
-                setDeleteStockModalOpen(false);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
+    // Function to handle deletion of stock using POST
+    const handleDeleteStock = async () => {
+        try {
+            console.log("stock id", stockToDelete);
+            const response = await axios.post(`http://localhost:3001/api/user/deleteStock/${user._id}`, {
+                stockId: stockToDelete
+            });
+            setFlag(prev => !prev);
+            console.log(response);
+            setDeleteStockModalOpen(false);
+            showToast("Stock deleted successfully.", "", "success"); // Display success toast
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     // Handling user input for ticker symbol and company/crypto name
     const handleInput = e => {
@@ -56,14 +68,7 @@ const Stocks = ({ user, thememode, toggle }) => {
     // Function to add stock symbol
     const handleSubmit = async () => {
         if (input.trim() === '') {
-            toast({
-                title: "No input provided.",
-                description: "Please enter a stock ticker symbol before saving.",
-                status: "warning",
-                duration: 3000,
-                isClosable: true,
-                position: "top",
-            });
+            showToast("No input provided.", "Please enter a stock ticker symbol before saving.", "warning"); // Display warning toast
             return;
         }
 
@@ -73,6 +78,7 @@ const Stocks = ({ user, thememode, toggle }) => {
             setStockData(prev => ([...prev, val]));
             setFlag(prev => !prev);
             setInput("");
+            showToast("Stock added successfully.", "", "success"); // Display success toast
         } catch (err) {
             console.log(err);
         }
@@ -104,7 +110,7 @@ const Stocks = ({ user, thememode, toggle }) => {
                 <div className='flex justify-around'>
                     <div className='flex w-full'>
                         <div className='w-3/4'>
-                            <div className='m-4 dark:text-white flex justify-center items-center w-full'>
+                            <div className='m-4 dark:text-black flex justify-center items-center w-full'>
                                 <input
                                     name={"input"}
                                     type="text"

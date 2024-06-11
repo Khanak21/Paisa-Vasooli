@@ -18,14 +18,13 @@ import {
   Box,
   Text,
   Heading,
-  useTheme,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import GroupCard from '../../components/GroupCard/GroupCard.jsx';
 
 export const Main = ({ user, setUser, thememode, toggle, groupData, setgroupData }) => {
-  const theme = useTheme();
+  // const theme = useTheme();
   const { isOpen: isGroupOpen, onOpen: onGroupOpen, onClose: onGroupClose } = useDisclosure();
   const { isOpen: isGroupJoinOpen, onOpen: onGroupJoinOpen, onClose: onGroupJoinClose } = useDisclosure();
   const { isOpen: isAddFriendOpen, onOpen: onAddFriendOpen, onClose: onAddFriendClose } = useDisclosure();
@@ -147,7 +146,8 @@ export const Main = ({ user, setUser, thememode, toggle, groupData, setgroupData
       }
     }
     check();
-  }, [user._id]);
+
+  }, [user._id,setUser]);
 
   useEffect(() => {
     const getGroups = async () => {

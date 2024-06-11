@@ -13,15 +13,21 @@ function Login({user,setUser}) {
   //hooks to handle the changing states
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("")
+
+  // eslint-disable-next-line no-unused-vars
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+  
+  // eslint-disable-next-line no-unused-vars
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [allEntry, setAllEntry] = useState([]);
   // const [currentView,setView]=useState("Login")
   // state to validate the email
+  // eslint-disable-next-line no-unused-vars
   const [validEmail,setValidemail]=useState(false)
 
   //variable to hold the regular expression to check  correct email
+  // eslint-disable-next-line no-unused-vars
   const emailValidation= (email) => {  
 
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -43,12 +49,7 @@ function Login({user,setUser}) {
     setIsUsernameValid(newUsername.length >= 5);
   };
 
-  const handleEmail=(event)=>{
-     const k=event.target.value;
-     setEmail(k);
-    //  setValidemail(emailValidation(k));
-
-  }
+  
   
   // const blabla = (event)=>{
   //   const logig =async()=>{

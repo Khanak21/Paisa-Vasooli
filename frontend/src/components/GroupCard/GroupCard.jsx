@@ -7,14 +7,16 @@ import axios from 'axios';
 const GroupCard = ({ key, setgroupData, groupData, allgroupsdata, setSelectedGroup, selectedGroup, thememode, toggle, user }) => {
   const navigate = useNavigate();
   const theme = useTheme(); 
+  // eslint-disable-next-line no-unused-vars
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [showGroupHome, setShowGroupHome] = useState(false);
+  // const [showGroupHome, setShowGroupHome] = useState(false);
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [friends, setFriends] = useState([]);
   const [checkedState, setCheckedState] = useState(new Array(user.friends.length).fill(false));
+  // eslint-disable-next-line no-unused-vars
   const [anchorEl, setAnchorEl] = useState(null);
   // const open = Boolean(anchorEl);
-  const [copied, setCopied] = useState(false);
+  // const [copied, setCopied] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,6 +39,7 @@ const GroupCard = ({ key, setgroupData, groupData, allgroupsdata, setSelectedGro
 
   const handleAddFriendsToGroup = async () => {
     try {
+      // eslint-disable-next-line no-unused-vars
       const res = await axios.put(`http://localhost:3001/api/group/addfriendsgroup/${groupData._id}`, { friends });
       handleAddFriendClose();
     } catch (err) {
@@ -75,9 +78,9 @@ const GroupCard = ({ key, setgroupData, groupData, allgroupsdata, setSelectedGro
     }
   };
 
-  const handlePaid = () => {
-    console.log("clicked");
-  };
+  // const handlePaid = () => {
+  //   console.log("clicked");
+  // };
 
   return (
     <Box className="flex justify-center items-center card-parent h-full p-1">
