@@ -399,9 +399,12 @@ console.log(datat)
         <label for="endDate" className='p-2 dark:text-white'>End Date:</label>
         <input type="date" id="endDate" className="mx-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
         
-        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#000080] text-white p-2 rounded-md w-full'>Apply Filter</button>
-        <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full mt-5'>Export CSV</button></CSVLink>
-        <button onClick={handleShow} className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full'>Add Transaction</button>
+        <div className=''>
+          <button style={{}} onClick={handleFilter} className='mx-2 p-2 mt-2 bg-[#000080] text-white p-2 rounded-md w-full'>Apply Filter</button>
+          <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className=' mx-2 mt-2 p-2 bg-[#000080] text-white rounded-md w-full'>Export CSV</button></CSVLink>
+        </div>
+        {/* <button onClick={handleShow} className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full'>Add Transaction</button> */}
+        <button onClick={handleShow} className='bg-[#000080] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 right-8 z-10'>+</button>
         </div>
         </div>
 
