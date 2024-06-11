@@ -40,6 +40,17 @@ const Stocks = ({user,thememode,toggle}) => {
         }
     }
 
+    const handledelete = async(stock)=>{
+      try{
+        const res = await axios.put(`http://localhost:3001/api/user/deletestock/${user._id}`,stock)
+        console.log(res.data);
+        setflag(prev=>!prev)
+      }
+      catch(e){
+        console.log(e);
+      }
+    }
+
     //function to fetch user stocks
     useEffect(()=>{
       const getStocks = async()=>{ try{ const res=await axios.get(`http://localhost:3001/api/user/getStocks/${user._id}`)
@@ -85,9 +96,11 @@ const Stocks = ({user,thememode,toggle}) => {
   <div className='px-3 '>
     <div className=' w-full grid grid-cols-5 '>  
     {stockData.map((stock, index) => (
+      <>
       <div className='h-fit w-fit mx-2 mb-4 border-[#8656cd] dark:text-white shadow-md p-2 rounded-md' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px", backgroundColor:thememode==='dark'?"#2c3034":"white"}}>
           {stock.input}
       </div>
+      </>
     ))}
     </div>
   </div>

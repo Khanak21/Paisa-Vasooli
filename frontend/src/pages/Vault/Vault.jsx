@@ -8,7 +8,7 @@ import {
 } from "firebase/storage";
 import { storage } from "../firebase";
 import axios from "axios";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/Navbar.jsx";
 
 
 function Vault({thememode,toggle,user}) {

@@ -23,6 +23,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   const [isVisible, setIsVisible] = useState(false);
   const [savingData, setSavingData] = useState([]);
   const [updateFlag,setUpdateFlag] =useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
  //function to handle savings input
 
@@ -94,6 +95,12 @@ function Savings2({ user,setUser,thememode,toggle}) {
   };
   const[show,setShow] =useState(false);
   const [sellectedsav,setselectedsav] = useState(null);
+  const [selectedSavingId, setSelectedSavingId] = useState(null);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
+    const handleShowDeleteModal = (id) => {
+    setSelectedSavingId(id);
+    setShowDeleteModal(true);
+  };
   const [sav,setsav]=useState({
     userId:user._id,
     targetAmt:'',
@@ -250,20 +257,23 @@ const currenciData = UCurrency(currenci);
     getSavings()
   },[user._id,updateFlag])
 
-  const handleDelete = (id) => {
-  const delsaving = async(id)=>{
+  const handleDelete = () => {
+  const delsaving = async()=>{
     try{
-        const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${id}`)
+        const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${selectedSavingId}`)
         console.log(res.data)
         setUpdateFlag((prev)=>!(prev))
-
+        handleCloseDeleteModal();
     }catch(err){
         console.log(err)
     }
 }
-delsaving(id);
+delsaving();
+}
 
-  }
+const DeleteConfirmation = (id) => {
+  handleShowDeleteModal(id);
+};
 
   return (
     <div className="min-h-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
@@ -379,7 +389,7 @@ delsaving(id);
               <td>
                 <div className='flex justify-end w-[80%] gap-4 mr-6'>
                   <AiFillEdit onClick={() => handleShow(sav)} style={{ cursor: 'pointer' }} />
-                  <AiFillDelete onClick={() => handleDelete(sav._id)} style={{ cursor: 'pointer' }} />
+                  <AiFillDelete onClick={() => DeleteConfirmation(sav._id)} style={{ cursor: 'pointer' }} />
                 </div>
               </td>
               </tr>
@@ -415,6 +425,22 @@ delsaving(id);
             </form>
         </Modal.Body>
       </Modal>
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Deletion</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>Are you sure you want to delete this saving?</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                  Cancel
+                </Button>
+                <Button variant="danger" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>
