@@ -14,7 +14,7 @@ function Vault({ thememode, toggle, user }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const filesListRef = ref(storage, "files/");
+  // const filesListRef = ref(storage, "files/");
 
   function convertToReadableDate(isoString) {
     const date = new Date(isoString);
@@ -70,7 +70,7 @@ function Vault({ thememode, toggle, user }) {
         data: { url: url }
       });
 
-      const response = await deleteObject(fileRef);
+       await deleteObject(fileRef);
       console.log("Response ", resp);
       setfileUrls((prev) => prev.filter((file) => file.fileName !== fileName));
       onClose();

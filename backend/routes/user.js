@@ -5,7 +5,7 @@ import {authmiddleware} from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 //Routes for user api
-router.delete("/deleteStock/:userId",deleteStock);
+router.post("/deleteStock/:userId",deleteStock);
 router.post("/addStock/:userId",addStock);
 router.post("/addUrl/:userId",addUrl);
 router.put("/addImg/:userId",addImg);

@@ -26,17 +26,21 @@ const Stocks = ({ user, thememode, toggle }) => {
         setDeleteStockModalOpen(false);
     };
 
-    // Function to handle deletion of stock
-    const handleDeleteStock = async () => {
-        try {
-            const response = await axios.delete(`http://localhost:3001/api/user/deleteStock/${user._id}`, { stockId: stockToDelete });
-            setFlag(prev => !prev);
-            console.log(response);
-            setDeleteStockModalOpen(false);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+        // Function to handle deletion of stock using POST
+        const handleDeleteStock = async () => {
+            try {
+                console.log("stock id", stockToDelete);
+                const response = await axios.post(`http://localhost:3001/api/user/deleteStock/${user._id}`, {
+                    stockId: stockToDelete
+                });
+                setFlag(prev => !prev);
+                console.log(response);
+                setDeleteStockModalOpen(false);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
 
     // Handling user input for ticker symbol and company/crypto name
     const handleInput = e => {
@@ -88,7 +92,7 @@ const Stocks = ({ user, thememode, toggle }) => {
     }, [flag, user._id, user.stocks]);
 
     return (
-        <div>
+        <div  className="h-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}>
             <Navbar thememode={thememode} toggle={toggle} />
             <div className="mx-auto my-auto h-screen block justify-center items-center" style={{ backgroundColor: thememode === "dark" ? "#181818" : "#f0f0f0" }}>
 
@@ -117,7 +121,18 @@ const Stocks = ({ user, thememode, toggle }) => {
                                     {stockData.length > 0 && stockData.map((stock, index) => (
                                         <div className='h-fit w-fit flex flex-col gap-1 justify-center items-center mx-2 mb-4 border-[#8656cd] dark:text-white shadow-md p-3 rounded-lg' key={index} onClick={() => handleSETSYM(stock.input)} style={{ cursor: "pointer", padding: "5px", backgroundColor: thememode === 'dark' ? "#2c3034" : "white" }}>
                                             <div>{stock.input}</div>
-                                            <Button size="xs" colorScheme="red" ml={2} onClick={() => openDeleteStockModal(stock.input)}>Delete</Button>
+                                            <Button 
+                                                size="xs" 
+                                                colorScheme="red" 
+                                                ml={2} 
+                                                onClick={() => {
+                                                    openDeleteStockModal(stock.input);
+                                                    setStockToDelete(stock.input);
+                                                }}
+                                                >
+                                                Delete
+                                            </Button>
+
                                         </div>
                                     ))}
                                 </div>

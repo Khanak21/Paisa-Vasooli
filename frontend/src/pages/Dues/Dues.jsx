@@ -254,7 +254,7 @@ const handleDelete = (id) => {
 };
 
 return (
-  <>
+  <div  className="h-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}>
    <Navbar thememode={thememode} toggle={toggle}/> 
     <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
       <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Bills and Dues</div>
@@ -432,7 +432,7 @@ return (
       </div>
     </div>
      
-  </>
+  </div>
   );
 }
 

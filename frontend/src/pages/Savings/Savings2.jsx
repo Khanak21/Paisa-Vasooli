@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
-import { Button } from 'react-bootstrap';
-import SavingCard from "../../components/Cards/SavingCard";
+// import { Button } from 'react-bootstrap';
+// import SavingCard from "../../components/Cards/SavingCard";
 import axios from "axios";
 import Navbar from '../../components/Navbar'
 import './Savings.css';
@@ -102,7 +102,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
     title:''
   })
   const handleSaving = (name) => (e) => {
-    if(name=='title'){
+    if(name==='title'){
       const capitalizedTitle = capitalizeFirstLetter(e.target.value);
       setsav({ ...sav, [name]: capitalizedTitle });
     }
@@ -240,7 +240,7 @@ const currenciData = UCurrency(currenci);
         setSavingData(res.data.savings)
         const numberOfSavings = res.data.savings.filter(saving => saving.currAmt >= saving.targetAmt).length;
         console.log(numberOfSavings);
-        if(numberOfSavings==5){
+        if(numberOfSavings===5){
           addBadge(savingbadge)
         }
       }catch(err){
@@ -248,7 +248,8 @@ const currenciData = UCurrency(currenci);
       }
     }
     getSavings()
-  },[user._id,updateFlag])
+    
+  },[user._id,updateFlag,setUser])
 
   const handleDelete = (id) => {
   const delsaving = async(id)=>{
@@ -358,7 +359,7 @@ delsaving(id);
           <div className="hero-right h-full mt-10">
         <div className="storing-savings">
           <div className="overflow-y-scroll w-full max-h-[500px]">
-          <Table striped borderless hover variant={thememode == 'dark' ? 'dark' : ''}>
+          <Table striped borderless hover variant={thememode === 'dark' ? 'dark' : ''}>
             <thead>
               <tr>
                 <th>Title</th>
