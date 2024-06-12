@@ -110,9 +110,10 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
               fontFamily: 'poppins',
               fontWeight: 700,
               letterSpacing: '.1rem',
-            color: thememode === 'dark' ? 'white' : '#000080',
+              color: thememode === 'dark' ? 'white' : '#000080',
               
               textDecoration: 'none',
+              cursor:'pointer'
             }}
           >
             Paisa Vasooli
