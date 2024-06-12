@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 // ------------- TransactionCard -------------------------- 
 const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransactionData,setUpdateFlag }) => {
@@ -23,6 +23,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
     return null;
   }
   
+  // eslint-disable-next-line no-unused-vars
   const { type, amount, category, desc, date,currency } = transInput;
 //  ---------------- Input --------------------- 
   const handleTransInput = (name) => (e) => {
@@ -44,7 +45,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
       date:transactionData.date,
       currency:transactionData.currency
     })
-  }
+  }  
 //  ---------------- function to handle submit ----------------  
   const handleSubmit = async (e) => {
     if(transInput.amount===''||transInput.category===''||transInput.currency===''||transInput.date===''||transInput.desc===''||transInput.type===''){
@@ -89,10 +90,10 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
   return (
     <div>
     <Card variant="light" border="secondary" className='mx-4 my-4 dark:text-white'>
-      <Card.Header className='font-bold text-xl' style={{backgroundColor:thememode=="dark"?"#3a3a3a":"white"}}> Category{" "}:-{" "}{transactionData.category}</Card.Header>
-      <Card.Body style={{backgroundColor:thememode=="dark"?"#282828":"white"}}>
+      <Card.Header className='font-bold text-xl' style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}}> Category{" "}:-{" "}{transactionData.category}</Card.Header>
+      <Card.Body style={{backgroundColor:thememode==="dark"?"#282828":"white"}}>
         <div className='flex justify-between items-center'>
-        <Card.Text className='text-md align-middle items-center my-1' style={{color:transactionData.type=="expense"?'red':'green'}}> Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
+        <Card.Text className='text-md align-middle items-center my-1' style={{color:transactionData.type==="expense"?'red':'green'}}> Amount{" "}:-  &#8377;{" "}{transactionData.amount}</Card.Text>
         {/* <Card.Text className='flex align-middle my-1 mx-4'><AiTwotoneCalendar size={20} />{transactionData.date.substring(0,10)}</Card.Text> */}
       <div className='flex justify-between gap-2'>
         <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>

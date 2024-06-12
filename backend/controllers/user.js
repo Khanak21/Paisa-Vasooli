@@ -56,12 +56,9 @@ export const getUrls = async(req,res)=>{
 export const deleteStock = async (req, res) => {
     try {
         const { userId } = req.params; 
-        const { stockId } = req.body;
+        const stockId = req.body.stockId; 
 
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ message: "Invalid user ID format" });
-        }
-
+        console.log("userId",userId,"stock Id",stockId)
         if (!stockId) {
             return res.status(400).json({ message: "Stock ID is required" });
         }

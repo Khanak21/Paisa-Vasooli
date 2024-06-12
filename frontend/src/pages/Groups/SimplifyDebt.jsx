@@ -4,10 +4,13 @@ import Navbar from '../../components/Navbar'
 import { useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { ReactComponent as Cash } from './cash-on-wallet.svg';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+// import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { MdContentCopy } from "react-icons/md";
-import Tooltip from '@mui/material/Tooltip';
+// import { MdContentCopy } from "react-icons/md";
+import { Button, Tooltip } from '@chakra-ui/react';
+import { CopyIcon } from '@chakra-ui/icons';
+import {  IconButton } from '@chakra-ui/react';
+import { ViewIcon } from '@chakra-ui/icons';
 
 const SimplifyDebt = ({ user, thememode, toggle }) => {
     const { id } = useParams();
@@ -21,6 +24,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
     const [membersData, setMembersData] = useState([]);
     const [commentText, setCommentText] = useState('');
     const [comments, setComments] = useState([]);
+    // eslint-disable-next-line no-unused-vars
     const [copied, setCopied] = useState(false);
 
     const handleCopyToClipboard = () => {
@@ -125,8 +129,9 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                 userId: user._id,
                 text: commentText,
                 groupId: id,
-                username: user.username
+                username: user?.username
             });
+            console.log("Simplify-debt ",res)
             setCommentText('');
             setCommentFlag(prev => !prev);
         } catch (err) {
@@ -145,8 +150,10 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 
     useEffect(() => {
         getComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [commentFlag, comments.length]);
 
+    
     const getMembers = async () => {
         try {
             const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`);
@@ -155,21 +162,21 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
             console.log(err);
         }
     };
-
     useEffect(() => {
         getGroup();
         getMembers();
-    }, [id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id,getGroup]);
 
     const CheckboxGroup = ({ options, selectedValues, onChange }) => (
         <div >
             {options.map((option, index) => (
                 <div key={index} className='w-full flex justify-between align-middle items-center text-slate-700 m-2 dark:text-white'>
-                  <label className='w-[80%] dark:text-slate-200'>{option.username}</label>
+                  <label className='w-[80%] dark:text-slate-200'>{option?.username}</label>
                     <input
                         type="checkbox"
-                        value={option.username}
-                        checked={selectedValues.includes(option.username)}
+                        value={option?.username}
+                        checked={selectedValues.includes(option?.username)}
                         onChange={(e) => onChange(e.target.value)}  
                         className='h-6'
                     />
@@ -192,21 +199,24 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
               <div className='flex'>
               {/* <input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} /> */}
             <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
-            <Tooltip title="Copy group code to clipboard" arrow>
-            <button>
-            <MdContentCopy  className='ml-2 text-xl'/>
-            </button>
+            <Tooltip label="Copy group code to clipboard" aria-label="Copy group code to clipboard">
+                <Button onClick={handleCopyToClipboard}>
+                    <CopyIcon className='ml-2 text-xl'/>
+                </Button>
             </Tooltip>
             </CopyToClipboard>
-            <Tooltip title="View members" arrow>
-            <PeopleAltIcon  onClick={handleShowPart}
+            <Tooltip label="View members" aria-label="View members">
+                <IconButton
+                    icon={<ViewIcon />}
+                    onClick={handleShowPart}
                     sx={{
-                        cursor:'pointer',
-                        marginRight:'2rem',
-                        marginLeft:'1rem',
-                        marginTop:'.6rem',
-                        color:thememode==='dark'?'white':'black'
-                    }}/>
+                        cursor: 'pointer',
+                        marginRight: '2rem',
+                        marginLeft: '1rem',
+                        marginTop: '.6rem',
+                        color: thememode === 'dark' ? 'white' : 'black'
+                    }}
+                />
             </Tooltip>
             </div>
           
@@ -222,7 +232,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                 <Modal.Body>
                     <div className='flex-col'>
                         {membersData?.map(data => (
-                            <div key={data._id}>{" "}{data.username}{" "}</div>
+                            <div key={data?._id}>{" "}{data?.username}{" "}</div>
                         ))}
                     </div>
                 </Modal.Body>
@@ -242,7 +252,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                                 >
                                     <option value="" disabled>Select a member</option>
                                     {membersData.map((member, i) => (
-                                        <option key={i} value={member.username}>{member.username}</option>
+                                        <option key={i} value={member?.username}>{member?.username}</option>
                                     ))}
                                 </select>
                             </div>
@@ -287,7 +297,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                   {data.map(debt => (
                     <div key={debt[0]} className='flex items-center bg-gray-300 rounded-2xl justify-between m-2 w-[95%] dark:bg-[#282828] text-sm'>
                       <div className='w-[60%] flex align-middle p-3'>{debt[0]}{" "} &#8594; {debt[1]} {" "}&#x20B9;{debt[2]}</div>
-                      {user.username === debt[1] && (
+                      {user?.username === debt[1] && (
                         <button onClick={async () => {
                           try {
                             const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`, debt);
@@ -301,7 +311,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                           {debt[3] === true ? "Approved" : "Approve"}
                         </button>
                       )}
-                      {user.username === debt[0] && debt[3] === true && <div>Approved by {debt[1]}✅</div>}
+                      {user?.username === debt[0] && debt[3] === true && <div>Approved by {debt[1]}✅</div>}
                     </div>
                   ))}
                 </div>
@@ -332,7 +342,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
             <div className="mt-4 mx-4 mb-20 ">
             {comments.map((comment) => (
                 <div key={comment._id} className="rounded-full text-sm w-[70%] bg-[#d1d5db]">
-                 <p className='px-3 py-2'>{comment.username === user.username ?'You' : comment.username}:{comment.text}</p>
+                 <p className='px-3 py-2'>{comment?.username === user?.username ?'You' : comment?.username}:{comment.text}</p>
         </div>
     ))}
     

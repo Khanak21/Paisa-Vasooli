@@ -5,13 +5,13 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+// import AdbIcon from '@mui/icons-material/Adb';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
@@ -29,12 +29,13 @@ const theme = createTheme({
     },
   });
  
-const pages = ['Dues', 'Groups', 'Savings','Vault'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const pages = ['Dues', 'Groups', 'Savings','Vault'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
 
   const navigate=useNavigate()
+  // eslint-disable-next-line no-unused-vars
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [navuser,setNavuser] = useState({})
@@ -56,16 +57,16 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
       }
     }
     check()
-  },[user?._id,flag])
+  },[user?._id,flag,setUser])
 
   console.log(user);
-  const [showNav, setShowNav] = useState(false);
+  // const [showNav, setShowNav] = useState(false);
   
   //  ------------- function to logout ----------------------- 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/login');
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   navigate('/login');
+  // };
   
   
 
@@ -74,16 +75,16 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
     navigate('/login');
   }
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  // const handleOpenNavMenu = (event) => {
+  //   setAnchorElNav(event.currentTarget);
+  // };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  // const handleCloseNavMenu = () => {
+  //   setAnchorElNav(null);
+  // };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -95,7 +96,7 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
 
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src="favicon.ico" style={{height:"50px"}}/>
+          <img src="favicon.ico" style={{height:"50px"}} alt=''/>
           <Typography
             variant="h6"
             noWrap

@@ -10,7 +10,9 @@ const Chart = ({user,setUser,thememode,toggle}) => {
     const [monthlyData,setMonthlyData]=useState([])
     const [yearlyData,setYearlyData]=useState([])
     const [allCategories,setAllCategories]=useState([])
+    // eslint-disable-next-line no-unused-vars
     const [incomeArray,setIncomeArray]=useState([])
+        // eslint-disable-next-line no-unused-vars
     const [expenseArray,setExpenseArray]=useState([])
     const [categoryData,setCategoryData]=useState([])
 
@@ -93,7 +95,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
        getMonthlyData()
        getYearlyData()
        getCategory()
-    },[user._id])
+    },[user._id,setUser])
     console.log(allCategories)
 
     

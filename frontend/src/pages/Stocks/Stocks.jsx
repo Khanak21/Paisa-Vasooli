@@ -13,7 +13,19 @@ const Stocks = ({ user, thememode, toggle }) => {
     const [deleteStockModalOpen, setDeleteStockModalOpen] = useState(false); // State variable for delete stock modal
     const [stockToDelete, setStockToDelete] = useState('');
 
-    const toast = useToast();
+    const toast = useToast(); // Initialize useToast hook
+
+    // Function to display toast notification
+    const showToast = (title, description, status) => {
+        toast({
+            title,
+            description,
+            status,
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+        });
+    };
 
     // Function to open delete stock modal
     const openDeleteStockModal = (stockSymbol) => {
@@ -26,13 +38,17 @@ const Stocks = ({ user, thememode, toggle }) => {
         setDeleteStockModalOpen(false);
     };
 
-    // Function to handle deletion of stock
+    // Function to handle deletion of stock using POST
     const handleDeleteStock = async () => {
         try {
-            const response = await axios.delete(`http://localhost:3001/api/user/deleteStock/${user._id}`, { stockId: stockToDelete });
+            console.log("stock id", stockToDelete);
+            const response = await axios.post(`http://localhost:3001/api/user/deleteStock/${user._id}`, {
+                stockId: stockToDelete
+            });
             setFlag(prev => !prev);
             console.log(response);
             setDeleteStockModalOpen(false);
+            showToast("Stock deleted successfully.", "", "success"); // Display success toast
         } catch (err) {
             console.log(err);
         }
@@ -52,14 +68,7 @@ const Stocks = ({ user, thememode, toggle }) => {
     // Function to add stock symbol
     const handleSubmit = async () => {
         if (input.trim() === '') {
-            toast({
-                title: "No input provided.",
-                description: "Please enter a stock ticker symbol before saving.",
-                status: "warning",
-                duration: 3000,
-                isClosable: true,
-                position: "top",
-            });
+            showToast("No input provided.", "Please enter a stock ticker symbol before saving.", "warning"); // Display warning toast
             return;
         }
 
@@ -69,6 +78,7 @@ const Stocks = ({ user, thememode, toggle }) => {
             setStockData(prev => ([...prev, val]));
             setFlag(prev => !prev);
             setInput("");
+            showToast("Stock added successfully.", "", "success"); // Display success toast
         } catch (err) {
             console.log(err);
         }
@@ -88,7 +98,7 @@ const Stocks = ({ user, thememode, toggle }) => {
     }, [flag, user._id, user.stocks]);
 
     return (
-        <div>
+        <div  className="h-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}>
             <Navbar thememode={thememode} toggle={toggle} />
             <div className="mx-auto my-auto h-screen block justify-center items-center" style={{ backgroundColor: thememode === "dark" ? "#181818" : "#f0f0f0" }}>
 
@@ -100,7 +110,7 @@ const Stocks = ({ user, thememode, toggle }) => {
                 <div className='flex justify-around'>
                     <div className='flex w-full'>
                         <div className='w-3/4'>
-                            <div className='m-4 dark:text-white flex justify-center items-center w-full'>
+                            <div className='m-4 dark:text-black flex justify-center items-center w-full'>
                                 <input
                                     name={"input"}
                                     type="text"
@@ -117,7 +127,18 @@ const Stocks = ({ user, thememode, toggle }) => {
                                     {stockData.length > 0 && stockData.map((stock, index) => (
                                         <div className='h-fit w-fit flex flex-col gap-1 justify-center items-center mx-2 mb-4 border-[#8656cd] dark:text-white shadow-md p-3 rounded-lg' key={index} onClick={() => handleSETSYM(stock.input)} style={{ cursor: "pointer", padding: "5px", backgroundColor: thememode === 'dark' ? "#2c3034" : "white" }}>
                                             <div>{stock.input}</div>
-                                            <Button size="xs" colorScheme="red" ml={2} onClick={() => openDeleteStockModal(stock.input)}>Delete</Button>
+                                            <Button 
+                                                size="xs" 
+                                                colorScheme="red" 
+                                                ml={2} 
+                                                onClick={() => {
+                                                    openDeleteStockModal(stock.input);
+                                                    setStockToDelete(stock.input);
+                                                }}
+                                                >
+                                                Delete
+                                            </Button>
+
                                         </div>
                                     ))}
                                 </div>

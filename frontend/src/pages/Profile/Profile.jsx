@@ -32,7 +32,7 @@ function Profile({ user, thememode, toggle,setUser}) {
       }
     }
     check()
-  },[user?._id])
+  },[user?._id,setUser])
 
 
   //function to take image input
@@ -101,13 +101,13 @@ function Profile({ user, thememode, toggle,setUser}) {
       >
         <div
           className='flex flex-col mx-auto w-[50%] h-[250px] border-1 border-black p-2 rounded-sm'
-          style={{ backgroundColor: thememode === 'dark' ? '#000080' : '#000080', color: thememode == 'dark' ? 'white' : 'black' }}
+          style={{ backgroundColor: thememode === 'dark' ? '#000080' : '#000080', color: thememode === 'dark' ? 'white' : 'black' }}
         >
           {/* ----------------------------------------------------Profile picture section----------------------------------------------- */}
           <div className=' flex justify-center align-middle items-center w-[70%] h-[80%] mx-auto p-1'>
             <img src={url || 'ProfileImg.jpeg'} className='w-[100px] h-[100px] rounded-full static' alt='' />
-            <br />{' '} <AiFillEdit onClick={handleShow} className='bg-white rounded-full h-8 w-8 p-1 -translate-x-4 translate-y-6 dark:text-black' style={{display:show==false ? "":"none",cursor:"pointer"}}/>
-           <div className='flex flex-col bg-white p-2 rounded-md m-2' style={{display:show==true ? "":"none"}}>
+            <br />{' '} <AiFillEdit onClick={handleShow} className='bg-white rounded-full h-8 w-8 p-1 -translate-x-4 translate-y-6 dark:text-black' style={{display:show===false ? "":"none",cursor:"pointer"}}/>
+           <div className='flex flex-col bg-white p-2 rounded-md m-2' style={{display:show===true ? "":"none"}}>
             <div className='flex'> <input type="file" className='border-none' onChange={handleChange}/><RxCross2  className="text-black" onClick={handleShow}/></div>
             <button className="m-2 bg-[#000080] text-white p-2 rounded-md" onClick={handleUpload}>
           Upload
@@ -126,7 +126,7 @@ function Profile({ user, thememode, toggle,setUser}) {
           <label
             htmlFor='username'
             className='w-full flex justify-between items-center gap-1 border-1 p-1 border-black rounded-md'
-            style={{ backgroundColor: thememode == 'dark' ? 'rgb(222, 221, 221)' : 'white' }}
+            style={{ backgroundColor: thememode === 'dark' ? 'rgb(222, 221, 221)' : 'white' }}
           >
             <div className='w-[30%] text-md p-1'>
               <b>Username</b>
@@ -137,7 +137,7 @@ function Profile({ user, thememode, toggle,setUser}) {
           <label
             htmlFor='username'
             className='w-full flex justify-between items-center gap-1 border-1 p-1 border-black rounded-md'
-            style={{ backgroundColor: thememode == 'dark' ? 'rgb(222, 221, 221)' : 'white' }}
+            style={{ backgroundColor: thememode === 'dark' ? 'rgb(222, 221, 221)' : 'white' }}
           >
             <div className='w-[30%] text-md p-1'>
               <b>Email</b>
