@@ -102,7 +102,7 @@ useEffect(()=>{
   //function to retrieve all user transactions
   const ifnocategselect=async()=>{
     try{
-      const res = await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getTransactions/${user._id}`);
+      const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`);
       console.log("transaction data",res.data)
       setFilteredData(res.data.trans)
       setTransactionData(res.data.trans)
@@ -123,7 +123,7 @@ console.log(datat)
         console.log("filters:",filterInput)
         const addFilter = async()=>{
         try{
-          const res = await axios.post("https://paisa-vasooli.onrender.com/api/transactions/getTransactionsByFilter",{filterInput})
+          const res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
           console.log(res.data)
           setFilteredData(res.data.trans)
           setFilterState(true)
@@ -139,7 +139,7 @@ console.log(datat)
         try{
           const reqmail = user.email
           console.log(reqmail)
-          const res = await axios.post("https://paisa-vasooli.onrender.com/api/mail/sendmail",{reqmail})
+          const res = await axios.post("http://localhost:3001/api/mail/sendmail",{reqmail})
           .then(() => alert("Message Sent Succesfully"))
           .catch((err) => console.log(err));
         }catch(err){
@@ -151,7 +151,7 @@ console.log(datat)
       const addBadge=async(img)=>{
         try{
           console.log(img)
-          const res = await axios.post(`https://paisa-vasooli.onrender.com/api/user/addbadge/${user._id}`,{img})
+          const res = await axios.post(`http://localhost:3001/api/user/addbadge/${user._id}`,{img})
           console.log(res.data.user)
         }catch(err){
           console.log(err.response.data)
@@ -209,7 +209,7 @@ console.log(datat)
         const response = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=LQvy3LtRMZSLNj7WvwKX3tPoA37h6FdzWNaLbw4f&currencies=MXN%2CSEK%2CCHF%2CSGD%2CHKD%2CCNY%2CCAD%2CAUD%2CJPY%2CGBP%2CEUR%2CUSD%2CCAD&base_currency=INR`);
         const result=response.json();
         console.log(result);
-        const res = await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getTotalStats/${user._id}`)
+        const res = await axios.get(`http://localhost:3001/api/transactions/getTotalStats/${user._id}`)
         console.log(res.data)
         setStats(res.data)
       }catch(err){
@@ -259,11 +259,12 @@ console.log(datat)
       console.log(amount)
       const addTrans = async()=>{
       try{
-        if(transInput.amount===''||transInput.category===''||transInput.currency===''||transInput.date===''||transInput.desc===''||transInput.type===''||transInput.userId===''){
-          setErrorMessage("All the fields should be filled");
+        console.log("TRANSINPUT",transInput)
+        if(transInput.amount===''||transInput.category===''||transInput.currency===''||transInput.date===''||transInput.type===''||transInput.userId===''){
+          setErrorMessage("All fields except description should be filled");
           return ;
         }
-        const res = await axios.post("https://paisa-vasooli.onrender.com/api/transactions/addTransaction",{userId:user._id,type,category,desc,date,currency,amount})
+        const res = await axios.post("http://localhost:3001/api/transactions/addTransaction",{userId:user._id,type,category,desc,date,currency,amount})
         console.log(res.data)
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])
@@ -276,6 +277,15 @@ console.log(datat)
           addBadge(bigincome)
           handleIncomeShow()
         }
+        setTransInput({
+          userId:user._id,
+          type:'expense',
+          amount:'',
+          category:'',
+          desc:'',
+          date:'',
+          currency:'',
+      })
         setErrorMessage("");
         handleClose()
       }catch(err){
@@ -285,15 +295,7 @@ console.log(datat)
     addTrans()
     
     mailsend()
-    setTransInput({
-      userId:user._id,
-      type:'expense',
-      amount:'',
-      category:'',
-      desc:'',
-      date:'',
-      currency:'',
-  })
+   
   }
   
 
@@ -467,6 +469,7 @@ console.log(datat)
             ></input>
         </Modal.Body>
         <Modal.Footer>
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <button className='bg-[#000080] p-2 rounded-md text-white' onClick={handleSubmit} required>Save</button>
         </Modal.Footer>
       </Modal>

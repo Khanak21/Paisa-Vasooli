@@ -31,7 +31,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 
     const getGroup = async () => {
         try {
-            const res = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getgroup/${id}`);
+            const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`);
             setGroupData(res.data);
         } catch (err) {
             console.log(err);
@@ -94,7 +94,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
         const outputArray = Object.values(resultMap);
         const simplify = async () => {
             try {
-                const res = await axios.post(`https://paisa-vasooli.onrender.com/api/group/simplifyDebt/${id}`, { outputArray });
+                const res = await axios.post(`http://localhost:3001/api/group/simplifyDebt/${id}`, { outputArray });
                 setData(res.data);
             } catch (err) {
                 console.log(err);
@@ -107,7 +107,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
     useEffect(() => {
         const getDebts = async () => {
             try {
-                const res = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getDebts/${id}`);
+                const res = await axios.get(`http://localhost:3001/api/group/getDebts/${id}`);
                 setData(res.data);
             } catch (err) {
                 console.log(err);
@@ -122,7 +122,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 
     const handleAddComment = async () => {
         try {
-            const res = await axios.post(`https://paisa-vasooli.onrender.com/api/group/addcomment`, {
+            const res = await axios.post(`http://localhost:3001/api/group/addcomment`, {
                 userId: user._id,
                 text: commentText,
                 groupId: id,
@@ -137,7 +137,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 
     const getComments = async () => {
         try {
-            const response = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getcomments/${id}`);
+            const response = await axios.get(`http://localhost:3001/api/group/getcomments/${id}`);
             setComments(response.data.commentss);
         } catch (error) {
             console.error('Error fetching comments:', error);
@@ -150,7 +150,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 
     const getMembers = async () => {
         try {
-            const res = await axios.get(`https://paisa-vasooli.onrender.com/api/group/getmembers/${id}`);
+            const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`);
             setMembersData(res.data);
         } catch (err) {
             console.log(err);
@@ -191,13 +191,21 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
             
               <div className='flex'>
             <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
-            <Tooltip label="Copy group code to clipboard" aria-label="Copy group code to clipboard">
-                <Button onClick={handleCopyToClipboard}>
-                    COPY
-                </Button>
+            <Tooltip title="Copy group code to clipboard" arrow>
+            <button>
+            <MdContentCopy  className='ml-2 text-xl'/>
+            </button>
             </Tooltip>
             </CopyToClipboard>
-            <Tooltip label="View members" aria-label="View members">
+            <Tooltip title="View members" arrow>
+            <PeopleAltIcon  onClick={handleShowPart}
+                    sx={{
+                        cursor:'pointer',
+                        marginRight:'2rem',
+                        marginLeft:'1rem',
+                        marginTop:'.6rem',
+                        color:thememode==='dark'?'white':'black'
+                    }}/>
             </Tooltip>
             </div>
             </div>
@@ -276,7 +284,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                       {user?.username === debt[1] && (
                         <button onClick={async () => {
                           try {
-                            const res = await axios.post(`https://paisa-vasooli.onrender.com/api/group/approveDebt/${id}`, debt);
+                            const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`, debt);
                             setData(res.data.simplifyDebt);
                             console.log(res.data);
                           } catch (err) {

@@ -13,6 +13,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTheme } from '@mui/material/styles';
+import {Button as Buttonmui} from '@mui/material';
 
 const ITEM_HEIGHT = 48;
 
@@ -59,7 +60,7 @@ useEffect(()=>{
 const handleAddFriendsToGroup=async()=>{
   try{
     console.log(friends)
-    const res = await axios.put(`https://paisa-vasooli.onrender.com/api/group/addfriendsgroup/${groupData._id}`,{friends})
+    const res = await axios.put(`http://localhost:3001/api/group/addfriendsgroup/${groupData._id}`,{friends})
     console.log(res.data)
     handleAddFriendClose()
 
@@ -88,7 +89,7 @@ const handleOpenGroup = () => {
 
 const handleDelete = async()=>{
   try{
-      const res=await axios.delete(`https://paisa-vasooli.onrender.com/api/group/deleteGroup/${groupData._id}`)
+      const res=await axios.delete(`http://localhost:3001/api/group/deleteGroup/${groupData._id}`)
       setgroupflag((prev)=>!(prev))
       setShowDeleteModal(false)
   }catch(err){
@@ -159,9 +160,9 @@ console.log(allgroupsdata)
            <MenuItem key="addfriend" onClick={()=>{handleAddFriendShow();handleCloseDots()}}>
           + Add member
           </MenuItem>
-          <MenuItem key="editgroup" onClick={()=>{handleShow();handleCloseDots();}}>
-          Edit group
-          </MenuItem>
+          {/* <MenuItem key="editgroup" onClick={()=>{handleShow();handleCloseDots();}}> */}
+          {/* Edit group */}
+          {/* </MenuItem> */}
           <MenuItem key="deletegroup" onClick={()=>{handleopendeletemodal();handleCloseDots();}}>
           Delete group
           </MenuItem>
@@ -174,11 +175,11 @@ console.log(allgroupsdata)
         </Typography>
       </CardContent>
       <CardActions>
-        <Button 
+      <Buttonmui 
         size="small"
         sx={{textDecoration:'underline'}}
         onClick={()=>navigate(`/simplifydebt/${groupData._id}`)}
-        >Settle transactions⟶</Button>
+        >Settle transactions⟶</Buttonmui>
       </CardActions>
     </Card>
 
@@ -223,12 +224,14 @@ console.log(allgroupsdata)
                 <p>Are you sure you want to delete this Group?</p>
               </Modal.Body>
               <Modal.Footer>
-                <Button className="custom-blue-button" onClick={handleCloseDeleteModal}>
+                <div className='flex w-full justify-end'>
+                <button className="bg-[#000080] mx-2 text-white p-2 rounded-md" onClick={handleCloseDeleteModal}>
                   Cancel
-                </Button>
-                <Button className="custom-blue-button" onClick={handleDelete}>
+                </button>
+                <button  className="bg-[#dc2626] text-white p-2 rounded-md" onClick={handleDelete}>
                   Delete
-                </Button>
+                </button>
+                </div>
               </Modal.Footer>
             </Modal>
 

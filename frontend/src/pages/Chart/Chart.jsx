@@ -35,7 +35,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
       //fetching previous week's transaction data
        const getWeeklyData = async()=>{
         try{
-            const res = await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getWeeklyTransaction/${user._id}`)
+            const res = await axios.get(`http://localhost:3001/api/transactions/getWeeklyTransaction/${user._id}`)
             console.log(res.data.weeklyData)
             setWeeklyData(res.data.weeklyData)
 
@@ -47,7 +47,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
        //fetching monthly transaction data
        const getMonthlyData = async()=>{
         try{
-            const res = await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getMonthlyTransaction/${user._id}`)
+            const res = await axios.get(`http://localhost:3001/api/transactions/getMonthlyTransaction/${user._id}`)
             console.log("monthly data",res.data.monthlyData)
             setMonthlyData(res.data.monthlyData)
 
@@ -59,7 +59,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
        //fetching yearly transaction data
        const getYearlyData = async()=>{
         try{
-            const res = await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getYearlyTransaction/${user._id}`)
+            const res = await axios.get(`http://localhost:3001/api/transactions/getYearlyTransaction/${user._id}`)
             setYearlyData(res.data.yearlyData)
 
         }catch(err){
@@ -70,7 +70,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
        //fetching category-wise transactions
        const getCategory = async()=>{
         try{
-          const res= await axios.get(`https://paisa-vasooli.onrender.com/api/transactions/getCategoryWiseTransaction/${user._id}`)
+          const res= await axios.get(`http://localhost:3001/api/transactions/getCategoryWiseTransaction/${user._id}`)
           const result = res.data
           setCategoryData(res.data)
           // Array of all categories

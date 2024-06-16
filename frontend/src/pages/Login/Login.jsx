@@ -51,7 +51,7 @@ function Login({user,setUser}) {
       // Handle form submission logic here
       const Logi =async()=>{
         try{
-          const res = await axios.post("https://paisa-vasooli.onrender.com/api/auth/signin",{username,email,password})
+          const res = await axios.post("http://localhost:3001/api/auth/signin",{username,email,password})
           console.log("response data:",res.data);
           setUser(res.data)
           // store the user in localStorage
@@ -72,7 +72,7 @@ function Login({user,setUser}) {
       console.log(result);
       console.log(result.user.photoURL);
       axios
-            .post("https://paisa-vasooli.onrender.com/api/auth/google", {
+            .post("http://localhost:3001/api/auth/google", {
               username: result.user.displayName,
               email: result.user.email,
               image: result.user.photoURL,

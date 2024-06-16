@@ -52,11 +52,11 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
     e.preventDefault();
     const submitbutton =async()=>{
       try {
-        if(transInput.amount===''||transInput.category===''||transInput.currency===''||transInput.date===''||transInput.desc===''||transInput.type===''){
-          setErrorMessage("All entries should be filled");
+        if(transInput.amount===''||transInput.category===''||transInput.currency===''||transInput.date===''||transInput.type===''){
+          setErrorMessage("All entries except description should be filled");
           return;
         }
-        const res = await axios.put(`https://paisa-vasooli.onrender.com/api/transactions/editTransaction/${transactionData._id}`, { transInput });
+        const res = await axios.put(`http://localhost:3001/api/transactions/editTransaction/${transactionData._id}`, { transInput });
         console.log(res.data);
         setTransInput({
           userId:user._id,
@@ -79,7 +79,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
 //  --------------function to delete --------------- 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://paisa-vasooli.onrender.com/api/transactions/deleteTransaction/${transactionData._id}`);
+      const res = await axios.delete(`http://localhost:3001/api/transactions/deleteTransaction/${transactionData._id}`);
       console.log(res.data);
       console.log(transactionData)
       setUpdateFlag((prevFlag) => !prevFlag);
@@ -112,7 +112,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
         
         </div>
         <Card.Text className='my-1'>
-          Description{" "} :  {transactionData.desc}
+          Description{" "} :  {transactionData.desc ? transactionData.desc : 'N/A'}
         </Card.Text>
         <Card.Text className='my-1'>
           Date{" "} :  {transactionData?.date?.substring(0,10)}
@@ -218,12 +218,14 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
                 <p>Are you sure you want to delete this Bill?</p>
               </Modal.Body>
               <Modal.Footer>
-                <Button className="custom-blue-button" onClick={handleCloseDeleteModal}>
+                <div className='flex w-full justify-end'>
+                <button className="bg-[#000080] mx-2 text-white p-2 rounded-md" onClick={handleCloseDeleteModal}>
                   Cancel
-                </Button>
-                <Button className="custom-blue-button" onClick={handleDelete}>
+                </button>
+                <button  className="bg-[#dc2626] text-white p-2 rounded-md" onClick={handleDelete}>
                   Delete
-                </Button>
+                </button>
+                </div>
               </Modal.Footer>
             </Modal>
     </div>

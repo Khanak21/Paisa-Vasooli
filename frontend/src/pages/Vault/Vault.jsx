@@ -31,7 +31,7 @@ function Vault({thememode,toggle,user}) {
         console.log(url)
         const addUrl= async()=>{
           try{
-            const res = await axios.post(`https://paisa-vasooli.onrender.com/api/user/addUrl/${user._id}`,{url,fileName})
+            const res = await axios.post(`http://localhost:3001/api/user/addUrl/${user._id}`,{url,fileName})
             console.log("file url",res.data)
 
           }catch(err){
@@ -77,9 +77,9 @@ function Vault({thememode,toggle,user}) {
       <div className="flex justify-between">
       <div className='mx-4 text-gray-600 dark:text-gray-400'>Export Transaction data with filters of your choice and upload them here in the vault</div>
       <div className="flex justify-end mx-4">
-      <label for="actual-btn" className="text-white  rounded-md p-1 bg-[#8656cd] mx-1">Choose File</label>
+      <label for="actual-btn" className="text-white  rounded-md p-2 bg-[#000080] mx-1">Choose File</label>
       <input type="file" id="actual-btn" className="w-60 flex justify-center align-middle mx-2 border-none hidden" onChange={(event) => {setfileUpload(event.target.files[0]);}}/>
-      <button onClick={uploadFile} className="text-white  rounded-md p-1 bg-[#8656cd]">Upload</button>
+      <button onClick={uploadFile} className="text-white  rounded-md p-2 bg-[#000080]">Upload</button>
       </div>
       </div>
 

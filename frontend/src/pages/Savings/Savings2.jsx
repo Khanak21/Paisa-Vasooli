@@ -138,7 +138,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
           setErrorMessage("All entries should be filled");
           return;
         }
-        const res = await axios.put(`https://paisa-vasooli.onrender.com/api/savings/editSaving/${obj._id}`, {sav});
+        const res = await axios.put(`http://localhost:3001/api/savings/editSaving/${obj._id}`, {sav});
         console.log(res.data);
         setsav({
           userId: user._id,
@@ -199,7 +199,7 @@ const currenciData = UCurrency(currenci);
       console.log(saving.currAmt)
       saving.targetAmt =Math.floor(saving.targetAmt / currenciData[currencysmall]);
       console.log(saving.targetAmt)
-      const res = await axios.post("https://paisa-vasooli.onrender.com/api/savings/addSaving", { saving });
+      const res = await axios.post("http://localhost:3001/api/savings/addSaving", { saving });
       console.log(res.data.saving);
       const val = res.data.saving;
       setSavingData(prev => [...prev, val]);
@@ -215,7 +215,7 @@ const currenciData = UCurrency(currenci);
   const addBadge=async(img)=>{
     try{
       console.log(img)
-      const res = await axios.post(`https://paisa-vasooli.onrender.com/api/user/addbadge/${user._id}`,{img})
+      const res = await axios.post(`http://localhost:3001/api/user/addbadge/${user._id}`,{img})
       console.log(res.data.user)
     }catch(err){
       console.log(err.response.data)
@@ -242,7 +242,7 @@ const currenciData = UCurrency(currenci);
     //function to fetch savings data
     const getSavings = async()=>{
       try{
-        const res = await axios.get(`https://paisa-vasooli.onrender.com/api/savings/getSavings/${user._id}`)//add user Id
+        const res = await axios.get(`http://localhost:3001/api/savings/getSavings/${user._id}`)//add user Id
         console.log("savings data:",res.data)
         setSavingData(res.data.savings)
         const numberOfSavings = res.data.savings.filter(saving => saving.currAmt >= saving.targetAmt).length;
@@ -260,7 +260,7 @@ const currenciData = UCurrency(currenci);
   const handleDelete = () => {
   const delsaving = async()=>{
     try{
-        const res=await axios.delete(`https://paisa-vasooli.onrender.com/api/savings/deleteSaving/${selectedSavingId}`)
+        const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${selectedSavingId}`)
         console.log(res.data)
         setUpdateFlag((prev)=>!(prev))
         handleCloseDeleteModal();
@@ -422,12 +422,14 @@ const DeleteConfirmation = (id) => {
                 <p>Are you sure you want to delete this saving?</p>
               </Modal.Body>
               <Modal.Footer>
-                <Button className="custom-blue-button" onClick={handleCloseDeleteModal}>
+                <div className='flex w-full justify-end'>
+                <button className="bg-[#000080] mx-2 text-white p-2 rounded-md" onClick={handleCloseDeleteModal}>
                   Cancel
-                </Button>
-                <Button className="custom-blue-button" onClick={handleDelete}>
+                </button>
+                <button  className="bg-[#dc2626] text-white p-2 rounded-md" onClick={handleDelete}>
                   Delete
-                </Button>
+                </button>
+                </div>
               </Modal.Footer>
             </Modal>
           </div>

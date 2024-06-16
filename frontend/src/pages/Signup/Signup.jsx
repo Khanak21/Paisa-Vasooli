@@ -63,7 +63,7 @@ function Signup({user,setUser})
     signInWithPopup(auth,provider).then((result)=>{
       console.log(result);
       axios
-            .post("https://paisa-vasooli.onrender.com/api/auth/google", {
+            .post("http://localhost:3001/api/auth/google", {
               username: result.user.displayName,
               email: result.user.email,
               img: result.user.photoURL,
@@ -86,7 +86,7 @@ function Signup({user,setUser})
       setEntries([entries, Entry]);
   
       try {
-        const res = await axios.post("https://paisa-vasooli.onrender.com/api/auth/signup", {
+        const res = await axios.post("http://localhost:3001/api/auth/signup", {
           username,
           email,
           password,
