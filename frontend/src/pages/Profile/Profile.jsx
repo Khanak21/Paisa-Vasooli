@@ -52,7 +52,7 @@ function Profile({ user, thememode, toggle,setUser}) {
           .then((url) => {
             const addUrl= async()=>{
               try{
-                const res = await axios.put(`http://localhost:3001/api/user/addImg/${user._id}`,{url})
+                const res = await axios.put(`https://paisa-vasooli.onrender.com/api/user/addImg/${user._id}`,{url})
                 setUser(res.data.user)
                 localStorage.setItem("user",JSON.stringify(res.data.user))
                 setFlag(prev=>!prev)
@@ -82,7 +82,7 @@ function Profile({ user, thememode, toggle,setUser}) {
   React.useEffect(() => {
     const getBadges = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/user/getBadges/${user._id}`);
+        const response = await axios.get(`https://paisa-vasooli.onrender.com/api/user/getBadges/${user._id}`);
         setBadges(response.data.badges);
         console.log(response.data.badges)
       } catch (error) {

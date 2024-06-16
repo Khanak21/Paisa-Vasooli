@@ -73,13 +73,9 @@ export const getgroups = async(req,res)=>{
     const userId= req.params.id;
     // console.log(req.params.userId)
     try{
-        // const groups = await group.find({
-        //     $or:[
-        //     {members: { $in: userId }},{userId: userId},],})
         console.log(userId)
         const userr = await user.findById(userId)
         const allgroups = userr.groups
-        // res.json({allgroups})
         const groupDetails = await Promise.all(allgroups.map(async groupId => {
             const groupDetail = await group.findById(groupId);
             return groupDetail;
@@ -94,13 +90,9 @@ export const getmembers = async(req,res)=>{
     const groupId= req.params.id;
     // console.log(req.params.userId)
     try{
-        // const groups = await group.find({
-        //     $or:[
-        //     {members: { $in: userId }},{userId: userId},],})
         console.log(groupId)
         const groupweneed= await group.findById(groupId)
         const allmembers = groupweneed.members
-        // res.json({allgroups})
         const memberDetails = await Promise.all(allmembers.map(async userId => {
             const memberDetail = await user.findById(userId);
             return memberDetail;

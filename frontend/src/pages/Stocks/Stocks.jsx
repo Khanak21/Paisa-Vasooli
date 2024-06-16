@@ -29,7 +29,7 @@ const Stocks = ({user,thememode,toggle}) => {
     //function to add stock symbol
     const handleSubmit = async()=>{
         try{
-            const res=await axios.post(`http://localhost:3001/api/user/addStock/${user._id}`,{input})
+            const res=await axios.post(`https://paisa-vasooli.onrender.com/api/user/addStock/${user._id}`,{input})
             console.log(res.data.user.stocks)
             const val=res.data.user.stocks
             setStockData(prev=>([...prev,val]))
@@ -42,7 +42,7 @@ const Stocks = ({user,thememode,toggle}) => {
 
     const handledelete = async(stock)=>{
       try{
-        const res = await axios.put(`http://localhost:3001/api/user/deletestock/${user._id}`,stock)
+        const res = await axios.put(`https://paisa-vasooli.onrender.com/api/user/deletestock/${user._id}`,stock)
         console.log(res.data);
         setflag(prev=>!prev)
       }
@@ -53,7 +53,7 @@ const Stocks = ({user,thememode,toggle}) => {
 
     //function to fetch user stocks
     useEffect(()=>{
-      const getStocks = async()=>{ try{ const res=await axios.get(`http://localhost:3001/api/user/getStocks/${user._id}`)
+      const getStocks = async()=>{ try{ const res=await axios.get(`https://paisa-vasooli.onrender.com/api/user/getStocks/${user._id}`)
         console.log("widget",res.data)
         setStockData(res.data.val)
         console.log(stockData)

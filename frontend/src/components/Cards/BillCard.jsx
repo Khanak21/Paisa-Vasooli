@@ -35,7 +35,7 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
     e.preventDefault();
     const editBill = async () => {
       try {
-        const res = await axios.put(`http://localhost:3001/api/bills/editBill/${BillData._id}`, { BillInput });
+        const res = await axios.put(`https://paisa-vasooli.onrender.com/api/bills/editBill/${BillData._id}`, { BillInput });
         console.log(res.data);
         setBillInput({
         userId: user._id,
@@ -57,7 +57,7 @@ const BillCard = ({ billflag,setbillflag,user,BillData,thememode }) => {
   const handleDelete = (id) => {
     const delBill = async (id) => {
       try {
-        const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${id}`);
+        const res = await axios.delete(`https://paisa-vasooli.onrender.com/api/bills/deleteBill/${id}`);
         console.log(res.data);
         setbillflag((prev)=>!(prev))
       } catch (err) {

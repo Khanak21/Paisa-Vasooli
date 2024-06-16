@@ -59,7 +59,7 @@ useEffect(()=>{
 const handleAddFriendsToGroup=async()=>{
   try{
     console.log(friends)
-    const res = await axios.put(`http://localhost:3001/api/group/addfriendsgroup/${groupData._id}`,{friends})
+    const res = await axios.put(`https://paisa-vasooli.onrender.com/api/group/addfriendsgroup/${groupData._id}`,{friends})
     console.log(res.data)
     handleAddFriendClose()
 
@@ -88,7 +88,7 @@ const handleOpenGroup = () => {
 
 const handleDelete = async()=>{
   try{
-      const res=await axios.delete(`http://localhost:3001/api/group/deleteGroup/${groupData._id}`)
+      const res=await axios.delete(`https://paisa-vasooli.onrender.com/api/group/deleteGroup/${groupData._id}`)
       setgroupflag((prev)=>!(prev))
       setShowDeleteModal(false)
   }catch(err){

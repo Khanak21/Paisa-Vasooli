@@ -31,7 +31,7 @@ function Vault({thememode,toggle,user}) {
         console.log(url)
         const addUrl= async()=>{
           try{
-            const res = await axios.post(`http://localhost:3001/api/user/addUrl/${user._id}`,{url,fileName})
+            const res = await axios.post(`https://paisa-vasooli.onrender.com/api/user/addUrl/${user._id}`,{url,fileName})
             console.log("file url",res.data)
 
           }catch(err){

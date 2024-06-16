@@ -56,7 +56,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
           setErrorMessage("All entries should be filled");
           return;
         }
-        const res = await axios.put(`http://localhost:3001/api/transactions/editTransaction/${transactionData._id}`, { transInput });
+        const res = await axios.put(`https://paisa-vasooli.onrender.com/api/transactions/editTransaction/${transactionData._id}`, { transInput });
         console.log(res.data);
         setTransInput({
           userId:user._id,
@@ -79,7 +79,7 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
 //  --------------function to delete --------------- 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`http://localhost:3001/api/transactions/deleteTransaction/${transactionData._id}`);
+      const res = await axios.delete(`https://paisa-vasooli.onrender.com/api/transactions/deleteTransaction/${transactionData._id}`);
       console.log(res.data);
       console.log(transactionData)
       setUpdateFlag((prevFlag) => !prevFlag);

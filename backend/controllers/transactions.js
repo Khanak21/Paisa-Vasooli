@@ -21,9 +21,6 @@ export const addTransaction = async(req,res)=>{
     })
 
     try{
-        // if(!type || !amount || !category || !date){
-        //     return res.status(400).json({message: 'All fields are required!'})
-        // }
         await transaction.save()
         res.status(200).json({transaction})
 
@@ -36,7 +33,6 @@ export const addTransaction = async(req,res)=>{
 
 export const getTransactions=async(req,res)=>{
     const userId= req.params.userId;
-    // console.log(req.params.userId)
     try{
         const trans = await Transaction.find({userId:userId})
         .sort({ date: -1 }) // Sort by date in descending order
@@ -154,7 +150,6 @@ export const getTotalStats=async(req,res)=>{
         const balance = totalIncome - totalExpense;
 
         res.json({ totalIncome, totalExpense, balance });
-        // res.json({incomeResult,expenseResult})
     }catch(err){
         res.json({message:"No stats found"})
     }
@@ -208,7 +203,6 @@ export const getWeeklyTransaction = async (req, res) => {
       },
     ]);
 
-    // console.log('weekly', weeklyData);
     res.json({ weeklyData });
   } catch (err) {
     console.error(err);
@@ -216,63 +210,11 @@ export const getWeeklyTransaction = async (req, res) => {
   }
 };
 
-// export const getWeeklyTransaction=async(req,res)=>{
-//     const userId=req.params.userId
-//     try {
-//         const currentDate = new Date();
-//         const sevenDaysAgo = new Date(currentDate);
-//         sevenDaysAgo.setDate(currentDate.getDate() - 7);
-    
-//         const weeklyData = await Transaction.aggregate([
-//           {
-//             $match: {
-//               userId: userId,
-//               date: { $gte: sevenDaysAgo, $lte: currentDate },
-//             },
-//           },
-//           {
-//             $group: {
-//               _id: {
-//                 $dateToString: { format: '%Y-%m-%d', date: '$date' },
-//               },
-//               totalIncome: {
-//                 $sum: {
-//                   $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0],
-//                 },
-//               },
-//               totalExpense: {
-//                 $sum: {
-//                   $cond: [{ $eq: ['$type', 'expense'] }, '$amount', 0],
-//                 },
-//               },
-//             },
-//           },
-//           {
-//             $project: {
-//               date: '$_id',
-//               totalIncome: 1,
-//               totalExpense: 1,
-//               _id: 0,
-//             },
-//           },
-//           {
-//             $sort: { date: 1 }, // Sort by date in ascending order
-//           },
-//         ]);
-//         console.log("weekly",weeklyData)
-//         res.json({ weeklyData });
-//       } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ message: 'Internal Server Error' });
-//       }
-// }
-
 export const getMonthlyTransaction = async (req, res) => {
   const userId = req.params.userId;
 
   try {
     const currentDate = new Date();
-    // currentDate.setHours(23, 59, 59, 999);
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
     const monthlyData = await Transaction.aggregate([
