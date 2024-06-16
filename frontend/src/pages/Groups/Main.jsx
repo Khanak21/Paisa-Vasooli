@@ -177,7 +177,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     },[groupflag])
 
   return (
-    <div style={{backgroundColor:thememode=="dark"?"#181818":"white"}} >
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}} >
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className='flex flex-col gap-2 justify-start items-start min-h-screen' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
         <div className='flex justify-between w-full'>
@@ -221,9 +221,9 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
           },
         }}
       >
-        <MenuItem onClick={handleGroupShow}>Create new group</MenuItem>
-        <MenuItem onClick={handleGroupJoinShow}>Join Group</MenuItem>
-        <MenuItem onClick={handleAddFriendShow}>Invite a friend</MenuItem>
+        <MenuItem onClick={()=>{handleGroupShow();handleClose()}}>Create new group</MenuItem>
+        <MenuItem onClick={()=>{handleGroupJoinShow();handleClose()}}>Join Group</MenuItem>
+        <MenuItem onClick={()=>{handleAddFriendShow();handleClose()}}>Invite a friend</MenuItem>
       </Menu>
     </div>
 
@@ -244,6 +244,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
             thememode={thememode}
             toggle={toggle}
             user={user}
+            setgroupflag={setgroupflag}
             /> 
             );
             })}

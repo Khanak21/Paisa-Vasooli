@@ -9,9 +9,12 @@ import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
 import Table from 'react-bootstrap/Table';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
 
 function Dues({ user, thememode, toggle,setUser }) {
   const [billflag,setbillflag] = useState(false)
+  const [selecteddue,setselecteddue] = useState(null);
+  const [showDeleteModal,setShowDeleteModal] = useState(false)
   const [dueItem, setdueItem] = useState({
     userId: user._id,
     title: '',
@@ -231,28 +234,40 @@ const handleSubmitBill = (e,obj) => {
 };
 
 // ----------------  handling the delete function -------------------- 
-const handleDelete = (id) => {
-  const delBill = async (id) => {
+const handleDelete = () => {
+  const delBill = async () => {
     try {
-      const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${id}`);
+      console.log(selecteddue);
+      const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${selecteddue}`);
       console.log(res.data);
       setbillflag((prev)=>!(prev))
+      setShowDeleteModal(false)
     } catch (err) {
       console.log(err);
     }
   };
-  delBill(id);
+  delBill();
 };
 
+const handleopendeletemodal=(id)=>{
+  console.log(id)
+  setShowDeleteModal(true)
+  setselecteddue(id)
+}
+
+const handleCloseDeleteModal=()=>{
+  setShowDeleteModal(false)
+  setselecteddue(null)
+}
+
+
 return (
-  <>
+  <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
    <Navbar thememode={thememode} toggle={toggle}/> 
     <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
       <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Bills and Dues</div>
       <div className='mx-4 text-gray-600 dark:text-gray-400'>Manage your recurring bills and dues here. Receive reminders through email</div>
-      
-
-      <div className="hero-section h-full"  >
+      <div className="hero-section h-full">
         <div className="hero-left " style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>
           <div className="due flex justify-between w-full gap-4 ">
             <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
@@ -288,7 +303,7 @@ return (
               placeholder="Input amount in Rs."
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
-              className="w-[70%] p-2  dark:bg-[#3a3a3a]"
+              className="w-[80%] p-2  dark:bg-[#3a3a3a]"
               
             />
           </div>
@@ -302,19 +317,19 @@ return (
               value={dueItem.toWhom}
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
-              className="w-[70%] p-2 dark:bg-[#3a3a3a]"
+              className="w-[80%] p-2 dark:bg-[#3a3a3a]"
             />
           </div>
 
 
           <div className="due flex justify-between w-full gap-4 ">
-            <label htmlFor="Currency " className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Currency</label> <br />
+            <label htmlFor="" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Currency</label> <br />
             <select
                     name="currency"
                     id="currency"
                     value={dueItem.currency}
                     onChange={handleBillInput('currency')}
-                    className="w-[70%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
+                    className="w-[80%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
                     required
                   >
                     <option>Select:</option>
@@ -349,7 +364,6 @@ return (
               <option value="monthly">Monthly</option>
               <option value="weekly">Weekly</option>
             </select> 
-
           </div>
           {errorMessageAdd && <p className="text-red-500">{errorMessageAdd}</p>}
           <div className="add-btn flex justify-center bg-[#000080] items-center hover:cursor-pointer " onClick={handleSubmit}>
@@ -366,6 +380,7 @@ return (
                 <th>Due To</th>
                 <th>Amount</th>
                 <th>Due date</th>
+                <th>Title</th>
                 <th>Edit</th>
               </tr>
             </thead>
@@ -376,10 +391,11 @@ return (
               <td>{bill.title}</td>
               <td>&#8377; {bill.amount}</td>
               <td>{bill.dueDate?.substring(0,10)}</td>
+              <td>{bill.title}</td>
               <td>
                 <div className='flex justify-end w-[80%] gap-4 mr-6'>
                   <AiFillEdit onClick={() => handleShow(bill)} style={{ cursor: 'pointer' }} />
-                  <AiFillDelete onClick={() => handleDelete(bill._id)} style={{ cursor: 'pointer' }} />
+                  <AiFillDelete onClick={() => handleopendeletemodal(bill._id)} style={{ cursor: 'pointer' }} />
                 </div>
               </td>
               </tr>
@@ -419,11 +435,26 @@ return (
             </form>
         </Modal.Body>
       </Modal>
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Deletion</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>Are you sure you want to delete this Bill?</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button className="custom-blue-button" onClick={handleCloseDeleteModal}>
+                  Cancel
+                </Button>
+                <Button className="custom-blue-button" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
       </div>
       </div>
     </div>
-     
-  </>
+    </div>
   );
 }
 

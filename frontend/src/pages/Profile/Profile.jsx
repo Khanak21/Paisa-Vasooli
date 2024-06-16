@@ -93,7 +93,7 @@ function Profile({ user, thememode, toggle,setUser}) {
   }, [user._id]);
 
   return (
-    <>
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
       <Navbar thememode={thememode} toggle={toggle} flag={flag} setFlag={setFlag}/>
       <div
         className='flex flex-col justify-start items-center p-3 border-[#000080] h-full' 
@@ -152,19 +152,11 @@ function Profile({ user, thememode, toggle,setUser}) {
 
           
           {user?.friends?.map((friend, index) => (
-            // <label
-            //   key={index}
-            //   htmlFor={`friend-${index}`}
-            //   className='w-full flex justify-between items-center gap-1 border-1 p-1 border-black rounded-md'
-            //   style={{ backgroundColor: thememode == 'dark' ? 'rgb(222, 221, 221)' : 'white' }}
-            // >
             <>
               <div className='w-[30%] text-md p-1'>
-                {/* <b>{friend}</b> */}
               </div>
               <input type='text' id={`friend-${index}`} value={friend} readOnly />
             </>
-            // </label>
           ))}
 
       <div
@@ -187,7 +179,7 @@ function Profile({ user, thememode, toggle,setUser}) {
       </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

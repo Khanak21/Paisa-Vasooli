@@ -182,7 +182,6 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
     return (
         <div className='pb-2 dark:bg-[#181818] dark:text-white bg-[#f0f0f0]'>
             <Navbar thememode={thememode} toggle={toggle} />
-      
             <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Simplify Debts</div>
             <div className='flex justify-between'>
                 <div className="mx-3 text-xl bg-[#f0f0f0] text-slate-500 dark:bg-[#181818] dark:text-[#f0f0f0] p-2">

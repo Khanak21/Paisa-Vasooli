@@ -310,21 +310,7 @@ console.log(datat)
 
   return (
     <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
-      
         <Navbar thememode={thememode} toggle={toggle}/>
-        {/* --------------------------User monetary stats------------------------ */}
-        {/* <select onChange={(e)=> handleChange(e)}>
-                {languages.map((item) => {
-                    return (
-                        <option
-                            key={item.value}
-                            value={item.value}
-                        >
-                            {item.text}
-                        </option>
-                    );
-                })}
-            </select> */}
       <div className='font-extrabold text-2xl mx-4 mt-2 px-6 dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
       <div className='mt-2 mx-4 px-6 text-gray-600 dark:text-gray-400'>Let's add some transactions!</div>
 
@@ -410,7 +396,6 @@ console.log(datat)
       <div className='h-[95%] w-full flex flex-col align-middle col-span-2'> 
         <div style={{width:"100%"}} className='overflow-y-scroll'>
           {(filterstate==false ? transactionData : filteredData)?.map(trans=>(
-            //  console.log("mapped data",trans)
             <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} setTransactionData={setTransactionData} setUpdateFlag={setUpdateFlag}/> 
             ))}
         </div>

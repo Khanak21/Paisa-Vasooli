@@ -276,66 +276,57 @@ const DeleteConfirmation = (id) => {
 };
 
   return (
-    <div className="min-h-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
-
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
     <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
+    <div className="outer min-h-screen w-full" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
        <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
-     
-      <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black"}}>
-        <div className="main-content p-1" style={{
-          color: thememode === "dark" ? "white" : "black",
-          backgroundColor: thememode === "dark" ? "#282828" : "#E5E4E2",
-          borderRadius: thememode==="dark" ? "20px" : "20px"
-          }}
-        >
-          <div className="main-left">
-            <div className="savings-holder"  >
-              <label htmlFor="">Title</label>
-              <br />
+      <div className="main-body h-full" style={{ color: thememode === "dark" ? "white" : "black"}}>
+          <div className="main-left" style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}} >
+            <div className="due flex justify-between w-full gap-4">
+              <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
+              <br/>
               <input
                 type="text"  
                 placeholder="Input the title"
-                className="saving-input border-none"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
                 value={inputTitle}
                 onChange={handleInputTitle}
-                style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
-                  />
+                />
             </div>
 
-            <div className="savings-holder">
-              <label htmlFor="">Current Amount</label> <br />
+            <div className="due flex justify-between w-full gap-4">
+              <label htmlFor="" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Current Amount</label> <br />
               <input
                 type="number"
                 placeholder="Input the Current Amount"
-                className="saving-input border-none"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
                 value={currentAmount}
                 onChange={handleCurrentAmount}
                 style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
               />
             </div>
 
-            <div className="savings-holder">
-              <label htmlFor="">Goal Amount</label> <br />
+            <div className="due flex justify-between w-full gap-4">
+              <label className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}} htmlFor="">Goal Amount</label> <br />
               <input
                 type="number"
                 placeholder="Input the Goal Amount"
-                className="saving-input border-none"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
                 value={amount}
                 onChange={handleAmount}
                 style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
               />
             </div>
 
-            <div className="savings-holder">
-              <label htmlFor="">Currency</label> <br />
+            <div className="due flex justify-between w-full gap-4">
+              <label className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}} htmlFor="">Currency</label> <br />
               <select
                     name="currency"
                     id="currency"
                     value={Currency}
                     onChange={handleCurrency}
-                    className="p-2 border-1 rounded-md"
+                    className="w-[70%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
                     style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
                     required
                     
@@ -363,9 +354,7 @@ const DeleteConfirmation = (id) => {
               </button>
             </div>
           </div>
-          
-          {/* Saving Cards list */}
-          <div className="hero-right h-full mt-10">
+        <div className="hero-right h-full">
         <div className="storing-savings">
           <div className="overflow-y-scroll w-full max-h-[500px]">
           <Table striped borderless hover variant={thememode == 'dark' ? 'dark' : ''}>
@@ -433,17 +422,17 @@ const DeleteConfirmation = (id) => {
                 <p>Are you sure you want to delete this saving?</p>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                <Button className="custom-blue-button" onClick={handleCloseDeleteModal}>
                   Cancel
                 </Button>
-                <Button variant="danger" onClick={handleDelete}>
+                <Button className="custom-blue-button" onClick={handleDelete}>
                   Delete
                 </Button>
               </Modal.Footer>
             </Modal>
           </div>
         </div>
-      </div>
+      
 
       {isVisible && (
         <div className="model visible">

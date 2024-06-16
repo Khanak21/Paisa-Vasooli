@@ -51,7 +51,7 @@ const handleAccept=async(key)=>{
 }
   return (
 
-    <div className='dark:bg-[#181818] h-[100vh]'>
+    <div className='dark:bg-[#181818] bg-[#f0f0f0] h-[100vh]'>
       <Navbar thememode={thememode} toggle={toggle} />
       <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Inbox</div>
 

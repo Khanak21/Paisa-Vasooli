@@ -13,11 +13,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTheme } from '@mui/material/styles';
+import { Button } from 'react-bootstrap';
 
 const ITEM_HEIGHT = 48;
-
-
-const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup, selectedGroup,thememode,toggle,user}) => {
+const GroupCard = ({key,setgroupData,groupData,allgroupsdata,setSelectedGroup,selectedGroup,thememode,toggle,user,setgroupflag}) => {
   const navigate = useNavigate()
   const theme = useTheme();
 const [show, setShow] = useState(false);
@@ -27,7 +26,8 @@ const [friends,setFriends] = useState([])
 const [checkedState, setCheckedState] = useState(
   new Array(user.friends.length).fill(false)
 );
-const [anchorEl, setAnchorEl] = React.useState(null);
+const [anchorEl, setAnchorEl] = useState(null);
+const [showDeleteModal,setShowDeleteModal]= useState(false)
 const open = Boolean(anchorEl);
 const handleClick = (event) => {
   setAnchorEl(event.currentTarget);
@@ -35,11 +35,6 @@ const handleClick = (event) => {
 const handleCloseDots = () => {
   setAnchorEl(null);
 };
-
-// const copy = () => toast("Copied to Clipboard");
-
-
-
 const handleOnChange = (position) => {
   const updatedCheckedState = checkedState.map((item, index) =>
     index === position ? !item : item
@@ -87,11 +82,15 @@ const handleOpenGroup = () => {
 // setOnegroupData(groupData)
 
 const handleDelete = async()=>{
+  console.log(groupData)
   try{
-      const res=await axios.delete(`http://localhost:3001/api/group/deleteGroup/${groupData._id}`)
+      const groupId=groupData._id
+      const res=await axios.delete(`http://localhost:3001/api/group/deleteGroup/${groupId}`)
+      setShowDeleteModal(false)
       console.log(res.data.groupp)
       const sav=res.data.groupp
-      setgroupData(allgroupsdata.filter(data=>data._id!=sav._id))
+      // setgroupData(allgroupsdata.filter(data=>data._id!=sav._id))
+      setgroupflag((prev)=>!(prev))
   }catch(err){
       console.log(err)
   }
@@ -99,6 +98,14 @@ const handleDelete = async()=>{
 const handlePaid=()=>{
   console.log("clicked")
 };
+
+const handleopendeletemodal=()=>{
+  setShowDeleteModal(true)
+}
+
+const handleCloseDeleteModal=()=>{
+  setShowDeleteModal(false)
+}
 console.log(allgroupsdata)
   return (
 
@@ -148,13 +155,13 @@ console.log(allgroupsdata)
           },
         }}
       >
-           <MenuItem key="addfriend" onClick={handleAddFriendShow}>
+           <MenuItem key="addfriend" onClick={()=>{handleAddFriendShow();handleCloseDots()}}>
           + Add member
           </MenuItem>
-          <MenuItem key="editgroup" onClick={handleShow}>
+          <MenuItem key="editgroup" onClick={()=>{handleShow();handleCloseDots();}}>
           Edit group
           </MenuItem>
-          <MenuItem key="deletegroup" onClick={handleDelete}>
+          <MenuItem key="deletegroup" onClick={()=>{handleopendeletemodal();handleCloseDots();}}>
           Delete group
           </MenuItem>
     
@@ -173,58 +180,6 @@ console.log(allgroupsdata)
         >Settle transactions⟶</Buttonmui>
       </CardActions>
     </Card>
-
-     {/* <Card  border="secondary" className='card-component flex flex-col justify-start items-start gap-3' style={{backgroundColor:thememode==="dark"?"#282828":"white",color:thememode==="dark"?"white":"black"}} >
-
-      <Card.Body className='w-full p-1 '>
-
-        <div className='flex flex-col justify-start items-start gap-1'>
-
-          <Card.Header className='w-full'>
-          <b> Group Title</b>{" "}:-{" "}{groupData.title}
-          </Card.Header>
-<div className='p-2'>
-          <Card.Text className='text-md w-fit justify-start items-center'>
-            <b> Group Code </b>{" "}:- <br/>
-            <div className='flex align-middle'>
-              <div className='flex'>
-              <input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} />
-            <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
-            <button>
-              <MdContentCopy  className='ml-2 text-xl'/>
-            </button>
-            </CopyToClipboard>
-            </div> */}
-            {/* {copied && <span style={{ marginLeft: '10px', color: 'green' }}>Copied to clipboard!</span>} */}
-            {/* <button className='mx-2 px-2 bg-[#8656cd] rounded-md text-white lg:w-80 md:w-80' onClick={handleAddFriendShow}>or Add Friend</button>
-            </div>
-          
-          </Card.Text>
-
-        </div>
-
-       <div className='w-full p-2 my-2 flex flex-col justify-center items-start gap-3'>
-        
-        <button className='rounded-md p-1 text-white w-full bg-[#000080]' onClick={()=>navigate(`/simplifydebt/${groupData._id}`)} style={{"cursor":"pointer"}}>
-           Simplify Debt
-        </button>
-        <div className='flex justify-between items-center w-full'>
-          <AiFillEdit onClick={handleShow} style={{"cursor":"pointer"}}/>
-          <AiFillDelete onClick={handleDelete} style={{"cursor":"pointer"}}/>
-        </div>
-       
-       </div>
-</div>
-      </Card.Body>
-
-    </Card> */}
-   
-
-    {/* <div className='group-chat'>
-    {showGroupHome && selectedGroup && selectedGroup._id === groupData._id && (
-        <Grouphome groupData={groupData} user={user} handlePaid={handlePaid} />
-      )}
-   </div> */}
     <Modal show={showAddFriend} onHide={handleAddFriendClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Select friends to be added</Modal.Title>
@@ -257,6 +212,22 @@ console.log(allgroupsdata)
           <button className="rounded-md p-1 text-white w-full bg-[#000080]" onClick={handleAddFriendsToGroup}  required>Add to group</button>
         </Modal.Footer>
       </Modal>
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Deletion</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>Are you sure you want to delete this Bill?</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button className="custom-blue-button" onClick={handleCloseDeleteModal}>
+                  Cancel
+                </Button>
+                <Button className="custom-blue-button" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
   </div>
   )
 }
