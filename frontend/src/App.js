@@ -30,7 +30,6 @@ function App() {
 
   const storedTheme = localStorage.getItem('theme');
   const [thememode, setThememode] = useState(storedTheme || 'light');
-  // console.log(thememode)
 
   //function to toggle between light and dark mode
   const toggle = () => {

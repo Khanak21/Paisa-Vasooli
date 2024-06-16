@@ -190,7 +190,6 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                 </div>
             
               <div className='flex'>
-              {/* <input type="text" value= {groupData.groupCode} name="" id="" style={{backgroundColor:thememode==="dark"?"#3a3a3a":"white"}} /> */}
             <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
             <Tooltip label="Copy group code to clipboard" aria-label="Copy group code to clipboard">
                 <Button onClick={handleCopyToClipboard}>
@@ -199,24 +198,8 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
             </Tooltip>
             </CopyToClipboard>
             <Tooltip label="View members" aria-label="View members">
-                {/* <IconButton
-                    icon={<ViewIcon />}
-                    onClick={handleShowPart}
-                    sx={{
-                        cursor: 'pointer',
-                        marginRight: '2rem',
-                        marginLeft: '1rem',
-                        marginTop: '.6rem',
-                        color: thememode === 'dark' ? 'white' : 'black'
-                    }}
-                /> */}
             </Tooltip>
             </div>
-          
-                  
-        
-                    
-        
             </div>
             <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
                 <Modal.Header closeButton>

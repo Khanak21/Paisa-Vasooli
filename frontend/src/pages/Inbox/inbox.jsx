@@ -68,8 +68,6 @@ const handleAccept=async(key)=>{
            i++;
         }
         key=key.trim()
-        // const key = tokens[0];
-
         return (
           <div key={key}>
             {msg.includes('sent') ? (

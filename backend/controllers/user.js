@@ -39,28 +39,6 @@ export const getStocks = async(req,res)=>{
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
-export const deleteStock = async (req, res) => {
-    try{
-        const userId = req.params.userId;
-        const { input } = req.body;
-        console.log(input);
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        const stockIndex = user.stocks.findIndex(stock => stock.input.toLowerCase() === input.toLowerCase());
-        if (stockIndex > -1) {
-            user.stocks.splice(stockIndex, 1);
-            await user.save();
-            return res.status(200).json({ message: 'Stock deleted successfully', user });
-        } else {
-            return res.status(404).json({ message: 'Stock not found' });
-        }
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Server error' });
-    }
-};
 
 export const getUrls = async(req,res)=>{
     const userId = req.params.userId

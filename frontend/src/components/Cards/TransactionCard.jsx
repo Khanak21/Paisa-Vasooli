@@ -82,8 +82,6 @@ const TransactionCard = ({ user,transactionData, key,thememode,toggle,setTransac
       const res = await axios.delete(`http://localhost:3001/api/transactions/deleteTransaction/${transactionData._id}`);
       console.log(res.data);
       console.log(transactionData)
-      // const updated=transactionData.filter(data=>data._id!=id)
-      // setTransactionData(updated)
       setUpdateFlag((prevFlag) => !prevFlag);
       // You might want to update the UI or state here if needed
     } catch (err) {

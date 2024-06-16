@@ -63,18 +63,6 @@ console.log(groupData)
       }
     }
 
-    // const handlePaid = async()=>{
-    //   try{
-    //     const res=await axios.put(`http://localhost:3001/api/group/markpaid/${groupData._id}`,{userId:id})
-    //     setPaid(prev=>!prev)
-  
-    //     console.log(res.data)
-    //   }catch(err){
-    //     console.log(err)
-    //   }
-    // }
-  
-    //function to fetch group data
     const getgroup=async()=>{
       try{
         const res = await axios.get(`http://localhost:3001/api/group/getgroup/${id}`)
@@ -87,8 +75,6 @@ console.log(groupData)
       }
     }
     
- 
-  //Approve paid debts
   const handleApproved = async(memid)=>{
     try{
       const res=await axios.put(`http://localhost:3001/api/group/markapproved/${groupData._id}`,{userId:memid})
@@ -106,7 +92,6 @@ console.log(groupData)
       getgroup()
     },[])
 
-  // function to fetch group members' data
    useEffect(()=>{
     const getMembers = async()=>{
       try{
@@ -122,7 +107,6 @@ console.log(groupData)
    },[])
 
     useEffect(() => {
-      // This effect will run whenever groupData changes
       setInput((prevInput) => ({
         ...prevInput,
         groupData,
@@ -192,7 +176,6 @@ console.log(groupData)
           <div  key={mem.userId} className='mx-auto w-[50%] flex justify-around gap-2 items-center'>
              <div><b>Name: {" "}</b>{mem.name}</div> 
              <div><b>Amount: {" "}</b>{mem.amount}</div>
-             {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
             {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-[#000080] text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
            </div>
 
