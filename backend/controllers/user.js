@@ -54,39 +54,39 @@ export const getUrls = async(req,res)=>{
     }
 }
 
-// export const deleteStock = async (req, res) => {
-//     try {
-//         const { userId } = req.params; 
-//         const stockId = req.body.stockId; 
+export const deleteStock = async (req, res) => {
+    try {
+        const { userId } = req.params; 
+        const stockId = req.body.stockId; 
 
-//         console.log("userId",userId,"stock Id",stockId)
-//         if (!stockId) {
-//             return res.status(400).json({ message: "Stock ID is required" });
-//         }
+        console.log("userId",userId,"stock Id",stockId)
+        if (!stockId) {
+            return res.status(400).json({ message: "Stock ID is required" });
+        }
 
-//         const user = await User.findById(userId);
-//         if (!user) {
-//             return res.status(404).json({ message: "Can't find the user of given ID" });
-//         }
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "Can't find the user of given ID" });
+        }
 
-//         console.log("User stocks", user.stocks);
+        console.log("User stocks", user.stocks);
 
-//         // Filter out the stock to be deleted
-//         const updatedStocks = user.stocks.filter(stock => stock.input !== stockId);
-//         user.stocks = updatedStocks;
+        // Filter out the stock to be deleted
+        const updatedStocks = user.stocks.filter(stock => stock.input !== stockId);
+        user.stocks = updatedStocks;
 
-//         const updatedUser = await user.save();
-//         console.log("Updated stocks", user.stocks);
+        const updatedUser = await user.save();
+        console.log("Updated stocks", user.stocks);
 
-//         res.status(200).json({
-//             user: updatedUser,
-//             stocks: updatedUser.stocks
-//         });
-//     } catch (error) {
-//         console.log("Error while deleting the stock", error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//     }
-// };
+        res.status(200).json({
+            user: updatedUser,
+            stocks: updatedUser.stocks
+        });
+    } catch (error) {
+        console.log("Error while deleting the stock", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
 
 export const delUrl=async (req, res) => {
     try {
