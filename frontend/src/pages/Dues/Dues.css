@@ -48,7 +48,7 @@
 
 }
 .hero-left{
-    display: flex;
+  display: flex;
   width: 50%;
   height: 100%;
   padding:20px;
@@ -107,8 +107,6 @@
 } 
 .hero-right{ 
     width:50%;
-    /* padding: 25px; */
-    /* border:2px solid black;  */
     display:flex;
     height: 100%;
     

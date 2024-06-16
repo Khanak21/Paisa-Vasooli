@@ -1,43 +1,20 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-// import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-// import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-// import AdbIcon from '@mui/icons-material/Adb';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useState,useEffect} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes,faUser } from '@fortawesome/free-solid-svg-icons';
+import {Link} from 'react-router-dom'
+import 'tailwindcss/base.css'; // Import Tailwind CSS base styles
+import 'tailwindcss/components.css'; // Import Tailwind CSS components styles
+import 'tailwindcss/utilities.css'; // Import Tailwind CSS utilities styles
+import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
-import { useState,useEffect } from 'react';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import LightModeIcon from '@mui/icons-material/LightMode';
+import ToggleBtn from './ToggleBtn.jsx';
 
-const theme = createTheme({
-    palette: {
-      purple: {
-        main: '#8656cd',
-        light: '#E9DB5D',
-        dark: '#A29415',
-        contrastText: '#242105',
-      },
-    },
-  });
- 
-// const pages = ['Dues', 'Groups', 'Savings'];
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import Profile from '../../pages/Profile/Profile.jsx';
+import { FaRegEnvelope } from "react-icons/fa";
+import Inbox from '../../pages/Inbox/inbox.jsx'
 
-function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
 
-  const navigate=useNavigate()
-  // eslint-disable-next-line no-unused-vars
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+function Navbar({thememode,toggle,setUser,user,setFlag,flag}) {
   const [navuser,setNavuser] = useState({})
  
   // ------------ hook to handle the user details ------------------ 
@@ -57,15 +34,20 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
       }
     }
     check()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[user?._id,flag])
 
+  // console.log(navuser)
   console.log(user);
-  // const [showNav, setShowNav] = useState(false);
+  const [showNav, setShowNav] = useState(false);
+  // const [isLoggedin,setIsloggedIn]=useState(true)
+  // console.log(thememode)
+  const navigate=useNavigate()
   
   //  ------------- function to logout ----------------------- 
-  // eslint-disable-next-line no-unused-vars
   const handleLogout = () => {
+  //   console.log("User before logout:", user);
+  //   setUser({});
+  //   console.log("User after logout:", user);
     localStorage.clear();
     navigate('/login');
   };
@@ -77,270 +59,79 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
     navigate('/login');
   }
 
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  
 
   return (
-    <ThemeProvider theme={theme}>
-    <AppBar position="static" color="transparent" sx={{ boxShadow: 'none', elevation: 0 }}>
-
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <img src="favicon.ico" style={{height:"50px"}} alt=''/>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            onClick={()=>{navigate("/dashboard")}}
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'poppins',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              color: thememode === 'dark' ? 'white' : '#000080',
-              
-              textDecoration: 'none',
-              cursor:'pointer'
-            }}
-          >
+    <div className="flex gap-30 justify-between items-center bg-[#8656cd] navbar-parent">
+      {/* ------------------ wesite name -------------------  */}
+         <div className='text-2xl mx-2 text-white font-extrabold paisa'>
             Paisa Vasooli
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button
-                key="Dues"
-                onClick={()=>{navigate("/dues")}}
-                sx={{
-                    my: 2,
-                    color: thememode === 'dark' ? 'white' : '#000080',    
-                    display: 'block',
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      width: '100%',
-                      height: '2px',
-                      backgroundColor: '#000080',
-                      bottom: '-2px',
-                      left: 0,
-                      transform: 'scaleX(0)',
-                      transformOrigin: 'bottom right',
-                      transition: 'transform 0.25s ease-out',
-                    },
-                    '&:hover::after': {
-                      transform: 'scaleX(1)',
-                      transformOrigin: 'bottom left',
-                    },
-                  }}
-              >
-               Dues
-              </Button>
-              <Button
-                key="Groups"
-                onClick={()=>{navigate("/groups")}}
-                sx={{
-                    my: 2,
-                    color: thememode === 'dark' ? 'white' : '#000080',
-                    display: 'block',
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      width: '100%',
-                      height: '2px',
-                      backgroundColor: '#000080',
-                      bottom: '-4px', // Adjust this value to move the underline up or down
-                      left: 0,
-                      transform: 'scaleX(0)',
-                      transformOrigin: 'bottom right',
-                      transition: 'transform 0.25s ease-out',
-                    },
-                    '&:hover::after': {
-                      transform: 'scaleX(1)',
-                      transformOrigin: 'bottom left',
-                    },
-                  }}
-              >
-                Groups
-              </Button>
-              <Button
-                key="Savings"
-                onClick={()=>{navigate("/savings")}}
-                sx={{
-                    my: 2,
-                    color: thememode === 'dark' ? 'white' : '#000080',   
-                    display: 'block',
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      width: '100%',
-                      height: '2px',
-                      backgroundColor: '#000080',
-                      bottom: '-4px', // Adjust this value to move the underline up or down
-                      left: 0,
-                      transform: 'scaleX(0)',
-                      transformOrigin: 'bottom right',
-                      transition: 'transform 0.25s ease-out',
-                    },
-                    '&:hover::after': {
-                      transform: 'scaleX(1)',
-                      transformOrigin: 'bottom left',
-                    },
-                  }}
-              >
-                Savings
-              </Button>
-              <Button
-                key="Charts"
-                onClick={()=>{navigate("/charts")}}
-                sx={{
-                    my: 2,
-                    color: thememode === 'dark' ? 'white' : '#000080',
-                    display: 'block',
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      width: '100%',
-                      height: '2px',
-                      backgroundColor: '#000080',
-                      bottom: '-4px', // Adjust this value to move the underline up or down
-                      left: 0,
-                      transform: 'scaleX(0)',
-                      transformOrigin: 'bottom right',
-                      transition: 'transform 0.25s ease-out',
-                    },
-                    '&:hover::after': {
-                      transform: 'scaleX(1)',
-                      transformOrigin: 'bottom left',
-                    },
-                  }}
-              >
-                Charts
-              </Button>
-              <Button
-                key="Stocks"
-                onClick={()=>{navigate("/stocks")}}
-                sx={{
-                    my: 2,
-            color: thememode === 'dark' ? 'white' : '#000080',
+        </div>
+          
 
-                    display: 'block',
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      width: '100%',
-                      height: '2px',
-                      backgroundColor: '#000080',
-                      bottom: '-4px', // Adjust this value to move the underline up or down
-                      left: 0,
-                      transform: 'scaleX(0)',
-                      transformOrigin: 'bottom right',
-                      transition: 'transform 0.25s ease-out',
-                    },
-                    '&:hover::after': {
-                      transform: 'scaleX(1)',
-                      transformOrigin: 'bottom left',
-                    },
-                  }}
-              >
-                Stocks
-              </Button>
-              <Button
-                key="Groups"
-                onClick={()=>{navigate("/vault")}}
-                sx={{
-                    my: 2,
-                    color: thememode === 'dark' ? 'white' : '#000080',
-                    display: 'block',
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      width: '100%',
-                      height: '2px',
-                      backgroundColor: '#000080',
-                      bottom: '-4px', // Adjust this value to move the underline up or down
-                      left: 0,
-                      transform: 'scaleX(0)',
-                      transformOrigin: 'bottom right',
-                      transition: 'transform 0.25s ease-out',
-                    },
-                    '&:hover::after': {
-                      transform: 'scaleX(1)',
-                      transformOrigin: 'bottom left',
-                    },
-                  }}
-              >
-                Vault
-              </Button>
-          </Box>
+      <div className={showNav ? " flex justify-between gap-12 p-4 text-white content-link active":"flex justify-evenly gap-12 p-4 text-white content-link"} >
 
-          <Box sx={{ flexGrow: 0 }}>
-          <LightModeIcon 
-          onClick={toggle}
-          sx={{
-            color: thememode === 'dark' ? 'white' : 'inherit',
-            cursor: 'pointer'
-          }}
-          />
-            <MailOutlineIcon sx={{mx: 2,
-            color: thememode === 'dark' ? 'white' : 'inherit',
-            cursor: 'pointer'
-             }}
-             onClick={()=>{navigate("/inbox")}}
-            />
-            {/* <Tooltip title=""> */}
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={navuser?.image || 'ProfileImg.jpeg'} />
-              </IconButton>
-            {/* </Tooltip> */}
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-                <MenuItem key="Profile" onClick={()=>{navigate("/profile")}}>
-                  <Typography textAlign="center">Profile</Typography>
-                </MenuItem>
-                <MenuItem key="Vault" onClick={()=>{navigate("/vault")}}>
-                  <Typography textAlign="center">Vault</Typography>
-                </MenuItem>
-                <MenuItem key="Logout" onClick={()=>{Logout()}}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
+  
+        <div className="font-bold text-white hover:cursor-pointer relative" onClick={()=>{navigate("/dashboard")}}>
+        DashBoard
+        </div>
 
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-    </ThemeProvider>
+        <div className="font-bold text-white hover:cursor-pointer" onClick={()=>{navigate("/dues")}}>Dues</div>
+        <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/groups")}}>Groups</div>
+        <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/savings")}}>Savings</div>
+        <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/charts")}}>Charts</div>
+        <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/stocks")}}>Stocks</div>
+        <div className="font-bold text-white hover:cursor-pointer " onClick={()=>{navigate("/vault")}}>Vault</div>
+        <div className="font-bold text-white hover:cursor-pointer lg:hidden" onClick={()=>{navigate("/inbox")}}>Inbox</div>
+        <div className="inside font-bold text-white hover:cursor-pointer " onClick={()=>{Logout()}}>Logout</div>
+        <div className="inside2 font-bold text-white hover:cursor-pointer " onClick={toggle} >Theme Toggle</div>
+        
+      </div>
+      <div className="logout absolute border border-white rounded-md p-2 right-1 font-bold text-white hover:cursor-pointer hover:border-gray-300 hover:shadow-xl" onClick={handleLogout}>
+  Logout
+</div>
+        
+    <div className='w-[20em] flex justify-evenly items-center icon-bar'>
+
+
+ {/* ----------------- buttons + toggle ----------------  */}
+<div className='w-fit relative top-4 right-1 toggle-nav'>
+  <ToggleBtn  thememode={thememode} toggle={toggle} /> 
+</div>
+<div className='font-bold text-white hover:cursor-pointer border-1 border-white p-3 profileIcon envelop' onClick={()=>{navigate("/inbox")}}>
+
+<FaRegEnvelope className="text-white cursor-pointer" />
+
+</div>
+
+<div className='font-bold text-white hover:cursor-pointer p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
+  {/* <FontAwesomeIcon icon={faUser}  /> */}
+  <img src={navuser?.image || 'ProfileImg.jpeg'} className='w-[50px] h-[50px]  rounded-full'></img>
+</div>
+
+
+
+{/* ------------ Hamburger menu icon & Cross icon -------------------------------  */}
+
+<div className="icons" style={{color:thememode==="dark"?"white":"black"}}>
+<div
+  className={showNav ? 'icon-menu activemenu' : 'icon-menu'}
+  onClick={() => setShowNav(!showNav)}
+  
+>
+  <FontAwesomeIcon icon={faBars} size="xl" />
+</div>
+
+<div
+  className={showNav ? 'icon-crossX activeman' : 'icon-crossX'}
+  onClick={() => setShowNav(!showNav)}
+>
+  <FontAwesomeIcon icon={faTimes} size="xl" />
+</div>
+</div>
+</div>
+</div>
   );
 }
-export default ResponsiveAppBar;
+
+export default Navbar;

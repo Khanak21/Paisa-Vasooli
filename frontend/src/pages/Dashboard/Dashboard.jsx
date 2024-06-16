@@ -1,23 +1,22 @@
 import React,{useState,useEffect} from 'react'
 import Navbar from '../../components/Navbar'
-// import {Button} from 'react-bootstrap'
+import {Button} from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
 import TransactionCard from '../../components/Cards/TransactionCard';
-// eslint-disable-next-line no-unused-vars
 import { CSVLink, CSVDownload } from "react-csv"
-// import { useTranslation,initReactI18next } from "react-i18next"; 
-// import i18next from "i18next"
+import { useTranslation,initReactI18next } from "react-i18next"; 
+import i18next from "i18next"
 import './Dashboard.css'
-// const languages = [
-//   { value: "", text: "Options" },
-//   { value: "en", text: "English" },
-//   { value: "hi", text: "Hindi" },
-// ];
+const languages = [
+  { value: "", text: "Options" },
+  { value: "en", text: "English" },
+  { value: "hi", text: "Hindi" },
+];
 
 
 const Dashboard = ({user,thememode,toggle,setUser}) => {
-  // const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState("en");
   const [updateFlag, setUpdateFlag] = useState(false); 
   const [show,setShow] = useState(false)
   // console.log(user)
@@ -37,7 +36,6 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
       startDate:'',
       endDate:'',
     })
-    // eslint-disable-next-line no-unused-vars
     const [errorMessage, setErrorMessage] = useState("");
     const [transactionData,setTransactionData]=useState([])
     console.log(transactionData)
@@ -76,7 +74,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
 
      //functions to handle input
     const handleTransInput = name=>(e)=>{
-      if(name==='type' ||name==='category'||name==='desc'){
+      if(name=='type' ||name=='category'||name=='desc'){
         const capitalizedValue = capitalizeFirstLetter(e.target.value);
         setTransInput({...transInput,[name]:capitalizedValue})
       }
@@ -142,7 +140,6 @@ console.log(datat)
         try{
           const reqmail = user.email
           console.log(reqmail)
-          // eslint-disable-next-line no-unused-vars
           const res = await axios.post("http://localhost:3001/api/mail/sendmail",{reqmail})
           .then(() => alert("Message Sent Succesfully"))
           .catch((err) => console.log(err));
@@ -188,7 +185,6 @@ console.log(datat)
         return data
     }
 
-    // eslint-disable-next-line no-unused-vars
     const [currenci, setCurrenci] = useState('inr');
     const currenciData = UCurrency(currenci);
     // console.log
@@ -210,7 +206,7 @@ console.log(datat)
         }
       }
       check()
-    },[user._id,setUser])
+    },[user._id])
 
     useEffect(()=>{
     //function to fetch total income,balance and expense
@@ -227,7 +223,7 @@ console.log(datat)
       }
     }
     getTotalStats()
-  },[updateFlag,user._id])
+  },[updateFlag])
     
   useEffect(()=>{
     const getTrans = async()=>{
@@ -237,12 +233,12 @@ console.log(datat)
         console.log(res.data)
         const numberOfIncomeTransactions = res.data.trans.filter((transaction) => transaction.type === 'income').length;
         console.log(numberOfIncomeTransactions)
-        if(numberOfIncomeTransactions===50){
+        if(numberOfIncomeTransactions==50){
           addBadge(incomebadge)
         }
         const numberOfExpenseTransactions = res.data.trans.filter((transaction) => transaction.type === 'expense').length;
         console.log(numberOfExpenseTransactions)
-        if(numberOfExpenseTransactions===50){
+        if(numberOfExpenseTransactions==50){
           addBadge(expensebadge)
         }
         setTransactionData(res.data.trans)
@@ -252,8 +248,7 @@ console.log(datat)
       }
     }
     getTrans()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[updateFlag,user._id])
+  },[updateFlag])
 
     useEffect(() => {
       const categoriesSet = new Set(transactionData.map(transaction => transaction.category));
@@ -261,7 +256,7 @@ console.log(datat)
     },[updateFlag,transactionData]);
 
      // Replace with your dynamic currency value
-    // const currencyData = UCurrency('inr');
+    const currencyData = UCurrency('inr');
     // console.log(currencyData['usd'])
     
     const handleSubmit = async(e)=>{
@@ -284,11 +279,11 @@ console.log(datat)
         setTransactionData(prev=>[...prev,val])
         // localStorage.setItem("transactions",JSON.stringify([...transactionData,val]))
         setUpdateFlag((prevFlag) => !(prevFlag));
-        if(amount>=100000 && type==="expense"){
+        if(amount>=100000 && type=="expense"){
           addBadge(bigexpense)
           handleExpenseShow()
         }
-        if(amount>=100000 && type==="income"){
+        if(amount>=100000 && type=="income"){
           addBadge(bigincome)
           handleIncomeShow()
         }
@@ -314,28 +309,14 @@ console.log(datat)
   
 
   return (
-    <div style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}}>
-      
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
         <Navbar thememode={thememode} toggle={toggle}/>
-        {/* --------------------------User monetary stats------------------------ */}
-        {/* <select onChange={(e)=> handleChange(e)}>
-                {languages.map((item) => {
-                    return (
-                        <option
-                            key={item.value}
-                            value={item.value}
-                        >
-                            {item.text}
-                        </option>
-                    );
-                })}
-            </select> */}
       <div className='font-extrabold text-2xl mx-4 mt-2 px-6 dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
       <div className='mt-2 mx-4 px-6 text-gray-600 dark:text-gray-400'>Let's add some transactions!</div>
 
      <div className='h-full flex flex-col justify-center items-start '>
        
-          <div className='flex w-[99vw] justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}}>
+          <div className='flex w-[99vw] justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
 
             <div className='  w-60 rounded-md flex flex-col justify-center bg-[#000080] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
@@ -383,8 +364,8 @@ console.log(datat)
         {/* -----------------------Filters------------------------ */}
         <div className='grid grid-cols-3'>
         <div className='col-span-1'>
-        <div className='flex-col px-6 py-4 justify-center items-center h-[100%] filter mx-4 w-fit' style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}}>
-           {/* <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}>Filters:</div> */}
+        <div className='flex-col px-6 py-4 justify-center items-center h-[100%] filter mx-4 w-fit' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+           {/* <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode=="dark"?"white":"black"}}>Filters:</div> */}
         
         {/* Category */}
               <label for="category" className='px-2 pb-2 dark:text-white'>Category:</label>
@@ -404,17 +385,9 @@ console.log(datat)
         <label for="endDate" className='p-2 dark:text-white'>End Date:</label>
         <input type="date" id="endDate" className="mx-2 border-2 rounded-md p-3" value={filterInput.endDate} onChange={handleFilterInput('endDate')} placeholder='End date'></input> 
         
-// <<<<<<< main
-// //         <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#000080] text-white rounded-md w-full'>Apply Filter</button>
-// //         <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full mt-5'>Export CSV</button></CSVLink>
-// //         <button onClick={handleShow} className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full'>Add Transaction</button>
-// =======
-        <div className=''>
-          <button style={{}} onClick={handleFilter} className='mx-2 p-2 mt-2 bg-[#000080] text-white p-2 rounded-md w-full'>Apply Filter</button>
-          <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className=' mx-2 mt-2 p-2 bg-[#000080] text-white rounded-md w-full'>Export CSV</button></CSVLink>
-        </div>
-        {/* <button onClick={handleShow} className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full'>Add Transaction</button> */}
-        <button onClick={handleShow} className='bg-[#000080] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 right-8 z-10'>+</button>
+        <button style={{}} onClick={handleFilter} className='mx-2 p-2 my-2 bg-[#000080] text-white p-2 rounded-md w-full'>Apply Filter</button>
+        <CSVLink className='export-dashboard' data={filteredData} headers={headers} filename={"Transaction_Data.csv"}><button className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full mt-5'>Export CSV</button></CSVLink>
+        <button onClick={handleShow} className='my-2 mx-2 p-2 bg-[#000080] text-white rounded-md w-full'>Add Transaction</button>
         </div>
         </div>
 
@@ -422,8 +395,7 @@ console.log(datat)
         {/* -------------------------------Listing Transaction Cards below filter bar---------------------------- */}
       <div className='h-[95%] w-full flex flex-col align-middle col-span-2'> 
         <div style={{width:"100%"}} className='overflow-y-scroll'>
-          {(filterstate===false ? transactionData : filteredData)?.map(trans=>(
-            //  console.log("mapped data",trans)
+          {(filterstate==false ? transactionData : filteredData)?.map(trans=>(
             <TransactionCard user={user} key={trans._id} transactionData={trans} thememode={thememode} toggle={toggle} setTransactionData={setTransactionData} setUpdateFlag={setUpdateFlag}/> 
             ))}
         </div>
@@ -521,7 +493,7 @@ console.log(datat)
           <Modal.Title>Congratulations! You are rewarded with a Badge!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <img src="BadeLog.png" alt="Badge img" className="w-100" />
+        <img src="BadeLog.png" alt="Badge Image" className="w-100" />
         </Modal.Body>
         <Modal.Footer>
         </Modal.Footer>
@@ -531,7 +503,7 @@ console.log(datat)
           <Modal.Title>Congratulations! You are rewarded with a Badge!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <img src="AAKR.png" alt="Badge Img" className="w-100" />
+        <img src="AAKR.png" alt="Badge Image" className="w-100" />
         </Modal.Body>
         <Modal.Footer>
         </Modal.Footer>

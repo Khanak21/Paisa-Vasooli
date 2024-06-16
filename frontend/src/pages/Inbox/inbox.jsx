@@ -28,7 +28,7 @@ const Inbox = ({ user,setUser,thememode,toggle }) => {
   }
   check()
 
-},[user?._id,setUser])
+},[user?._id])
 console.log(inboxuser)
 useEffect(() => {
 
@@ -51,7 +51,7 @@ const handleAccept=async(key)=>{
 }
   return (
 
-    <div className='dark:bg-[#181818] h-[100vh]'>
+    <div className='dark:bg-[#181818] bg-[#f0f0f0] h-[100vh]'>
       <Navbar thememode={thememode} toggle={toggle} />
       <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Inbox</div>
 
@@ -62,7 +62,7 @@ const handleAccept=async(key)=>{
         let i=0
         let key=""
         while(i<tokens.length){
-          if(tokens[i]==="sent")break
+          if(tokens[i]=="sent")break
            key+=tokens[i];
            key+=" "
            i++;

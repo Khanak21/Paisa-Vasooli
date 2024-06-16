@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useToast } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import './Dues.css';
-import axios from 'axios';
-// import BillCard from '../../components/Cards/BillCard.jsx';
-import Navbar from '../../components/Navbar.jsx';
-// import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
+import { faPlus,faMinus } from '@fortawesome/free-solid-svg-icons';
+import './Dues.css'
+import axios from "axios";
+import BillCard from "../../components/Cards/BillCard.jsx"
+import Navbar from '../../components/Navbar'
+import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
 import Table from 'react-bootstrap/Table';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
 
-function Dues({ user, thememode, toggle, setUser }) {
-  // eslint-disable-next-line no-unused-vars
-  const [billflag, setbillflag] = useState(false);
+function Dues({ user, thememode, toggle,setUser }) {
+  const [billflag,setbillflag] = useState(false)
+  const [selecteddue,setselecteddue] = useState(null);
+  const [showDeleteModal,setShowDeleteModal] = useState(false)
   const [dueItem, setdueItem] = useState({
     userId: user._id,
     title: '',
@@ -21,94 +22,73 @@ function Dues({ user, thememode, toggle, setUser }) {
     amount: '',
     toWhom: '',
     recurring: 'daily',
-    currency: 'inr'
+    currency:'inr'
   });
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  // const [filterInput, setFilterInput] = useState({
-  //   userId: user._id,
-  //   category: '',
-  //   startDate: '',
-  //   endDate: '',
-  // });
+  const [filterInput, setFilterInput] = useState({
+    userId: user._id,
+    category: '',
+    startDate: '',
+    endDate: '',
+  });
 
-  // const [deleteDiv, setdeleteDiv] = useState(false);
+  const [deleteDiv, setdeleteDiv] = useState(false);
   const [BillData, setBillData] = useState([]);
   const [errorMessageAdd, setErrorMessageAdd] = useState("");
-  const toast = useToast();
-
+  console.log(BillData)
+    // ---------------input ----------------------- 
   const handleBillInput = (name) => (e) => {
-    if (name === 'title' || name === 'toWhom') {
+    if(name=='title' ||name=='toWhom'){
       const capitalizedTitle = capitalizeFirstLetter(e.target.value);
       setdueItem({ ...dueItem, [name]: capitalizedTitle });
-    } else {
+    }
+    else{
       setdueItem({ ...dueItem, [name]: e.target.value });
     }
   };
-
-  // const handleFilterInput = (name) => (e) => {
-  //   setFilterInput({ ...filterInput, [name]: e.target.value });
-  // };
-
+  //  --------------handling filter input --------------- 
+  const handleFilterInput = (name) => (e) => {
+    setFilterInput({ ...filterInput, [name]: e.target.value });
+  };
+  // -----------------function to manage mails ------------------- 
   const mailsendstart = async () => {
     try {
       const reqmail = user.email;
-      // eslint-disable-next-line no-unused-vars
+      console.log(reqmail);
       const res = await axios.post('http://localhost:3001/api/mail/sendstartmail', { reqmail });
       alert('Message Sent Successfully');
-      
     } catch (err) {
       console.error('Error sending start mail:', err);
     }
   };
-
   const mailsendrecurring = async (recurring) => {
     try {
       const reqmail = user.email;
       const duedate = dueItem.dueDate;
-      const recurring = dueItem.recurring;
-      // eslint-disable-next-line no-unused-vars
+      const recurring = dueItem.recurring
+      console.log(reqmail);
       const res = await axios.post('http://localhost:3001/api/mail/sendmailrecurring', { reqmail, duedate, recurring });
       alert('Message Sent Successfully');
     } catch (err) {
       console.error('Error sending recurring mail:', err);
     }
   };
-
+// ----------------------- Submit ------------------- 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const currencysmall = dueItem.currency.toUpperCase();
-    dueItem.amount = Math.floor(dueItem.amount / currenciData[currencysmall]);
-
-    if (!dueItem.amount || !dueItem.currency || !dueItem.dueDate || !dueItem.recurring || !dueItem.title || !dueItem.toWhom || !dueItem.userId) {
-      toast({
-        title: 'Validation Error',
-        description: 'All fields are required.',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
+    dueItem.amount =Math.floor(dueItem.amount / currenciData[currencysmall]);
+    if(dueItem.amount==''||dueItem.currency===''||dueItem.dueDate===''||dueItem.recurring===''||dueItem.title===''||dueItem.toWhom===''||dueItem.userId===''){
       setErrorMessageAdd("All entries should be filled");
-      return;
+      return ;
     }
-
-    if (isNaN(dueItem.amount) || dueItem.amount <= 0) {
-      toast({
-        title: 'Validation Error',
-        description: 'Amount must be a positive number.',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-      setErrorMessageAdd("Amount must be a positive number.");
-      return;
-    }
-
     try {
       const res = await axios.post('http://localhost:3001/api/bills/addBill', { dueItem });
+      console.log(res.data);
       const val = res.data.bill;
       setBillData((prev) => [...prev, val]);
       mailsendstart();
@@ -125,7 +105,7 @@ function Dues({ user, thememode, toggle, setUser }) {
         amount: '',
         toWhom: '',
         recurring: 'daily',
-        currency: 'inr'
+        currency:'inr'
       });
       setErrorMessageAdd("");
     } catch (err) {
@@ -134,35 +114,37 @@ function Dues({ user, thememode, toggle, setUser }) {
   };
 
   useEffect(() => {
-    const check = async () => {
-      try {
+    const check=async()=>{
+      try{
         const loggedInUser = localStorage.getItem("user");
         if (loggedInUser) {
+          console.log(loggedInUser);
           const foundUser = JSON.parse(loggedInUser);
+          console.log("found user",foundUser  )
           await setUser(foundUser);
         }
-      } catch (err) {
-        console.log(err);
+      }catch(err){
+        console.log(err)
       }
-    };
-    check();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+    check()
   }, [user._id]);
 
-  useEffect(() => {
+  useEffect(()=>{
     const getBills = async () => {
       try {
         const res = await axios.get(`http://localhost:3001/api/bills/getBills/${user._id}`);
+        console.log(res.data);
         setBillData(res.data.bill);
       } catch (err) {
         console.log(err);
       }
     };
     getBills();
-  }, [billflag,user._id]);
+  },[billflag])
 
-  const UCurrency = (currency) => {
-    const [data, setData] = useState({});
+  const UCurrency=(currency)=>{
+    const [data, setData] = useState({})
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -178,254 +160,301 @@ function Dues({ user, thememode, toggle, setUser }) {
     useEffect(() => {
       console.log(data); // Log the state after it has been updated
     }, [data]);
-    return data;
-  };
+    return data
+}
+const [currenci, setCurrenci] = useState('inr');
+const currenciData = UCurrency(currenci);
 
-  // eslint-disable-next-line no-unused-vars
-  const [currenci, setCurrenci] = useState('inr');
-  const currenciData = UCurrency(currenci);
+//Table entry data
+const [errorMessage, setErrorMessage] = useState("");
+const [show, setShow] = useState(false);
+const [sellectedbill,setselectedbill] = useState(null);
+const [Bill, setBill] = useState({
+  userId: user._id,
+  titleedit: '',
+  dueDateedit: '',
+  amountedit: '',
+  toWhomedit: '',
+});
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [show, setShow] = useState(false);
-  const [sellectedbill, setselectedbill] = useState(null);
-  const [Bill, setBill] = useState({
+const {titleedit, amountedit, toWhomedit, dueDateedit } = Bill;
+
+const handleBill = (name) => (e) => {
+  // setBill({ ...Bill, [name]: e.target.value });
+  if(name=='titleedit' ||name=='toWhomedit'){
+    const capitalizedTitle = capitalizeFirstLetter(e.target.value);
+    setBill({ ...Bill, [name]: capitalizedTitle });
+  }
+  else{
+    setBill({ ...Bill, [name]: e.target.value });
+  }
+};
+
+// -------------- handling the closing and opening of edit ------------- 
+const handleClose = () => {setShow(false);setselectedbill(null);setErrorMessage("")}
+const handleShow = (bill) => {
+  setShow(true);
+  setselectedbill(bill)
+  setBill({
     userId: user._id,
-    titleedit: '',
-    dueDateedit: '',
-    amountedit: '',
-    toWhomedit: '',
-  });
-
-  const { titleedit, amountedit, toWhomedit, dueDateedit } = Bill;
-
-  const handleBill = (name) => (e) => {
-    if (name === 'titleedit' || name === 'toWhomedit') {
-      const capitalizedTitle = capitalizeFirstLetter(e.target.value);
-      setBill({ ...Bill, [name]: capitalizedTitle });
-    } else {
-      setBill({ ...Bill, [name]: e.target.value });
-    }
-  };
-
-  const handleClose = () => { setShow(false); setselectedbill(null); setErrorMessage("") };
-  const handleShow = (bill) => {
-    setShow(true);
-    setselectedbill(bill);
-    setBill({
-      userId: user._id,
-      titleedit: bill.title,
-      dueDateedit: bill.dueDate.slice(0, 10),
-      amountedit: bill.amount,
-      toWhomedit: bill.toWhom,
+    titleedit: bill.title,
+    dueDateedit: bill.dueDate.slice(0,10),
+    amountedit: bill.amount,
+    toWhomedit: bill.toWhom,
     });
-  };
+}
 
-  const handleSubmitBill = (e, obj) => {
-    e.preventDefault();
-    const editBill = async () => {
-      try {
-        if (!Bill.amountedit || !Bill.dueDateedit || !Bill.titleedit || !Bill.toWhomedit || !Bill.userId) {
-          toast({
-            title: 'Validation Error',
-            description: 'All fields are required.',
-            status: 'error',
-            duration: 3000,
-            isClosable: true,
-          });
-          setErrorMessage("All entries should be filled");
-          return;
-        }
-
-        if (isNaN(Bill.amountedit) || Bill.amountedit <= 0) {
-          toast({
-            title: 'Validation Error',
-            description: 'Amount must be a positive number.',
-            status: 'error',
-            duration: 3000,
-            isClosable: true,
-          });
-          setErrorMessage("Amount must be a positive number.");
-          return;
-        }
-
-        const res = await axios.put(`http://localhost:3001/api/bills/updateBill/${obj._id}`, {
-          title: titleedit,
-          amount: amountedit,
-          toWhom: toWhomedit,
-          dueDate: dueDateedit,
-        });
-        console.log(res.data);
-        setBillData((prevBillData) =>
-          prevBillData.map((bill) =>
-            bill._id === obj._id
-              ? {
-                ...bill,
-                title: titleedit,
-                amount: amountedit,
-                toWhom: toWhomedit,
-                dueDate: dueDateedit,
-              }
-              : bill
-          )
-        );
-        setShow(false);
-        setselectedbill(null);
-      } catch (err) {
-        console.log(err.response.data);
-      }
-    };
-    editBill();
-  };
-
-  const deleteBill = async (billId) => {
+// --------------funtion to handle the submitting the edit data --------------------- 
+const handleSubmitBill = (e,obj) => {
+  e.preventDefault();
+  const editBill = async () => {
     try {
-      // eslint-disable-next-line no-unused-vars
-      const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${billId}`);
-      const updatedBillData = BillData.filter(bill => bill._id !== billId);
-      setBillData(updatedBillData);
+      console.log(obj);
+      if(Bill.amountedit===''||Bill.dueDateedit===''||Bill.titleedit===''||Bill.toWhomedit===''||Bill.userId===''){
+        setErrorMessage("All entries should be filled");
+        return;
+      }
+      const res = await axios.put(`http://localhost:3001/api/bills/editBill/${obj._id}`, {Bill});
+      console.log(res.data);
+      setBill({
+      userId: user._id,
+      titleedit: '',
+      dueDateedit: '',
+      amountedit: '',
+      toWhomedit: '',
+      });
+      setbillflag((prev)=>!(prev))
+      setErrorMessage("");
+      handleClose();
     } catch (err) {
-      console.error('Error deleting bill:', err);
+      console.log(err);
     }
   };
+  editBill();
+};
 
-  return (
-    <>
-      <Navbar user={user} thememode={thememode} toggle={toggle} />
-      <div className={thememode ? 'dues-body-dark' : 'dues-body'}>
-        <div className="content-title">Dues</div>
-        <form className={thememode ? 'add-bill-form-dark' : 'add-bill-form'} onSubmit={handleSubmit}>
-          <input
-            className={thememode ? 'add-bill-input-dark' : 'add-bill-input'}
-            type="text"
-            placeholder="Title"
-            value={dueItem.title}
-            onChange={handleBillInput('title')}
-            required
-          />
-          <input
-            className={thememode ? 'add-bill-input-dark' : 'add-bill-input'}
-            type="date"
-            value={dueItem.dueDate}
-            onChange={handleBillInput('dueDate')}
-            required
-          />
-          <input
-            className={thememode ? 'add-bill-input-dark' : 'add-bill-input'}
-            type="number"
-            placeholder="Amount"
-            value={dueItem.amount}
-            onChange={handleBillInput('amount')}
-            required
-          />
-          <input
-            className={thememode ? 'add-bill-input-dark' : 'add-bill-input'}
-            type="text"
-            placeholder="To Whom"
-            value={dueItem.toWhom}
-            onChange={handleBillInput('toWhom')}
-            required
-          />
-          <select
-            className={thememode ? 'add-bill-select-dark' : 'add-bill-select'}
-            value={dueItem.recurring}
-            onChange={handleBillInput('recurring')}
-            required
-          >
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
-          <select
-            className={thememode ? 'add-bill-select-dark' : 'add-bill-select'}
-            value={dueItem.currency}
-            onChange={handleBillInput('currency')}
-            required
-          >
-            <option value="inr">INR</option>
-            <option value="usd">USD</option>
-            <option value="eur">EUR</option>
-            {/* Add more currencies as needed */}
-          </select>
-          <button type="submit" className={thememode ? 'add-bill-button-dark' : 'add-bill-button'}>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-          {errorMessageAdd && <div className="error-message">{errorMessageAdd}</div>}
-        </form>
-        <Table striped bordered hover variant={thememode ? 'dark' : 'light'} className="bill-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Due Date</th>
-              <th>Amount</th>
-              <th>To Whom</th>
-              <th>Recurring</th>
-              <th>Currency</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {BillData.map((bill) => (
-              <tr key={bill._id}>
-                <td>{bill.title}</td>
-                <td>{bill.dueDate.slice(0, 10)}</td>
-                <td>{bill.amount}</td>
-                <td>{bill.toWhom}</td>
-                <td>{bill.recurring}</td>
-                <td>{bill.currency}</td>
-                <td>
-                  <AiFillEdit onClick={() => handleShow(bill)} className="action-icon" />
-                  <AiFillDelete onClick={() => deleteBill(bill._id)} className="action-icon" />
-                </td>
+// ----------------  handling the delete function -------------------- 
+const handleDelete = () => {
+  const delBill = async () => {
+    try {
+      console.log(selecteddue);
+      const res = await axios.delete(`http://localhost:3001/api/bills/deleteBill/${selecteddue}`);
+      console.log(res.data);
+      setbillflag((prev)=>!(prev))
+      setShowDeleteModal(false)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  delBill();
+};
+
+const handleopendeletemodal=(id)=>{
+  console.log(id)
+  setShowDeleteModal(true)
+  setselecteddue(id)
+}
+
+const handleCloseDeleteModal=()=>{
+  setShowDeleteModal(false)
+  setselecteddue(null)
+}
+
+
+return (
+  <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+   <Navbar thememode={thememode} toggle={toggle}/> 
+    <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
+      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Bills and Dues</div>
+      <div className='mx-4 text-gray-600 dark:text-gray-400'>Manage your recurring bills and dues here. Receive reminders through email</div>
+      <div className="hero-section h-full">
+        <div className="hero-left " style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>
+          <div className="due flex justify-between w-full gap-4 ">
+            <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
+            <input
+              type="text"
+              name="title"
+              id=""
+              placeholder="Enter title"
+              value={dueItem.title}
+              onChange={handleBillInput('title')}
+              className="w-[70%] p-2 dark:bg-[#3a3a3a]"
+              />
+          </div>
+
+          <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="Date" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due date</label>
+            <input
+              type="date"
+              name="date"
+              id=""
+              value={dueItem.dueDate}
+              onChange={handleBillInput('dueDate')}
+              className="w-[70%] p-2 dark:bg-[#3a3a3a] "
+            />
+          </div>
+
+          <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="amount" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Amount</label> <br />
+            <input
+              type="number"
+              name="amount"
+              id=""
+              placeholder="Input amount in Rs."
+              value={dueItem.amount}
+              onChange={handleBillInput('amount')}
+              className="w-[80%] p-2  dark:bg-[#3a3a3a]"
+              
+            />
+          </div>
+
+          <div className="due flex justify-between w-full gap-4  ">
+            <label htmlFor="PersonDue " className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Due To</label> <br />
+            <input
+              type="text"
+              name="toWhom"
+              id=""
+              value={dueItem.toWhom}
+              onChange={handleBillInput('toWhom')}
+              placeholder="To whom"
+              className="w-[80%] p-2 dark:bg-[#3a3a3a]"
+            />
+          </div>
+
+
+          <div className="due flex justify-between w-full gap-4 ">
+            <label htmlFor="" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Currency</label> <br />
+            <select
+                    name="currency"
+                    id="currency"
+                    value={dueItem.currency}
+                    onChange={handleBillInput('currency')}
+                    className="w-[80%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
+                    required
+                  >
+                    <option>Select:</option>
+                    <option value="inr">inr</option>
+                    <option value="usd">usd</option>
+                    <option value="eur">eur</option>
+                    <option value="gbp">gbp</option>
+                    <option value="jpy">jpy</option>
+                    <option value="aud">aud</option>
+                    <option value="cad">cad</option>
+                    <option value="cny">cny</option>
+                    <option value="hkd">hkd</option>
+                    <option value="sgd">sgd</option>
+                    <option value="chf">chf</option>
+                    <option value="sek">sek</option>
+                    <option value="mxn">mxn</option>
+                  </select>
+          </div>
+
+
+          <div className="due flex justify-between w-full gap-4">
+            <label htmlFor="recurring" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Recurring</label>
+             <select
+              name="recurring"
+              id=""
+              value={dueItem.recurring}
+              onChange={handleBillInput('recurring')}
+              className="w-[70%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
+            >
+              <option value="">Select</option>
+              <option value="daily">Daily</option>
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+            </select> 
+          </div>
+          {errorMessageAdd && <p className="text-red-500">{errorMessageAdd}</p>}
+          <div className="add-btn flex justify-center bg-[#000080] items-center hover:cursor-pointer " onClick={handleSubmit}>
+            Add Due
+          </div>
+        </div>
+
+      <div className="hero-right h-full">
+        <div className="storing-dues">
+          <div className="overflow-y-scroll w-full max-h-[500px]">
+          <Table striped borderless hover variant={thememode == 'dark' ? 'dark' : ''}>
+            <thead>
+              <tr>
+                <th>Due To</th>
+                <th>Amount</th>
+                <th>Due date</th>
+                <th>Title</th>
+                <th>Edit</th>
               </tr>
+            </thead>
+            <tbody>
+            {BillData?.map((bill) => (
+              <>
+              <tr key = {bill._id}>
+              <td>{bill.title}</td>
+              <td>&#8377; {bill.amount}</td>
+              <td>{bill.dueDate?.substring(0,10)}</td>
+              <td>{bill.title}</td>
+              <td>
+                <div className='flex justify-end w-[80%] gap-4 mr-6'>
+                  <AiFillEdit onClick={() => handleShow(bill)} style={{ cursor: 'pointer' }} />
+                  <AiFillDelete onClick={() => handleopendeletemodal(bill._id)} style={{ cursor: 'pointer' }} />
+                </div>
+              </td>
+              </tr>
+              </>
             ))}
-          </tbody>
-        </Table>
-      </div>
-      <Modal show={show} onHide={handleClose}>
+            </tbody>
+          </Table>
+          </div>
+        </div>
+        <Modal show={show} onHide={handleClose} animation={false} centered>
+        
         <Modal.Header closeButton>
-          <Modal.Title>Edit Bill</Modal.Title>
+          <Modal.Title className='font-bolder'>Edit Bill</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={(e) => handleSubmitBill(e, sellectedbill)}>
-            <input
-              className={thememode ? 'edit-bill-input-dark' : 'edit-bill-input'}
-              type="text"
-              placeholder="Title"
-              value={Bill.titleedit}
-              onChange={handleBill('titleedit')}
-              required
-            />
-            <input
-              className={thememode ? 'edit-bill-input-dark' : 'edit-bill-input'}
-              type="date"
-              value={Bill.dueDateedit}
-              onChange={handleBill('dueDateedit')}
-              required
-            />
-            <input
-              className={thememode ? 'edit-bill-input-dark' : 'edit-bill-input'}
-              type="number"
-              placeholder="Amount"
-              value={Bill.amountedit}
-              onChange={handleBill('amountedit')}
-              required
-            />
-            <input
-              className={thememode ? 'edit-bill-input-dark' : 'edit-bill-input'}
-              type="text"
-              placeholder="To Whom"
-              value={Bill.toWhomedit}
-              onChange={handleBill('toWhomedit')}
-              required
-            />
-            <button type="submit" className={thememode ? 'edit-bill-button-dark' : 'edit-bill-button'}>
-              Save Changes
-            </button>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
-          </form>
+        <form onSubmit={(e) => handleSubmitBill(e, sellectedbill)}>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-bold text-sm">Title</label>
+                  <input type="text" className="border border-gray-300 p-2 rounded w-full text-sm" value={titleedit} onChange={handleBill('titleedit')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Due Date</label>
+                  <input type="date" className="border border-gray-300 p-2 rounded w-full text-sm" value={dueDateedit} onChange={handleBill('dueDateedit')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">Amount</label>
+                  <input type="number" className="border border-gray-300 p-2 rounded w-full text-sm" value={amountedit} onChange={handleBill('amountedit')} />
+                </div>
+                <div>
+                  <label className="font-bold text-sm">To Whom</label>
+                  <input type="text" className="border border-gray-300 p-2 rounded w-full text-sm" value={toWhomedit} onChange={handleBill('toWhomedit')} />
+                </div>
+              </div>
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              <button type="submit" className="mt-4 bg-[#000080] text-white py-2 px-4 rounded">Save Changes</button>
+            </form>
         </Modal.Body>
       </Modal>
-    </>
+          <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Deletion</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>Are you sure you want to delete this Bill?</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button className="custom-blue-button" onClick={handleCloseDeleteModal}>
+                  Cancel
+                </Button>
+                <Button className="custom-blue-button" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
+      </div>
+      </div>
+    </div>
+    </div>
   );
 }
 

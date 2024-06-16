@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
-// import { Button } from 'react-bootstrap';
-// import SavingCard from "../../components/Cards/SavingCard";
+import { Button } from 'react-bootstrap';
+import SavingCard from "../../components/Cards/SavingCard";
 import axios from "axios";
 import Navbar from '../../components/Navbar'
 import './Savings.css';
@@ -23,6 +23,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
   const [isVisible, setIsVisible] = useState(false);
   const [savingData, setSavingData] = useState([]);
   const [updateFlag,setUpdateFlag] =useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
  //function to handle savings input
 
@@ -94,6 +95,12 @@ function Savings2({ user,setUser,thememode,toggle}) {
   };
   const[show,setShow] =useState(false);
   const [sellectedsav,setselectedsav] = useState(null);
+  const [selectedSavingId, setSelectedSavingId] = useState(null);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
+    const handleShowDeleteModal = (id) => {
+    setSelectedSavingId(id);
+    setShowDeleteModal(true);
+  };
   const [sav,setsav]=useState({
     userId:user._id,
     targetAmt:'',
@@ -102,7 +109,7 @@ function Savings2({ user,setUser,thememode,toggle}) {
     title:''
   })
   const handleSaving = (name) => (e) => {
-    if(name==='title'){
+    if(name=='title'){
       const capitalizedTitle = capitalizeFirstLetter(e.target.value);
       setsav({ ...sav, [name]: capitalizedTitle });
     }
@@ -169,7 +176,6 @@ function Savings2({ user,setUser,thememode,toggle}) {
     }, [data]);
     return data
 }
-// eslint-disable-next-line no-unused-vars
 const [currenci, setCurrenci] = useState('inr');
 const currenciData = UCurrency(currenci);
 
@@ -241,7 +247,7 @@ const currenciData = UCurrency(currenci);
         setSavingData(res.data.savings)
         const numberOfSavings = res.data.savings.filter(saving => saving.currAmt >= saving.targetAmt).length;
         console.log(numberOfSavings);
-        if(numberOfSavings===5){
+        if(numberOfSavings==5){
           addBadge(savingbadge)
         }
       }catch(err){
@@ -249,86 +255,78 @@ const currenciData = UCurrency(currenci);
       }
     }
     getSavings()
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[user._id,updateFlag,setUser])
+  },[user._id,updateFlag])
 
-  const handleDelete = (id) => {
-  const delsaving = async(id)=>{
+  const handleDelete = () => {
+  const delsaving = async()=>{
     try{
-        const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${id}`)
+        const res=await axios.delete(`http://localhost:3001/api/savings/deleteSaving/${selectedSavingId}`)
         console.log(res.data)
         setUpdateFlag((prev)=>!(prev))
-
+        handleCloseDeleteModal();
     }catch(err){
         console.log(err)
     }
 }
-delsaving(id);
+delsaving();
+}
 
-  }
+const DeleteConfirmation = (id) => {
+  handleShowDeleteModal(id);
+};
 
   return (
-    <div className="min-h-screen"  style={{ color: thememode === "dark" ? "white" : "white",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
-
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
     <Navbar thememode={thememode} toggle={toggle}/>
-    <div className="savings-container" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
-       <div className='font-extrabold text-2xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
+    <div className="outer min-h-screen w-full" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
+       <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
       <div className='m-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
-     
-      <div className="main-body" style={{ color: thememode === "dark" ? "white" : "black"}}>
-        <div className="main-content p-1" style={{
-          color: thememode === "dark" ? "white" : "black",
-          backgroundColor: thememode === "dark" ? "#282828" : "#E5E4E2",
-          borderRadius: thememode==="dark" ? "20px" : "20px"
-          }}
-        >
-          <div className="main-left">
-            <div className="savings-holder"  >
-              <label htmlFor="">Title</label>
-              <br />
+      <div className="main-body h-full" style={{ color: thememode === "dark" ? "white" : "black"}}>
+          <div className="main-left" style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}} >
+            <div className="due flex justify-between w-full gap-4">
+              <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
+              <br/>
               <input
                 type="text"  
                 placeholder="Input the title"
-                className="saving-input border-none"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
                 value={inputTitle}
                 onChange={handleInputTitle}
-                style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
-                  />
+                />
             </div>
 
-            <div className="savings-holder">
-              <label htmlFor="">Current Amount</label> <br />
+            <div className="due flex justify-between w-full gap-4">
+              <label htmlFor="" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Current Amount</label> <br />
               <input
                 type="number"
                 placeholder="Input the Current Amount"
-                className="saving-input border-none"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
                 value={currentAmount}
                 onChange={handleCurrentAmount}
                 style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
               />
             </div>
 
-            <div className="savings-holder">
-              <label htmlFor="">Goal Amount</label> <br />
+            <div className="due flex justify-between w-full gap-4">
+              <label className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}} htmlFor="">Goal Amount</label> <br />
               <input
                 type="number"
                 placeholder="Input the Goal Amount"
-                className="saving-input border-none"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
                 value={amount}
                 onChange={handleAmount}
                 style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
               />
             </div>
 
-            <div className="savings-holder">
-              <label htmlFor="">Currency</label> <br />
+            <div className="due flex justify-between w-full gap-4">
+              <label className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}} htmlFor="">Currency</label> <br />
               <select
                     name="currency"
                     id="currency"
                     value={Currency}
                     onChange={handleCurrency}
-                    className="p-2 border-1 rounded-md"
+                    className="w-[70%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
                     style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
                     required
                     
@@ -356,12 +354,10 @@ delsaving(id);
               </button>
             </div>
           </div>
-          
-          {/* Saving Cards list */}
-          <div className="hero-right h-full mt-10">
+        <div className="hero-right h-full">
         <div className="storing-savings">
           <div className="overflow-y-scroll w-full max-h-[500px]">
-          <Table striped borderless hover variant={thememode === 'dark' ? 'dark' : ''}>
+          <Table striped borderless hover variant={thememode == 'dark' ? 'dark' : ''}>
             <thead>
               <tr>
                 <th>Title</th>
@@ -378,11 +374,11 @@ delsaving(id);
               <td>{sav.title}</td>
               <td>&#8377; {sav.currAmt}</td>
               <td>&#8377; {sav.targetAmt}</td>
-              <td>{Math.min((sav.currAmt / sav.targetAmt) * 100, 100)} %</td>
+              <td>{(Math.min((sav.currAmt / sav.targetAmt) * 100, 100)).toFixed(2)} %</td>
               <td>
                 <div className='flex justify-end w-[80%] gap-4 mr-6'>
                   <AiFillEdit onClick={() => handleShow(sav)} style={{ cursor: 'pointer' }} />
-                  <AiFillDelete onClick={() => handleDelete(sav._id)} style={{ cursor: 'pointer' }} />
+                  <AiFillDelete onClick={() => DeleteConfirmation(sav._id)} style={{ cursor: 'pointer' }} />
                 </div>
               </td>
               </tr>
@@ -418,9 +414,25 @@ delsaving(id);
             </form>
         </Modal.Body>
       </Modal>
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Deletion</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>Are you sure you want to delete this saving?</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button className="custom-blue-button" onClick={handleCloseDeleteModal}>
+                  Cancel
+                </Button>
+                <Button className="custom-blue-button" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
-      </div>
+      
 
       {isVisible && (
         <div className="model visible">

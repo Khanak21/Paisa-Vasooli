@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from 'react'
-// import Card from 'react-bootstrap/Card';
+import Card from 'react-bootstrap/Card';
 import Navbar from '../../components/Navbar/Navbar.jsx'
 import Modal from 'react-bootstrap/Modal';
-// import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button'
 import axios from 'axios';
-// import GroupCard from '../../components/GroupCard/GroupCard.jsx'
+import GroupCard from '../../components/GroupCard/GroupCard.jsx'
 import { useParams } from 'react-router-dom';
 
 export const Grouphome = ({user,thememode,toggle}) => {
@@ -12,29 +12,28 @@ export const Grouphome = ({user,thememode,toggle}) => {
   const [groupData,setgroupData]=useState([])
  
   console.log(groupData)
-    // const [showGroup, setShowGroup] = useState(false);
+    const [showGroup, setShowGroup] = useState(false);
     const [show, setShow] = useState(false);
     const [showPart, setShowPart] = useState(false);
-    // const [showGroupJoin, setShowGroupJoin] = useState(false);
-    // const [showFriend, setShowFriend] = useState(false);
+    const [showGroupJoin, setShowGroupJoin] = useState(false);
+    const [showFriend, setShowFriend] = useState(false);
 
-    // const handleGroupClose = () => setShowGroup(false);
-    // const handleGroupShow = () => setShowGroup(true);
-    // const handleGroupJoinClose = () => setShowGroupJoin(false);
-    // const handleGroupJoinShow = () => setShowGroupJoin(true);
+    const handleGroupClose = () => setShowGroup(false);
+    const handleGroupShow = () => setShowGroup(true);
+    const handleGroupJoinClose = () => setShowGroupJoin(false);
+    const handleGroupJoinShow = () => setShowGroupJoin(true);
     const handleShowPart = () => setShowPart(true);
     const handleClosePart = () => setShowPart(false);
 
-    // const handleFriendClose = () => setShowFriend(false);
-    // const handleFriendShow = () => setShowFriend(true);
+    const handleFriendClose = () => setShowFriend(false);
+    const handleFriendShow = () => setShowFriend(true);
     const [membersdata,setmembersdata]=useState([])
-    // const [paid,setPaid] = useState(false)
-    // eslint-disable-next-line no-unused-vars
+    const [paid,setPaid] = useState(false)
     const [approved,setApproved] = useState(false)
-    // const [showGroupHome, setShowGroupHome] = useState(false);
-//     const handleOpenGroup = () => {
-//     setShowGroupHome(true);
-// };
+    const [showGroupHome, setShowGroupHome] = useState(false);
+    const handleOpenGroup = () => {
+    setShowGroupHome(true);
+};
 console.log(groupData)
 
     const [input, setInput] = useState({
@@ -105,7 +104,6 @@ console.log(groupData)
     useEffect(()=>{
      
       getgroup()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
   // function to fetch group members' data
@@ -121,7 +119,6 @@ console.log(groupData)
     }
 
     getMembers()
-   // eslint-disable-next-line react-hooks/exhaustive-deps
    },[])
 
     useEffect(() => {
@@ -136,7 +133,7 @@ console.log(groupData)
    <>
           <Navbar thememode={thememode} toggle={toggle}/>
 
-        <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}}>
+        <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
 
 
        
@@ -196,7 +193,7 @@ console.log(groupData)
              <div><b>Name: {" "}</b>{mem.name}</div> 
              <div><b>Amount: {" "}</b>{mem.amount}</div>
              {/* <button onClick={handlePaid} style={{cursor:"pointer"}} className='bg-green-700 text-white p-2 m-2 rounded-md cursor-pointer' >{(mem[0].settled===false) ? "Mark as paid" : "Paid"}</button> */}
-            {(groupData.userId===user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-[#000080] text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
+            {(groupData.userId==user._id) &&  <button onClick={()=>handleApproved(mem.userId)} style={{cursor:"pointer"}} className='bg-[#000080] text-white p-2 m-2 rounded-md cursor-pointer'>{mem.approved===false ? "Approve" : "Approved"}</button>}
            </div>
 
         ))

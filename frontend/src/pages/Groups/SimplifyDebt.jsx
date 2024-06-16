@@ -4,13 +4,11 @@ import Navbar from '../../components/Navbar'
 import { useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { ReactComponent as Cash } from './cash-on-wallet.svg';
-// import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-// import { MdContentCopy } from "react-icons/md";
-import { Button, Tooltip } from '@chakra-ui/react';
-import { CopyIcon } from '@chakra-ui/icons';
-import {  IconButton } from '@chakra-ui/react';
-import { ViewIcon } from '@chakra-ui/icons';
+import { MdContentCopy } from "react-icons/md";
+import Tooltip from '@mui/material/Tooltip';
+import { Button } from 'react-bootstrap';
 
 const SimplifyDebt = ({ user, thememode, toggle }) => {
     const { id } = useParams();
@@ -24,7 +22,6 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
     const [membersData, setMembersData] = useState([]);
     const [commentText, setCommentText] = useState('');
     const [comments, setComments] = useState([]);
-    // eslint-disable-next-line no-unused-vars
     const [copied, setCopied] = useState(false);
 
     const handleCopyToClipboard = () => {
@@ -129,9 +126,8 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                 userId: user._id,
                 text: commentText,
                 groupId: id,
-                username: user?.username
+                username: user.username
             });
-            console.log("Simplify-debt ",res)
             setCommentText('');
             setCommentFlag(prev => !prev);
         } catch (err) {
@@ -150,10 +146,8 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 
     useEffect(() => {
         getComments();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [commentFlag, comments.length]);
 
-    
     const getMembers = async () => {
         try {
             const res = await axios.get(`http://localhost:3001/api/group/getmembers/${id}`);
@@ -162,21 +156,21 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
             console.log(err);
         }
     };
+
     useEffect(() => {
         getGroup();
         getMembers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id,getGroup]);
+    }, [id]);
 
     const CheckboxGroup = ({ options, selectedValues, onChange }) => (
         <div >
             {options.map((option, index) => (
                 <div key={index} className='w-full flex justify-between align-middle items-center text-slate-700 m-2 dark:text-white'>
-                  <label className='w-[80%] dark:text-slate-200'>{option?.username}</label>
+                  <label className='w-[80%] dark:text-slate-200'>{option.username}</label>
                     <input
                         type="checkbox"
-                        value={option?.username}
-                        checked={selectedValues.includes(option?.username)}
+                        value={option.username}
+                        checked={selectedValues.includes(option.username)}
                         onChange={(e) => onChange(e.target.value)}  
                         className='h-6'
                     />
@@ -189,7 +183,6 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
     return (
         <div className='pb-2 dark:bg-[#181818] dark:text-white bg-[#f0f0f0]'>
             <Navbar thememode={thememode} toggle={toggle} />
-      
             <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Simplify Debts</div>
             <div className='flex justify-between'>
                 <div className="mx-3 text-xl bg-[#f0f0f0] text-slate-500 dark:bg-[#181818] dark:text-[#f0f0f0] p-2">
@@ -201,12 +194,12 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
             <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
             <Tooltip label="Copy group code to clipboard" aria-label="Copy group code to clipboard">
                 <Button onClick={handleCopyToClipboard}>
-                    <CopyIcon className='ml-2 text-xl'/>
+                    COPY
                 </Button>
             </Tooltip>
             </CopyToClipboard>
             <Tooltip label="View members" aria-label="View members">
-                <IconButton
+                {/* <IconButton
                     icon={<ViewIcon />}
                     onClick={handleShowPart}
                     sx={{
@@ -216,7 +209,7 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                         marginTop: '.6rem',
                         color: thememode === 'dark' ? 'white' : 'black'
                     }}
-                />
+                /> */}
             </Tooltip>
             </div>
           
@@ -356,4 +349,3 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 };
 
 export default SimplifyDebt;
-

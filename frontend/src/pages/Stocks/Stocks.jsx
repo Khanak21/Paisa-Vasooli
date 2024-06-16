@@ -1,175 +1,117 @@
-import React, { useEffect, useState } from 'react';
-import TradingViewWidget from '../../components/Stocks/TradingViewWidget';
-import Navbar from '../../components/Navbar';
-import axios from 'axios';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useToast } from "@chakra-ui/react";
+import React, { useEffect, useState } from 'react'
+import TradingViewWidget from '../../components/Stocks/TradingViewWidget'
+import Navbar from '../../components/Navbar'
+import axios from "axios"
+import HeatmapStocks from '../../components/Stocks/HeatmapStocks'
 
-const Stocks = ({ user, thememode, toggle }) => {
-    const [input, setInput] = useState('');
-    const [flag, setFlag] = useState(false);
-    const [stockflag, setStockflag] = useState(false);
-    const [sym, setSym] = useState('MSFT');
-    const [stockData, setStockData] = useState([]);
-    const [deleteStockModalOpen, setDeleteStockModalOpen] = useState(false); // State variable for delete stock modal
-    const [stockToDelete, setStockToDelete] = useState('');
+const Stocks = ({user,thememode,toggle}) => {
 
-    const toast = useToast(); // Initialize useToast hook
+    const [input,setInput]=useState()
+    const[flag,setflag]=useState(false)
+    const[stockflag,setstockflag]=useState(false)
+    const[sym,setsym] = useState("MSFT")
+    const [stockData,setStockData]=useState(['AAPL'])
+    console.log(stockData)
 
-    // Function to display toast notification
-    const showToast = (title, description, status) => {
-        toast({
-            title,
-            description,
-            status,
-            duration: 3000,
-            isClosable: true,
-            position: "top",
-        });
-    };
+    //handling user input for ticker symbol and company/crypto name
+    const handleInput = e=>{
+        setInput(e.target.value)
+        console.log(input)
+    }
 
-    // Function to open delete stock modal
-    const openDeleteStockModal = (stockSymbol) => {
-        setStockToDelete(stockSymbol);
-        setDeleteStockModalOpen(true);
-    };
+    //function to set ticker symbol
+    const handleSETSYM = async(e)=>{
+      setsym(e)
+      console.log("symbol",sym)
+      setstockflag(prev=>!prev)
+    }
 
-    // Function to close delete stock modal
-    const closeDeleteStockModal = () => {
-        setDeleteStockModalOpen(false);
-    };
-
-    // Function to handle deletion of stock using POST
-    const handleDeleteStock = async () => {
-        try {
-            console.log("stock id", stockToDelete);
-            const response = await axios.post(`http://localhost:3001/api/user/deleteStock/${user._id}`, {
-                stockId: stockToDelete
-            });
-            setFlag(prev => !prev);
-            console.log(response);
-            setDeleteStockModalOpen(false);
-            showToast("Stock deleted successfully.", "", "success"); // Display success toast
-        } catch (err) {
-            console.log(err);
+    //function to add stock symbol
+    const handleSubmit = async()=>{
+        try{
+            const res=await axios.post(`http://localhost:3001/api/user/addStock/${user._id}`,{input})
+            console.log(res.data.user.stocks)
+            const val=res.data.user.stocks
+            setStockData(prev=>([...prev,val]))
+            setflag(prev=>!prev)
+            setInput("")
+        }catch(err){
+            console.log(err)
         }
-    };
+    }
 
-    // Handling user input for ticker symbol and company/crypto name
-    const handleInput = e => {
-        setInput(e.target.value);
-    };
+    const handledelete = async(stock)=>{
+      try{
+        const res = await axios.put(`http://localhost:3001/api/user/deletestock/${user._id}`,stock)
+        console.log(res.data);
+        setflag(prev=>!prev)
+      }
+      catch(e){
+        console.log(e);
+      }
+    }
 
-    // Function to set ticker symbol
-    const handleSETSYM = async (e) => {
-        setSym(e);
-        setStockflag(prev => !prev);
-    };
+    //function to fetch user stocks
+    useEffect(()=>{
+      const getStocks = async()=>{ try{ const res=await axios.get(`http://localhost:3001/api/user/getStocks/${user._id}`)
+        console.log("widget",res.data)
+        setStockData(res.data.val)
+        console.log(stockData)
+    }catch(err){
+        console.log(err)
+    }
+    }
+    getStocks()
+    console.log(stockData)
+    },[flag])
+    console.log(stockData)
 
-    // Function to add stock symbol
-    const handleSubmit = async () => {
-        if (input.trim() === '') {
-            showToast("No input provided.", "Please enter a stock ticker symbol before saving.", "warning"); // Display warning toast
-            return;
-        }
+  return ( 
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+        <Navbar thememode={thememode} toggle={toggle}/>
+        <div className="mx-auto my-auto h-screen block justify-center items-center" style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} >
+          
+        <div className='flex justify-center p-2 font-bold text-2xl' style={{color:thememode==="dark"?"white":"black"}}></div>
 
-        try {
-            const res = await axios.post(`http://localhost:3001/api/user/addStock/${user._id}`, { input });
-            const val = res.data.user.stocks;
-            setStockData(prev => ([...prev, val]));
-            setFlag(prev => !prev);
-            setInput("");
-            showToast("Stock added successfully.", "", "success"); // Display success toast
-        } catch (err) {
-            console.log(err);
-        }
-    };
+        {/* -----------------------------Search Stocks and crypto-------------------------------- */}
+        <div className='flex justify-left font-extrabold text-2xl mx-4 my-1 dark:text-[#f0f0f0] ' style={{color:thememode==="dark"?"white":"black"}}> Search for a particular stock/crypto...</div>
+    <div className='mx-4 mb-4 text-gray-600 dark:text-gray-400'>Type the stock tick for a company and click on Save to add the stocks you would want to track for easy access later</div>
+        
+  <div className='flex justify-around'>
+  <div className='flex'>
+  <div className=''>
+  <div className='m-4 dark:text-white flex justify-center w-full'>
+  <input name={"input"}
+              type="text"
+              value={input}
+              onChange={handleInput}
+              placeholder='Enter stock tick'
+              required
+              className='p-2'
+              ></input>
+              <button onClick={handleSubmit} className='m-2 bg-[#8656cd]  text-white rounded-md p-2'>Save</button>
+  </div>
+           
 
-    // Function to fetch user stocks
-    useEffect(() => {
-        const getStocks = async () => {
-            try {
-                const res = await axios.get(`http://localhost:3001/api/user/getStocks/${user?._id}`);
-                setStockData(res.data.val);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        getStocks();
-    }, [flag, user._id, user.stocks]);
+  <div className='px-3 '>
+    <div className=' w-full grid grid-cols-5 '>  
+    {stockData.map((stock, index) => (
+      <>
+      <div className='h-fit w-fit mx-2 mb-4 border-[#8656cd] dark:text-white shadow-md p-2 rounded-md' key={index} onClick={()=>handleSETSYM(stock.input)}  style={{ cursor: "pointer",padding: "5px", backgroundColor:thememode==='dark'?"#2c3034":"white"}}>
+          {stock.input}
+      </div>
+      </>
+    ))}
+    </div>
+  </div>
+  </div>
 
-    return (
-        <div  className="h-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0' }}>
-            <Navbar thememode={thememode} toggle={toggle} />
-            <div className="mx-auto my-auto h-screen block justify-center items-center" style={{ backgroundColor: thememode === "dark" ? "#181818" : "#f0f0f0" }}>
+   <TradingViewWidget sym={sym} stockflag={stockflag} thememode={thememode} />
+   </div>
+    </div>
+    </div>
+    </div>
+  )
+}
 
-                <div className='flex justify-center p-2 font-bold text-2xl' style={{ color: thememode === "dark" ? "white" : "black" }}></div>
-
-                <div className='flex justify-left font-extrabold text-2xl mx-4 my-1 dark:text-[#f0f0f0]' style={{ color: thememode === "dark" ? "white" : "black" }}> Search for a particular stock/crypto...</div>
-                <div className='mx-4 mb-4 text-gray-600 dark:text-gray-400'>Type the stock tick for a company and click on Save to add the stocks you would want to track for easy access later</div>
-
-                <div className='flex justify-around'>
-                    <div className='flex w-full'>
-                        <div className='w-3/4'>
-                            <div className='m-4 dark:text-black flex justify-center items-center w-full'>
-                                <input
-                                    name={"input"}
-                                    type="text"
-                                    value={input}
-                                    onChange={handleInput}
-                                    placeholder='Enter stock tick'
-                                    required
-                                    className='p-2'
-                                />
-                                <button onClick={handleSubmit} className='m-2 bg-[#8656cd] text-white rounded-md p-2'>Save</button>
-                            </div>
-                            <div className='px-3 w-full'>
-                                <div className='w-full flex flex-wrap'>
-                                    {stockData.length > 0 && stockData.map((stock, index) => (
-                                        <div className='h-fit w-fit flex flex-col gap-1 justify-center items-center mx-2 mb-4 border-[#8656cd] dark:text-white shadow-md p-3 rounded-lg' key={index} onClick={() => handleSETSYM(stock.input)} style={{ cursor: "pointer", padding: "5px", backgroundColor: thememode === 'dark' ? "#2c3034" : "white" }}>
-                                            <div>{stock.input}</div>
-                                            <Button 
-                                                size="xs" 
-                                                colorScheme="red" 
-                                                ml={2} 
-                                                onClick={() => {
-                                                    openDeleteStockModal(stock.input);
-                                                    setStockToDelete(stock.input);
-                                                }}
-                                                >
-                                                Delete
-                                            </Button>
-
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        <TradingViewWidget sym={sym} stockflag={stockflag} thememode={thememode} />
-                    </div>
-                </div>
-
-                {/* Delete Stock Modal */}
-                <Modal isOpen={deleteStockModalOpen} onClose={closeDeleteStockModal}>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>Delete Stock</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            Are you sure you want to delete {stockToDelete} stock?
-                        </ModalBody>
-
-                        <ModalFooter>
-                            <Button colorScheme="red" mr={3} onClick={handleDeleteStock}>
-                                Delete
-                            </Button>
-                            <Button variant="ghost" onClick={closeDeleteStockModal}>Cancel</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
-            </div>
-        </div>
-    );
-};
-
-export default Stocks;
+export default Stocks

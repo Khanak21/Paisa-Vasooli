@@ -14,7 +14,7 @@ router.get("/getStocks/:userId",getStocks);
 router.get("/getInbox/:userId",getInbox);
 router.post("/addbadge/:id",addBadge)
 router.get("/getBadges/:id",getBadges);
-router.delete("/deleteFile/:userId",delUrl)
+router.put("/deletestock/:userId",deleteStock);router.delete("/deleteFile/:userId",delUrl)
 
 
 export default router;
