@@ -106,7 +106,6 @@ useEffect(()=>{
       console.log("transaction data",res.data)
       setFilteredData(res.data.trans)
       setTransactionData(res.data.trans)
-      // localStorage.setItem("transactions",JSON.stringify(res.data.trans))
     }catch(err){
         console.log(err)
     }
@@ -154,9 +153,6 @@ console.log(datat)
           console.log(img)
           const res = await axios.post(`http://localhost:3001/api/user/addbadge/${user._id}`,{img})
           console.log(res.data.user)
-          // setTransactionData(prev=>[...prev,val])
-          // setUpdateFlag((prevFlag) => !(prevFlag));
-          // handleClose()
         }catch(err){
           console.log(err.response.data)
         }
@@ -187,8 +183,6 @@ console.log(datat)
 
     const [currenci, setCurrenci] = useState('inr');
     const currenciData = UCurrency(currenci);
-    // console.log
-    // console.log(currenciData['INR'])
     
     useEffect(()=>{
       //function to retrive user data from local storage
@@ -228,7 +222,6 @@ console.log(datat)
   useEffect(()=>{
     const getTrans = async()=>{
       try{
-        // console.log("Sending request with data:", transInput);
         const res = await axios.get(`http://localhost:3001/api/transactions/getTransactions/${user._id}`)//add user Id
         console.log(res.data)
         const numberOfIncomeTransactions = res.data.trans.filter((transaction) => transaction.type === 'income').length;
@@ -242,7 +235,6 @@ console.log(datat)
           addBadge(expensebadge)
         }
         setTransactionData(res.data.trans)
-        // localStorage.setItem("transactions",JSON.stringify(res.data.trans));
       }catch(err){
         console.log(err)
       }
@@ -262,8 +254,6 @@ console.log(datat)
     const handleSubmit = async(e)=>{
       e.preventDefault()
       console.log('Currency data:', currenciData);
-      // // console.log(transInput)
-      // // addTransaction(transInput)
       const currencysmall = currency.toUpperCase();
       amount =Math.floor(amount / currenciData[currencysmall]);
       console.log(amount)
@@ -277,7 +267,6 @@ console.log(datat)
         console.log(res.data)
         const val=res.data.transaction
         setTransactionData(prev=>[...prev,val])
-        // localStorage.setItem("transactions",JSON.stringify([...transactionData,val]))
         setUpdateFlag((prevFlag) => !(prevFlag));
         if(amount>=100000 && type=="expense"){
           addBadge(bigexpense)
@@ -365,9 +354,6 @@ console.log(datat)
         <div className='grid grid-cols-3'>
         <div className='col-span-1'>
         <div className='flex-col px-6 py-4 justify-center items-center h-[100%] filter mx-4 w-fit' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
-           {/* <div className='flex justify-center align-middle py-2 px-2 font-bold text-2xl' style={{color:thememode=="dark"?"white":"black"}}>Filters:</div> */}
-        
-        {/* Category */}
               <label for="category" className='px-2 pb-2 dark:text-white'>Category:</label>
               <select className='mx-2 border-2 rounded-md p-3 category-all w-full' name="category" id="category" selected="All" onChange={handleFilterInput('category')} value={filterInput.category}>
                 <option value="">All Categories</option>
@@ -379,7 +365,6 @@ console.log(datat)
 
               </select>
 
-        {/* Date */}
         <label for="startDate" className='p-2 dark:text-white'>Start Date:</label>
         <input type="date" id="startDate" className="mx-2 border-2 rounded-md p-3" value={filterInput.startDate} onChange={handleFilterInput('startDate')} placeholder='Start date'></input> 
         <label for="endDate" className='p-2 dark:text-white'>End Date:</label>
@@ -407,7 +392,6 @@ console.log(datat)
       </div>
 
     {/* --------------------------------------Add transaction modal-------------------------------- */}
-    {/* <button onClick={handleShow} className='bg-[#000080] text-white rounded-full px-2 py-2 w-12 h-12 shadow-md fixed bottom-8 left-8'>+</button> */}
     <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Transaction</Modal.Title>

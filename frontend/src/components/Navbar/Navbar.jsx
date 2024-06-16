@@ -2,9 +2,9 @@ import React, { useState,useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes,faUser } from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom'
-import 'tailwindcss/base.css'; // Import Tailwind CSS base styles
-import 'tailwindcss/components.css'; // Import Tailwind CSS components styles
-import 'tailwindcss/utilities.css'; // Import Tailwind CSS utilities styles
+import 'tailwindcss/base.css'; 
+import 'tailwindcss/components.css'; 
+import 'tailwindcss/utilities.css'; 
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 import ToggleBtn from './ToggleBtn.jsx';
@@ -12,7 +12,6 @@ import ToggleBtn from './ToggleBtn.jsx';
 import Profile from '../../pages/Profile/Profile.jsx';
 import { FaRegEnvelope } from "react-icons/fa";
 import Inbox from '../../pages/Inbox/inbox.jsx'
-
 
 function Navbar({thememode,toggle,setUser,user,setFlag,flag}) {
   const [navuser,setNavuser] = useState({})
@@ -105,13 +104,11 @@ function Navbar({thememode,toggle,setUser,user,setFlag,flag}) {
 </div>
 
 <div className='font-bold text-white hover:cursor-pointer p-3 profileIcon ' onClick={()=>{navigate("/profile")}}>
-  {/* <FontAwesomeIcon icon={faUser}  /> */}
   <img src={navuser?.image || 'ProfileImg.jpeg'} className='w-[50px] h-[50px]  rounded-full'></img>
 </div>
 
 
 
-{/* ------------ Hamburger menu icon & Cross icon -------------------------------  */}
 
 <div className="icons" style={{color:thememode==="dark"?"white":"black"}}>
 <div

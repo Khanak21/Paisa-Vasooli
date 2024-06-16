@@ -15,8 +15,6 @@ function Vault({thememode,toggle,user}) {
   const [fileUpload, setfileUpload] = useState(null);
   const [fileUrls, setfileUrls] = useState([]);
 
-  // console.log(fileUrls)
-  // console.log("vault user",user)
 
   const filesListRef = ref(storage, "files/");
 
@@ -58,7 +56,6 @@ function Vault({thememode,toggle,user}) {
   useEffect(()=>{
     const getFiles = async()=>{
       try{
-        // console.log("Sending request with data:", transInput);
         const res = await axios.get(`http://localhost:3001/api/user/getUrls/${user._id}`)//add user Id
         console.log(res.data)
         setfileUrls(res.data.files)
@@ -80,11 +77,9 @@ function Vault({thememode,toggle,user}) {
       <div className="flex justify-between">
       <div className='mx-4 text-gray-600 dark:text-gray-400'>Export Transaction data with filters of your choice and upload them here in the vault</div>
       <div className="flex justify-end mx-4">
-      {/* File upload section */}
       <label for="actual-btn" className="text-white  rounded-md p-1 bg-[#8656cd] mx-1">Choose File</label>
       <input type="file" id="actual-btn" className="w-60 flex justify-center align-middle mx-2 border-none hidden" onChange={(event) => {setfileUpload(event.target.files[0]);}}/>
       <button onClick={uploadFile} className="text-white  rounded-md p-1 bg-[#8656cd]">Upload</button>
-      {/* All user files diplayed */}
       </div>
       </div>
 

@@ -35,7 +35,6 @@ function Signup({user,setUser})
   const handleEmail=(event)=>{
     const k=event.target.value;
     setEmail(k);
-    // setValidemail(emailValidation(k));
  }
 
 //  -------------------- function to handle the username change ------------------ 
@@ -56,48 +55,6 @@ function Signup({user,setUser})
    
     setConformpass("");
   }
-  // const submitFunction = (event) => {
-  //   event.preventDefault(); // Prevent the form from submitting the traditional way
-  //   if (isPass && isUsername && confirmpass===password){
-  //     const Entry = { username: username, password: password, email: email };
-  //     setEntries([entries, Entry]);
-  //     const reg =async()=>{
-  //       try{
-  //         const res = await axios.post("http://localhost:3001/api/auth/signup",{username,email,password}).catch(function(err){
-  //           console.log(err)})
-  //           console.log(res.data);
-  //           setUser(res.data.newUser)
-  //           console.log(user)
-  //           navigate('/dashboard')
-  //       }catch(err){
-  //         if (err.response && err.response.status === 400) {
-  //           alert("Username already exists. Please choose a different username.");
-  //         } else {
-  //           console.log(err);
-  //         }
-  //     }
-  //     reg();
-  //     console.log(Entry);
-  //     // Handle form submission logic here
-  //     //making the credentials empty after submitting
-  //     setEmail("");
-  //     setPassword("")
-  //     setUsername("")
-  //     emptyConfirmpass()
-  //     console.log(confirmpass);
-  //     alert("Logged in successfully")
-  //   }
-  // }
-  //   else {
-  //     if(confirmpass!== password)
-  //     {
-  //       alert("Password and confirmed pass didn't match")
-  //     } 
-  //     else
-  //     alert("Invalid username or password.Make sure username is>=5 characters and password is >=8 characters");
-
-  //   }
-  // };
 
 
   //Google OAuth function
@@ -202,7 +159,6 @@ function Signup({user,setUser})
                   onChange={handleEmail}
                   required
                 />
-                 {/* {(!validEmail && email!=="" )? <p style={{color:'red'}}>Invalid Email address</p>:null} */}
               {console.log(email)}
               </div>
 
