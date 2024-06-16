@@ -374,7 +374,7 @@ const DeleteConfirmation = (id) => {
               <td>{sav.title}</td>
               <td>&#8377; {sav.currAmt}</td>
               <td>&#8377; {sav.targetAmt}</td>
-              <td>{Math.min((sav.currAmt / sav.targetAmt) * 100, 100)} %</td>
+              <td>{(Math.min((sav.currAmt / sav.targetAmt) * 100, 100)).toFixed(2)} %</td>
               <td>
                 <div className='flex justify-end w-[80%] gap-4 mr-6'>
                   <AiFillEdit onClick={() => handleShow(sav)} style={{ cursor: 'pointer' }} />

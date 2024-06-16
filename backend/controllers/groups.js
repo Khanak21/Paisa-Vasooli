@@ -26,7 +26,7 @@ export const  creategroup= async(req,res)=>{
             { new: true }
         );
         await newgroup.save()
-        res.status(200).json({newgroup})
+        res.status(200).json({newgroup,updatedgroup,userr})
     }
     catch (err) {
     next(err)
