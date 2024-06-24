@@ -3,11 +3,6 @@
 Paisa Vasooli is a website built with the MERN stack to help you manage and track your expenses. 
 This project was made during the Codesangam 2023 Event conducted by CC Club MNNIT Allahabad, the topic being "Thoth's Steller Ledger"
 
-## Team Members
-1. Khanak Patwari : Frontend and Backend
-2. Sahil Gupta : Frontend and Backend
-3. Shikhar Pandya : Frontend
-
 ## Features
 
 ### Basic features
@@ -38,7 +33,6 @@ This project was made during the Codesangam 2023 Event conducted by CC Club MNNI
 ### Unique Features
   
 - **Filter and Search:** Filter transactions based on categories, date ranges, or both, and search for specific transactions
-- **Responsive Design:** Ensures a seamless experience on laptops, desktops and tablets
 - **Inbox**: Receive friend request invitations and acceptance messages 
 - **Email reminders**: Reminders for dues and bills are sent on user's mail
 - **Group codes**: Apart from friends,users can share group code with other people not added as friends to join the group
@@ -50,15 +44,11 @@ This project was made during the Codesangam 2023 Event conducted by CC Club MNNI
 ## Images
 Few Images from the site
 
-<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/2542f74c-1f35-4f5c-99f5-3dfa05eb1577">
+![image](https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/7c49533a-7f52-4c7c-9007-c223f4189a18)
 
-<img width="955" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/72d6c2ca-8af6-4d6f-94f8-8753f2bdd006">
+![image](https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/d6c2ee30-6e79-4fde-a9fa-2d4359d8fe12)
 
-<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/49f33955-682f-43f4-a141-8887e12d88fc">
-
-<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/a1b0b8ab-9752-4dd9-b89c-7bcbd2f594bd">
-
-<img width="960" alt="image" src="https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/127b26af-3af9-4fd1-888b-b2ce2dae8d81">
+![image](https://github.com/Khanak21/Paisa-Vasooli/assets/127039986/dca581a0-e721-4e95-8077-6e0f4fe5b0de)
 
 ## Tech Stack
 
@@ -68,7 +58,7 @@ Few Images from the site
 
 ## External Libraries/APIs
 - **Google Login:** Google OAuth
-- **Styling:** Bootstrap, Tailwind CSS
+- **Styling:** Bootstrap, Tailwind CSS, Material UI
 - **Data Visualization:** Chart.js
 - **Sending mails**: Nodemailer
 - **API for currency conversion**: JSDelivr
@@ -107,11 +97,15 @@ npm run serve
 ## Future Additions
 - **Payment Gateways:** Connection to payement apps to enable seamless on-site transactions in groups
 - **Integration with payment apps**: Getting transaction data from UPI apps and displaying it on website
-- **Authentication:** Enhancing user security,privacy and authentication
 - **Stock prediction:** Integrating ML to display stock predictions of user-selected stocks
 - **Contacts as friends:** Automatically adding all contacts related to a gmail account in friends' list
 - **Drag and Drop:** Drag and Drop feature for file upload in vault
 - **Pro Version:** Adding a paid version with specific features unlocked, and locked otherwise
 
+## Team Members
+1. Khanak Patwari : Frontend and Backend
+2. Sahil Gupta : Frontend and Backend
+3. Shikhar Pandya : Frontend
+
 ## Deployed Link
-Access the deployed site here: https://paisavasooli.netlify.app/
+Access the deployed site here: https://paisa-vasooli.netlify.app/
