@@ -108,7 +108,7 @@ function ResponsiveAppBar({thememode,toggle,setUser,user,setFlag,flag}) {
               fontWeight: 700,
               letterSpacing: '.1rem',
             color: thememode === 'dark' ? 'white' : '#000080',
-              
+            cursor: 'pointer',
               textDecoration: 'none',
             }}
           >

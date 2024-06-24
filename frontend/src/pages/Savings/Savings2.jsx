@@ -279,11 +279,11 @@ const DeleteConfirmation = (id) => {
     <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
     <Navbar thememode={thememode} toggle={toggle}/>
     <div className="outer min-h-screen w-full" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
-       <div className='font-extrabold text-5xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
-      <div className='m-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
+       <div className='font-extrabold text-2xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
+      <div className='mx-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
       <div className="main-body h-full" style={{ color: thememode === "dark" ? "white" : "black"}}>
           <div className="main-left" style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}} >
-            <div className="due flex justify-between w-full gap-4">
+            <div className="due flex justify-between w-full gap-4 p-4">
               <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
               <br/>
               <input

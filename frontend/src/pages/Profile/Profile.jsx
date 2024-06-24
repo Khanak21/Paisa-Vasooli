@@ -146,15 +146,14 @@ function Profile({ user, thememode, toggle,setUser}) {
           </label>
 
            {/* Subheading for Friends */}
-           <div className='w-full text-xl font-bolder mb-2' style={{ color: thememode === 'dark' ? 'black' : 'black' }}>
+           <div className='w-full text-xl font-bolder' style={{ color: thememode === 'dark' ? 'black' : 'black' }}>
             Friends
           </div>
 
           
           {user?.friends?.map((friend, index) => (
             <>
-              <div className='w-[30%] text-md p-1'>
-              </div>
+          
               <input type='text' id={`friend-${index}`} value={friend} readOnly />
             </>
           ))}

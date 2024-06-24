@@ -5,7 +5,7 @@ import './Dues.css'
 import axios from "axios";
 import BillCard from "../../components/Cards/BillCard.jsx"
 import Navbar from '../../components/Navbar.jsx'
-import ToggleBtn from '../../components/Navbar/ToggleBtn.jsx';
+import ToggleBtn from '../../components/Toggle/ToggleBtn.jsx';
 import Table from 'react-bootstrap/Table';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import Modal from 'react-bootstrap/Modal';
@@ -265,7 +265,7 @@ return (
   <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
    <Navbar thememode={thememode} toggle={toggle}/> 
     <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
-      <div className='font-extrabold text-5xl mx-4 mt-4 dark:text-[#f0f0f0]'>Bills and Dues</div>
+      <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Bills and Dues</div>
       <div className='mx-4 text-gray-600 dark:text-gray-400'>Manage your recurring bills and dues here. Receive reminders through email</div>
       <div className="hero-section h-full">
         <div className="hero-left " style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>

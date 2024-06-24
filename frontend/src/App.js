@@ -12,11 +12,10 @@ import Vault from "./pages/Vault/Vault"
 import Chart from './pages/Chart/Chart';
 import Stocks from './pages/Stocks/Stocks';
 import { Main } from './pages/Groups/Main';
-import ToggleBtn from './components/Navbar/ToggleBtn.jsx';
+import ToggleBtn from './components/Toggle/ToggleBtn.jsx';
 import Savings2 from './pages/Savings/Savings2';
 import SimplifyDebt from './pages/Groups/SimplifyDebt.jsx'
 import Grouphome from './pages/Groups/Grouphome.jsx';
-
 import Profile from './pages/Profile/Profile.jsx';
 import Inbox from './pages/Inbox/inbox.jsx';
 
