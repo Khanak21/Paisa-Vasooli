@@ -103,9 +103,9 @@ npm run serve
 - **Pro Version:** Adding a paid version with specific features unlocked, and locked otherwise
 
 ## Team Members
-1. Khanak Patwari : Frontend and Backend
-2. Sahil Gupta : Frontend and Backend
-3. Shikhar Pandya : Frontend
+1. Khanak Patwari 
+2. Sahil Gupta 
+3. Shikhar Pandya
 
 ## Deployed Link
 Access the deployed site here: https://paisa-vasooli.netlify.app/
