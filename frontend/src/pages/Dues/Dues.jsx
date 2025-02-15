@@ -262,13 +262,13 @@ const handleCloseDeleteModal=()=>{
 
 
 return (
-  <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+  <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}} className='min-h-screen overflow-x-hidden'>
    <Navbar thememode={thememode} toggle={toggle}/> 
     <div className="outer min-h-screen w-full" style={{ backgroundColor: thememode === 'dark' ? '#181818' : '#f0f0f0'}}>
       <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Bills and Dues</div>
-      <div className='mx-4 text-gray-600 dark:text-gray-400'>Manage your recurring bills and dues here. Receive reminders through email</div>
+      <div className='mx-4 text-gray-600 dark:text-gray-200'>Manage your recurring bills and dues here. Receive reminders through email</div>
       <div className="hero-section h-full">
-        <div className="hero-left " style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>
+        <div className="hero-left dark:text-white" style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}}>
           <div className="due flex justify-between w-full gap-4 ">
             <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
             <input
@@ -278,7 +278,7 @@ return (
               placeholder="Enter title"
               value={dueItem.title}
               onChange={handleBillInput('title')}
-              className="w-[70%] p-2 dark:bg-[#3a3a3a]"
+              className="w-[70%] p-2 dark:placeholder-white dark:bg-[#3a3a3a]"
               />
           </div>
 
@@ -287,10 +287,10 @@ return (
             <input
               type="date"
               name="date"
-              id=""
+              id="date"
               value={dueItem.dueDate}
               onChange={handleBillInput('dueDate')}
-              className="w-[70%] p-2 dark:bg-[#3a3a3a] "
+              className="w-[70%] p-2 dark:placeholder-white dark:text-white dark:bg-[#3a3a3a] "
             />
           </div>
 
@@ -303,7 +303,7 @@ return (
               placeholder="Input amount in Rs."
               value={dueItem.amount}
               onChange={handleBillInput('amount')}
-              className="w-[80%] p-2  dark:bg-[#3a3a3a]"
+              className="w-[80%] p-2 dark:placeholder-white dark:bg-[#3a3a3a]"
               
             />
           </div>
@@ -317,7 +317,7 @@ return (
               value={dueItem.toWhom}
               onChange={handleBillInput('toWhom')}
               placeholder="To whom"
-              className="w-[80%] p-2 dark:bg-[#3a3a3a]"
+              className="w-[80%] p-2 dark:placeholder-white dark:bg-[#3a3a3a]"
             />
           </div>
 
@@ -329,7 +329,7 @@ return (
                     id="currency"
                     value={dueItem.currency}
                     onChange={handleBillInput('currency')}
-                    className="w-[80%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
+                    className="w-[80%] p-2 dark:bg-[#3a3a3a] dark:placeholder-white outline rounded-sm outline-slate-200"
                     required
                   >
                     <option>Select:</option>

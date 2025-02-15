@@ -38,10 +38,10 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     })
     const [errorMessage, setErrorMessage] = useState("");
     const [transactionData,setTransactionData]=useState([])
-    console.log(transactionData)
+    // console.log(transactionData)
     const [filteredData,setFilteredData]=useState(transactionData)
     const [filterstate,setFilterState]=useState(false)
-    console.log(filteredData)
+    // console.log(filteredData)
     const [uniqueCategories, setUniqueCategories] = useState([]);
     const [stats,setStats] = useState({})
     const bigincome = 'BadeLog.png'
@@ -51,7 +51,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     const incomebadge = 'SoBeautiful.png'
     const expensebadge = 'SoElegant.png'
 
-    console.log(uniqueCategories)
+    // console.log(uniqueCategories)
     const headers = [
       { label: "Transaction Type", key: "type" },
       { label: "Amount", key: "amount" },
@@ -64,7 +64,15 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     let {amount} = transInput
 
     //functions to handle modal visibility
-    const handleClose = () => {setShow(false);setErrorMessage("")};
+    const handleClose = () => {setShow(false);setTransInput({
+      userId:user._id,
+      type: 'Expense',
+      amount:'',
+      category:'',
+      desc:'',
+      date:'',
+      currency:'inr'
+  });setErrorMessage("")};
     const handleShow = () => setShow(true);
 
     const handleIncomeClose = () => setIncomeshow(false);
@@ -76,6 +84,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     const handleTransInput = name=>(e)=>{
       if(name=='type' ||name=='category'||name=='desc'){
         const capitalizedValue = capitalizeFirstLetter(e.target.value);
+        // console.log(capitalizedValue)
         setTransInput({...transInput,[name]:capitalizedValue})
       }
       else{
@@ -84,6 +93,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
     }
 
     const capitalizeFirstLetter = (string) => {
+      // console.log("string"+string);
       return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
@@ -94,7 +104,7 @@ const Dashboard = ({user,thememode,toggle,setUser}) => {
 }
   
 
-console.log("filters:",filterInput)
+// console.log("filters:",filterInput)
 // -----------------checking whether filter empty or not ------------------------- 
 const isFilterEmpty =filterInput.category === "" && filterInput.startDate === "" && filterInput.endDate === "";
 
@@ -116,7 +126,7 @@ useEffect(()=>{
 },[updateFlag,user._id,isFilterEmpty])
  
 const datat = localStorage.getItem("transactions")
-console.log(datat)
+// console.log(datat)
    //function to retrieve user transactions with filter
     const handleFilter = e=>{
         e.preventDefault()
@@ -124,7 +134,7 @@ console.log(datat)
         const addFilter = async()=>{
         try{
           const res = await axios.post("http://localhost:3001/api/transactions/getTransactionsByFilter",{filterInput})
-          console.log(res.data)
+          // console.log(res.data)
           setFilteredData(res.data.trans)
           setFilterState(true)
         }catch(err){
@@ -300,42 +310,38 @@ console.log(datat)
   
 
   return (
-    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}} className='min-h-screen'>
         <Navbar thememode={thememode} toggle={toggle}/>
       <div className='font-extrabold text-2xl mx-4 mt-2 px-6 dark:text-[#f0f0f0]'>Welcome, {user.username}!</div>
       <div className='mt-2 mx-4 px-6 text-gray-600 dark:text-gray-400'>Let's add some transactions!</div>
 
-     <div className='h-full flex flex-col justify-center items-start '>
+      <div className='h-full flex flex-col justify-center items-start '>
        
           <div className='flex w-[99vw] justify-evenly items-center h-20 p-4  d-parent' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
 
             <div className='  w-60 rounded-md flex flex-col justify-center bg-[#000080] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
-              <div>
-              Income
-              </div>
+                <div>
+                Income
+                </div>
 
-             <div> 
-       
-             &#8377;{stats.totalIncome}
-             </div>
-
-             
+                <div> 
+                  &#8377;{stats.totalIncome}
+                </div>
               </div>
             </div>
 
 
-           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#000080] h-10 text-white items-center chill'>
+            <div className='  w-60 rounded-md flex flex-col justify-center bg-[#000080] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6' >
-              <div> 
-               Balance
-              </div>
+                <div> 
+                  Balance
+                </div>
                 <div>
-              
-                &#8377;{stats.balance}
+                  &#8377;{stats.balance}
                 </div>
               </div>
-          </div>
+            </div>
 
           <div className='  w-60 rounded-md flex flex-col justify-center bg-[#000080] h-10 text-white items-center chill'>
              <div className='flex  justify-between p-4 font-bold gap-6'>
@@ -392,86 +398,111 @@ console.log(datat)
 
       </div>
 
-    {/* --------------------------------------Add transaction modal-------------------------------- */}
-    <Modal show={show} onHide={handleClose} animation={false} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Transaction</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            {/* Add transaction input section */}
-            <label htmlFor="type">Transaction type: </label>
-            <select name="type" 
-                    id="type"  
-                    value={type}
-                    onChange={handleTransInput('type')}
-                    className='px-1 border-1 py-1 mx-2 rounded-md'
-                    required
-                    >
-            <option value="">Select</option>    
-            <option value="expense">Expense</option>
-            <option value="income">Income</option>
-            </select><br/>
+      {/* --------------------------------------Add transaction modal-------------------------------- */}
+      <Modal show={show} onHide={handleClose} animation={false} centered>
+          <Modal.Header  closeButton>
+            <Modal.Title className='text-center w-full' >Add Transaction</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className='flex flex-col text-md gap-1'>
+              {/* Add transaction input section */}
 
-            <label htmlFor='currency'>Currency: </label>
-            <select
-                    name="currency"
-                    id="currency"
-                    value={currency}
-                    onChange={handleTransInput('currency')}
-                    className='px-1 border-1 py-1 mx-2 rounded-md'
-                    required
-                  >
-                    <option>select:</option>
-                    <option value="inr">inr</option>
-                    <option value="usd">usd</option>
-                    <option value="eur">eur</option>
-                    <option value="gbp">gbp</option>
-                    <option value="jpy">jpy</option>
-                    <option value="aud">aud</option>
-                    <option value="cad">cad</option>
-                    <option value="cny">cny</option>
-                    <option value="hkd">hkd</option>
-                    <option value="sgd">sgd</option>
-                    <option value="chf">chf</option>
-                    <option value="sek">sek</option>
-                    <option value="mxn">mxn</option>
+              <div className='w-full flex justify-between items-center'>
+                  <label htmlFor="type" className='w-3/12 text-center text-md'>Type: </label>
+                  <select name="type" 
+                          id="type"  
+                          value={transInput.type}
+                          onChange={handleTransInput('type')}
+                          className='border-1 w-7/12  text-center py-1 px-1 rounded-md'
+                          required
+                          >
+                  <option>select</option>    
+                  <option value="Expense">Expense</option>
+                  <option value="Income">Income</option>
                   </select>
-                  <br />
-            <label htmlFor='amount'>Amount: </label>
-            <input type="number" 
-                   name={'amount'}
-                   value={amount}
-                   onChange={handleTransInput('amount')}
-                   required
-                   ></input>
+              </div>
+              
+          
+              <div className='w-full flex justify-between items-center'>
+                <label htmlFor='currency' className='w-3/12 text-center'>Currency: </label>
+                <select
+                        name="currency"
+                        id="currency"
+                        value={transInput.currency}
+                        onChange={handleTransInput('currency')}
+                        className='border-1 w-7/12  text-center py-1 px-1 rounded-md'
+                        required
+                      >
+                        <option>select:</option>
+                        <option value="inr">inr</option>
+                        <option value="usd">usd</option>
+                        <option value="eur">eur</option>
+                        <option value="gbp">gbp</option>
+                        <option value="jpy">jpy</option>
+                        <option value="aud">aud</option>
+                        <option value="cad">cad</option>
+                        <option value="cny">cny</option>
+                        <option value="hkd">hkd</option>
+                        <option value="sgd">sgd</option>
+                        <option value="chf">chf</option>
+                        <option value="sek">sek</option>
+                        <option value="mxn">mxn</option>
+                </select>
+              </div>
 
-            <label htmlFor='category'>Category: </label>
-            <input name={"category"}
-                   type="text"
-                   value={category}
-                   onChange={handleTransInput('category')}
-                   required
-                   ></input>
+              <div
+              className='w-full flex justify-between items-center'
+              >
+                <label htmlFor='amount' className='w-3/12 text-center'>Amount: </label>
+                <input type="number" 
+                      name={'amount'}
+                      className='w-7/12 text-center'
+                      value={amount}
+                      onChange={handleTransInput('amount')}
+                      required
+                      >
+                </input>
+              </div>
 
-            <label htmlFor='desc'>Description:</label>
-            <input type='text' 
-                   name={'desc'}
-                   value={desc}
-                   onChange={handleTransInput('desc')}
-            ></input>
+              <div
+              className='w-full flex justify-between items-center'
+              >
+                <label htmlFor='category' className='w-3/12 text-center'>Category: </label>
+                <input name={"category"}
+                      type="text"
+                      className='w-7/12 '
+                      value={category}
+                      onChange={handleTransInput('category')}
+                      required
+                ></input>
+              </div>
 
-            <label htmlFor='date'>Date:</label>
-            <input type='date'
-                   name={"date"}
-                   value={date}
-                   onChange={handleTransInput('date')}
-                   required
-            ></input>
-        </Modal.Body>
-        <Modal.Footer>
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-          <button className='bg-[#000080] p-2 rounded-md text-white' onClick={handleSubmit} required>Save</button>
-        </Modal.Footer>
+
+              <div className='w-full flex justify-between items-center'
+              >
+                <label htmlFor='desc' className='w-3/12 text-center'>Description:</label>
+                <input type='text' 
+                      name={'desc'}
+                      value={desc}
+                      className='w-7/12 '
+                      onChange={handleTransInput('desc')}
+                ></input>
+              </div>
+
+              <div className='w-full flex justify-between items-center'>
+                <label htmlFor='date' className='w-3/12 text-center'>Date:</label>
+                <input type='date'
+                      name={"date"}
+                      value={date}
+                      className='w-7/12 '
+                      onChange={handleTransInput('date')}
+                      required
+                ></input>
+              </div>
+          </Modal.Body>
+          <Modal.Footer>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            <button className='bg-[#000080] p-2 rounded-md text-white md:w-full' onClick={handleSubmit} required>Save</button>
+          </Modal.Footer>
       </Modal>
 
       <Modal show={incomeshow} onHide={handleIncomeClose} animation={false} centered>

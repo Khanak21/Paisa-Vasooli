@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/Navbar';
 import { useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { ReactComponent as Cash } from './cash-on-wallet.svg';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { MdContentCopy } from "react-icons/md";
 import Tooltip from '@mui/material/Tooltip';
 import { Button } from 'react-bootstrap';
@@ -26,8 +26,8 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
 
     const handleCopyToClipboard = () => {
         setCopied(true);
-        alert("Copied to clipboard")
-      };
+        alert("Copied to clipboard");
+    };
 
     const getGroup = async () => {
         try {
@@ -163,51 +163,44 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
     }, [id]);
 
     const CheckboxGroup = ({ options, selectedValues, onChange }) => (
-        <div >
+        <div>
             {options.map((option, index) => (
-                <div key={index} className='w-full flex justify-between align-middle items-center text-slate-700 m-2 dark:text-white'>
-                  <label className='w-[80%] dark:text-slate-200'>{option.username}</label>
+                <div key={index} className='w-full flex justify-between align-middle items-center text-slate-700 m-2'>
+                    <label className='w-[80%]'>{option.username}</label>
                     <input
                         type="checkbox"
                         value={option.username}
                         checked={selectedValues.includes(option.username)}
-                        onChange={(e) => onChange(e.target.value)}  
+                        onChange={(e) => onChange(e.target.value)}
                         className='h-6'
                     />
-                    
                 </div>
             ))}
         </div>
     );
 
     return (
-        <div className='pb-2 dark:bg-[#181818] dark:text-white bg-[#f0f0f0]'>
+        <div className='pb-2 dark:bg-[#181818] dark:text-white bg-[#f0f0f0] min-h-screen overflow-x-hidden'>
             <Navbar thememode={thememode} toggle={toggle} />
             <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Simplify Debts</div>
-            <div className='flex justify-between'>
-                <div className="mx-3 text-xl bg-[#f0f0f0] text-slate-500 dark:bg-[#181818] dark:text-[#f0f0f0] p-2">
-                     {groupData.title}
+            <div className='flex justify-between items-center mx-4 mt-4'>
+                <div className="text-xl bg-[#f0f0f0] text-slate-500 dark:bg-[#181818] dark:text-[#f0f0f0] p-2 rounded-lg">
+                    {groupData.title}
                 </div>
-            
-              <div className='flex'>
-            <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
-            <Tooltip title="Copy group code to clipboard" arrow>
-            <button>
-            <MdContentCopy  className='ml-2 text-xl'/>
-            </button>
-            </Tooltip>
-            </CopyToClipboard>
-            <Tooltip title="View members" arrow>
-            <PeopleAltIcon  onClick={handleShowPart}
-                    sx={{
-                        cursor:'pointer',
-                        marginRight:'2rem',
-                        marginLeft:'1rem',
-                        marginTop:'.6rem',
-                        color:thememode==='dark'?'white':'black'
-                    }}/>
-            </Tooltip>
-            </div>
+                <div className='flex'>
+                    <CopyToClipboard text={groupData.groupCode} onCopy={handleCopyToClipboard}>
+                        <Tooltip title="Copy group code to clipboard" arrow>
+                            <button className='p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700'>
+                                <MdContentCopy className='text-xl' />
+                            </button>
+                        </Tooltip>
+                    </CopyToClipboard>
+                    <Tooltip title="View members" arrow>
+                        <button onClick={handleShowPart} className='p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700'>
+                            <PeopleAltIcon sx={{ color: thememode === 'dark' ? 'white' : 'black' }} />
+                        </button>
+                    </Tooltip>
+                </div>
             </div>
             <Modal show={showPart} onHide={handleClosePart} animation={false} centered>
                 <Modal.Header closeButton>
@@ -221,120 +214,117 @@ const SimplifyDebt = ({ user, thememode, toggle }) => {
                     </div>
                 </Modal.Body>
             </Modal>
-            <div className={`grid grid-cols-2`}>
-            <div className='overflow-auto h-[65vh]'>
-            <form onSubmit={handleSubmit} className='p-3 mx-auto flex flex-col gap-3 justify-center'>
-                {inputFields.map((field, index) => (
-                    <div key={index} className='flex justify-center gap-3 w-[40%] mx-auto rounded-lg'>
-                        <div className='gap-3'>
-                            <div className='text-slate-500 mb-2'>
-                                <label htmlFor={`paidBy-${index}`} className='dark:text-white'>Paid By</label>
-                                <select
-                                    value={field.paidBy}
-                                    onChange={(e) => handleInputChange(index, 'paidBy', e.target.value)}
-                                    className="w-80 p-2 border border-gray-300 rounded-md"
-                                >
-                                    <option value="" disabled>Select a member</option>
-                                    {membersData.map((member, i) => (
-                                        <option key={i} value={member?.username}>{member?.username}</option>
-                                    ))}
-                                </select>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mx-4 mt-4'>
+                <div className='bg-blue-100  p-4 rounded-lg shadow-md'>
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-4 dark:text-slate-300'>
+                        {inputFields.map((field, index) => (
+                            <div key={index} className='flex flex-col gap-2'>
+                                <div className='flex flex-col gap-1'>
+                                    <label htmlFor={`paidBy-${index}`} className='text-slate-600 '>Paid By</label>
+                                    <select
+                                        value={field.paidBy}
+                                        onChange={(e) => handleInputChange(index, 'paidBy', e.target.value)}
+                                        className="w-full p-2 border border-gray-300 rounded-md dark:bg-[#181818] dark:text-white"
+                                    >
+                                        <option value="" disabled>Select a member</option>
+                                        {membersData.map((member, i) => (
+                                            <option key={i} value={member?.username}>{member?.username}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className='flex flex-col gap-1'>
+                                    <label htmlFor={`paidFor-${index}`} className='text-slate-600'>Paid For</label>
+                                    <CheckboxGroup
+                                        options={membersData}
+                                        selectedValues={field.paidFor}
+                                        className='text-black'
+                                        onChange={(value) => handleInputChange(index, 'paidFor', value)}
+                                    />
+                                </div>
+                                <div className='flex flex-col gap-1'>
+                                    <label htmlFor={`amount-${index}`} className='text-slate-500'>Amount</label>
+                                    <input
+                                        type="number"
+                                        value={field.amount}
+                                        onChange={(e) => handleInputChange(index, 'amount', e.target.value)}
+                                        placeholder="Amount"
+                                        className='w-full p-2 border border-gray-300 rounded-md dark:bg-[#181818] dark:placeholder-white dark:text-white'
+                                    />
+                                </div>
+                                <button type="button" className='bg-red-500 p-2 rounded-md text-white' onClick={() => handleRemoveField(index)}>
+                                    Remove
+                                </button>
                             </div>
-                            <div className='text-slate-500'>
-                                <label htmlFor={`paidFor-${index}`} className='dark:text-white'>Paid For</label>
-                                <CheckboxGroup
-                                    options={membersData}
-                                    selectedValues={field.paidFor}
-                                    onChange={(value) => handleInputChange(index, 'paidFor', value)}
-                                />
-                            </div>
-                            <label htmlFor={`amount-${index}`} className='text-slate-500 dark:text-white'>Amount</label>
-                            <div className='flex-col'>
-                            <input
-                                type="number"
-                                value={field.amount}
-                                onChange={(e) => handleInputChange(index, 'amount', e.target.value)}
-                                placeholder="Amount"
-                                className='w-80 h-10 '
-                            />
-                            <button type="button" className='bg-[#000080] p-2 rounded-md text-white m-2' onClick={() => handleRemoveField(index)}>
-                                Remove
+                        ))}
+                        <div className='flex gap-2'>
+                            <button type="button" onClick={handleAddField} className='bg-[#000080] p-2 rounded-md text-white flex-1'>
+                                Add Payment
                             </button>
-                            </div>
+                            <button type="submit" onClick={handleSubmit} className='bg-[#000080] p-2 rounded-md text-white flex-1'>
+                                Simplify Debt
+                            </button>
                         </div>
-                    </div>
-                ))}
-            </form>
-
-            <div className='flex w-full justify-center'>
-                <button onClick={handleAddField} className='bg-[#000080] p-2 rounded-md text-white m-2'>Add Payment</button>
-                <button type="submit" onClick={handleSubmit} className='bg-[#000080] p-2 rounded-md text-white m-2'>Simplify Debt</button>
-            </div>
-            </div>
-            <div className='relative overflow-auto h-[65vh]'>
-            {data && data.length > 0 ? (
-              <>
-                <div className='absolute inset-0 flex justify-center items-center opacity-20 pointer-events-none'>
-                  <Cash />
+                    </form>
                 </div>
-                <div className='relative z-10'>
-                  {data.map(debt => (
-                    <div key={debt[0]} className='flex items-center bg-gray-300 rounded-2xl justify-between m-2 w-[95%] dark:bg-[#282828] text-sm'>
-                      <div className='w-[60%] flex align-middle p-3'>{debt[0]}{" "} &#8594; {debt[1]} {" "}&#x20B9;{debt[2]}</div>
-                      {user?.username === debt[1] && (
-                        <button onClick={async () => {
-                          try {
-                            const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`, debt);
-                            setData(res.data.simplifyDebt);
-                            console.log(res.data);
-                          } catch (err) {
-                            console.log(err);
-                          }
-                        }}
-                          className='bg-[#000080] p-1 rounded-md text-white m-2'>
-                          {debt[3] === true ? "Approved" : "Approve"}
-                        </button>
-                      )}
-                      {user?.username === debt[0] && debt[3] === true && <div>Approved by {debt[1]}✅</div>}
-                    </div>
-                  ))}
+                <div className='bg-white dark:bg-[#282828] p-4 rounded-lg shadow-md relative'>
+                    {data && data.length > 0 ? (
+                        <>
+                            <div className='absolute inset-0 flex justify-center items-center opacity-20 pointer-events-none'>
+                                <Cash />
+                            </div>
+                            <div className='relative z-10'>
+                                {data.map(debt => (
+                                    <div key={debt[0]} className='flex items-center bg-gray-300 rounded-2xl justify-between m-2 w-[95%] dark:bg-[#282828] text-sm'>
+                                        <div className='w-[60%] flex align-middle p-3'>{debt[0]}{" "} &#8594; {debt[1]} {" "}&#x20B9;{debt[2]}</div>
+                                        {user?.username === debt[1] && (
+                                            <button onClick={async () => {
+                                                try {
+                                                    const res = await axios.post(`http://localhost:3001/api/group/approveDebt/${id}`, debt);
+                                                    setData(res.data.simplifyDebt);
+                                                    console.log(res.data);
+                                                } catch (err) {
+                                                    console.log(err);
+                                                }
+                                            }}
+                                                className='bg-[#000080] p-1 rounded-md text-white m-2'>
+                                                {debt[3] === true ? "Approved" : "Approve"}
+                                            </button>
+                                        )}
+                                        {user?.username === debt[0] && debt[3] === true && <div>Approved by {debt[1]}✅</div>}
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    ) : (
+                        <div className='flex justify-center items-center h-full py-10 pr-20 opacity-50'>
+                            <Cash />
+                        </div>
+                    )}
                 </div>
-              </>
-            ) : (
-              <div className='flex justify-center items-center h-full py-10 pr-20 opacity-50'>
-                <Cash />
-              </div>
-            )}
-          </div>
-            
             </div>
-
-            <h3 className='mx-4 mt-4'>Comments:</h3>
-            <div className='mx-4'>
-                <input
-                    type="text"
-                    id="commentText"
-                    value={commentText}
-                    onChange={handleCommentChange}
-                    placeholder="Type your comment here"
-                    className="w-[50%] h-10 p-2 border border-gray-300 rounded-md text-black"
-                />
-                <button onClick={handleAddComment} className="bg-[#000080] p-2 rounded-md text-white m-2">
-                    Add Comment
-                </button>
+            <div className='mx-4 mt-4'>
+                <h3>Comments:</h3>
+                <div className='flex gap-2'>
+                    <input
+                        type="text"
+                        id="commentText"
+                        value={commentText}
+                        onChange={handleCommentChange}
+                        placeholder="Type your comment here"
+                        className="w-full p-2 border dark:placeholder-white border-gray-300 rounded-md dark:bg-[#181818] dark:text-white"
+                    />
+                    <button onClick={handleAddComment} className="bg-[#000080] p-2 rounded-md text-white">
+                        Add Comment
+                    </button>
+                </div>
+                <div className="mt-4 mb-20">
+                    {comments.map((comment) => (
+                        <div key={comment._id} className="rounded-full text-sm w-[70%] bg-[#d1d5db] dark:bg-[#282828] dark:text-white">
+                            <p className='px-3 py-2'>{comment?.username === user?.username ? 'You' : comment?.username}: {comment.text}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
-            <div className="mt-4 mx-4 mb-20 ">
-            {comments.map((comment) => (
-                <div key={comment._id} className="rounded-full text-sm w-[70%] bg-[#d1d5db]">
-                 <p className='px-3 py-2'>{comment?.username === user?.username ?'You' : comment?.username}:{comment.text}</p>
-        </div>
-    ))}
-    
-    
-</div>
-
-
-
         </div>
     );
 };

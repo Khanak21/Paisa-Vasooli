@@ -99,7 +99,7 @@ const Chart = ({user,setUser,thememode,toggle}) => {
     
 
   return (
-    <div className='' style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} >
+    <div style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} className='min-h-screen overflow-x-hidden'>
          {/* ------------ Navbar ------------------------ */}
         <Navbar thememode={thememode} toggle={toggle}/>
 

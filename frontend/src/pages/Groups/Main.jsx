@@ -88,7 +88,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     const handleSendRequest = async()=>{
       try{
         const res= await axios.put(`http://localhost:3001/api/friend/sendRequest/${user._id}`,{friendName})
-        console.log(res)
+        console.log("Friend output ",res)
         alert(res.data.message)
         setFriendName("")
       }catch(err){
@@ -124,7 +124,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
 
     //function to join group
     const handleJoin =e=>{  
-      console.log("yoyy")
+      // console.log("yoyy")
       console.log(JoingCode)
       const addgroup =async()=>{
           try{
@@ -177,13 +177,13 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
     },[groupflag])
 
   return (
-    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}} >
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}} className='min-h-screen overflow-x-hidden'>
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className='flex flex-col gap-2 justify-start items-start min-h-screen' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
         <div className='flex justify-between w-full'>
         <div>
         <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'> Groups</div>
-        <div className='mx-4 text-gray-600 dark:text-gray-400 '>Invite friends, create groups and streamline bill splitting and debt settlements</div>
+        <div className='mx-4 text-gray-600 dark:text-gray-200 '>Invite friends, create groups and streamline bill splitting and debt settlements</div>
         </div>
       
         <div>
@@ -202,6 +202,7 @@ export const Main = ({user,setUser,thememode,toggle,groupData,setgroupData}) => 
             color: 'white',
           },
           }}
+          className='dark:bg-slate-200 dark:hover:bg-slate-400 dark:text-blue-400'
       >
         + NEW 
       </Buttonmui>

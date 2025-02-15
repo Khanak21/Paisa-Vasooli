@@ -276,57 +276,57 @@ const DeleteConfirmation = (id) => {
 };
 
   return (
-    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}} className="min-h-full overflow-x-hidden">
     <Navbar thememode={thememode} toggle={toggle}/>
     <div className="outer min-h-screen w-full" style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#181818":"#f0f0f0" }}>
        <div className='font-extrabold text-2xl mx-4 mt-4 decoration-[#000080] dark:text-[#f0f0f0]'>Savings Tracker</div>
-      <div className='mx-4 text-gray-600 dark:text-gray-400'>Have any financial goals? Track them here!</div>
+      <div className='mx-4 text-gray-600 dark:text-gray-200'>Have any financial goals? Track them here!</div>
       <div className="main-body h-full" style={{ color: thememode === "dark" ? "white" : "black"}}>
           <div className="main-left" style={{ borderColor: thememode === 'dark' ? '#000080' : '#000080',backgroundColor: thememode === 'dark' ? '#2c3034' : 'white'}} >
-            <div className="due flex justify-between w-full gap-4 p-4">
+            <div className="due flex justify-between items-center w-full gap-4">
               <label htmlFor="Title" style={{ color: thememode === 'dark' ? 'white' : 'black'}} className='w-[30%]'>Title</label>
               <br/>
               <input
                 type="text"  
                 placeholder="Input the title"
-                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a] dark:text-white dark:placeholder-white"
                 value={inputTitle}
                 onChange={handleInputTitle}
                 />
             </div>
 
-            <div className="due flex justify-between w-full gap-4">
+            <div className="due flex items-center justify-between w-full gap-4">
               <label htmlFor="" className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}}>Current Amount</label> <br />
               <input
                 type="number"
                 placeholder="Input the Current Amount"
-                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a] dark:text-white dark:placeholder-white"
                 value={currentAmount}
                 onChange={handleCurrentAmount}
-                style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
+                style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
               />
             </div>
 
-            <div className="due flex justify-between w-full gap-4">
+            <div className="due flex items-center justify-between w-full gap-4">
               <label className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}} htmlFor="">Goal Amount</label> <br />
               <input
                 type="number"
                 placeholder="Input the Goal Amount"
-                className="w-[70%] p-2 dark:bg-[#3a3a3a]"
+                className="w-[70%] p-2 dark:bg-[#3a3a3a] dark:text-white dark:placeholder-white"
                 value={amount}
                 onChange={handleAmount}
-                style={{ color: thememode === "dark" ? "black" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
+                style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
               />
             </div>
 
-            <div className="due flex justify-between w-full gap-4">
+            <div className="due flex items-center justify-between w-full gap-4">
               <label className='w-[30%]' style={{ color: thememode === 'dark' ? 'white' : 'black'}} htmlFor="">Currency</label> <br />
               <select
                     name="currency"
                     id="currency"
                     value={Currency}
                     onChange={handleCurrency}
-                    className="w-[70%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200"
+                    className="w-[70%] p-2 dark:bg-[#3a3a3a] outline rounded-sm outline-slate-200 dark:placeholder-white"
                     style={{ color: thememode === "dark" ? "white" : "black",backgroundColor:thememode==="dark"?"#3a3a3a":"white" }}
                     required
                     
@@ -402,7 +402,7 @@ const DeleteConfirmation = (id) => {
                 </div>
                 <div>
                   <label className="font-bold text-sm">Current Amount</label>
-                  <input type="date" className="border border-gray-300 p-2 rounded w-full text-sm" value={sav.currAmt} onChange={handleSaving('currAmt')} />
+                  <input type="number" className="border border-gray-300 p-2 rounded w-full text-sm" value={sav.currAmt} onChange={handleSaving('currAmt')} />
                 </div>
                 <div>
                   <label className="font-bold text-sm">Target Amount</label>

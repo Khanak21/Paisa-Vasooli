@@ -23,13 +23,15 @@ const Inbox = ({ user,setUser,thememode,toggle }) => {
         setinboxuser(foundUser)
         await setUser(foundUser);
       }
+
+      console.log("Loggedin User" ,loggedInUser)
     }catch(err){
       console.log(err)
     }
   }
   check()
 
-},[user?._id])
+},[user?._id,user.friends])
 console.log(inboxuser)
 useEffect(() => {
 
@@ -56,33 +58,37 @@ const handleAccept=async(key)=>{
       <Navbar thememode={thememode} toggle={toggle} />
       <div className='font-extrabold text-2xl mx-4 mt-4 dark:text-[#f0f0f0]'>Inbox <MailIcon/></div>
 
-      <div>
-        
-      {inboxuser.inbox?.toReversed().map((msg, index) => {
-        const tokens = msg.split(' ');
-        let i=0
-        let key=""
-        while(i<tokens.length){
-          if(tokens[i]=="sent")break
-           key+=tokens[i];
-           key+=" "
-           i++;
-        }
-        key=key.trim()
-        return (
-          <div key={key}>
-            {msg.includes('sent') ? (
-              <div className='m-4 bg-gray-200 p-2 rounded-md flex  justify-between align-middle dark:bg-[#282828] dark:text-white'>
-                <div className='m-3'>{msg}</div>
-                <button className='p-2 m-2 rounded-md text-white' style={{backgroundColor:inboxuser.friends.includes(key) ? "green":"#000080"}} onClick={()=>handleAccept(key)}>{inboxuser.friends.includes(key) ? "Accepted" : "Accept"}</button>
-              </div>
-            ) : (
-              <div className='m-4 bg-gray-200 p-2 rounded-md dark:bg-[#282828] dark:text-white'>{msg}</div>
-            )}
-          </div>
-        );
-      })}
-    </div>
+      <div> 
+        {inboxuser.inbox?.toReversed().map((msg, index) => {
+          const tokens = msg.split(' ');
+          let i=0
+          let key=""
+          while(i<tokens.length){
+            if(tokens[i]=="sent")break
+            key+=tokens[i];
+            key+=" "
+            i++;
+          }
+          key=key.trim()
+          return (
+            <div key={key}>
+              {msg.includes('sent') ? (
+                <div className='m-4 bg-gray-200 p-2 rounded-md flex  justify-between align-middle dark:bg-[#6f00c9] dark:text-white'>
+                  <div className='m-3'>{msg}</div>
+                  <button className='p-2 m-2 rounded-md text-white' style={{backgroundColor:inboxuser.friends.includes(key) ? "green":"#000080"}} onClick={()=>handleAccept(key)}>{inboxuser.friends.includes(key) ? "Accepted" : "Accept"}</button>
+                </div>
+              ) : (
+                <div className='m-4 bg-gray-200 p-2 rounded-md dark:bg-[#282828] dark:text-white'>{msg}</div>
+              )}
+            </div>
+          );
+        })
+        // :
+        // <div className='grid grid-cols-1 mx-4 font-semibold text-lg'>
+        //   <div> No friends yet</div>
+        // </div>
+        } 
+      </div>
     </div>
   );
 };

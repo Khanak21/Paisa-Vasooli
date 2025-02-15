@@ -114,7 +114,7 @@ console.log(groupData)
     }, [groupData]);
   return (
     
-   <>
+   <div className='min-h-screen overflow-x-hidden'>
           <Navbar thememode={thememode} toggle={toggle}/>
 
         <div className='flex flex-col justify-center items-start' style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
@@ -159,7 +159,7 @@ console.log(groupData)
           <Modal.Title>Group Participants</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-           <div className='flex-col'>
+           <div className='flex flex-col gap-1'>
               {membersdata?.map(data=>(
                <div >{" "}{data.username}{" "}</div>
                ))}
@@ -183,7 +183,7 @@ console.log(groupData)
       }
           </div>
         </div> 
-        </>
+        </div>
     
   )
 }

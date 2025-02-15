@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     stocks:{
         type:[Object],
-    },
+    }, 
     files:{
         type:[Object],
     },

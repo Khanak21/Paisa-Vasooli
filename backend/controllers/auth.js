@@ -25,16 +25,16 @@ export const signup = async (req, res, next) => {
     // Check if the email is already in use
     const existingUserEmail = await User.findOne({ email: req.body.email });
     if (existingUserEmail) {
-      console.log("Email already in use");
+      // console.log("Email already in use",existingUserEmail);
       return res.status(400).json({ success: false, message: "Email is already in use." });
     }
 
     // Check if the username is already in use
     const existingUsername = await User.findOne({ username: req.body.username });
     if (existingUsername) {
-      console.log("Username already in use");
+      // console.log("Username already in use",existingUsername);
       return res.status(400).json({ success: false, message: "Username is already in use." });
-    }
+    } 
 
     const newUser = await User.create({ ...req.body, password: hash });
     console.log("New User Created:", newUser);

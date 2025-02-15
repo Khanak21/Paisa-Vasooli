@@ -71,7 +71,7 @@ const Stocks = ({user,thememode,toggle}) => {
     console.log(stockData)
 
   return ( 
-    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}}>
+    <div style={{backgroundColor:thememode=="dark"?"#181818":"#f0f0f0"}} className='min-h-screen overflow-x-hidden'>
         <Navbar thememode={thememode} toggle={toggle}/>
         <div className="mx-auto my-auto h-screen block justify-center items-center" style={{backgroundColor:thememode==="dark"?"#181818":"#f0f0f0"}} >
           
